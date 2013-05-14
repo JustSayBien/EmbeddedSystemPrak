@@ -1,0 +1,311 @@
+Archive member included because of file (symbol)
+
+lib/libor32rte-de2-70.a(init.o)
+                              lib/boot.o (_init)
+lib/libor32rte-de2-70.a(entry.o)
+                              lib/boot.o (tick_timer)
+lib/libor32rte-de2-70.a(or32.o)
+                              main.o (___divsi3)
+lib/libor32rte-de2-70.a(roomba.o)
+                              main.o (_drive)
+lib/libor32rte-de2-70.a(pio.o)
+                              main.o (_button_vals)
+lib/libor32rte-de2-70.a(led.o)
+                              main.o (_led_vals)
+lib/libor32rte-de2-70.a(tools.o)
+                              main.o (_msleep)
+lib/libor32rte-de2-70.a(timer.o)
+                              lib/libor32rte-de2-70.a(entry.o) (_do_timer)
+lib/libor32rte-de2-70.a(irq.o)
+                              lib/libor32rte-de2-70.a(entry.o) (_do_irq)
+lib/libor32rte-de2-70.a(uart.o)
+                              lib/libor32rte-de2-70.a(roomba.o) (_uart_read_byte)
+
+Allocating common symbols
+Common symbol       size              file
+
+_drive_state        0x4               main.o
+_button_state       0x1               main.o
+_program_state      0x4               main.o
+_query_results      0x14              lib/libor32rte-de2-70.a(roomba.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+lram             0x0000000000000000 0x0000000002000000
+vram             0x0000000002000000 0x0000000002000000
+flash            0x0000000004000000 0x0000000000800000
+sram             0x0000000005000000 0x0000000000200000
+vectors          0x00000000ff000000 0x0000000000001000
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD lib/boot.o
+LOAD main.o
+Address of section .text set to 0x0
+                [0x0000000000001000]                __USTACK_SIZE = DEFINED (__USTACK_SIZE)?__USTACK_SIZE:0x1000
+                [0x0000000000001000]                __TSTACK_SIZE = DEFINED (__TSTACK_SIZE)?__TSTACK_SIZE:0x1000
+                [0x0000000000000010]                __TSTACK_N = DEFINED (__TSTACK_N)?__TSTACK_N:0x10
+                [0x00000000000ea600]                __VGA_FRAME_SIZE = DEFINED (__VGA_FRAME_SIZE)?__VGA_FRAME_SIZE:0xea600
+
+.text           0x0000000000000000     0x29ec
+ *(.text)
+ .text          0x0000000000000000     0x1000 lib/boot.o
+                0x0000000000000b00                range_vec
+                0x0000000000000600                alignment_vec
+                0x0000000000000a00                i_tlb_miss_vec
+                0x0000000000000900                d_tlb_miss_vec
+                0x0000000000000300                data_page_fault_vec
+                0x0000000000000400                instruction_page_fault_vec
+                0x0000000000000100                _start
+                0x0000000000000800                external_interrupt_vec
+                0x0000000000000500                tick_timer_vec
+                0x0000000000000200                bus_error_vec
+                0x0000000000000700                illegal_instruction_vec
+                0x0000000000000d00                floating_point_vec
+                0x0000000000000e00                trap_vec
+                0x0000000000000c00                system_call_vec
+ .text          0x0000000000001000      0x7bc main.o
+                0x0000000000001148                _handleStateCollision
+                0x00000000000014d0                _handleStateInit
+                0x00000000000010bc                _setProgramState
+                0x0000000000001000                _intToAscii
+                0x00000000000011bc                _handleStateDrive
+                0x0000000000001634                _main
+ .text          0x00000000000017bc      0x1b8 lib/libor32rte-de2-70.a(init.o)
+                0x00000000000017bc                _init
+ .text          0x0000000000001974      0x1d0 lib/libor32rte-de2-70.a(entry.o)
+                0x0000000000001a14                external_interrupt
+                0x0000000000001974                tick_timer
+                0x0000000000001ab4                _ret_from_exception
+ .text          0x0000000000001b44      0x218 lib/libor32rte-de2-70.a(or32.o)
+                0x0000000000001ce0                ___umodsi3
+                0x0000000000001c7c                ___divsi3
+                0x0000000000001d00                ___modsi3
+                0x0000000000001b80                ___udivsi3
+                0x0000000000001b44                ___mulsi3
+ .text          0x0000000000001d5c      0x430 lib/libor32rte-de2-70.a(roomba.o)
+                0x0000000000001d5c                _calculateTimeToDrive
+                0x0000000000001d90                _drive
+                0x0000000000002134                _query_list
+                0x0000000000002034                _read_query_list
+                0x0000000000001e34                _setLed
+                0x0000000000001ff8                _check_button
+                0x0000000000001ef4                _writeDigits
+                0x0000000000001f4c                _write_query_list
+                0x0000000000001fc8                _init_roomba
+                0x0000000000001ea4                _setWeekdayLed
+                0x0000000000001e08                _stop
+ .text          0x000000000000218c        0x0 lib/libor32rte-de2-70.a(pio.o)
+ .text          0x000000000000218c        0x0 lib/libor32rte-de2-70.a(led.o)
+ .text          0x000000000000218c      0x174 lib/libor32rte-de2-70.a(tools.o)
+                0x000000000000225c                _msleep
+                0x000000000000218c                _wait
+                0x0000000000002294                _invert_byte_order32
+                0x00000000000022d4                _invert_byte_order16
+ .text          0x0000000000002300       0xec lib/libor32rte-de2-70.a(timer.o)
+                0x0000000000002300                _register_timer_cb
+                0x00000000000023ac                _do_timer
+                0x000000000000237c                _disable_timer
+                0x0000000000002334                _enable_timer
+ .text          0x00000000000023ec      0x410 lib/libor32rte-de2-70.a(irq.o)
+                0x00000000000025d0                _pic_irq
+                0x0000000000002798                _irq_free
+                0x00000000000023ec                _init_irq
+                0x00000000000024f8                _irq_disable
+                0x0000000000002498                _irq_enable
+                0x000000000000242c                _enable_all_interrupts
+                0x000000000000253c                _irq_request
+                0x0000000000002700                _do_irq
+                0x0000000000002594                _irq_enabled
+                0x0000000000002460                _disable_all_interrupts
+ .text          0x00000000000027fc      0x1f0 lib/libor32rte-de2-70.a(uart.o)
+                0x0000000000002814                _uart_read_byte
+                0x00000000000028e0                _uart_puts
+                0x00000000000027fc                _uart_init
+                0x000000000000297c                _uart_putchar
+                0x0000000000002874                _uart_write_byte
+
+.rodata         0x00000000000029ec      0x118
+ *(.rodata)
+ .rodata        0x00000000000029ec       0xc8 lib/libor32rte-de2-70.a(roomba.o)
+                0x0000000000002a9c                _PACKET_INFRARED_CHARACTER_RIGHT
+                0x0000000000002a6c                _PACKET_REQUESTED_RIGHT_VELOCITY
+                0x0000000000002a4c                _PACKET_CLIFF_RIGHT_SIGNAL
+                0x0000000000002a80                _PACKET_LIGHT_BUMP_LEFT_SIGNAL
+                0x0000000000002aa8                _PACKET_MAIN_BRUSH_MOTOR_CURRENT
+                0x0000000000002a74                _PACKET_RIGHT_ENCODER_COUNTS
+                0x0000000000002a1c                _PACKET_DISTANCE
+                0x0000000000002a18                _PACKET_BUTTONS
+                0x0000000000002a34                _PACKET_BATTERY_CHARGE
+                0x00000000000029f0                _PACKET_WALL
+                0x0000000000002a88                _PACKET_LIGHT_BUMP_CENTER_LEFT_SIGNAL
+                0x0000000000002a04                _PACKET_VIRTUAL_WALL
+                0x0000000000002a14                _PACKET_INFRARED_CHARACTER_OMNI
+                0x0000000000002a44                _PACKET_CLIFF_FRONT_LEFT_SIGNAL
+                0x0000000000002a5c                _PACKET_SONG_PLAYING
+                0x0000000000002a20                _PACKET_ANGLE
+                0x0000000000002a60                _PACKET_NUMBER_OF_STREAM_PACKETS
+                0x0000000000002ab0                _PACKET_STASIS
+                0x0000000000002a28                _PACKET_VOLTAGE
+                0x0000000000002a50                _PACKET_CHARGING_SOURCES_AVAILABLE
+                0x0000000000002aac                _PACKET_SIDE_BRUSH_MOTOR_CURRENT
+                0x0000000000002aa0                _PACKET_LEFT_MOTOR_CURRENT
+                0x00000000000029f4                _PACKET_CLIFF_LEFT
+                0x0000000000002a7c                _PACKET_LIGHT_BUMPER
+                0x00000000000029f8                _PACKET_CLIFF_FRONT_LEFT
+                0x0000000000002a3c                _PACKET_WALL_SIGNAL
+                0x0000000000002a64                _PACKET_REQUESTED_VELOCITY
+                0x0000000000002a10                _PACKET_UNUSED_BYTE
+                0x0000000000002a08                _PACKET_WHEEL_OVERCURRENTS
+                0x0000000000002aa4                _PACKET_RIGHT_MOTOR_CURRENT
+                0x00000000000029ec                _PACKET_BUMPS_WHEELDROPS
+                0x0000000000002a2c                _PACKET_CURRENT
+                0x0000000000002a58                _PACKET_SONG_NUMBER
+                0x0000000000002a78                _PACKET_LEFT_ENCODER_COUNTS
+                0x0000000000002a84                _PACKET_LIGHT_BUMP_FRONT_LEFT_SIGNAL
+                0x0000000000002a24                _PACKET_CHARGING_STATE
+                0x0000000000002a90                _PACKET_LIGHT_BUMP_FRONT_RIGHT_SIGNAL
+                0x0000000000002a0c                _PACKET_DIRT_DETECT
+                0x0000000000002a38                _PACKET_BATTERY_CAPICITY
+                0x0000000000002a70                _PACKET_REQUESTED_LEFT_VELOCITY
+                0x0000000000002a98                _PACKET_INFRARED_CHARACTER_LEFT
+                0x0000000000002a68                _REQUESTED_RADIUS
+                0x0000000000002a30                _PACKET_TEMPERATURE
+                0x0000000000002a48                _PACKET_CLIFF_FRONT_RIGHT_SIGNAL
+                0x00000000000029fc                _PACKET_CLIFF_FRONT_RIGHT
+                0x0000000000002a54                _PACKET_OI_MODE
+                0x0000000000002a8c                _PACKET_LIGHT_BUMP_CENTER_RIGHT_SIGNAL
+                0x0000000000002a00                _PACKET_CLIFF_RIGHT
+                0x0000000000002a94                _PACKET_LIGHT_BUMP_RIGHT_SIGNAL
+                0x0000000000002a40                _PACKET_CLIFF_LEFT_SIGNAL
+ .rodata        0x0000000000002ab4        0x4 lib/libor32rte-de2-70.a(pio.o)
+                0x0000000000002ab4                _button_vals
+ .rodata        0x0000000000002ab8       0x24 lib/libor32rte-de2-70.a(led.o)
+                0x0000000000002ab8                _led_vals
+ *(.rodata.*)
+                0x0000000000002adc                . = ALIGN (0x4)
+                0x0000000000002adc                PROVIDE (__clear_table, .)
+                0x0000000000002adc        0x4 LONG 0x2000024 (0x0 + ADDR (.bss))
+                0x0000000000002ae0        0x4 LONG 0x13090 SIZEOF (.bss)
+                0x0000000000002ae4        0x4 LONG 0xffffffffffffffff
+                0x0000000000002ae8        0x4 LONG 0xffffffffffffffff
+                0x0000000000002aec                PROVIDE (__copy_table, .)
+                0x0000000000002aec        0x4 LONG 0x2b04 LOADADDR (.data)
+                0x0000000000002af0        0x4 LONG 0x2000000 <code 345> (DATA_BASE)
+                0x0000000000002af4        0x4 LONG 0x24 SIZEOF (.data)
+                0x0000000000002af8        0x4 LONG 0xffffffffffffffff
+                0x0000000000002afc        0x4 LONG 0xffffffffffffffff
+                0x0000000000002b00        0x4 LONG 0xffffffffffffffff
+                0x0000000000002b04                _etext = ALIGN (0x4)
+                0x0000000000002b04                PROVIDE (etext, _etext)
+
+.data           0x0000000002000000       0x24 load address 0x0000000000002b04
+                0x0000000002000000                . = ALIGN (0x4)
+                0x0000000002000000                DATA_BASE = <code 345> (.)
+ *(.data)
+ .data          0x0000000002000000        0x0 lib/boot.o
+ .data          0x0000000002000000        0x0 main.o
+ .data          0x0000000002000000        0x0 lib/libor32rte-de2-70.a(init.o)
+ .data          0x0000000002000000        0x0 lib/libor32rte-de2-70.a(entry.o)
+ .data          0x0000000002000000        0x0 lib/libor32rte-de2-70.a(or32.o)
+ .data          0x0000000002000000       0x24 lib/libor32rte-de2-70.a(roomba.o)
+                0x0000000002000014                _digits
+                0x0000000002000000                _packet_queries
+ .data          0x0000000002000024        0x0 lib/libor32rte-de2-70.a(pio.o)
+ .data          0x0000000002000024        0x0 lib/libor32rte-de2-70.a(led.o)
+ .data          0x0000000002000024        0x0 lib/libor32rte-de2-70.a(tools.o)
+ .data          0x0000000002000024        0x0 lib/libor32rte-de2-70.a(timer.o)
+ .data          0x0000000002000024        0x0 lib/libor32rte-de2-70.a(irq.o)
+ .data          0x0000000002000024        0x0 lib/libor32rte-de2-70.a(uart.o)
+
+.bss            0x0000000002000024    0x13090 load address 0x0000000000002b28
+ *(.bss)
+ .bss           0x0000000002000024        0x0 lib/boot.o
+ .bss           0x0000000002000024       0x18 main.o
+                0x0000000002000034                _quadrant_counter
+                0x0000000002000030                _driven_angle
+                0x0000000002000028                _driven_distance
+                0x000000000200002c                _driven_quadrant_distance
+                0x0000000002000038                _is_moving
+                0x0000000002000024                _planned_distance
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(init.o)
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(entry.o)
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(or32.o)
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(roomba.o)
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(pio.o)
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(led.o)
+ .bss           0x000000000200003c        0x0 lib/libor32rte-de2-70.a(tools.o)
+ .bss           0x000000000200003c        0x4 lib/libor32rte-de2-70.a(timer.o)
+ .bss           0x0000000002000040       0x50 lib/libor32rte-de2-70.a(irq.o)
+ .bss           0x0000000002000090        0x0 lib/libor32rte-de2-70.a(uart.o)
+                0x0000000002000090                . = ALIGN (0x4)
+                0x0000000002000090                __KSTACK_TOP = .
+                0x0000000002001090                . = (__KSTACK_TOP + __USTACK_SIZE)
+ *fill*         0x0000000002000090     0x1000 00
+                0x0000000002001090                __KSTACK_BOTTOM = .
+                0x0000000002001090                __ISTACK_TOP = .
+                0x0000000002002090                . = (__ISTACK_TOP + __USTACK_SIZE)
+ *fill*         0x0000000002001090     0x1000 00
+                0x0000000002002090                __ISTACK_BOTTOM = .
+                0x0000000002002090                __USTACK_TOP = .
+                0x0000000002003090                . = (__USTACK_TOP + __USTACK_SIZE)
+ *fill*         0x0000000002002090     0x1000 00
+                0x0000000002003090                __USTACK_BOTTOM = .
+                0x0000000002003090                __TSTACK_TOP = .
+                0x0000000002013090                . = (__TSTACK_TOP + (__TSTACK_N * __TSTACK_SIZE))
+ *fill*         0x0000000002003090    0x10000 00
+                0x0000000002013090                __TSTACK_BOTTOM = .
+ COMMON         0x0000000002013090        0xc main.o
+                0x0000000002013090                _drive_state
+                0x0000000002013094                _button_state
+                0x0000000002013098                _program_state
+ *fill*         0x000000000201309c        0x4 00
+ COMMON         0x00000000020130a0       0x14 lib/libor32rte-de2-70.a(roomba.o)
+                0x00000000020130a0                _query_results
+                0x00000000020130b4                __RAM_END = .
+
+.vga_mem        0x0000000005000000    0xea600
+                0x0000000005000000                __VGA_MEM = .
+                0x00000000050ea600                . = (. + __VGA_FRAME_SIZE)
+ *fill*         0x0000000005000000    0xea600 00
+                0x00000000050ea600                __VGA_END = .
+                0x0000000000000000                __CODE_START = ADDR (.text)
+                0x00000000000029ec                __CODE_END = (ADDR (.text) + SIZEOF (.text))
+                0x0000000002000000                __DATA_START = ADDR (.data)
+                0x0000000002000024                __DATA_END = (ADDR (.data) + SIZEOF (.data))
+                0x0000000002000024                __BSS_START = ADDR (.bss)
+                0x00000000020130b4                __BSS_END = (ADDR (.bss) + SIZEOF (.bss))
+LOAD lib/libor32rte-de2-70.a
+OUTPUT(main.elf elf32-or32)
+
+.stab           0x0000000000000000     0x39d8
+ .stab          0x0000000000000000      0xca8 main.o
+ .stab          0x0000000000000ca8      0xc84 lib/libor32rte-de2-70.a(roomba.o)
+ .stab          0x000000000000192c      0x294 lib/libor32rte-de2-70.a(pio.o)
+ .stab          0x0000000000001bc0      0x27c lib/libor32rte-de2-70.a(led.o)
+ .stab          0x0000000000001e3c      0x648 lib/libor32rte-de2-70.a(tools.o)
+ .stab          0x0000000000002484      0x498 lib/libor32rte-de2-70.a(timer.o)
+ .stab          0x000000000000291c      0xaa4 lib/libor32rte-de2-70.a(irq.o)
+ .stab          0x00000000000033c0      0x618 lib/libor32rte-de2-70.a(uart.o)
+
+.stabstr        0x0000000000000000     0x42f8
+ .stabstr       0x0000000000000000      0x8a4 main.o
+ .stabstr       0x00000000000008a4      0xf82 lib/libor32rte-de2-70.a(roomba.o)
+ .stabstr       0x0000000000001826      0x651 lib/libor32rte-de2-70.a(pio.o)
+ .stabstr       0x0000000000001e77      0x63b lib/libor32rte-de2-70.a(led.o)
+ .stabstr       0x00000000000024b2      0x6c0 lib/libor32rte-de2-70.a(tools.o)
+ .stabstr       0x0000000000002b72      0x732 lib/libor32rte-de2-70.a(timer.o)
+ .stabstr       0x00000000000032a4      0x8e9 lib/libor32rte-de2-70.a(irq.o)
+ .stabstr       0x0000000000003b8d      0x76b lib/libor32rte-de2-70.a(uart.o)
+
+.comment        0x0000000000000000       0x90
+ .comment       0x0000000000000000       0x12 main.o
+ .comment       0x0000000000000012       0x12 lib/libor32rte-de2-70.a(roomba.o)
+ .comment       0x0000000000000024       0x12 lib/libor32rte-de2-70.a(pio.o)
+ .comment       0x0000000000000036       0x12 lib/libor32rte-de2-70.a(led.o)
+ .comment       0x0000000000000048       0x12 lib/libor32rte-de2-70.a(tools.o)
+ .comment       0x000000000000005a       0x12 lib/libor32rte-de2-70.a(timer.o)
+ .comment       0x000000000000006c       0x12 lib/libor32rte-de2-70.a(irq.o)
+ .comment       0x000000000000007e       0x12 lib/libor32rte-de2-70.a(uart.o)

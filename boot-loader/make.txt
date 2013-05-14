@@ -1,0 +1,15 @@
+To build a bootloader binary follow these steps:
+
+* compile boot.c without assembling or linking it
+	or32-elf-gcc -S -O3 boot.c
+
+* insert the following line (without quotation marks) in line 2 of the assembly file (boot.s)
+	".org	0x100"
+
+* remove every line of boot.s containing either one of "r1", "r2" or "r9"
+
+* assemble boot.s to object file boot.o
+	or32-elf-as -g boot.s -o boot.o
+
+* build Intel hex format file out of boot.o
+	or32-elf-objcopy -O ihex boot.o boot.hex
