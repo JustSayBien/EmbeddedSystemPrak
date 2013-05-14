@@ -23,12 +23,15 @@ Modification history:
 /****************************************************************** Includes */
 
 #include <roomba.h>
+#include "tools.h"
 
 
 
 /******************************************************************* Defines */
 const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET_INFRARED_CHARACTER_OMNI, &PACKET_DISTANCE, &PACKET_ANGLE, &PACKET_TEMPERATURE};
 int32_t query_results[QUERY_LENGTH];
+
+roomba_data roombadata = {0, 0, 0, 0};
 
 // array of currently displayed digits on Roomba's seven segment display
 int digits[DIGIT_LENGTH] = {
@@ -127,7 +130,7 @@ void roomba_calibrate_angle() {
 			stop();
 			moving = false;
 			query_list(packet_queries, QUERY_LENGTH, query_results);
-			roomba_data->angle_360_degrees = query_results[3];
+			roombadata.angle_360_degrees = query_results[3];
 			break;
 		}
 		msleep(50);

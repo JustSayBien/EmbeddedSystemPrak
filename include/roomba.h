@@ -144,11 +144,13 @@ extern int32_t query_results[QUERY_LENGTH];
 extern int32_t digits[DIGIT_LENGTH];
 
 typedef struct{
-	int32_t driven_distance = 0;
-	int32_t driven_angle = 0;
-	int32_t angle_360_degrees = 0;
-	int32_t distance_10_decimeters = 0;
+	int32_t driven_distance;
+	int32_t driven_angle;
+	int32_t angle_360_degrees;
+	int32_t distance_10_decimeters;
 } roomba_data;
+
+extern roomba_data roombadata;
 
 /******************************************************* Function prototypes */
 /**
