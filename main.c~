@@ -131,12 +131,12 @@ enum drivestate drive_state;
 int main(int argc, char *argv[]) {
 
 	//init program
-	//BUTTON_WAIT(0);
-	//LED = led_vals[0];
+	BUTTON_WAIT(0);
+	LED = led_vals[0];
 	init_roomba();
 	msleep(1000);
-	//LED = led_vals[0] | led_vals[1];
-	//BUTTON_WAIT(1);
+	LED = led_vals[0] | led_vals[1];
+	BUTTON_WAIT(1);
 
 	//init sevenseg
 	writeDigits(digits);	
