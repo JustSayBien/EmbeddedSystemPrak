@@ -117,6 +117,8 @@
 #define BTN_SPOT		0x02
 #define BTN_CLEAN		0x01
 
+#define CMD_QUERY_SENSOR	0x8E
+
 #define SENSORS_ALL						0x00
 #define SENSORS_PHYSICAL				0x01
 #define SENSORS_BUTTONS_AND_INTERNAL	0x02
@@ -166,6 +168,9 @@ void init_roomba(void);
 void roomba_calibrate_angle();
 
 void roomba_calibrate_distance();
+
+
+int32_t query_sensor(packet query_packet);
 
 
 /**

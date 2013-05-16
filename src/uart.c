@@ -67,7 +67,7 @@ void uart_init(void) {
 
 int32_t uart_putchar(int32_t c) {
   char vc = (char) (c & 0xff);
-  while ( !(IORD8(A_UART, UART_ST) & UART_ST_TRDY) );
+  while ( !(IORD32(A_UART, UART_ST) & UART_ST_TRDY) );
   IOWR8(A_UART, UART_TX, vc);
   return (int32_t) vc;
 }
@@ -80,7 +80,7 @@ int32_t uart_puts(char *p) {
   }
   do {
     // need to wait until UART gets ready to transmit
-    if (IORD8(A_UART, UART_ST) & UART_ST_TRDY) {
+    if (IORD32(A_UART, UART_ST) & UART_ST_TRDY) {
       IOWR8(A_UART, UART_TX, *p);
       ++p;
       ++ctr;
@@ -92,18 +92,16 @@ int32_t uart_puts(char *p) {
 
 
 void uart_write_byte(char b){
-  while ( !(IORD8(A_UART, UART_ST) & UART_ST_TRDY) );
+  while ( !(IORD32(A_UART, UART_ST) & UART_ST_TRDY) );
   IOWR8(A_UART, UART_TX, b);
 }
 
 
 int32_t uart_read_byte(void){
   char b = -1;
-  while ( !(IORD8(A_UART, UART_ST) & UART_ST_TRDY) );
+  while ( !(IORD32(A_UART, UART_ST) & UART_ST_RRDY) );
   b = IORD8(A_UART, UART_RX);
-  return (int32_t)b;
 }
-
 
 /*********************************************************** Local functions */
 

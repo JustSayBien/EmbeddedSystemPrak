@@ -31,7 +31,7 @@ Modification history:
 const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET_INFRARED_CHARACTER_OMNI, &PACKET_DISTANCE, &PACKET_ANGLE, &PACKET_TEMPERATURE};
 volatile int32_t query_results[QUERY_LENGTH];
 
-roomba_data roombadata = {0, 0, 0, 0};
+roomba_data roombadata = {0, 0, 360, 10};
 
 // array of currently displayed digits on Roomba's seven segment display
 int32_t digits[DIGIT_LENGTH] = {
@@ -115,9 +115,19 @@ const packet PACKET_STASIS                    = {58, 1, 0};
 void init_roomba() {
 	uart_write_byte(CMD_START);
 	uart_write_byte(CMD_FULL);
+
+	uart_write_byte(141);
+	uart_write_byte(4);
 }
 
 void roomba_calibrate_angle() {
+
+	digits[0] = 'A';
+	digits[1] = 'L';
+	digits[2] = 'A';
+	digits[3] = 'C';
+	writeDigits();
+
 	uint8_t button_state;
 	bool_t moving = false;
 	while(1){
@@ -129,17 +139,56 @@ void roomba_calibrate_angle() {
 		else if(moving && button_state == BTN_CLEAN){
 			stop();
 			moving = false;
-			query_list(packet_queries, QUERY_LENGTH, query_results);
-			roombadata.angle_360_degrees = query_results[3];
+			int32_t angle = query_sensor(PACKET_ANGLE);
+			roombadata.angle_360_degrees = angle;
 			break;
 		}
-		my_sleep(50);
+		my_msleep(150);
 	}
 }	
 
 void roomba_calibrate_distance(){
-
+	digits[0] = 'D';
+	digits[1] = 'L';
+	digits[2] = 'A';
+	digits[3] = 'C';
+	writeDigits();
 }
+
+
+
+int32_t query_sensor(packet query_packet){
+	uart_write_byte(CMD_QUERY_SENSOR);
+	uart_write_byte(query_packet.id);
+
+	int32_t result;
+	uint8_t temp = uart_read_byte();
+	if(query_packet.length == 1){
+		if(query_packet.has_sign){
+			int8_t tempSigned = (int8_t) temp;
+			result = (int32_t) tempSigned;		
+		}
+		else{
+			result = (int32_t) temp;
+		}
+	}
+	else{
+		uint16_t tempConcat = temp << 8;
+		temp = uart_read_byte();
+		tempConcat |= temp;
+			
+		if(query_packet.has_sign){
+			int16_t tempConcatSigned = (int16_t) tempConcat;
+			result = (int32_t) tempConcatSigned;
+		}
+		else{
+			result =  (int32_t) tempConcat;
+		}
+	}
+
+	return result;
+}
+
 
 void query_list(const packet * packets[], uint8_t count, int32_t results[]){
 	write_query_list(packets, count);
