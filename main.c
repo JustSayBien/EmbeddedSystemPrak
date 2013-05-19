@@ -259,9 +259,6 @@ void handleStateInit(){
 }
 
 void handleStateCalibrate(){
-
-	
-
 	if(button_state == BTN_SPOT){
 		roomba_calibrate_angle();
 		intToAscii(roombadata.angle_360_degrees, digits);
@@ -269,7 +266,8 @@ void handleStateCalibrate(){
 	}
 	if(button_state == BTN_DOCK){
 		roomba_calibrate_distance();
-		//TODO
+		intToAscii(roombadata.distance_10_decimeters, digits);
+		writeDigits();
 	}
 	
 	if(button_state == BTN_HOUR){

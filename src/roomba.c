@@ -116,6 +116,7 @@ void init_roomba() {
 	uart_write_byte(CMD_START);
 	uart_write_byte(CMD_FULL);
 
+	//play sound
 	uart_write_byte(141);
 	uart_write_byte(4);
 }
@@ -133,7 +134,7 @@ void roomba_calibrate_angle() {
 	while(1){
 		button_state = check_button();
 		if(!moving && button_state == BTN_CLEAN){
-			drive(DEFAULT_VELOCITY, 1);
+			drive(DEFAULT_VELOCITY/4, 1);
 			moving = true;
 		}
 		else if(moving && button_state == BTN_CLEAN){
@@ -153,6 +154,31 @@ void roomba_calibrate_distance(){
 	digits[2] = 'A';
 	digits[3] = 'C';
 	writeDigits();
+
+	uint8_t button_state = 0;
+	int32_t bumpers = 0;
+	bool_t moving = false;
+	while(1){
+		button_state = check_button();
+		int32_t bumpers = query_sensor(PACKET_BUMPS_WHEELDROPS);
+		// bumper and wheeldrop collision detected ?
+		if(!moving && button_state == BTN_CLEAN){
+			drive(DEFAULT_VELOCITY/2, 1);
+			moving = true;
+		}
+		else if(moving){
+			if(bumpers != 0 || button_state == BTN_CLEAN){
+				stop();
+				moving = false;
+				int32_t distance = query_sensor(PACKET_DISTANCE);
+				roombadata.distance_10_decimeters = distance / 1000;
+				break;
+			}
+		}
+		my_msleep(150);
+	}
+
+
 }
 
 
