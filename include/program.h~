@@ -1,0 +1,144 @@
+#ifndef _PROGRAM_H
+#define _PROGRAM_H
+
+
+/****************************************************************** Includes */
+
+#include "board.h"
+#include "led.h"
+#include "pio.h"
+#include "roomba.h"
+#include "tools.h"
+#include "uart.h"
+
+/******************************************************************* Defines */
+
+
+enum programstate { INIT, CALIBRATE, DRIVE, COLLISION};
+enum drivestate {TURNING, DRIVING};
+enum calibratestate {DISTANCE, ANGLE};
+
+
+/******************************************************* Function prototypes */
+
+
+void program_run();
+
+
+/**
+  * \brief  Convert int to ascii 
+  *
+  *         Convert an integer value to an array of ascii roomba_sevenseg_digits with function
+  *
+  * \param      value	 	the integer value to convert
+  * \param 	out		the result array, containing the ascii roomba_sevenseg_digits
+  * \return	1 if the integer value is smaller than 10000, -1 otherwise
+  */
+int intToAscii(int32_t value, int32_t out[]);
+
+
+/**
+  * \brief  Set program state 
+  *
+  *         Set the program state according to the state chart with this function
+  *
+  * \param      state	 	the state to set
+  */
+void setProgramState(enum programstate state);
+
+/**
+  * \brief	Handle INIT state
+  *
+  *         this function handles the INIT programm state
+  *
+  */
+void handleStateInit();
+
+/**
+  * \brief	Handle DRIVE state
+  *
+  *         this function handles the DRIVE programm state
+  *
+  */
+void handleStateDrive();
+
+/**
+  * \brief	Handle COLLISION state
+  *
+  *         this function handles the COLLISION programm state
+  *
+  */
+void handleStateCollision();
+
+
+/**
+  * \brief	Handle CALIBRATE state
+  *
+  *         this function handles the CALIBRATE programm state
+  *
+  */
+void handleStateCalibrate();
+
+
+
+
+
+/************************************************************** Global const */
+
+
+/********************************************************** Global variables */
+
+
+/** stores the queried button state */
+volatile uint8_t button_state;
+
+/** stores the queried bumper state */
+volatile int32_t bumper_state;
+
+/** bool to switch between displaying trip or whole distance */
+uint8_t display_whole_distance = 0;
+
+/** planned distance  */
+int32_t planned_distance = 0;
+
+/** planned angle */
+int32_t planned_angle = 0;
+
+
+/** driven angle */
+int32_t driven_angle = 0;
+
+/** current program state */
+enum programstate program_state;
+
+
+/** current drive state */
+enum drivestate drive_state;
+
+
+/** current calibrate state */
+enum calibratestate calibrate_state;
+
+
+
+
+
+/*************************************************************** Local const */
+
+
+/*********************************************************** Local variables */
+
+
+/******************************************************************** Macros */
+
+
+/********************************************************** Global functions */
+
+
+/*********************************************************** Local functions */
+
+
+#endif
+
+
+

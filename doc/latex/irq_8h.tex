@@ -1,0 +1,156 @@
+\hypertarget{irq_8h}{\section{include/irq.h \-File \-Reference}
+\label{irq_8h}\index{include/irq.\-h@{include/irq.\-h}}
+}
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+{\ttfamily \#include $<$tools.\-h$>$}\*
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef uint32\-\_\-t($\ast$ \hyperlink{irq_8h_aa6d61581f3786e1dbf92cfc99f8f806b}{irq\-\_\-handler\-\_\-t} )(uint32\-\_\-t)
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{irq_8h_ad17d9a8aa78440af8fc40d3fd55dbad8}{init\-\_\-irq} (void)
+\item 
+void \hyperlink{irq_8h_a62fd537e60d475b8a6d0de3d544ce4c5}{enable\-\_\-all\-\_\-interrupts} (void)
+\item 
+void \hyperlink{irq_8h_a76c18cad18e4423335fbf6d656e81feb}{disable\-\_\-all\-\_\-interrupts} (void)
+\item 
+uint32\-\_\-t \hyperlink{irq_8h_ae38da7a0fba33d6781fb96f4332daf0e}{irq\-\_\-enable} (uint32\-\_\-t irq)
+\item 
+uint32\-\_\-t \hyperlink{irq_8h_a84ff79a2c91dca1d5394e945e398cc36}{irq\-\_\-disable} (uint32\-\_\-t irq)
+\item 
+uint32\-\_\-t \hyperlink{irq_8h_acc147dc0aa758f0f66637e893f0b4018}{irq\-\_\-request} (uint32\-\_\-t irq, \hyperlink{irq_8h_aa6d61581f3786e1dbf92cfc99f8f806b}{irq\-\_\-handler\-\_\-t} handler)
+\item 
+uint32\-\_\-t \hyperlink{irq_8h_ae9236d381106d001f7ebca344af635fc}{irq\-\_\-free} (uint32\-\_\-t irq)
+\item 
+\hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8}{bool\-\_\-t} \hyperlink{irq_8h_a39f68b7e730de9aed898dccb3b9d8183}{irq\-\_\-enabled} (uint32\-\_\-t irq)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{irq_8h_aa6d61581f3786e1dbf92cfc99f8f806b}{\index{irq.\-h@{irq.\-h}!irq\-\_\-handler\-\_\-t@{irq\-\_\-handler\-\_\-t}}
+\index{irq\-\_\-handler\-\_\-t@{irq\-\_\-handler\-\_\-t}!irq.h@{irq.\-h}}
+\subsubsection[{irq\-\_\-handler\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef uint32\-\_\-t($\ast$ {\bf irq\-\_\-handler\-\_\-t})(uint32\-\_\-t)}}\label{irq_8h_aa6d61581f3786e1dbf92cfc99f8f806b}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{irq_8h}{irq.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{irq_8h_a76c18cad18e4423335fbf6d656e81feb}{\index{irq.\-h@{irq.\-h}!disable\-\_\-all\-\_\-interrupts@{disable\-\_\-all\-\_\-interrupts}}
+\index{disable\-\_\-all\-\_\-interrupts@{disable\-\_\-all\-\_\-interrupts}!irq.h@{irq.\-h}}
+\subsubsection[{disable\-\_\-all\-\_\-interrupts}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf disable\-\_\-all\-\_\-interrupts} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_a76c18cad18e4423335fbf6d656e81feb}
+\-Disable all interrupts \hypertarget{irq_8h_a62fd537e60d475b8a6d0de3d544ce4c5}{\index{irq.\-h@{irq.\-h}!enable\-\_\-all\-\_\-interrupts@{enable\-\_\-all\-\_\-interrupts}}
+\index{enable\-\_\-all\-\_\-interrupts@{enable\-\_\-all\-\_\-interrupts}!irq.h@{irq.\-h}}
+\subsubsection[{enable\-\_\-all\-\_\-interrupts}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf enable\-\_\-all\-\_\-interrupts} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_a62fd537e60d475b8a6d0de3d544ce4c5}
+\-Enable all interrupts \hypertarget{irq_8h_ad17d9a8aa78440af8fc40d3fd55dbad8}{\index{irq.\-h@{irq.\-h}!init\-\_\-irq@{init\-\_\-irq}}
+\index{init\-\_\-irq@{init\-\_\-irq}!irq.h@{irq.\-h}}
+\subsubsection[{init\-\_\-irq}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf init\-\_\-irq} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_ad17d9a8aa78440af8fc40d3fd55dbad8}
+\-Initialise the \-I\-R\-Q system \hypertarget{irq_8h_a84ff79a2c91dca1d5394e945e398cc36}{\index{irq.\-h@{irq.\-h}!irq\-\_\-disable@{irq\-\_\-disable}}
+\index{irq\-\_\-disable@{irq\-\_\-disable}!irq.h@{irq.\-h}}
+\subsubsection[{irq\-\_\-disable}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t {\bf irq\-\_\-disable} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{irq}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_a84ff79a2c91dca1d5394e945e398cc36}
+\-Disable a specific \-I\-R\-Q 
+\begin{DoxyParams}{\-Parameters}
+{\em irq} & number of irq \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+-\/ 0 if no error
+\begin{DoxyItemize}
+\item \-E\-N\-X\-I\-O no such irq number 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\hypertarget{irq_8h_ae38da7a0fba33d6781fb96f4332daf0e}{\index{irq.\-h@{irq.\-h}!irq\-\_\-enable@{irq\-\_\-enable}}
+\index{irq\-\_\-enable@{irq\-\_\-enable}!irq.h@{irq.\-h}}
+\subsubsection[{irq\-\_\-enable}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t {\bf irq\-\_\-enable} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{irq}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_ae38da7a0fba33d6781fb96f4332daf0e}
+\-Enable a specific \-I\-R\-Q 
+\begin{DoxyParams}{\-Parameters}
+{\em irq} & number of irq \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+-\/ 0 if no error
+\begin{DoxyItemize}
+\item \-E\-N\-O\-E\-N\-T no handler registered
+\item \-E\-N\-X\-I\-O no such irq number 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\hypertarget{irq_8h_a39f68b7e730de9aed898dccb3b9d8183}{\index{irq.\-h@{irq.\-h}!irq\-\_\-enabled@{irq\-\_\-enabled}}
+\index{irq\-\_\-enabled@{irq\-\_\-enabled}!irq.h@{irq.\-h}}
+\subsubsection[{irq\-\_\-enabled}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool\-\_\-t} {\bf irq\-\_\-enabled} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{irq}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_a39f68b7e730de9aed898dccb3b9d8183}
+\-Check whether an interrupt is enabled 
+\begin{DoxyParams}{\-Parameters}
+{\em irq} & number of irq \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+true, if irq is enabled, false else 
+\end{DoxyReturn}
+\hypertarget{irq_8h_ae9236d381106d001f7ebca344af635fc}{\index{irq.\-h@{irq.\-h}!irq\-\_\-free@{irq\-\_\-free}}
+\index{irq\-\_\-free@{irq\-\_\-free}!irq.h@{irq.\-h}}
+\subsubsection[{irq\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t {\bf irq\-\_\-free} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{irq}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_ae9236d381106d001f7ebca344af635fc}
+\-Unregister an interrupt handler 
+\begin{DoxyParams}{\-Parameters}
+{\em irq} & number of irq \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+-\/ 0 if no error
+\begin{DoxyItemize}
+\item \-E\-N\-X\-I\-O no such irq number
+\item \-E\-B\-U\-S\-Y irq is enabled, disable using \hyperlink{irq_8h_a84ff79a2c91dca1d5394e945e398cc36}{irq\-\_\-disable} before! 
+\end{DoxyItemize}
+\end{DoxyReturn}
+\hypertarget{irq_8h_acc147dc0aa758f0f66637e893f0b4018}{\index{irq.\-h@{irq.\-h}!irq\-\_\-request@{irq\-\_\-request}}
+\index{irq\-\_\-request@{irq\-\_\-request}!irq.h@{irq.\-h}}
+\subsubsection[{irq\-\_\-request}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t {\bf irq\-\_\-request} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{irq, }
+\item[{{\bf irq\-\_\-handler\-\_\-t}}]{handler}
+\end{DoxyParamCaption}
+)}}\label{irq_8h_acc147dc0aa758f0f66637e893f0b4018}
+\-Request an interrupt / register handler 
+\begin{DoxyParams}{\-Parameters}
+{\em irq} & number of irq \\
+\hline
+{\em handler} & the callback handler function \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+-\/ 0 if no error
+\begin{DoxyItemize}
+\item \-E\-N\-X\-I\-O no such irq number
+\item \-E\-I\-N\-V\-A\-L invalid handler
+\item \-E\-E\-X\-I\-S\-T a handler is already registered, unregister using \hyperlink{irq_8h_ae9236d381106d001f7ebca344af635fc}{irq\-\_\-free} before! 
+\end{DoxyItemize}
+\end{DoxyReturn}

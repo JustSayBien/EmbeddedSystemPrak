@@ -31,10 +31,10 @@ Modification history:
 const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET_INFRARED_CHARACTER_OMNI, &PACKET_DISTANCE, &PACKET_ANGLE, &PACKET_TEMPERATURE};
 volatile int32_t query_results[QUERY_LENGTH];
 
-roomba_data roombadata = {0, 0, 360, 10};
+roomba_data roombadata = {0, 0, 0, 0, 130, 1000};
 
 // array of currently displayed digits on Roomba's seven segment display
-int32_t digits[DIGIT_LENGTH] = {
+int32_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
         48,
         48,
         48,
@@ -104,79 +104,96 @@ const packet PACKET_STASIS                    = {58, 1, 0};
 
 /*************************************************************** Local const */
 
-
 /*********************************************************** Local variables */
 
-
 /******************************************************************** Macros */
-
 
 /********************************************************** Global functions */
 void init_roomba() {
 	uart_write_byte(CMD_START);
 	uart_write_byte(CMD_FULL);
 
+	my_msleep(1000);
+
 	//play sound
-	uart_write_byte(141);
-	uart_write_byte(4);
+	//uart_write_byte(141);
+	//uart_write_byte(4);
 }
 
 void roomba_calibrate_angle() {
 
-	digits[0] = 'A';
-	digits[1] = 'L';
-	digits[2] = 'A';
-	digits[3] = 'C';
-	writeDigits();
+	my_msleep(300);
 
-	uint8_t button_state;
-	bool_t moving = false;
+	uint8_t cliff_counter = 0;
+	int32_t cliff_signal;
+
+	drive(DEFAULT_VELOCITY, 1);
+
 	while(1){
-		button_state = check_button();
-		if(!moving && button_state == BTN_CLEAN){
-			drive(DEFAULT_VELOCITY/4, 1);
-			moving = true;
-		}
-		else if(moving && button_state == BTN_CLEAN){
-			stop();
-			moving = false;
-			int32_t angle = query_sensor(PACKET_ANGLE);
-			roombadata.angle_360_degrees = angle;
-			break;
-		}
-		my_msleep(150);
-	}
-}	
+		cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+		if(cliff_signal >= 1200){
+			do{
+				my_msleep(50);
+				cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+			}while(cliff_signal >= 1200);
 
-void roomba_calibrate_distance(){
-	digits[0] = 'D';
-	digits[1] = 'L';
-	digits[2] = 'A';
-	digits[3] = 'C';
-	writeDigits();
-
-	uint8_t button_state = 0;
-	int32_t bumpers = 0;
-	bool_t moving = false;
-	while(1){
-		button_state = check_button();
-		int32_t bumpers = query_sensor(PACKET_BUMPS_WHEELDROPS);
-		// bumper and wheeldrop collision detected ?
-		if(!moving && button_state == BTN_CLEAN){
-			drive(DEFAULT_VELOCITY/2, 1);
-			moving = true;
-		}
-		else if(moving){
-			if(bumpers != 0 || button_state == BTN_CLEAN){
-				stop();
-				moving = false;
-				int32_t distance = query_sensor(PACKET_DISTANCE);
-				roombadata.distance_10_decimeters = distance / 1000;
+			cliff_counter++;
+			if(cliff_counter == 1) {
+				//reset angle value
+				query_sensor(PACKET_ANGLE);
+			}
+			if(cliff_counter == 5){
 				break;
 			}
 		}
-		my_msleep(150);
+		my_msleep(50);
 	}
+	stop();
+	int32_t angle = query_sensor(PACKET_ANGLE);
+	roombadata.angle_360_degrees = angle;
+	roomba_sevenseg_digits[0] = 'K';
+	roomba_sevenseg_digits[1] = 'O';
+	roomba_sevenseg_digits[2] = ' ';
+	roomba_sevenseg_digits[3] = ' ';
+	write_sevenseg_digits();
+}	
+
+void roomba_calibrate_distance(){
+
+	my_msleep(300);
+
+	uint8_t cliff_counter = 0;
+	int32_t cliff_signal;
+
+	drive(DEFAULT_VELOCITY, (int16_t) 0);
+	while(1){
+		cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+		if(cliff_signal >= 1200){
+			do{
+				my_msleep(50);
+				cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+			}while(cliff_signal >= 1200);
+
+			cliff_counter++;
+			if(cliff_counter == 1) {
+				//reset distance value
+				query_sensor(PACKET_DISTANCE);
+			}
+			if(cliff_counter == 2){
+				break;
+			}
+		}
+		my_msleep(50);
+	}
+
+	stop();
+	int32_t distance = query_sensor(PACKET_DISTANCE);
+	roombadata.distance_1_meter = distance < 0 ? distance * -1 : 1;
+	roomba_sevenseg_digits[0] = 'K';
+	roomba_sevenseg_digits[1] = 'O';
+	roomba_sevenseg_digits[2] = ' ';
+	roomba_sevenseg_digits[3] = ' ';
+	write_sevenseg_digits();
 
 
 }
@@ -210,6 +227,14 @@ int32_t query_sensor(packet query_packet){
 		else{
 			result =  (int32_t) tempConcat;
 		}
+	}
+
+
+	if(query_packet.id == PACKET_DISTANCE.id){
+		int32_t distance_value = result < 0 ? result * -1 : result;
+		distance_value = (int32_t) (distance_value * (1000.0f/roombadata.distance_1_meter));
+		roombadata.driven_distance += distance_value;
+		roombadata.trip_meter += distance_value;
 	}
 
 	return result;
@@ -262,11 +287,11 @@ void read_query_list(const packet * packets[], uint8_t count, int32_t results[])
 
 	
 
-void writeDigits () {
+void write_sevenseg_digits () {
         uart_write_byte(CMD_7SEG_ASCII);
 	int i;
 	for(i=3; i >= 0; i--){
-        	uart_write_byte(digits[i]);
+        	uart_write_byte(roomba_sevenseg_digits[i]);
 	}
 }
  
@@ -291,12 +316,16 @@ void drive(int16_t velocity, int16_t radius) {
 	uart_write_byte((uint8_t) (velocity & 0xFF));
 	uart_write_byte((uint8_t) (radius >> 8));
 	uart_write_byte((uint8_t) (radius & 0xFF));
+	roombadata.is_moving = 1;
+	roombadata.current_velocity = velocity;
 }
 
 
 
 void stop(){
 	drive(0, 0);
+	roombadata.is_moving = 0;
+	roombadata.current_velocity = 0;
 }
 
 uint8_t check_button(){

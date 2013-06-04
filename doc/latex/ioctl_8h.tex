@@ -1,0 +1,61 @@
+\hypertarget{ioctl_8h}{\section{include/sys/ioctl.h \-File \-Reference}
+\label{ioctl_8h}\index{include/sys/ioctl.\-h@{include/sys/ioctl.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{ioctl_8h_a567894a568861994414b041f246cc9ac}{\-T\-I\-O\-C\-E\-X\-C\-L}~0x740d /$\ast$ exclusive use of the device $\ast$/
+\item 
+\#define \hyperlink{ioctl_8h_a3f9289a5578a8ad6dbb0df80fb77cf00}{\-T\-I\-O\-C\-N\-X\-C\-L}~0x740e /$\ast$ allow multiple use of the device $\ast$/
+\item 
+\#define \hyperlink{ioctl_8h_a8d8aa4c95ca0e5ce1db22115b8593eb2}{\-T\-I\-O\-C\-O\-U\-T\-Q}~0x7472 /$\ast$ get output queue size $\ast$/
+\item 
+\#define \hyperlink{ioctl_8h_a07a6b5abd57b47faba5faf23700b365f}{\-T\-I\-O\-C\-M\-G\-E\-T}~0x741d /$\ast$ get termios flags $\ast$/
+\item 
+\#define \hyperlink{ioctl_8h_aae2ec9a6a81b8163324827366ef5d1d2}{\-T\-I\-O\-C\-M\-S\-E\-T}~0x741a /$\ast$ set termios flags $\ast$/
+\item 
+\#define \hyperlink{ioctl_8h_a374bc27643abef0c599893db498446de}{\-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T}~0x6a01 /$\ast$ Set Timeout before assuming no host present $\ast$/
+\item 
+\#define \hyperlink{ioctl_8h_a0732072fac74cf071df7e38bff9df5a2}{\-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D}~0x6a02 /$\ast$ Get indication of whether host is connected $\ast$/
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{ioctl_8h_a7eb6b59b9ca2ab5ab6fcaa6dc6d0326d}{ioctl} (int fd, int req, void $\ast$arg)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{ioctl_8h_a567894a568861994414b041f246cc9ac}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-E\-X\-C\-L@{\-T\-I\-O\-C\-E\-X\-C\-L}}
+\index{\-T\-I\-O\-C\-E\-X\-C\-L@{\-T\-I\-O\-C\-E\-X\-C\-L}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-E\-X\-C\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-E\-X\-C\-L}~0x740d /$\ast$ exclusive use of the device $\ast$/}}\label{ioctl_8h_a567894a568861994414b041f246cc9ac}
+\hypertarget{ioctl_8h_a0732072fac74cf071df7e38bff9df5a2}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D@{\-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D}}
+\index{\-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D@{\-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-G\-C\-O\-N\-N\-E\-C\-T\-E\-D}~0x6a02 /$\ast$ Get indication of whether host is connected $\ast$/}}\label{ioctl_8h_a0732072fac74cf071df7e38bff9df5a2}
+\hypertarget{ioctl_8h_a07a6b5abd57b47faba5faf23700b365f}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-M\-G\-E\-T@{\-T\-I\-O\-C\-M\-G\-E\-T}}
+\index{\-T\-I\-O\-C\-M\-G\-E\-T@{\-T\-I\-O\-C\-M\-G\-E\-T}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-M\-G\-E\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-M\-G\-E\-T}~0x741d /$\ast$ get termios flags $\ast$/}}\label{ioctl_8h_a07a6b5abd57b47faba5faf23700b365f}
+\hypertarget{ioctl_8h_aae2ec9a6a81b8163324827366ef5d1d2}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-M\-S\-E\-T@{\-T\-I\-O\-C\-M\-S\-E\-T}}
+\index{\-T\-I\-O\-C\-M\-S\-E\-T@{\-T\-I\-O\-C\-M\-S\-E\-T}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-M\-S\-E\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-M\-S\-E\-T}~0x741a /$\ast$ set termios flags $\ast$/}}\label{ioctl_8h_aae2ec9a6a81b8163324827366ef5d1d2}
+\hypertarget{ioctl_8h_a3f9289a5578a8ad6dbb0df80fb77cf00}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-N\-X\-C\-L@{\-T\-I\-O\-C\-N\-X\-C\-L}}
+\index{\-T\-I\-O\-C\-N\-X\-C\-L@{\-T\-I\-O\-C\-N\-X\-C\-L}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-N\-X\-C\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-N\-X\-C\-L}~0x740e /$\ast$ allow multiple use of the device $\ast$/}}\label{ioctl_8h_a3f9289a5578a8ad6dbb0df80fb77cf00}
+\hypertarget{ioctl_8h_a8d8aa4c95ca0e5ce1db22115b8593eb2}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-O\-U\-T\-Q@{\-T\-I\-O\-C\-O\-U\-T\-Q}}
+\index{\-T\-I\-O\-C\-O\-U\-T\-Q@{\-T\-I\-O\-C\-O\-U\-T\-Q}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-O\-U\-T\-Q}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-O\-U\-T\-Q}~0x7472 /$\ast$ get output queue size $\ast$/}}\label{ioctl_8h_a8d8aa4c95ca0e5ce1db22115b8593eb2}
+\hypertarget{ioctl_8h_a374bc27643abef0c599893db498446de}{\index{ioctl.\-h@{ioctl.\-h}!\-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T@{\-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T}}
+\index{\-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T@{\-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{\-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-I\-O\-C\-S\-T\-I\-M\-E\-O\-U\-T}~0x6a01 /$\ast$ Set Timeout before assuming no host present $\ast$/}}\label{ioctl_8h_a374bc27643abef0c599893db498446de}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{ioctl_8h_a7eb6b59b9ca2ab5ab6fcaa6dc6d0326d}{\index{ioctl.\-h@{ioctl.\-h}!ioctl@{ioctl}}
+\index{ioctl@{ioctl}!ioctl.h@{ioctl.\-h}}
+\subsubsection[{ioctl}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf ioctl} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd, }
+\item[{int}]{req, }
+\item[{void $\ast$}]{arg}
+\end{DoxyParamCaption}
+)}}\label{ioctl_8h_a7eb6b59b9ca2ab5ab6fcaa6dc6d0326d}

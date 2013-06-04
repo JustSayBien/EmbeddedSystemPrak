@@ -1,0 +1,126 @@
+\hypertarget{alt__file_8h}{\section{include/priv/alt\-\_\-file.h \-File \-Reference}
+\label{alt__file_8h}\index{include/priv/alt\-\_\-file.\-h@{include/priv/alt\-\_\-file.\-h}}
+}
+{\ttfamily \#include \char`\"{}sys/alt\-\_\-dev.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}sys/alt\-\_\-llist.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}os/alt\-\_\-sem.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}alt\-\_\-types.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__file_8h_a758a1cad215aceeed0cf5d4e8b4fdb05}{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L}~0x80000000
+\item 
+\#define \hyperlink{alt__file_8h_a801310af44abcb36c08fece28bbefa64}{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V}~0x40000000
+\item 
+\#define \hyperlink{alt__file_8h_af88e1c645c7ca03fc5cb4ecd17c6c148}{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K}~(\hyperlink{alt__file_8h_a758a1cad215aceeed0cf5d4e8b4fdb05}{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L} $|$ \hyperlink{alt__file_8h_a801310af44abcb36c08fece28bbefa64}{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V})
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{alt__dev_8h_a42830f9d5b32d9ad8d73afa0f24cd56b}{alt\-\_\-dev} $\ast$ \hyperlink{alt__file_8h_a878f31e9952cfe3a924ce7cb46ccdccb}{alt\-\_\-find\-\_\-dev} (const char $\ast$name, \hyperlink{alt__llist_8h_a94b50b44e6bd512a432af0b840d49aa4}{alt\-\_\-llist} $\ast$list)
+\item 
+\hyperlink{alt__dev_8h_a42830f9d5b32d9ad8d73afa0f24cd56b}{alt\-\_\-dev} $\ast$ \hyperlink{alt__file_8h_a59675b3f5b16c4e0e3918d7fdb1914f3}{alt\-\_\-find\-\_\-file} (const char $\ast$name)
+\item 
+int \hyperlink{alt__file_8h_a816c00867cd975c4eee5dc17fac03d16}{alt\-\_\-get\-\_\-fd} (\hyperlink{alt__dev_8h_a42830f9d5b32d9ad8d73afa0f24cd56b}{alt\-\_\-dev} $\ast$dev)
+\item 
+void \hyperlink{alt__file_8h_af5fe09b66b5c62c3bedfa9ca8be4ef22}{alt\-\_\-release\-\_\-fd} (int fd)
+\item 
+int \hyperlink{alt__file_8h_a0dee18bd04d0adc10f99016076b8f2b2}{alt\-\_\-fd\-\_\-lock} (\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd)
+\item 
+int \hyperlink{alt__file_8h_a8eb01b988ade948dc5439b35033b1e0f}{alt\-\_\-fd\-\_\-unlock} (\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd)
+\item 
+void \hyperlink{alt__file_8h_a825bb530fea653ed149df14bbc62f9a2}{alt\-\_\-io\-\_\-redirect} (const char $\ast$stdout\-\_\-dev, const char $\ast$stdin\-\_\-dev, const char $\ast$stderr\-\_\-dev)
+\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} \hyperlink{alt__file_8h_aeb233a450b991f48b21139adfcb89153}{alt\-\_\-fd\-\_\-list} \mbox{[}$\,$\mbox{]}
+\item 
+\hyperlink{alt__llist_8h_a94b50b44e6bd512a432af0b840d49aa4}{alt\-\_\-llist} \hyperlink{alt__file_8h_a39bed231770a966001ae9f4cd2ce4074}{alt\-\_\-dev\-\_\-list}
+\item 
+\hyperlink{alt__llist_8h_a94b50b44e6bd512a432af0b840d49aa4}{alt\-\_\-llist} \hyperlink{alt__file_8h_a10012e4d88a121b82154d9f377cee46d}{alt\-\_\-fs\-\_\-list}
+\item 
+\hyperlink{alt__types_8h_ae33df531659dabd33aead9e759a55d87}{alt\-\_\-32} \hyperlink{alt__file_8h_aefa50a1243bc074834e3140d00a7eca0}{alt\-\_\-max\-\_\-fd}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__file_8h_a801310af44abcb36c08fece28bbefa64}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V@{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V}}
+\index{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V@{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V}~0x40000000}}\label{alt__file_8h_a801310af44abcb36c08fece28bbefa64}
+\hypertarget{alt__file_8h_a758a1cad215aceeed0cf5d4e8b4fdb05}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L@{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L}}
+\index{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L@{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L}~0x80000000}}\label{alt__file_8h_a758a1cad215aceeed0cf5d4e8b4fdb05}
+\hypertarget{alt__file_8h_af88e1c645c7ca03fc5cb4ecd17c6c148}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!\-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K@{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K}}
+\index{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K@{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-F\-D\-\_\-\-F\-L\-A\-G\-S\-\_\-\-M\-A\-S\-K}~({\bf \-A\-L\-T\-\_\-\-F\-D\-\_\-\-E\-X\-C\-L} $|$ {\bf \-A\-L\-T\-\_\-\-F\-D\-\_\-\-D\-E\-V})}}\label{alt__file_8h_af88e1c645c7ca03fc5cb4ecd17c6c148}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{alt__file_8h_a0dee18bd04d0adc10f99016076b8f2b2}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-fd\-\_\-lock@{alt\-\_\-fd\-\_\-lock}}
+\index{alt\-\_\-fd\-\_\-lock@{alt\-\_\-fd\-\_\-lock}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-fd\-\_\-lock}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf alt\-\_\-fd\-\_\-lock} (
+\begin{DoxyParamCaption}
+\item[{{\bf alt\-\_\-fd} $\ast$}]{fd}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_a0dee18bd04d0adc10f99016076b8f2b2}
+\hypertarget{alt__file_8h_a8eb01b988ade948dc5439b35033b1e0f}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-fd\-\_\-unlock@{alt\-\_\-fd\-\_\-unlock}}
+\index{alt\-\_\-fd\-\_\-unlock@{alt\-\_\-fd\-\_\-unlock}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-fd\-\_\-unlock}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf alt\-\_\-fd\-\_\-unlock} (
+\begin{DoxyParamCaption}
+\item[{{\bf alt\-\_\-fd} $\ast$}]{fd}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_a8eb01b988ade948dc5439b35033b1e0f}
+\hypertarget{alt__file_8h_a878f31e9952cfe3a924ce7cb46ccdccb}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-find\-\_\-dev@{alt\-\_\-find\-\_\-dev}}
+\index{alt\-\_\-find\-\_\-dev@{alt\-\_\-find\-\_\-dev}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-find\-\_\-dev}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-dev}$\ast$ {\bf alt\-\_\-find\-\_\-dev} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{name, }
+\item[{{\bf alt\-\_\-llist} $\ast$}]{list}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_a878f31e9952cfe3a924ce7cb46ccdccb}
+\hypertarget{alt__file_8h_a59675b3f5b16c4e0e3918d7fdb1914f3}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-find\-\_\-file@{alt\-\_\-find\-\_\-file}}
+\index{alt\-\_\-find\-\_\-file@{alt\-\_\-find\-\_\-file}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-find\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-dev}$\ast$ {\bf alt\-\_\-find\-\_\-file} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{name}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_a59675b3f5b16c4e0e3918d7fdb1914f3}
+\hypertarget{alt__file_8h_a816c00867cd975c4eee5dc17fac03d16}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-get\-\_\-fd@{alt\-\_\-get\-\_\-fd}}
+\index{alt\-\_\-get\-\_\-fd@{alt\-\_\-get\-\_\-fd}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-get\-\_\-fd}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf alt\-\_\-get\-\_\-fd} (
+\begin{DoxyParamCaption}
+\item[{{\bf alt\-\_\-dev} $\ast$}]{dev}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_a816c00867cd975c4eee5dc17fac03d16}
+\hypertarget{alt__file_8h_a825bb530fea653ed149df14bbc62f9a2}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-io\-\_\-redirect@{alt\-\_\-io\-\_\-redirect}}
+\index{alt\-\_\-io\-\_\-redirect@{alt\-\_\-io\-\_\-redirect}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-io\-\_\-redirect}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-io\-\_\-redirect} (
+\begin{DoxyParamCaption}
+\item[{const char $\ast$}]{stdout\-\_\-dev, }
+\item[{const char $\ast$}]{stdin\-\_\-dev, }
+\item[{const char $\ast$}]{stderr\-\_\-dev}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_a825bb530fea653ed149df14bbc62f9a2}
+\hypertarget{alt__file_8h_af5fe09b66b5c62c3bedfa9ca8be4ef22}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-release\-\_\-fd@{alt\-\_\-release\-\_\-fd}}
+\index{alt\-\_\-release\-\_\-fd@{alt\-\_\-release\-\_\-fd}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-release\-\_\-fd}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-release\-\_\-fd} (
+\begin{DoxyParamCaption}
+\item[{int}]{fd}
+\end{DoxyParamCaption}
+)}}\label{alt__file_8h_af5fe09b66b5c62c3bedfa9ca8be4ef22}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{alt__file_8h_a39bed231770a966001ae9f4cd2ce4074}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-dev\-\_\-list@{alt\-\_\-dev\-\_\-list}}
+\index{alt\-\_\-dev\-\_\-list@{alt\-\_\-dev\-\_\-list}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-dev\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-llist} {\bf alt\-\_\-dev\-\_\-list}}}\label{alt__file_8h_a39bed231770a966001ae9f4cd2ce4074}
+\hypertarget{alt__file_8h_aeb233a450b991f48b21139adfcb89153}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-fd\-\_\-list@{alt\-\_\-fd\-\_\-list}}
+\index{alt\-\_\-fd\-\_\-list@{alt\-\_\-fd\-\_\-list}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-fd\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-fd} {\bf alt\-\_\-fd\-\_\-list}\mbox{[}$\,$\mbox{]}}}\label{alt__file_8h_aeb233a450b991f48b21139adfcb89153}
+\hypertarget{alt__file_8h_a10012e4d88a121b82154d9f377cee46d}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-fs\-\_\-list@{alt\-\_\-fs\-\_\-list}}
+\index{alt\-\_\-fs\-\_\-list@{alt\-\_\-fs\-\_\-list}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-fs\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-llist} {\bf alt\-\_\-fs\-\_\-list}}}\label{alt__file_8h_a10012e4d88a121b82154d9f377cee46d}
+\hypertarget{alt__file_8h_aefa50a1243bc074834e3140d00a7eca0}{\index{alt\-\_\-file.\-h@{alt\-\_\-file.\-h}!alt\-\_\-max\-\_\-fd@{alt\-\_\-max\-\_\-fd}}
+\index{alt\-\_\-max\-\_\-fd@{alt\-\_\-max\-\_\-fd}!alt_file.h@{alt\-\_\-file.\-h}}
+\subsubsection[{alt\-\_\-max\-\_\-fd}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-32} {\bf alt\-\_\-max\-\_\-fd}}}\label{alt__file_8h_aefa50a1243bc074834e3140d00a7eca0}

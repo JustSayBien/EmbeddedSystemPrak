@@ -1,0 +1,56 @@
+\hypertarget{output_8h}{\section{include/output.h \-File \-Reference}
+\label{output_8h}\index{include/output.\-h@{include/output.\-h}}
+}
+{\ttfamily \#include $<$gprintf.\-h$>$}\*
+{\ttfamily \#include $<$uart.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{output_8h_ad01b23ce7a9ee4520ce14114bfd9f771}{lcd\-\_\-printf}(args...)~\hyperlink{gprintf_8h_ab1b2c45de48d5bee30648c38c94655e3}{gprintf}(lcd\-\_\-putchar, args)
+\item 
+\#define \hyperlink{output_8h_add7350c5d89ddc5350f1e371f5002c53}{tty\-\_\-printf}(args...)~\hyperlink{gprintf_8h_ab1b2c45de48d5bee30648c38c94655e3}{gprintf}(tty\-\_\-putchar, args)
+\item 
+\#define \hyperlink{output_8h_a4a47d77c039102ddd330f510c859e044}{uart\-\_\-printf}(args...)~\hyperlink{gprintf_8h_ab1b2c45de48d5bee30648c38c94655e3}{gprintf}(\hyperlink{uart_8h_ac1baaedc33ccf3687b955d102761f18a}{uart\-\_\-putchar}, args)
+\item 
+\#define \hyperlink{output_8h_afff86884884d8570c45095964d354589}{log\-\_\-printf}~\hyperlink{output_8h_a4a47d77c039102ddd330f510c859e044}{uart\-\_\-printf}
+\item 
+\#define \hyperlink{output_8h_a75d643fcf2b14fde9297205954a220fc}{log\-\_\-puts}~\hyperlink{uart_8h_a255b2a650af5aa5bc53e9cb006de04bb}{uart\-\_\-puts}
+\item 
+\#define \hyperlink{output_8h_a747c3e1febddcd23fc87752c2b87a01e}{log\-\_\-putchar}~\hyperlink{uart_8h_ac1baaedc33ccf3687b955d102761f18a}{uart\-\_\-putchar}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{output_8h_ad01b23ce7a9ee4520ce14114bfd9f771}{\index{output.\-h@{output.\-h}!lcd\-\_\-printf@{lcd\-\_\-printf}}
+\index{lcd\-\_\-printf@{lcd\-\_\-printf}!output.h@{output.\-h}}
+\subsubsection[{lcd\-\_\-printf}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf lcd\-\_\-printf}(
+\begin{DoxyParamCaption}
+\item[{}]{args...}
+\end{DoxyParamCaption}
+)~{\bf gprintf}(lcd\-\_\-putchar, args)}}\label{output_8h_ad01b23ce7a9ee4520ce14114bfd9f771}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{output_8h}{output.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}
+\hypertarget{output_8h_afff86884884d8570c45095964d354589}{\index{output.\-h@{output.\-h}!log\-\_\-printf@{log\-\_\-printf}}
+\index{log\-\_\-printf@{log\-\_\-printf}!output.h@{output.\-h}}
+\subsubsection[{log\-\_\-printf}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf log\-\_\-printf}~{\bf uart\-\_\-printf}}}\label{output_8h_afff86884884d8570c45095964d354589}
+\hypertarget{output_8h_a747c3e1febddcd23fc87752c2b87a01e}{\index{output.\-h@{output.\-h}!log\-\_\-putchar@{log\-\_\-putchar}}
+\index{log\-\_\-putchar@{log\-\_\-putchar}!output.h@{output.\-h}}
+\subsubsection[{log\-\_\-putchar}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf log\-\_\-putchar}~{\bf uart\-\_\-putchar}}}\label{output_8h_a747c3e1febddcd23fc87752c2b87a01e}
+\hypertarget{output_8h_a75d643fcf2b14fde9297205954a220fc}{\index{output.\-h@{output.\-h}!log\-\_\-puts@{log\-\_\-puts}}
+\index{log\-\_\-puts@{log\-\_\-puts}!output.h@{output.\-h}}
+\subsubsection[{log\-\_\-puts}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf log\-\_\-puts}~{\bf uart\-\_\-puts}}}\label{output_8h_a75d643fcf2b14fde9297205954a220fc}
+\hypertarget{output_8h_add7350c5d89ddc5350f1e371f5002c53}{\index{output.\-h@{output.\-h}!tty\-\_\-printf@{tty\-\_\-printf}}
+\index{tty\-\_\-printf@{tty\-\_\-printf}!output.h@{output.\-h}}
+\subsubsection[{tty\-\_\-printf}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf tty\-\_\-printf}(
+\begin{DoxyParamCaption}
+\item[{}]{args...}
+\end{DoxyParamCaption}
+)~{\bf gprintf}(tty\-\_\-putchar, args)}}\label{output_8h_add7350c5d89ddc5350f1e371f5002c53}
+\hypertarget{output_8h_a4a47d77c039102ddd330f510c859e044}{\index{output.\-h@{output.\-h}!uart\-\_\-printf@{uart\-\_\-printf}}
+\index{uart\-\_\-printf@{uart\-\_\-printf}!output.h@{output.\-h}}
+\subsubsection[{uart\-\_\-printf}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf uart\-\_\-printf}(
+\begin{DoxyParamCaption}
+\item[{}]{args...}
+\end{DoxyParamCaption}
+)~{\bf gprintf}({\bf uart\-\_\-putchar}, args)}}\label{output_8h_a4a47d77c039102ddd330f510c859e044}

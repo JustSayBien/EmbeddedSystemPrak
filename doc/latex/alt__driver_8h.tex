@@ -1,0 +1,146 @@
+\hypertarget{alt__driver_8h}{\section{include/sys/alt\-\_\-driver.h \-File \-Reference}
+\label{alt__driver_8h}\index{include/sys/alt\-\_\-driver.\-h@{include/sys/alt\-\_\-driver.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__driver_8h_aae3e8c26f35113fc5137004bc9b0ba8a}{\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}(instance)~\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S\-\_\- \#\# instance
+\item 
+\#define \hyperlink{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, func)~\hyperlink{alt__driver_8h_abde8167ca5ae69fac79200f6898a810d}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}(\hyperlink{alt__driver_8h_aae3e8c26f35113fc5137004bc9b0ba8a}{\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}(instance), func)
+\item 
+\#define \hyperlink{alt__driver_8h_abde8167ca5ae69fac79200f6898a810d}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}(module\-\_\-class, func)~\hyperlink{alt__driver_8h_a23bc314c69520412b6ad814abdc2d647}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}(module\-\_\-class, func)
+\item 
+\#define \hyperlink{alt__driver_8h_a23bc314c69520412b6ad814abdc2d647}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}(module\-\_\-class, func)~module\-\_\-class \#\# \-\_\- \#\# func
+\item 
+\#define \hyperlink{alt__driver_8h_a8f330f20ca304711fe9124db533624e0}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T}(instance)~struct \hyperlink{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, state\-\_\-s)
+\item 
+\#define \hyperlink{alt__driver_8h_a1d0ea4b3d61c2a5582087ac18bbe3ca0}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance)~instance
+\item 
+\#define \hyperlink{alt__driver_8h_a1ac64897179df1d39f0408576356c40c}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S}(instance)
+\item 
+\#define \hyperlink{alt__driver_8h_a15cdfc9d11cea909407d9fc2c9dd7ae4}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E}(instance, buffer, len, flags)~\hyperlink{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, write)(\&\hyperlink{alt__driver_8h_a1d0ea4b3d61c2a5582087ac18bbe3ca0}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance), buffer, len, flags)
+\item 
+\#define \hyperlink{alt__driver_8h_a3ff4bf8c44579c24f47dc5052fc79b59}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S}(instance)
+\item 
+\#define \hyperlink{alt__driver_8h_a3c4f6aba74808640b9cf0a4006da6d0f}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D}(instance, buffer, len, flags)~\hyperlink{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, read)(\&\hyperlink{alt__driver_8h_a1d0ea4b3d61c2a5582087ac18bbe3ca0}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance), buffer, len, flags)
+\item 
+\#define \hyperlink{alt__driver_8h_a630cd533bebbdf03e271225b290faef6}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S}(instance)
+\item 
+\#define \hyperlink{alt__driver_8h_a908abe0719326141662c52fd20404671}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L}(instance, req, arg)~\hyperlink{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, \hyperlink{ioctl_8h_a7eb6b59b9ca2ab5ab6fcaa6dc6d0326d}{ioctl})(\&\hyperlink{alt__driver_8h_a1d0ea4b3d61c2a5582087ac18bbe3ca0}{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance), req, arg)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(
+\begin{DoxyParamCaption}
+\item[{}]{instance, }
+\item[{}]{func}
+\end{DoxyParamCaption}
+)~{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}({\bf \-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}(instance), func)}}\label{alt__driver_8h_a08bf0e7225f70b3951e27580aa07e8bd}
+\hypertarget{alt__driver_8h_abde8167ca5ae69fac79200f6898a810d}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E1}(
+\begin{DoxyParamCaption}
+\item[{}]{module\-\_\-class, }
+\item[{}]{func}
+\end{DoxyParamCaption}
+)~{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}(module\-\_\-class, func)}}\label{alt__driver_8h_abde8167ca5ae69fac79200f6898a810d}
+\hypertarget{alt__driver_8h_a23bc314c69520412b6ad814abdc2d647}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E2}(
+\begin{DoxyParamCaption}
+\item[{}]{module\-\_\-class, }
+\item[{}]{func}
+\end{DoxyParamCaption}
+)~module\-\_\-class \#\# \-\_\- \#\# func}}\label{alt__driver_8h_a23bc314c69520412b6ad814abdc2d647}
+\hypertarget{alt__driver_8h_a908abe0719326141662c52fd20404671}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L}(
+\begin{DoxyParamCaption}
+\item[{}]{instance, }
+\item[{}]{req, }
+\item[{}]{arg}
+\end{DoxyParamCaption}
+)~{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, {\bf ioctl})(\&{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance), req, arg)}}\label{alt__driver_8h_a908abe0719326141662c52fd20404671}
+\hypertarget{alt__driver_8h_a630cd533bebbdf03e271225b290faef6}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-I\-O\-C\-T\-L\-\_\-\-E\-X\-T\-E\-R\-N\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{instance}
+\end{DoxyParamCaption}
+)}}\label{alt__driver_8h_a630cd533bebbdf03e271225b290faef6}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+extern ALT_DRIVER_STATE_STRUCT(instance) ALT_DRIVER_STATE(instance);    \
+    extern int ALT_DRIVER_FUNC_NAME(instance, ioctl)                        \
+      (ALT_DRIVER_STATE_STRUCT(instance) *, int, void*);
+\end{DoxyCode}
+\hypertarget{alt__driver_8h_a3c4f6aba74808640b9cf0a4006da6d0f}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D}(
+\begin{DoxyParamCaption}
+\item[{}]{instance, }
+\item[{}]{buffer, }
+\item[{}]{len, }
+\item[{}]{flags}
+\end{DoxyParamCaption}
+)~{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, read)(\&{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance), buffer, len, flags)}}\label{alt__driver_8h_a3c4f6aba74808640b9cf0a4006da6d0f}
+\hypertarget{alt__driver_8h_a3ff4bf8c44579c24f47dc5052fc79b59}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-R\-E\-A\-D\-\_\-\-E\-X\-T\-E\-R\-N\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{instance}
+\end{DoxyParamCaption}
+)}}\label{alt__driver_8h_a3ff4bf8c44579c24f47dc5052fc79b59}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+extern ALT_DRIVER_STATE_STRUCT(instance) ALT_DRIVER_STATE(instance);    \
+    extern int ALT_DRIVER_FUNC_NAME(instance, read)                         \
+      (ALT_DRIVER_STATE_STRUCT(instance) *, const char *, int, int);
+\end{DoxyCode}
+\hypertarget{alt__driver_8h_a1d0ea4b3d61c2a5582087ac18bbe3ca0}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(
+\begin{DoxyParamCaption}
+\item[{}]{instance}
+\end{DoxyParamCaption}
+)~instance}}\label{alt__driver_8h_a1d0ea4b3d61c2a5582087ac18bbe3ca0}
+\hypertarget{alt__driver_8h_a8f330f20ca304711fe9124db533624e0}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E\-\_\-\-S\-T\-R\-U\-C\-T}(
+\begin{DoxyParamCaption}
+\item[{}]{instance}
+\end{DoxyParamCaption}
+)~struct {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, state\-\_\-s)}}\label{alt__driver_8h_a8f330f20ca304711fe9124db533624e0}
+\hypertarget{alt__driver_8h_a15cdfc9d11cea909407d9fc2c9dd7ae4}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E}(
+\begin{DoxyParamCaption}
+\item[{}]{instance, }
+\item[{}]{buffer, }
+\item[{}]{len, }
+\item[{}]{flags}
+\end{DoxyParamCaption}
+)~{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-F\-U\-N\-C\-\_\-\-N\-A\-M\-E}(instance, write)(\&{\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-S\-T\-A\-T\-E}(instance), buffer, len, flags)}}\label{alt__driver_8h_a15cdfc9d11cea909407d9fc2c9dd7ae4}
+\hypertarget{alt__driver_8h_a1ac64897179df1d39f0408576356c40c}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S}}
+\index{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S@{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-R\-I\-V\-E\-R\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-X\-T\-E\-R\-N\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{instance}
+\end{DoxyParamCaption}
+)}}\label{alt__driver_8h_a1ac64897179df1d39f0408576356c40c}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+extern ALT_DRIVER_STATE_STRUCT(instance) ALT_DRIVER_STATE(instance);    \
+    extern int ALT_DRIVER_FUNC_NAME(instance, write)                        \
+      (ALT_DRIVER_STATE_STRUCT(instance) *, const char *, int, int);
+\end{DoxyCode}
+\hypertarget{alt__driver_8h_aae3e8c26f35113fc5137004bc9b0ba8a}{\index{alt\-\_\-driver.\-h@{alt\-\_\-driver.\-h}!\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S@{\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}}
+\index{\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S@{\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}!alt_driver.h@{alt\-\_\-driver.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{instance}
+\end{DoxyParamCaption}
+)~\-A\-L\-T\-\_\-\-M\-O\-D\-U\-L\-E\-\_\-\-C\-L\-A\-S\-S\-\_\- \#\# instance}}\label{alt__driver_8h_aae3e8c26f35113fc5137004bc9b0ba8a}

@@ -1,0 +1,60 @@
+\hypertarget{alt__irq_8h}{\section{include/sys/alt\-\_\-irq.h \-File \-Reference}
+\label{alt__irq_8h}\index{include/sys/alt\-\_\-irq.\-h@{include/sys/alt\-\_\-irq.\-h}}
+}
+{\ttfamily \#include $<$errno.\-h$>$}\*
+{\ttfamily \#include \char`\"{}nios2.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}alt\-\_\-types.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}priv/alt\-\_\-legacy\-\_\-irq.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__irq_8h_a0d06164317590074d63fafca4947b51b}{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D}~1
+\item 
+\#define \hyperlink{alt__irq_8h_a43a692dc27baa63b6556c9ef27aa11cf}{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D}~0
+\item 
+\#define \hyperlink{alt__irq_8h_a72dc306b129d80d2397a0c66a90ad333}{\-A\-L\-T\-\_\-\-N\-I\-R\-Q}~\hyperlink{nios2_8h_abd1039763ffe41f4858f7089cee25e9f}{\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef int \hyperlink{alt__irq_8h_a80ef27457a34b1d96cd5c2ec53a4917a}{alt\-\_\-irq\-\_\-context}
+\item 
+typedef void($\ast$ \hyperlink{alt__irq_8h_a5022b01fe91c48bc994583b14774aff7}{alt\-\_\-isr\-\_\-func} )(void $\ast$isr\-\_\-context, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} id)
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{alt__irq_8h_adc592f32c3a0ef8eccfc3b4ff6e3afba}{alt\-\_\-irq\-\_\-init} (const void $\ast$base)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__irq_8h_a43a692dc27baa63b6556c9ef27aa11cf}{\index{alt\-\_\-irq.\-h@{alt\-\_\-irq.\-h}!\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D@{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D}}
+\index{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D@{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D}!alt_irq.h@{alt\-\_\-irq.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-D\-I\-S\-A\-B\-L\-E\-D}~0}}\label{alt__irq_8h_a43a692dc27baa63b6556c9ef27aa11cf}
+\hypertarget{alt__irq_8h_a0d06164317590074d63fafca4947b51b}{\index{alt\-\_\-irq.\-h@{alt\-\_\-irq.\-h}!\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D@{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D}}
+\index{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D@{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D}!alt_irq.h@{alt\-\_\-irq.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-I\-R\-Q\-\_\-\-E\-N\-A\-B\-L\-E\-D}~1}}\label{alt__irq_8h_a0d06164317590074d63fafca4947b51b}
+\hypertarget{alt__irq_8h_a72dc306b129d80d2397a0c66a90ad333}{\index{alt\-\_\-irq.\-h@{alt\-\_\-irq.\-h}!\-A\-L\-T\-\_\-\-N\-I\-R\-Q@{\-A\-L\-T\-\_\-\-N\-I\-R\-Q}}
+\index{\-A\-L\-T\-\_\-\-N\-I\-R\-Q@{\-A\-L\-T\-\_\-\-N\-I\-R\-Q}!alt_irq.h@{alt\-\_\-irq.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-N\-I\-R\-Q}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-N\-I\-R\-Q}~{\bf \-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}}}\label{alt__irq_8h_a72dc306b129d80d2397a0c66a90ad333}
+
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{alt__irq_8h_a80ef27457a34b1d96cd5c2ec53a4917a}{\index{alt\-\_\-irq.\-h@{alt\-\_\-irq.\-h}!alt\-\_\-irq\-\_\-context@{alt\-\_\-irq\-\_\-context}}
+\index{alt\-\_\-irq\-\_\-context@{alt\-\_\-irq\-\_\-context}!alt_irq.h@{alt\-\_\-irq.\-h}}
+\subsubsection[{alt\-\_\-irq\-\_\-context}]{\setlength{\rightskip}{0pt plus 5cm}typedef int {\bf alt\-\_\-irq\-\_\-context}}}\label{alt__irq_8h_a80ef27457a34b1d96cd5c2ec53a4917a}
+\hypertarget{alt__irq_8h_a5022b01fe91c48bc994583b14774aff7}{\index{alt\-\_\-irq.\-h@{alt\-\_\-irq.\-h}!alt\-\_\-isr\-\_\-func@{alt\-\_\-isr\-\_\-func}}
+\index{alt\-\_\-isr\-\_\-func@{alt\-\_\-isr\-\_\-func}!alt_irq.h@{alt\-\_\-irq.\-h}}
+\subsubsection[{alt\-\_\-isr\-\_\-func}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ {\bf alt\-\_\-isr\-\_\-func})(void $\ast$isr\-\_\-context, {\bf alt\-\_\-u32} id)}}\label{alt__irq_8h_a5022b01fe91c48bc994583b14774aff7}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{alt__irq_8h_adc592f32c3a0ef8eccfc3b4ff6e3afba}{\index{alt\-\_\-irq.\-h@{alt\-\_\-irq.\-h}!alt\-\_\-irq\-\_\-init@{alt\-\_\-irq\-\_\-init}}
+\index{alt\-\_\-irq\-\_\-init@{alt\-\_\-irq\-\_\-init}!alt_irq.h@{alt\-\_\-irq.\-h}}
+\subsubsection[{alt\-\_\-irq\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-irq\-\_\-init} (
+\begin{DoxyParamCaption}
+\item[{const void $\ast$}]{base}
+\end{DoxyParamCaption}
+)}}\label{alt__irq_8h_adc592f32c3a0ef8eccfc3b4ff6e3afba}

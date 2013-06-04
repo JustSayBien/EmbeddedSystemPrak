@@ -1,0 +1,157 @@
+\hypertarget{io_8h}{\section{include/asm/io.h \-File \-Reference}
+\label{io_8h}\index{include/asm/io.\-h@{include/asm/io.\-h}}
+}
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{io_8h_a3b48d9b25557341b3543e215e5f6344d}{\-\_\-\-\_\-\-I\-O\-W\-R8}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}, val)~asm volatile (\char`\"{}stbio \%0, \char`\"{}\#offset\char`\"{}(\%1)\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val), \char`\"{}r\char`\"{}(base))
+\item 
+\#define \hyperlink{io_8h_acf4dbb50d3a8403c93105734a60972df}{\-\_\-\-\_\-\-I\-O\-W\-R16}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}, val)~asm volatile (\char`\"{}sthio \%0, \char`\"{}\#offset\char`\"{}(\%1)\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val), \char`\"{}r\char`\"{}(base))
+\item 
+\#define \hyperlink{io_8h_aae52bbbf42bb53b113755fcf5fac2036}{\-\_\-\-\_\-\-I\-O\-W\-R32}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}, val)~asm volatile (\char`\"{}stwio \%0, \char`\"{}\#offset\char`\"{}(\%1)\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val), \char`\"{}r\char`\"{}(base))
+\item 
+\#define \hyperlink{io_8h_a2c1fc7ceef9d5e8e2871b7351cf889ea}{\-I\-O\-W\-R8}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}, val)~\hyperlink{io_8h_a3b48d9b25557341b3543e215e5f6344d}{\-\_\-\-\_\-\-I\-O\-W\-R8}((base), (\hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}), (val))
+\item 
+\#define \hyperlink{io_8h_a521f6238bca44bcad10f5d37fdeb59e1}{\-I\-O\-W\-R16}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}, val)~\hyperlink{io_8h_acf4dbb50d3a8403c93105734a60972df}{\-\_\-\-\_\-\-I\-O\-W\-R16}((base), (\hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}), (val))
+\item 
+\#define \hyperlink{io_8h_a2f4ec27348d96d564abc93119fe4c666}{\-I\-O\-W\-R32}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}, val)~\hyperlink{io_8h_aae52bbbf42bb53b113755fcf5fac2036}{\-\_\-\-\_\-\-I\-O\-W\-R32}((base), (\hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}), (val))
+\item 
+\#define \hyperlink{io_8h_a9c422d6a045d2efff61d7efd745b3dcf}{\-\_\-\-\_\-\-I\-O\-R\-D8}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset})
+\item 
+\#define \hyperlink{io_8h_a1c51b2245c897548c0dabeda587ac7ee}{\-\_\-\-\_\-\-I\-O\-R\-D16}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset})
+\item 
+\#define \hyperlink{io_8h_af797e456ba62d49e4dee15369381f8f6}{\-\_\-\-\_\-\-I\-O\-R\-D32}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset})
+\item 
+\#define \hyperlink{io_8h_a42b8893e2d7bc7cba40b73e4ce997cb1}{\-I\-O\-R\-D8}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset})~\hyperlink{io_8h_a9c422d6a045d2efff61d7efd745b3dcf}{\-\_\-\-\_\-\-I\-O\-R\-D8}((base), (\hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}))
+\item 
+\#define \hyperlink{io_8h_a62ab57e41975602651d305f351ba7e38}{\-I\-O\-R\-D16}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset})~\hyperlink{io_8h_a1c51b2245c897548c0dabeda587ac7ee}{\-\_\-\-\_\-\-I\-O\-R\-D16}((base), (\hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}))
+\item 
+\#define \hyperlink{io_8h_a053e69e42d7d9e5f48261f5ade0f7cb0}{\-I\-O\-R\-D32}(base, \hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset})~\hyperlink{io_8h_af797e456ba62d49e4dee15369381f8f6}{\-\_\-\-\_\-\-I\-O\-R\-D32}((base), (\hyperlink{alt__flash_8h_a461f0be37c7c42bd613e22be8678818a}{offset}))
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{io_8h_a1c51b2245c897548c0dabeda587ac7ee}{\index{io.\-h@{io.\-h}!\-\_\-\-\_\-\-I\-O\-R\-D16@{\-\_\-\-\_\-\-I\-O\-R\-D16}}
+\index{\-\_\-\-\_\-\-I\-O\-R\-D16@{\-\_\-\-\_\-\-I\-O\-R\-D16}!io.h@{io.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-I\-O\-R\-D16}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-\-I\-O\-R\-D16}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}}
+\end{DoxyParamCaption}
+)}}\label{io_8h_a1c51b2245c897548c0dabeda587ac7ee}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+( {uint16_t val;                                                \
+    asm volatile ("ldhio %0, "#offset"(%1)" : "=r"(val) : "r"(base));   \
+    val; })
+\end{DoxyCode}
+\hypertarget{io_8h_af797e456ba62d49e4dee15369381f8f6}{\index{io.\-h@{io.\-h}!\-\_\-\-\_\-\-I\-O\-R\-D32@{\-\_\-\-\_\-\-I\-O\-R\-D32}}
+\index{\-\_\-\-\_\-\-I\-O\-R\-D32@{\-\_\-\-\_\-\-I\-O\-R\-D32}!io.h@{io.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-I\-O\-R\-D32}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-\-I\-O\-R\-D32}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}}
+\end{DoxyParamCaption}
+)}}\label{io_8h_af797e456ba62d49e4dee15369381f8f6}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+( {uint32_t val;                                                \
+    asm volatile ("ldwio %0, "#offset"(%1)" : "=r"(val) : "r"(base));   \
+    val; })
+\end{DoxyCode}
+\hypertarget{io_8h_a9c422d6a045d2efff61d7efd745b3dcf}{\index{io.\-h@{io.\-h}!\-\_\-\-\_\-\-I\-O\-R\-D8@{\-\_\-\-\_\-\-I\-O\-R\-D8}}
+\index{\-\_\-\-\_\-\-I\-O\-R\-D8@{\-\_\-\-\_\-\-I\-O\-R\-D8}!io.h@{io.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-I\-O\-R\-D8}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-\-I\-O\-R\-D8}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}}
+\end{DoxyParamCaption}
+)}}\label{io_8h_a9c422d6a045d2efff61d7efd745b3dcf}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+( {uint8_t val;                                                 \
+    asm volatile ("ldbio %0, "#offset"(%1)" : "=r"(val) : "r"(base));   \
+    val; })
+\end{DoxyCode}
+\hypertarget{io_8h_acf4dbb50d3a8403c93105734a60972df}{\index{io.\-h@{io.\-h}!\-\_\-\-\_\-\-I\-O\-W\-R16@{\-\_\-\-\_\-\-I\-O\-W\-R16}}
+\index{\-\_\-\-\_\-\-I\-O\-W\-R16@{\-\_\-\-\_\-\-I\-O\-W\-R16}!io.h@{io.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-I\-O\-W\-R16}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-\-I\-O\-W\-R16}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~asm volatile (\char`\"{}sthio \%0, \char`\"{}\#offset\char`\"{}(\%1)\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val), \char`\"{}r\char`\"{}(base))}}\label{io_8h_acf4dbb50d3a8403c93105734a60972df}
+\hypertarget{io_8h_aae52bbbf42bb53b113755fcf5fac2036}{\index{io.\-h@{io.\-h}!\-\_\-\-\_\-\-I\-O\-W\-R32@{\-\_\-\-\_\-\-I\-O\-W\-R32}}
+\index{\-\_\-\-\_\-\-I\-O\-W\-R32@{\-\_\-\-\_\-\-I\-O\-W\-R32}!io.h@{io.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-I\-O\-W\-R32}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-\-I\-O\-W\-R32}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~asm volatile (\char`\"{}stwio \%0, \char`\"{}\#offset\char`\"{}(\%1)\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val), \char`\"{}r\char`\"{}(base))}}\label{io_8h_aae52bbbf42bb53b113755fcf5fac2036}
+\hypertarget{io_8h_a3b48d9b25557341b3543e215e5f6344d}{\index{io.\-h@{io.\-h}!\-\_\-\-\_\-\-I\-O\-W\-R8@{\-\_\-\-\_\-\-I\-O\-W\-R8}}
+\index{\-\_\-\-\_\-\-I\-O\-W\-R8@{\-\_\-\-\_\-\-I\-O\-W\-R8}!io.h@{io.\-h}}
+\subsubsection[{\-\_\-\-\_\-\-I\-O\-W\-R8}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-\-I\-O\-W\-R8}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~asm volatile (\char`\"{}stbio \%0, \char`\"{}\#offset\char`\"{}(\%1)\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val), \char`\"{}r\char`\"{}(base))}}\label{io_8h_a3b48d9b25557341b3543e215e5f6344d}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{io_8h}{io.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}
+\-I/\-O access macros \hypertarget{io_8h_a62ab57e41975602651d305f351ba7e38}{\index{io.\-h@{io.\-h}!\-I\-O\-R\-D16@{\-I\-O\-R\-D16}}
+\index{\-I\-O\-R\-D16@{\-I\-O\-R\-D16}!io.h@{io.\-h}}
+\subsubsection[{\-I\-O\-R\-D16}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-O\-R\-D16}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-\-I\-O\-R\-D16}((base), ({\bf offset}))}}\label{io_8h_a62ab57e41975602651d305f351ba7e38}
+\hypertarget{io_8h_a053e69e42d7d9e5f48261f5ade0f7cb0}{\index{io.\-h@{io.\-h}!\-I\-O\-R\-D32@{\-I\-O\-R\-D32}}
+\index{\-I\-O\-R\-D32@{\-I\-O\-R\-D32}!io.h@{io.\-h}}
+\subsubsection[{\-I\-O\-R\-D32}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-O\-R\-D32}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-\-I\-O\-R\-D32}((base), ({\bf offset}))}}\label{io_8h_a053e69e42d7d9e5f48261f5ade0f7cb0}
+\hypertarget{io_8h_a42b8893e2d7bc7cba40b73e4ce997cb1}{\index{io.\-h@{io.\-h}!\-I\-O\-R\-D8@{\-I\-O\-R\-D8}}
+\index{\-I\-O\-R\-D8@{\-I\-O\-R\-D8}!io.h@{io.\-h}}
+\subsubsection[{\-I\-O\-R\-D8}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-O\-R\-D8}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-\-I\-O\-R\-D8}((base), ({\bf offset}))}}\label{io_8h_a42b8893e2d7bc7cba40b73e4ce997cb1}
+\hypertarget{io_8h_a521f6238bca44bcad10f5d37fdeb59e1}{\index{io.\-h@{io.\-h}!\-I\-O\-W\-R16@{\-I\-O\-W\-R16}}
+\index{\-I\-O\-W\-R16@{\-I\-O\-W\-R16}!io.h@{io.\-h}}
+\subsubsection[{\-I\-O\-W\-R16}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-O\-W\-R16}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-\-I\-O\-W\-R16}((base), ({\bf offset}), (val))}}\label{io_8h_a521f6238bca44bcad10f5d37fdeb59e1}
+\hypertarget{io_8h_a2f4ec27348d96d564abc93119fe4c666}{\index{io.\-h@{io.\-h}!\-I\-O\-W\-R32@{\-I\-O\-W\-R32}}
+\index{\-I\-O\-W\-R32@{\-I\-O\-W\-R32}!io.h@{io.\-h}}
+\subsubsection[{\-I\-O\-W\-R32}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-O\-W\-R32}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-\-I\-O\-W\-R32}((base), ({\bf offset}), (val))}}\label{io_8h_a2f4ec27348d96d564abc93119fe4c666}
+\hypertarget{io_8h_a2c1fc7ceef9d5e8e2871b7351cf889ea}{\index{io.\-h@{io.\-h}!\-I\-O\-W\-R8@{\-I\-O\-W\-R8}}
+\index{\-I\-O\-W\-R8@{\-I\-O\-W\-R8}!io.h@{io.\-h}}
+\subsubsection[{\-I\-O\-W\-R8}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-O\-W\-R8}(
+\begin{DoxyParamCaption}
+\item[{}]{base, }
+\item[{}]{{\bf offset}, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-\-I\-O\-W\-R8}((base), ({\bf offset}), (val))}}\label{io_8h_a2c1fc7ceef9d5e8e2871b7351cf889ea}

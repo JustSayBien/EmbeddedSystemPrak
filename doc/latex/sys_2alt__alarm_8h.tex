@@ -1,0 +1,53 @@
+\hypertarget{sys_2alt__alarm_8h}{\section{include/sys/alt\-\_\-alarm.h \-File \-Reference}
+\label{sys_2alt__alarm_8h}\index{include/sys/alt\-\_\-alarm.\-h@{include/sys/alt\-\_\-alarm.\-h}}
+}
+{\ttfamily \#include \char`\"{}alt\-\_\-llist.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}alt\-\_\-types.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}priv/alt\-\_\-alarm.\-h\char`\"{}}\*
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \hyperlink{structalt__alarm__s}{alt\-\_\-alarm\-\_\-s} \hyperlink{sys_2alt__alarm_8h_a643f0fc2597a7a9b9a4b71fe23b5f607}{alt\-\_\-alarm}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{sys_2alt__alarm_8h_aeb852aadb937fa68d9960e085e203674}{alt\-\_\-alarm\-\_\-start} (\hyperlink{sys_2alt__alarm_8h_a643f0fc2597a7a9b9a4b71fe23b5f607}{alt\-\_\-alarm} $\ast$the\-\_\-alarm, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} nticks, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32}($\ast$callback)(void $\ast$context), void $\ast$context)
+\item 
+void \hyperlink{sys_2alt__alarm_8h_aa948aee64974350df15de183a9d6204d}{alt\-\_\-alarm\-\_\-stop} (\hyperlink{sys_2alt__alarm_8h_a643f0fc2597a7a9b9a4b71fe23b5f607}{alt\-\_\-alarm} $\ast$the\-\_\-alarm)
+\item 
+void \hyperlink{sys_2alt__alarm_8h_a8717d54d19301f7004086a20324a16ff}{alt\-\_\-tick} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{sys_2alt__alarm_8h_a643f0fc2597a7a9b9a4b71fe23b5f607}{\index{sys/alt\-\_\-alarm.\-h@{sys/alt\-\_\-alarm.\-h}!alt\-\_\-alarm@{alt\-\_\-alarm}}
+\index{alt\-\_\-alarm@{alt\-\_\-alarm}!sys/alt_alarm.h@{sys/alt\-\_\-alarm.\-h}}
+\subsubsection[{alt\-\_\-alarm}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf alt\-\_\-alarm\-\_\-s} {\bf alt\-\_\-alarm}}}\label{sys_2alt__alarm_8h_a643f0fc2597a7a9b9a4b71fe23b5f607}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{sys_2alt__alarm_8h_aeb852aadb937fa68d9960e085e203674}{\index{sys/alt\-\_\-alarm.\-h@{sys/alt\-\_\-alarm.\-h}!alt\-\_\-alarm\-\_\-start@{alt\-\_\-alarm\-\_\-start}}
+\index{alt\-\_\-alarm\-\_\-start@{alt\-\_\-alarm\-\_\-start}!sys/alt_alarm.h@{sys/alt\-\_\-alarm.\-h}}
+\subsubsection[{alt\-\_\-alarm\-\_\-start}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf alt\-\_\-alarm\-\_\-start} (
+\begin{DoxyParamCaption}
+\item[{{\bf alt\-\_\-alarm} $\ast$}]{the\-\_\-alarm, }
+\item[{{\bf alt\-\_\-u32}}]{nticks, }
+\item[{{\bf alt\-\_\-u32}($\ast$)(void $\ast$context)}]{callback, }
+\item[{void $\ast$}]{context}
+\end{DoxyParamCaption}
+)}}\label{sys_2alt__alarm_8h_aeb852aadb937fa68d9960e085e203674}
+\hypertarget{sys_2alt__alarm_8h_aa948aee64974350df15de183a9d6204d}{\index{sys/alt\-\_\-alarm.\-h@{sys/alt\-\_\-alarm.\-h}!alt\-\_\-alarm\-\_\-stop@{alt\-\_\-alarm\-\_\-stop}}
+\index{alt\-\_\-alarm\-\_\-stop@{alt\-\_\-alarm\-\_\-stop}!sys/alt_alarm.h@{sys/alt\-\_\-alarm.\-h}}
+\subsubsection[{alt\-\_\-alarm\-\_\-stop}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-alarm\-\_\-stop} (
+\begin{DoxyParamCaption}
+\item[{{\bf alt\-\_\-alarm} $\ast$}]{the\-\_\-alarm}
+\end{DoxyParamCaption}
+)}}\label{sys_2alt__alarm_8h_aa948aee64974350df15de183a9d6204d}
+\hypertarget{sys_2alt__alarm_8h_a8717d54d19301f7004086a20324a16ff}{\index{sys/alt\-\_\-alarm.\-h@{sys/alt\-\_\-alarm.\-h}!alt\-\_\-tick@{alt\-\_\-tick}}
+\index{alt\-\_\-tick@{alt\-\_\-tick}!sys/alt_alarm.h@{sys/alt\-\_\-alarm.\-h}}
+\subsubsection[{alt\-\_\-tick}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-tick} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{sys_2alt__alarm_8h_a8717d54d19301f7004086a20324a16ff}

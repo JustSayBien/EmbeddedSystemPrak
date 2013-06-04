@@ -1,0 +1,63 @@
+\hypertarget{structalt__dev__s}{\section{alt\-\_\-dev\-\_\-s \-Struct \-Reference}
+\label{structalt__dev__s}\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}}
+}
+
+
+{\ttfamily \#include $<$alt\-\_\-dev.\-h$>$}
+
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{alt__llist_8h_a94b50b44e6bd512a432af0b840d49aa4}{alt\-\_\-llist} \hyperlink{structalt__dev__s_a135bc0be285afc59289210771ad9c136}{llist}
+\item 
+const char $\ast$ \hyperlink{structalt__dev__s_a8f8f80d37794cde9472343e4487ba3eb}{name}
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_afedc84b0c25763ecb200e2fdf6b3919a}{open} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd, const char $\ast$\hyperlink{structalt__dev__s_a8f8f80d37794cde9472343e4487ba3eb}{name}, int flags, int mode)
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_a971c646055e5b97090e1257789d40e04}{close} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd)
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_a6343e4469a0a96fe7dffde448bdca372}{read} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd, char $\ast$ptr, int len)
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_a9abad625f9dea6bbf3aa495678ccd894}{write} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd, const char $\ast$ptr, int len)
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_ab8596a7b90d3cf8e637abbe23825c9bc}{lseek} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd, int ptr, int dir)
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_a6dd1e33034db23119fcb7b72c43f7b00}{fstat} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd, struct stat $\ast$buf)
+\item 
+int($\ast$ \hyperlink{structalt__dev__s_a85a75658ee2ebbe698566e4fa8a5ca47}{ioctl} )(\hyperlink{alt__dev_8h_afdb772b397fcbb083de113d64b859673}{alt\-\_\-fd} $\ast$fd, int req, void $\ast$arg)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Field \-Documentation}
+\hypertarget{structalt__dev__s_a971c646055e5b97090e1257789d40e04}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!close@{close}}
+\index{close@{close}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{close}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf close})({\bf alt\-\_\-fd} $\ast$fd)}}\label{structalt__dev__s_a971c646055e5b97090e1257789d40e04}
+\hypertarget{structalt__dev__s_a6dd1e33034db23119fcb7b72c43f7b00}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!fstat@{fstat}}
+\index{fstat@{fstat}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{fstat}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf fstat})({\bf alt\-\_\-fd} $\ast$fd, struct stat $\ast$buf)}}\label{structalt__dev__s_a6dd1e33034db23119fcb7b72c43f7b00}
+\hypertarget{structalt__dev__s_a85a75658ee2ebbe698566e4fa8a5ca47}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!ioctl@{ioctl}}
+\index{ioctl@{ioctl}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{ioctl}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf ioctl})({\bf alt\-\_\-fd} $\ast$fd, int req, void $\ast$arg)}}\label{structalt__dev__s_a85a75658ee2ebbe698566e4fa8a5ca47}
+\hypertarget{structalt__dev__s_a135bc0be285afc59289210771ad9c136}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!llist@{llist}}
+\index{llist@{llist}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{llist}]{\setlength{\rightskip}{0pt plus 5cm}{\bf alt\-\_\-llist} {\bf llist}}}\label{structalt__dev__s_a135bc0be285afc59289210771ad9c136}
+\hypertarget{structalt__dev__s_ab8596a7b90d3cf8e637abbe23825c9bc}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!lseek@{lseek}}
+\index{lseek@{lseek}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{lseek}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf lseek})({\bf alt\-\_\-fd} $\ast$fd, int ptr, int dir)}}\label{structalt__dev__s_ab8596a7b90d3cf8e637abbe23825c9bc}
+\hypertarget{structalt__dev__s_a8f8f80d37794cde9472343e4487ba3eb}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!name@{name}}
+\index{name@{name}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf name}}}\label{structalt__dev__s_a8f8f80d37794cde9472343e4487ba3eb}
+\hypertarget{structalt__dev__s_afedc84b0c25763ecb200e2fdf6b3919a}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!open@{open}}
+\index{open@{open}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{open}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf open})({\bf alt\-\_\-fd} $\ast$fd, const char $\ast${\bf name}, int flags, int mode)}}\label{structalt__dev__s_afedc84b0c25763ecb200e2fdf6b3919a}
+\hypertarget{structalt__dev__s_a6343e4469a0a96fe7dffde448bdca372}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!read@{read}}
+\index{read@{read}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{read}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf read})({\bf alt\-\_\-fd} $\ast$fd, char $\ast$ptr, int len)}}\label{structalt__dev__s_a6343e4469a0a96fe7dffde448bdca372}
+\hypertarget{structalt__dev__s_a9abad625f9dea6bbf3aa495678ccd894}{\index{alt\-\_\-dev\-\_\-s@{alt\-\_\-dev\-\_\-s}!write@{write}}
+\index{write@{write}!alt_dev_s@{alt\-\_\-dev\-\_\-s}}
+\subsubsection[{write}]{\setlength{\rightskip}{0pt plus 5cm}int($\ast$ {\bf write})({\bf alt\-\_\-fd} $\ast$fd, const char $\ast$ptr, int len)}}\label{structalt__dev__s_a9abad625f9dea6bbf3aa495678ccd894}
+
+
+\-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/sys/\hyperlink{alt__dev_8h}{alt\-\_\-dev.\-h}\end{DoxyCompactItemize}

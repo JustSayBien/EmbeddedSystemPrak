@@ -1,0 +1,29 @@
+\hypertarget{or32-asm_8h}{\section{include/asm/or32-\/asm.h \-File \-Reference}
+\label{or32-asm_8h}\index{include/asm/or32-\/asm.\-h@{include/asm/or32-\/asm.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{or32-asm_8h_a3564ecdf86e8c1b44e80fe8c48d46b9e}{\-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R}(gpr, symbol)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{or32-asm_8h_a3564ecdf86e8c1b44e80fe8c48d46b9e}{\index{or32-\/asm.\-h@{or32-\/asm.\-h}!\-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R@{\-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R}}
+\index{\-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R@{\-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R}!or32-asm.h@{or32-\/asm.\-h}}
+\subsubsection[{\-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-L\-O\-A\-D\-\_\-\-S\-Y\-M\-B\-O\-L\-\_\-2\-\_\-\-G\-P\-R}(
+\begin{DoxyParamCaption}
+\item[{}]{gpr, }
+\item[{}]{symbol}
+\end{DoxyParamCaption}
+)}}\label{or32-asm_8h_a3564ecdf86e8c1b44e80fe8c48d46b9e}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+l.movhi gpr, hi(symbol)              ;\
+    l.ori   gpr, gpr, lo(symbol);
+\end{DoxyCode}
+\-O\-R32 assembler macros
+
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{or32-asm_8h}{or32-\/asm.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}

@@ -1,0 +1,88 @@
+\hypertarget{tools_8h}{\section{include/tools.h \-File \-Reference}
+\label{tools_8h}\index{include/tools.\-h@{include/tools.\-h}}
+}
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{tools_8h_a081d62accba0e782c4d3d9284566fa4f}{my\-\_\-usleep}(us)~\hyperlink{tools_8h_a65f85ad4128b5b822218b400b97e67a0}{my\-\_\-sleep}((us)/10)
+\item 
+\#define \hyperlink{tools_8h_ad307acddb10150dcbd536fe5ab801797}{my\-\_\-msleep}(ms)~\hyperlink{tools_8h_a65f85ad4128b5b822218b400b97e67a0}{my\-\_\-sleep}((ms)$\ast$100)
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8}{bool\-\_\-t} \{ \hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8ae9de385ef6fe9bf3360d1038396b884c}{false}, 
+\hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8a08f175a5505a10b9ed657defeb050e4b}{true}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{tools_8h_a65f85ad4128b5b822218b400b97e67a0}{my\-\_\-sleep} (uint32\-\_\-t counter)
+\item 
+uint32\-\_\-t \hyperlink{tools_8h_a2764a582c20de8181410383d5895743e}{invert\-\_\-byte\-\_\-order32} (uint32\-\_\-t in32)
+\item 
+uint16\-\_\-t \hyperlink{tools_8h_a39301e6b416446d7a4ad52ada7a5deef}{invert\-\_\-byte\-\_\-order16} (uint16\-\_\-t in16)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{tools_8h_ad307acddb10150dcbd536fe5ab801797}{\index{tools.\-h@{tools.\-h}!my\-\_\-msleep@{my\-\_\-msleep}}
+\index{my\-\_\-msleep@{my\-\_\-msleep}!tools.h@{tools.\-h}}
+\subsubsection[{my\-\_\-msleep}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf my\-\_\-msleep}(
+\begin{DoxyParamCaption}
+\item[{}]{ms}
+\end{DoxyParamCaption}
+)~{\bf my\-\_\-sleep}((ms)$\ast$100)}}\label{tools_8h_ad307acddb10150dcbd536fe5ab801797}
+sleep for \#ms milliseconds \hypertarget{tools_8h_a081d62accba0e782c4d3d9284566fa4f}{\index{tools.\-h@{tools.\-h}!my\-\_\-usleep@{my\-\_\-usleep}}
+\index{my\-\_\-usleep@{my\-\_\-usleep}!tools.h@{tools.\-h}}
+\subsubsection[{my\-\_\-usleep}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf my\-\_\-usleep}(
+\begin{DoxyParamCaption}
+\item[{}]{us}
+\end{DoxyParamCaption}
+)~{\bf my\-\_\-sleep}((us)/10)}}\label{tools_8h_a081d62accba0e782c4d3d9284566fa4f}
+sleep for \#us microseconds 
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{tools_8h_a04dd5074964518403bf944f2b240a5f8}{\index{tools.\-h@{tools.\-h}!bool\-\_\-t@{bool\-\_\-t}}
+\index{bool\-\_\-t@{bool\-\_\-t}!tools.h@{tools.\-h}}
+\subsubsection[{bool\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf bool\-\_\-t}}}\label{tools_8h_a04dd5074964518403bf944f2b240a5f8}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{tools_8h}{tools.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}
+\begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{false@{false}!tools.\-h@{tools.\-h}}\index{tools.\-h@{tools.\-h}!false@{false}}\item[{\em 
+\hypertarget{tools_8h_a04dd5074964518403bf944f2b240a5f8ae9de385ef6fe9bf3360d1038396b884c}{false}\label{tools_8h_a04dd5074964518403bf944f2b240a5f8ae9de385ef6fe9bf3360d1038396b884c}
+}]\index{true@{true}!tools.\-h@{tools.\-h}}\index{tools.\-h@{tools.\-h}!true@{true}}\item[{\em 
+\hypertarget{tools_8h_a04dd5074964518403bf944f2b240a5f8a08f175a5505a10b9ed657defeb050e4b}{true}\label{tools_8h_a04dd5074964518403bf944f2b240a5f8a08f175a5505a10b9ed657defeb050e4b}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{tools_8h_a39301e6b416446d7a4ad52ada7a5deef}{\index{tools.\-h@{tools.\-h}!invert\-\_\-byte\-\_\-order16@{invert\-\_\-byte\-\_\-order16}}
+\index{invert\-\_\-byte\-\_\-order16@{invert\-\_\-byte\-\_\-order16}!tools.h@{tools.\-h}}
+\subsubsection[{invert\-\_\-byte\-\_\-order16}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf invert\-\_\-byte\-\_\-order16} (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{in16}
+\end{DoxyParamCaption}
+)}}\label{tools_8h_a39301e6b416446d7a4ad52ada7a5deef}
+invert the byte order of a 16 bit integer \hypertarget{tools_8h_a2764a582c20de8181410383d5895743e}{\index{tools.\-h@{tools.\-h}!invert\-\_\-byte\-\_\-order32@{invert\-\_\-byte\-\_\-order32}}
+\index{invert\-\_\-byte\-\_\-order32@{invert\-\_\-byte\-\_\-order32}!tools.h@{tools.\-h}}
+\subsubsection[{invert\-\_\-byte\-\_\-order32}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t {\bf invert\-\_\-byte\-\_\-order32} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{in32}
+\end{DoxyParamCaption}
+)}}\label{tools_8h_a2764a582c20de8181410383d5895743e}
+invert the byte order of a 32 bit integer \hypertarget{tools_8h_a65f85ad4128b5b822218b400b97e67a0}{\index{tools.\-h@{tools.\-h}!my\-\_\-sleep@{my\-\_\-sleep}}
+\index{my\-\_\-sleep@{my\-\_\-sleep}!tools.h@{tools.\-h}}
+\subsubsection[{my\-\_\-sleep}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf my\-\_\-sleep} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{counter}
+\end{DoxyParamCaption}
+)}}\label{tools_8h_a65f85ad4128b5b822218b400b97e67a0}
+sleep for approx. 10 us (our boards are running at 40 \-M\-Hz) 

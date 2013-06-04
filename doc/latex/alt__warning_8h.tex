@@ -1,0 +1,86 @@
+\hypertarget{alt__warning_8h}{\section{include/sys/alt\-\_\-warning.h \-File \-Reference}
+\label{alt__warning_8h}\index{include/sys/alt\-\_\-warning.\-h@{include/sys/alt\-\_\-warning.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__warning_8h_a53c9798256ce1ec14c6f44c3fc0ec402}{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G}(symbol, msg)
+\item 
+\#define \hyperlink{alt__warning_8h_a6ebd90c5b5c9fffb20d53c5fa5e4d6e4}{\-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G}(name)
+\item 
+\#define \hyperlink{alt__warning_8h_ab89a5160e388e0166eae4dac2bf07e52}{\-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G}(name)
+\item 
+\#define \hyperlink{alt__warning_8h_a0a0a7a464b428d67460ab4f7774367fb}{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R}(msg)
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{alt__warning_8h_a327982b59851cfdd543e4223dee0f056}{\-\_\-\-\_\-alt\-\_\-invalid} (void)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__warning_8h_a0a0a7a464b428d67460ab4f7774367fb}{\index{alt\-\_\-warning.\-h@{alt\-\_\-warning.\-h}!\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R@{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R}}
+\index{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R@{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R}!alt_warning.h@{alt\-\_\-warning.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-E\-R\-R\-O\-R}(
+\begin{DoxyParamCaption}
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}}\label{alt__warning_8h_a0a0a7a464b428d67460ab4f7774367fb}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+ALT_LINK_WARNING (__alt_invalid, msg); \
+  __alt_invalid()
+\end{DoxyCode}
+\hypertarget{alt__warning_8h_a53c9798256ce1ec14c6f44c3fc0ec402}{\index{alt\-\_\-warning.\-h@{alt\-\_\-warning.\-h}!\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G@{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G}}
+\index{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G@{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G}!alt_warning.h@{alt\-\_\-warning.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-L\-I\-N\-K\-\_\-\-W\-A\-R\-N\-I\-N\-G}(
+\begin{DoxyParamCaption}
+\item[{}]{symbol, }
+\item[{}]{msg}
+\end{DoxyParamCaption}
+)}}\label{alt__warning_8h_a53c9798256ce1ec14c6f44c3fc0ec402}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+__asm__(".ifndef __evoke_link_warning_" #symbol                                
+                \
+          "\n\t .section .gnu.warning." #symbol                                
+                  \
+          "\n__evoke_link_warning_" #symbol ":\n\t .string \x22" msg "\x22 \n\t
+       .previous" \
+          "\n .endif");
+\end{DoxyCode}
+\hypertarget{alt__warning_8h_ab89a5160e388e0166eae4dac2bf07e52}{\index{alt\-\_\-warning.\-h@{alt\-\_\-warning.\-h}!\-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G@{\-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G}}
+\index{\-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G@{\-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G}!alt_warning.h@{alt\-\_\-warning.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-O\-B\-S\-O\-L\-E\-T\-E\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-W\-A\-R\-N\-I\-N\-G}(
+\begin{DoxyParamCaption}
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}}\label{alt__warning_8h_ab89a5160e388e0166eae4dac2bf07e52}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+ALT_LINK_WARNING (name, \
+    "warning: " #name " is a deprecated function")
+\end{DoxyCode}
+\hypertarget{alt__warning_8h_a6ebd90c5b5c9fffb20d53c5fa5e4d6e4}{\index{alt\-\_\-warning.\-h@{alt\-\_\-warning.\-h}!\-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G@{\-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G}}
+\index{\-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G@{\-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G}!alt_warning.h@{alt\-\_\-warning.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-S\-T\-U\-B\-\_\-\-W\-A\-R\-N\-I\-N\-G}(
+\begin{DoxyParamCaption}
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}}\label{alt__warning_8h_a6ebd90c5b5c9fffb20d53c5fa5e4d6e4}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+ALT_LINK_WARNING (name, \
+    "warning: " #name " is not implemented and will always fail")
+\end{DoxyCode}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{alt__warning_8h_a327982b59851cfdd543e4223dee0f056}{\index{alt\-\_\-warning.\-h@{alt\-\_\-warning.\-h}!\-\_\-\-\_\-alt\-\_\-invalid@{\-\_\-\-\_\-alt\-\_\-invalid}}
+\index{\-\_\-\-\_\-alt\-\_\-invalid@{\-\_\-\-\_\-alt\-\_\-invalid}!alt_warning.h@{alt\-\_\-warning.\-h}}
+\subsubsection[{\-\_\-\-\_\-alt\-\_\-invalid}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-\_\-\-\_\-alt\-\_\-invalid} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{alt__warning_8h_a327982b59851cfdd543e4223dee0f056}

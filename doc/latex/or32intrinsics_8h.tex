@@ -1,0 +1,57 @@
+\hypertarget{or32intrinsics_8h}{\section{include/asm/or32intrinsics.h \-File \-Reference}
+\label{or32intrinsics_8h}\index{include/asm/or32intrinsics.\-h@{include/asm/or32intrinsics.\-h}}
+}
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{or32intrinsics_8h_a9d61099f1be8cb2dd247084b763b7cca}{\-\_\-mfspr}(regaddr)~\hyperlink{or32intrinsics_8h_a95b925f2ced1e387a3f815977ccc03ad}{\-\_\-\-\_\-mfspr}(regaddr)
+\item 
+\#define \hyperlink{or32intrinsics_8h_a95b925f2ced1e387a3f815977ccc03ad}{\-\_\-\-\_\-mfspr}(regaddr)
+\item 
+\#define \hyperlink{or32intrinsics_8h_a61089adb848dbe44400d904cc19125ea}{\-\_\-mtspr}(regaddr, val)~\hyperlink{or32intrinsics_8h_a4f3743c37623bc62340853b3001d6980}{\-\_\-\-\_\-mtspr}(regaddr, val)
+\item 
+\#define \hyperlink{or32intrinsics_8h_a4f3743c37623bc62340853b3001d6980}{\-\_\-\-\_\-mtspr}(regaddr, val)~\{ asm volatile (\char`\"{}l.\-mtspr \%0, \%1, 0\char`\"{} \-: \-: \char`\"{}r\char`\"{}(regaddr), \char`\"{}r\char`\"{}(val)); \}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{or32intrinsics_8h_a95b925f2ced1e387a3f815977ccc03ad}{\index{or32intrinsics.\-h@{or32intrinsics.\-h}!\-\_\-\-\_\-mfspr@{\-\_\-\-\_\-mfspr}}
+\index{\-\_\-\-\_\-mfspr@{\-\_\-\-\_\-mfspr}!or32intrinsics.h@{or32intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-mfspr}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-mfspr}(
+\begin{DoxyParamCaption}
+\item[{}]{regaddr}
+\end{DoxyParamCaption}
+)}}\label{or32intrinsics_8h_a95b925f2ced1e387a3f815977ccc03ad}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                                        \
+    asm volatile ("l.mfspr %0, %1, 0" : "=r"(val) : "r"(regaddr));      \
+    val; })
+\end{DoxyCode}
+\hypertarget{or32intrinsics_8h_a4f3743c37623bc62340853b3001d6980}{\index{or32intrinsics.\-h@{or32intrinsics.\-h}!\-\_\-\-\_\-mtspr@{\-\_\-\-\_\-mtspr}}
+\index{\-\_\-\-\_\-mtspr@{\-\_\-\-\_\-mtspr}!or32intrinsics.h@{or32intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-mtspr}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-mtspr}(
+\begin{DoxyParamCaption}
+\item[{}]{regaddr, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~\{ asm volatile (\char`\"{}l.\-mtspr \%0, \%1, 0\char`\"{} \-: \-: \char`\"{}r\char`\"{}(regaddr), \char`\"{}r\char`\"{}(val)); \}}}\label{or32intrinsics_8h_a4f3743c37623bc62340853b3001d6980}
+\hypertarget{or32intrinsics_8h_a9d61099f1be8cb2dd247084b763b7cca}{\index{or32intrinsics.\-h@{or32intrinsics.\-h}!\-\_\-mfspr@{\-\_\-mfspr}}
+\index{\-\_\-mfspr@{\-\_\-mfspr}!or32intrinsics.h@{or32intrinsics.\-h}}
+\subsubsection[{\-\_\-mfspr}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-mfspr}(
+\begin{DoxyParamCaption}
+\item[{}]{regaddr}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-mfspr}(regaddr)}}\label{or32intrinsics_8h_a9d61099f1be8cb2dd247084b763b7cca}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{or32intrinsics_8h}{or32intrinsics.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}
+\hypertarget{or32intrinsics_8h_a61089adb848dbe44400d904cc19125ea}{\index{or32intrinsics.\-h@{or32intrinsics.\-h}!\-\_\-mtspr@{\-\_\-mtspr}}
+\index{\-\_\-mtspr@{\-\_\-mtspr}!or32intrinsics.h@{or32intrinsics.\-h}}
+\subsubsection[{\-\_\-mtspr}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-mtspr}(
+\begin{DoxyParamCaption}
+\item[{}]{regaddr, }
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~{\bf \-\_\-\-\_\-mtspr}(regaddr, val)}}\label{or32intrinsics_8h_a61089adb848dbe44400d904cc19125ea}

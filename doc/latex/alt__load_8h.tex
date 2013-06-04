@@ -1,0 +1,31 @@
+\hypertarget{alt__load_8h}{\section{include/sys/alt\-\_\-load.h \-File \-Reference}
+\label{alt__load_8h}\index{include/sys/alt\-\_\-load.\-h@{include/sys/alt\-\_\-load.\-h}}
+}
+{\ttfamily \#include \char`\"{}alt\-\_\-types.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__load_8h_ad9c1a16e98e8df712d7f55cfc13f8072}{\-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E}(name)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__load_8h_ad9c1a16e98e8df712d7f55cfc13f8072}{\index{alt\-\_\-load.\-h@{alt\-\_\-load.\-h}!\-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E@{\-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E}}
+\index{\-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E@{\-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E}!alt_load.h@{alt\-\_\-load.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-L\-O\-A\-D\-\_\-\-S\-E\-C\-T\-I\-O\-N\-\_\-\-B\-Y\-\_\-\-N\-A\-M\-E}(
+\begin{DoxyParamCaption}
+\item[{}]{name}
+\end{DoxyParamCaption}
+)}}\label{alt__load_8h_ad9c1a16e98e8df712d7f55cfc13f8072}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+{                                                            \
+    extern void _alt_partition_##name##_start;                 \
+    extern void _alt_partition_##name##_end;                   \
+    extern void _alt_partition_##name##_load_addr;             \
+                                                               \
+    alt_load_section(&_alt_partition_##name##_load_addr,       \
+                     &_alt_partition_##name##_start,           \
+                     &_alt_partition_##name##_end);            \
+  }
+\end{DoxyCode}

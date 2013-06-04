@@ -1,0 +1,47 @@
+\hypertarget{alt__sim_8h}{\section{include/sys/alt\-\_\-sim.h \-File \-Reference}
+\label{alt__sim_8h}\index{include/sys/alt\-\_\-sim.\-h@{include/sys/alt\-\_\-sim.\-h}}
+}
+{\ttfamily \#include \char`\"{}system.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}alt\-\_\-types.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__sim_8h_a8cbb84e565224578e04d00881f3a93b5}{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L}()~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}cmpltui r0, r0, 0xabc1\char`\"{}); \} while (0)
+\item 
+\#define \hyperlink{alt__sim_8h_a80f2c62b629666aeaf482919be40fce5}{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S}()~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}cmpltui r0, r0, 0xabc2\char`\"{}); \} while (0)
+\item 
+\#define \hyperlink{alt__sim_8h_a05c77a243ca9f29ac452cbbabd16a72d}{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P}()~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}cmpltui r0, r0, 0xabc3\char`\"{}); \} while (0)
+\item 
+\#define \hyperlink{alt__sim_8h_ae17fde27111994220e541bf2ff79bbfb}{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T}(exit\-\_\-code)~alt\-\_\-sim\-\_\-halt(exit\-\_\-code)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__sim_8h_a8cbb84e565224578e04d00881f3a93b5}{\index{alt\-\_\-sim.\-h@{alt\-\_\-sim.\-h}!\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L}}
+\index{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L}!alt_sim.h@{alt\-\_\-sim.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-F\-A\-I\-L}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}cmpltui r0, r0, 0xabc1\char`\"{}); \} while (0)}}\label{alt__sim_8h_a8cbb84e565224578e04d00881f3a93b5}
+\hypertarget{alt__sim_8h_ae17fde27111994220e541bf2ff79bbfb}{\index{alt\-\_\-sim.\-h@{alt\-\_\-sim.\-h}!\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T}}
+\index{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T}!alt_sim.h@{alt\-\_\-sim.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-H\-A\-L\-T}(
+\begin{DoxyParamCaption}
+\item[{}]{exit\-\_\-code}
+\end{DoxyParamCaption}
+)~alt\-\_\-sim\-\_\-halt(exit\-\_\-code)}}\label{alt__sim_8h_ae17fde27111994220e541bf2ff79bbfb}
+\hypertarget{alt__sim_8h_a05c77a243ca9f29ac452cbbabd16a72d}{\index{alt\-\_\-sim.\-h@{alt\-\_\-sim.\-h}!\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P}}
+\index{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P}!alt_sim.h@{alt\-\_\-sim.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-I\-N\-\_\-\-T\-O\-P\-\_\-\-O\-F\-\_\-\-H\-O\-T\-\_\-\-L\-O\-O\-P}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}cmpltui r0, r0, 0xabc3\char`\"{}); \} while (0)}}\label{alt__sim_8h_a05c77a243ca9f29ac452cbbabd16a72d}
+\hypertarget{alt__sim_8h_a80f2c62b629666aeaf482919be40fce5}{\index{alt\-\_\-sim.\-h@{alt\-\_\-sim.\-h}!\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S}}
+\index{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S@{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S}!alt_sim.h@{alt\-\_\-sim.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-S\-I\-M\-\_\-\-P\-A\-S\-S}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}cmpltui r0, r0, 0xabc2\char`\"{}); \} while (0)}}\label{alt__sim_8h_a80f2c62b629666aeaf482919be40fce5}

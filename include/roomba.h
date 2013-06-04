@@ -130,9 +130,9 @@
 #define ASCII_PLUS 43
 #define ASCII_MINUS 45
 #define ASCII_NUMBER_START 48
-#define DEFAULT_VELOCITY 200
 
 #define DEFAULT_VELOCITY 200
+
 
 typedef struct{
 	uint8_t id;
@@ -143,13 +143,16 @@ typedef struct{
 
 extern const packet * packet_queries[QUERY_LENGTH];
 extern volatile int32_t query_results[QUERY_LENGTH];
-extern int32_t digits[DIGIT_LENGTH];
+extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
+
 
 typedef struct{
+	uint8_t is_moving;
+	int16_t current_velocity;
 	int32_t driven_distance;
-	int32_t driven_angle;
+	int32_t trip_meter;
 	int32_t angle_360_degrees;
-	int32_t distance_10_decimeters;
+	int32_t distance_1_meter;
 } roomba_data;
 
 extern roomba_data roombadata;
@@ -164,12 +167,28 @@ extern roomba_data roombadata;
   */
 void init_roomba(void);
 
-
+/**
+  * \brief  calibrate angle function
+  *
+  *	This function can be used to calibrate a angle of 360 degrees
+  *         
+  */
 void roomba_calibrate_angle();
 
+/**
+  * \brief  calibrate angle function
+  *
+  *	This function can be used to calibrate a distance of 1 meter
+  *         
+  */
 void roomba_calibrate_distance();
 
-
+/**
+  * \brief  query sensor function
+  *
+  *	This function queries the specified sensor
+  * \return the queried sensor value, converted to a 32-bit integer 
+  */
 int32_t query_sensor(packet query_packet);
 
 
@@ -179,8 +198,8 @@ int32_t query_sensor(packet query_packet);
   *	Query a list of sensor values with this function
   *
   * \param	packets		an array of packets, specifying which sensors should be queried
-  * \param	count		the length of \param packets
-  * \param	results		the out-array where the query results get stored. It should have at least a length of \param count
+  * \param	count		the length of 'packets'
+  * \param	results		the out-array where the query results get stored. It should have at least a length of 'count'
   *
   */
 void query_list(const packet * packets[], uint8_t count, int32_t results[]);
@@ -192,7 +211,7 @@ void query_list(const packet * packets[], uint8_t count, int32_t results[]);
   *	Write a list of sensor values to the roomba robot with this function
   *
   * \param	packets		an array of packets, specifying which sensor requests should be written to roomba
-  * \param	count		the length of \param packets
+  * \param	count		the length of 'packets'
   *
   */
 void write_query_list(const packet * packets[], uint8_t count);
@@ -204,8 +223,8 @@ void write_query_list(const packet * packets[], uint8_t count);
   *	This function should be called after write_query_list() to read the sensor values from roomba
   *
   * \param	packets		an array of packets, specifying which sensor requests have been written to roomba
-  * \param	count		the length of \param packets
-  * \param	results		the out-array where the query results get stored. It should have at least a length of \param count
+  * \param	count		the length of 'packets'
+  * \param	results		the out-array where the query results get stored. It should have at least a length of 'count'
   *
   */
 void read_query_list(const packet * packets[], uint8_t count, int32_t results[]);
@@ -240,13 +259,13 @@ void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
   *	Write the global ascii digits array to roomba's seven seg display with this function
   *
   */ 
-void writeDigits ();
+void write_sevenseg_digits ();
 
 
 /**
   * \brief  Drive function
   *
-  *	Let the roomba drive with the specified \param velocity by calling this function
+  *	Let the roomba drive with the specified 'velocity' by calling this function
   *
   * \param      velocity	the velocity to drive
   *
@@ -275,11 +294,11 @@ uint8_t check_button();
 /**
   * \brief  Calculate the time to drive
   *
-  *         Calculate the time to drive \param distance centermeters with the specified \param velocity
+  *         Calculate the time to drive 'distance' centimeters with the specified 'velocity'
   *
   * \param      distance 	the distance to drive
   * \param 	velocity	the velocity to drive
-  * \return                 	the calculated time, which is needed to drive \param distance with \param velocity
+  * \return                 	the calculated time, which is needed to drive 'distance' with 'velocity'
   *
   */
 int32_t calculateTimeToDrive (int32_t distance, int32_t velocity);

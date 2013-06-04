@@ -1,0 +1,165 @@
+\hypertarget{nios2intrinsics_8h}{\section{include/asm/nios2intrinsics.h \-File \-Reference}
+\label{nios2intrinsics_8h}\index{include/asm/nios2intrinsics.\-h@{include/asm/nios2intrinsics.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a700f88377bf36711b711f69b06c52f5d}{\-N\-O\-P}~\char`\"{}$\backslash$tnop\char`\"{}
+\item 
+\#define \hyperlink{nios2intrinsics_8h_acc38c235974b58ba8c539f4bb91ba231}{\-\_\-\-\_\-rdctl\-\_\-status}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_ae1f28e4b6c1e8adea03cad99c21ef82a}{\-\_\-\-\_\-rdctl\-\_\-estatus}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_aef453913d1421630945496ea40db6a2d}{\-\_\-\-\_\-rdctl\-\_\-bstatus}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a6361f0938e933e11565c23bc1758dd55}{\-\_\-\-\_\-rdctl\-\_\-ienable}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a3c1e38ab0a5cc4d465864b918e4b8aad}{\-\_\-\-\_\-rdctl\-\_\-ipending}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a383d0c0d753d174efc7c39e1c35e1349}{\-\_\-\-\_\-rdctl\-\_\-cpuid}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_aa0902df1f480899de6c7252e0753edd9}{\-\_\-\-\_\-rdctl\-\_\-badaddr}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_ac97dae19539fea58b5f1f1edc9b092c5}{\-\_\-\-\_\-rdctl\-\_\-exception}()
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a550a59136494822a26c9e3cd259cacc6}{\-\_\-\-\_\-wrctl\-\_\-status}(val)~\{ asm volatile (\char`\"{}wrctl status, \%0\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val)); \}
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a28703ac5be3f1f65fe981af01501d874}{\-\_\-\-\_\-wrctl\-\_\-ienable}(val)~\{ asm volatile (\char`\"{}wrctl ienable, \%0\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val)); \}
+\item 
+\#define \hyperlink{nios2intrinsics_8h_a8794f2cf945dfc178cb2430c01a98c98}{\-\_\-\-\_\-wrctl\-\_\-ipending}(val)~0
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{nios2intrinsics_8h_aa0902df1f480899de6c7252e0753edd9}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-badaddr@{\-\_\-\-\_\-rdctl\-\_\-badaddr}}
+\index{\-\_\-\-\_\-rdctl\-\_\-badaddr@{\-\_\-\-\_\-rdctl\-\_\-badaddr}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-badaddr}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-badaddr}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_aa0902df1f480899de6c7252e0753edd9}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, badaddr" : "=r"(val) : );  \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_aef453913d1421630945496ea40db6a2d}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-bstatus@{\-\_\-\-\_\-rdctl\-\_\-bstatus}}
+\index{\-\_\-\-\_\-rdctl\-\_\-bstatus@{\-\_\-\-\_\-rdctl\-\_\-bstatus}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-bstatus}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-bstatus}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_aef453913d1421630945496ea40db6a2d}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, bstatus" : "=r"(val) : );  \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_a383d0c0d753d174efc7c39e1c35e1349}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-cpuid@{\-\_\-\-\_\-rdctl\-\_\-cpuid}}
+\index{\-\_\-\-\_\-rdctl\-\_\-cpuid@{\-\_\-\-\_\-rdctl\-\_\-cpuid}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-cpuid}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-cpuid}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_a383d0c0d753d174efc7c39e1c35e1349}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, cpuid" : "=r"(val) : );    \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_ae1f28e4b6c1e8adea03cad99c21ef82a}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-estatus@{\-\_\-\-\_\-rdctl\-\_\-estatus}}
+\index{\-\_\-\-\_\-rdctl\-\_\-estatus@{\-\_\-\-\_\-rdctl\-\_\-estatus}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-estatus}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-estatus}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_ae1f28e4b6c1e8adea03cad99c21ef82a}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, estatus" : "=r"(val) : );  \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_ac97dae19539fea58b5f1f1edc9b092c5}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-exception@{\-\_\-\-\_\-rdctl\-\_\-exception}}
+\index{\-\_\-\-\_\-rdctl\-\_\-exception@{\-\_\-\-\_\-rdctl\-\_\-exception}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-exception}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-exception}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_ac97dae19539fea58b5f1f1edc9b092c5}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, exception" : "=r"(val) : );\
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_a6361f0938e933e11565c23bc1758dd55}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-ienable@{\-\_\-\-\_\-rdctl\-\_\-ienable}}
+\index{\-\_\-\-\_\-rdctl\-\_\-ienable@{\-\_\-\-\_\-rdctl\-\_\-ienable}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-ienable}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-ienable}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_a6361f0938e933e11565c23bc1758dd55}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, ienable" : "=r"(val) : );  \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_a3c1e38ab0a5cc4d465864b918e4b8aad}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-ipending@{\-\_\-\-\_\-rdctl\-\_\-ipending}}
+\index{\-\_\-\-\_\-rdctl\-\_\-ipending@{\-\_\-\-\_\-rdctl\-\_\-ipending}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-ipending}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-ipending}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_a3c1e38ab0a5cc4d465864b918e4b8aad}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, ipending" : "=r"(val) : ); \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_acc38c235974b58ba8c539f4bb91ba231}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-rdctl\-\_\-status@{\-\_\-\-\_\-rdctl\-\_\-status}}
+\index{\-\_\-\-\_\-rdctl\-\_\-status@{\-\_\-\-\_\-rdctl\-\_\-status}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-rdctl\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-rdctl\-\_\-status}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nios2intrinsics_8h_acc38c235974b58ba8c539f4bb91ba231}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+({ uint32_t val;                                        \
+        asm volatile ("rdctl %0, status" : "=r"(val) : );   \
+        val; })
+\end{DoxyCode}
+\hypertarget{nios2intrinsics_8h_a28703ac5be3f1f65fe981af01501d874}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-wrctl\-\_\-ienable@{\-\_\-\-\_\-wrctl\-\_\-ienable}}
+\index{\-\_\-\-\_\-wrctl\-\_\-ienable@{\-\_\-\-\_\-wrctl\-\_\-ienable}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-wrctl\-\_\-ienable}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-wrctl\-\_\-ienable}(
+\begin{DoxyParamCaption}
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~\{ asm volatile (\char`\"{}wrctl ienable, \%0\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val)); \}}}\label{nios2intrinsics_8h_a28703ac5be3f1f65fe981af01501d874}
+\hypertarget{nios2intrinsics_8h_a8794f2cf945dfc178cb2430c01a98c98}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-wrctl\-\_\-ipending@{\-\_\-\-\_\-wrctl\-\_\-ipending}}
+\index{\-\_\-\-\_\-wrctl\-\_\-ipending@{\-\_\-\-\_\-wrctl\-\_\-ipending}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-wrctl\-\_\-ipending}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-wrctl\-\_\-ipending}(
+\begin{DoxyParamCaption}
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~0}}\label{nios2intrinsics_8h_a8794f2cf945dfc178cb2430c01a98c98}
+\hypertarget{nios2intrinsics_8h_a550a59136494822a26c9e3cd259cacc6}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-\_\-\-\_\-wrctl\-\_\-status@{\-\_\-\-\_\-wrctl\-\_\-status}}
+\index{\-\_\-\-\_\-wrctl\-\_\-status@{\-\_\-\-\_\-wrctl\-\_\-status}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-\_\-\-\_\-wrctl\-\_\-status}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-\_\-\-\_\-wrctl\-\_\-status}(
+\begin{DoxyParamCaption}
+\item[{}]{val}
+\end{DoxyParamCaption}
+)~\{ asm volatile (\char`\"{}wrctl status, \%0\char`\"{} \-: \-: \char`\"{}r\char`\"{}(val)); \}}}\label{nios2intrinsics_8h_a550a59136494822a26c9e3cd259cacc6}
+\hypertarget{nios2intrinsics_8h_a700f88377bf36711b711f69b06c52f5d}{\index{nios2intrinsics.\-h@{nios2intrinsics.\-h}!\-N\-O\-P@{\-N\-O\-P}}
+\index{\-N\-O\-P@{\-N\-O\-P}!nios2intrinsics.h@{nios2intrinsics.\-h}}
+\subsubsection[{\-N\-O\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-O\-P}~\char`\"{}$\backslash$tnop\char`\"{}}}\label{nios2intrinsics_8h_a700f88377bf36711b711f69b06c52f5d}
+\begin{DoxyParagraph}{\-Id\-:}
+\hyperlink{nios2intrinsics_8h}{nios2intrinsics.\-h} 672 2013-\/04-\/12 10\-:30\-:44\-Z klugeflo 
+\end{DoxyParagraph}
+\-N\-I\-O\-S2 intrinsics 

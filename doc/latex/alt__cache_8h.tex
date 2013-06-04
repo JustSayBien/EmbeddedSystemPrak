@@ -1,0 +1,97 @@
+\hypertarget{alt__cache_8h}{\section{include/sys/alt\-\_\-cache.h \-File \-Reference}
+\label{alt__cache_8h}\index{include/sys/alt\-\_\-cache.\-h@{include/sys/alt\-\_\-cache.\-h}}
+}
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include \char`\"{}alt\-\_\-types.\-h\char`\"{}}\*
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{alt__cache_8h_aaafe7e3a51bfd4e77dd838ff6916676e}{alt\-\_\-icache\-\_\-flush} (void $\ast$start, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} len)
+\item 
+void \hyperlink{alt__cache_8h_a9fabe1416281a97e1767ada9f7c0a337}{alt\-\_\-dcache\-\_\-flush} (void $\ast$start, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} len)
+\item 
+void \hyperlink{alt__cache_8h_a1efada8073a74729b8760227ea466d32}{alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback} (void $\ast$start, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} len)
+\item 
+void \hyperlink{alt__cache_8h_a0005ac47724f3b36c4f86697eb85be70}{alt\-\_\-icache\-\_\-flush\-\_\-all} (void)
+\item 
+void \hyperlink{alt__cache_8h_a5c773368bb72d640d39efb42ff592175}{alt\-\_\-dcache\-\_\-flush\-\_\-all} (void)
+\item 
+volatile void $\ast$ \hyperlink{alt__cache_8h_ae8c29b6eac64e62a9fb0b2662dc6c4a7}{alt\-\_\-uncached\-\_\-malloc} (size\-\_\-t size)
+\item 
+void \hyperlink{alt__cache_8h_a0e4a485cf0b12cdef8cc54174618f833}{alt\-\_\-uncached\-\_\-free} (volatile void $\ast$ptr)
+\item 
+volatile void $\ast$ \hyperlink{alt__cache_8h_a493bc9202493a0cebd380dc2c208a500}{alt\-\_\-remap\-\_\-uncached} (void $\ast$ptr, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} len)
+\item 
+void $\ast$ \hyperlink{alt__cache_8h_a411434f520dd864f71424d8a18da3bdb}{alt\-\_\-remap\-\_\-cached} (volatile void $\ast$ptr, \hyperlink{alt__types_8h_acd6a6a2004f05f01beaa42367510d8af}{alt\-\_\-u32} len)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{alt__cache_8h_a9fabe1416281a97e1767ada9f7c0a337}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-dcache\-\_\-flush@{alt\-\_\-dcache\-\_\-flush}}
+\index{alt\-\_\-dcache\-\_\-flush@{alt\-\_\-dcache\-\_\-flush}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-dcache\-\_\-flush}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-dcache\-\_\-flush} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{start, }
+\item[{{\bf alt\-\_\-u32}}]{len}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a9fabe1416281a97e1767ada9f7c0a337}
+\hypertarget{alt__cache_8h_a5c773368bb72d640d39efb42ff592175}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-dcache\-\_\-flush\-\_\-all@{alt\-\_\-dcache\-\_\-flush\-\_\-all}}
+\index{alt\-\_\-dcache\-\_\-flush\-\_\-all@{alt\-\_\-dcache\-\_\-flush\-\_\-all}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-dcache\-\_\-flush\-\_\-all}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-dcache\-\_\-flush\-\_\-all} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a5c773368bb72d640d39efb42ff592175}
+\hypertarget{alt__cache_8h_a1efada8073a74729b8760227ea466d32}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback@{alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback}}
+\index{alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback@{alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-dcache\-\_\-flush\-\_\-no\-\_\-writeback} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{start, }
+\item[{{\bf alt\-\_\-u32}}]{len}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a1efada8073a74729b8760227ea466d32}
+\hypertarget{alt__cache_8h_aaafe7e3a51bfd4e77dd838ff6916676e}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-icache\-\_\-flush@{alt\-\_\-icache\-\_\-flush}}
+\index{alt\-\_\-icache\-\_\-flush@{alt\-\_\-icache\-\_\-flush}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-icache\-\_\-flush}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-icache\-\_\-flush} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{start, }
+\item[{{\bf alt\-\_\-u32}}]{len}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_aaafe7e3a51bfd4e77dd838ff6916676e}
+\hypertarget{alt__cache_8h_a0005ac47724f3b36c4f86697eb85be70}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-icache\-\_\-flush\-\_\-all@{alt\-\_\-icache\-\_\-flush\-\_\-all}}
+\index{alt\-\_\-icache\-\_\-flush\-\_\-all@{alt\-\_\-icache\-\_\-flush\-\_\-all}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-icache\-\_\-flush\-\_\-all}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-icache\-\_\-flush\-\_\-all} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a0005ac47724f3b36c4f86697eb85be70}
+\hypertarget{alt__cache_8h_a411434f520dd864f71424d8a18da3bdb}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-remap\-\_\-cached@{alt\-\_\-remap\-\_\-cached}}
+\index{alt\-\_\-remap\-\_\-cached@{alt\-\_\-remap\-\_\-cached}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-remap\-\_\-cached}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf alt\-\_\-remap\-\_\-cached} (
+\begin{DoxyParamCaption}
+\item[{volatile void $\ast$}]{ptr, }
+\item[{{\bf alt\-\_\-u32}}]{len}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a411434f520dd864f71424d8a18da3bdb}
+\hypertarget{alt__cache_8h_a493bc9202493a0cebd380dc2c208a500}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-remap\-\_\-uncached@{alt\-\_\-remap\-\_\-uncached}}
+\index{alt\-\_\-remap\-\_\-uncached@{alt\-\_\-remap\-\_\-uncached}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-remap\-\_\-uncached}]{\setlength{\rightskip}{0pt plus 5cm}volatile void$\ast$ {\bf alt\-\_\-remap\-\_\-uncached} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{ptr, }
+\item[{{\bf alt\-\_\-u32}}]{len}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a493bc9202493a0cebd380dc2c208a500}
+\hypertarget{alt__cache_8h_a0e4a485cf0b12cdef8cc54174618f833}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-uncached\-\_\-free@{alt\-\_\-uncached\-\_\-free}}
+\index{alt\-\_\-uncached\-\_\-free@{alt\-\_\-uncached\-\_\-free}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-uncached\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf alt\-\_\-uncached\-\_\-free} (
+\begin{DoxyParamCaption}
+\item[{volatile void $\ast$}]{ptr}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_a0e4a485cf0b12cdef8cc54174618f833}
+\hypertarget{alt__cache_8h_ae8c29b6eac64e62a9fb0b2662dc6c4a7}{\index{alt\-\_\-cache.\-h@{alt\-\_\-cache.\-h}!alt\-\_\-uncached\-\_\-malloc@{alt\-\_\-uncached\-\_\-malloc}}
+\index{alt\-\_\-uncached\-\_\-malloc@{alt\-\_\-uncached\-\_\-malloc}!alt_cache.h@{alt\-\_\-cache.\-h}}
+\subsubsection[{alt\-\_\-uncached\-\_\-malloc}]{\setlength{\rightskip}{0pt plus 5cm}volatile void$\ast$ {\bf alt\-\_\-uncached\-\_\-malloc} (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{size}
+\end{DoxyParamCaption}
+)}}\label{alt__cache_8h_ae8c29b6eac64e62a9fb0b2662dc6c4a7}

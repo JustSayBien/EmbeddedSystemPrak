@@ -1,0 +1,381 @@
+\hypertarget{nios2_8h}{\section{include/nios2.h \-File \-Reference}
+\label{nios2_8h}\index{include/nios2.\-h@{include/nios2.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{nios2_8h_a3f027a5a7fad410b1632a912c8535589}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T}(et)~do \{ \-\_\-\-\_\-asm (\char`\"{}mov \%0, et\char`\"{} \-: \char`\"{}=r\char`\"{} (et) ); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_af5e20c4521f0800f2ed22939a7d114d6}{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T}(et)~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}mov et, \%z0\char`\"{} \-: \-: \char`\"{}r\-M\char`\"{} (et)); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_a9b2388f2038197c762b6345fd904e889}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P}(sp)~do \{ \-\_\-\-\_\-asm (\char`\"{}mov \%0, sp\char`\"{} \-: \char`\"{}=r\char`\"{} (sp) ); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_a7026dab1cb67e8210a6f236922dfba14}{\-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K}()~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}break\char`\"{}); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_a49afea648f99c88a26acbac6246cc23d}{\-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W}()~do \{ \-\_\-\-\_\-asm volatile(\char`\"{}break 3\char`\"{}); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_aa958b3987ddd03320537f37f2276c44f}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S}(dest)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(0); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_a3adafd4d9a38bd8589a0e46c44ec761c}{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S}(src)~do \{ \-\_\-\-\_\-builtin\-\_\-wrctl(0, src); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_a650b7547049556cc3a8f2bffd9546094}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S}(dest)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(1); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_a9748570dfcacbc2ff6fe7498c79af465}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S}(dest)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(2); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_af9afd57142bb960a25c8c9fec953a5c6}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E}(dest)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(3); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_af79e611c38be6e02449bb916de76f664}{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E}(src)~do \{ \-\_\-\-\_\-builtin\-\_\-wrctl(3, src); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_ad754ba8ddf36bff36bbe6ce921dbbd80}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}(dest)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(4); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_ab7ee70246af44f3fa0a2493bfceda237}{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D}(dest)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(5); \} while (0)
+\item 
+\#define \hyperlink{nios2_8h_ad34427532598ae3ebfa7d23d3b17b608}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S}~status
+\item 
+\#define \hyperlink{nios2_8h_a7d034056f9e1737521bfb86e1bc4f0ab}{\-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S}~estatus
+\item 
+\#define \hyperlink{nios2_8h_a72ca6b7521fd2cf19726fa51f3346c36}{\-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S}~bstatus
+\item 
+\#define \hyperlink{nios2_8h_ace4053c902157cae6da788ad0f822e35}{\-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E}~ienable
+\item 
+\#define \hyperlink{nios2_8h_a531b545c2314222d0cd5cf83e3df451c}{\-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}~ipending
+\item 
+\#define \hyperlink{nios2_8h_a7908bed7102290cfa768b95539b6125f}{\-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D}~cpuid
+\item 
+\#define \hyperlink{nios2_8h_ab72a90fc3af428ec4aeabaecd009be0e}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K}~(0x00000001)
+\item 
+\#define \hyperlink{nios2_8h_a802439d6552d752804a47e843ea03b62}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T}~(0)
+\item 
+\#define \hyperlink{nios2_8h_a8b4290b0e9594bcbaf2dd399f37303f8}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K}~(0x00000002)
+\item 
+\#define \hyperlink{nios2_8h_a7bea56bb0028e97c89d03a424372e0a7}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T}~(1)
+\item 
+\#define \hyperlink{nios2_8h_a64888be8f301859fc55000100d8b262c}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K}~(0x00000004)
+\item 
+\#define \hyperlink{nios2_8h_acb2607282fef918f3617104e8265c6bf}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T}~(2)
+\item 
+\#define \hyperlink{nios2_8h_a9cffcdafe76226a1ead22925e42eb2a1}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K}~(0x00000008)
+\item 
+\#define \hyperlink{nios2_8h_a377f98e7303a4f6a206337b46bcf4f7b}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T}~(3)
+\item 
+\#define \hyperlink{nios2_8h_ae7b58cda92c4f6f6c83a9e2daeffdfdf}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K}~(0x000003f0)
+\item 
+\#define \hyperlink{nios2_8h_ad084220bf77c1d9d039851729cc30df3}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T}~(4)
+\item 
+\#define \hyperlink{nios2_8h_adb909a5a4a6624d47ecc4fcb1099d1a9}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K}~(0x0000fc00)
+\item 
+\#define \hyperlink{nios2_8h_a8ffd44e86e548dc548c6768f29d198b1}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T}~(10)
+\item 
+\#define \hyperlink{nios2_8h_a50383173c2fe598509f261ff1ba62c3c}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K}~(0x003f0000)
+\item 
+\#define \hyperlink{nios2_8h_a5d847db40d631480824d77a1909434bc}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T}~(16)
+\item 
+\#define \hyperlink{nios2_8h_a6152da1c59926c2740dcb9fbdfd3e96c}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K}~(0x00400000)
+\item 
+\#define \hyperlink{nios2_8h_a53e628ac5b14ac1bd602d12537915d9c}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T}~(22)
+\item 
+\#define \hyperlink{nios2_8h_aa65e3c7cd868e0409f30b4efb3293339}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K}~(0x00800000)
+\item 
+\#define \hyperlink{nios2_8h_a643fb9a1fe3b029060a1c4f7882d248c}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T}~(23)
+\item 
+\#define \hyperlink{nios2_8h_a5bc9644ac75f8d2f5d1527b472fa0267}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K}~(0x80000000)
+\item 
+\#define \hyperlink{nios2_8h_a24b97dd63c602153a21059a16f151049}{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T}~(31)
+\item 
+\#define \hyperlink{nios2_8h_aa3e05815adb290916e9f699af8c9cc11}{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K}~(0x0000007c)
+\item 
+\#define \hyperlink{nios2_8h_a56440808e259123a40ee625b56935ff6}{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T}~(2)
+\item 
+\#define \hyperlink{nios2_8h_a631239a3b9b48af3970d3a8efc116e2d}{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K}~(0x00000001)
+\item 
+\#define \hyperlink{nios2_8h_a1eaee9129af2e1b54bab839400f029fd}{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T}~(0)
+\item 
+\#define \hyperlink{nios2_8h_abaad2f10821ddd584d451648103eeaaa}{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K}~(0x00000002)
+\item 
+\#define \hyperlink{nios2_8h_a2015a0e32c6f6a0e9ea20c088c07a9c8}{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T}~(1)
+\item 
+\#define \hyperlink{nios2_8h_a0cc7dd3fc32c21c67ae115c5c84e14fa}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K}~(0x00000001)
+\item 
+\#define \hyperlink{nios2_8h_a9ec3f5a0c0f778017a3013ef1094c910}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T}~(0)
+\item 
+\#define \hyperlink{nios2_8h_a6b1e1e8fc7a0d87eef65d760664002aa}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K}~(0x0000003e)
+\item 
+\#define \hyperlink{nios2_8h_a46a88b78e0e8fc790984976f806b677d}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T}~(1)
+\item 
+\#define \hyperlink{nios2_8h_acd0cc782bd29cac75c4bd0f30407e3e7}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K}~(0xffffffc0)
+\item 
+\#define \hyperlink{nios2_8h_a6e6758f1584275c132bc897aa9fbc140}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T}~(6)
+\item 
+\#define \hyperlink{nios2_8h_a40b536937f0ebf231d08b1e1b8348cc2}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K}~(0xffffffc0)
+\item 
+\#define \hyperlink{nios2_8h_a5bd84a46c3b6bb33f66e4f0a44d1823c}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T}~(6)
+\item 
+\#define \hyperlink{nios2_8h_ae81675d911ca2c34da95b24f7158c4e0}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K}~(0xffffffc0)
+\item 
+\#define \hyperlink{nios2_8h_a1d4be3f49cdaef1f58e88a8a5c854fc7}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T}~(6)
+\item 
+\#define \hyperlink{nios2_8h_aa22a5a4fe42cb02a6ec97c90665472d1}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K}~(0x00000020)
+\item 
+\#define \hyperlink{nios2_8h_a878e4e5d4a30f0ffa1a13412ac3d632c}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T}~(5)
+\item 
+\#define \hyperlink{nios2_8h_a5d9ba76e47ae29b02fa6d4dfe54a4826}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K}~(0x0000001c)
+\item 
+\#define \hyperlink{nios2_8h_a36e8385c8c83bc5a25a2a07746bb9f1b}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T}~(2)
+\item 
+\#define \hyperlink{nios2_8h_a24c0c5678a5a7ba9caabcb19ca6acfc0}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K}~(0x00000002)
+\item 
+\#define \hyperlink{nios2_8h_a066005379b28b72b5b38227b0e55e693}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T}~(1)
+\item 
+\#define \hyperlink{nios2_8h_a7b26c566bb8094eaefe661b504164dce}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K}~(0x00000001)
+\item 
+\#define \hyperlink{nios2_8h_a4c849d299cc5c64ae4c92925e1a2e370}{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T}~(0)
+\item 
+\#define \hyperlink{nios2_8h_abd1039763ffe41f4858f7089cee25e9f}{\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}~32
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{nios2_8h_a7026dab1cb67e8210a6f236922dfba14}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K@{\-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K@{\-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-B\-R\-E\-A\-K}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}break\char`\"{}); \} while (0)}}\label{nios2_8h_a7026dab1cb67e8210a6f236922dfba14}
+\hypertarget{nios2_8h_a72ca6b7521fd2cf19726fa51f3346c36}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-B\-S\-T\-A\-T\-U\-S}~bstatus}}\label{nios2_8h_a72ca6b7521fd2cf19726fa51f3346c36}
+\hypertarget{nios2_8h_abaad2f10821ddd584d451648103eeaaa}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-M\-A\-S\-K}~(0x00000002)}}\label{nios2_8h_abaad2f10821ddd584d451648103eeaaa}
+\hypertarget{nios2_8h_a2015a0e32c6f6a0e9ea20c088c07a9c8}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-A\-N\-I\-\_\-\-O\-F\-S\-T}~(1)}}\label{nios2_8h_a2015a0e32c6f6a0e9ea20c088c07a9c8}
+\hypertarget{nios2_8h_a631239a3b9b48af3970d3a8efc116e2d}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-M\-A\-S\-K}~(0x00000001)}}\label{nios2_8h_a631239a3b9b48af3970d3a8efc116e2d}
+\hypertarget{nios2_8h_a1eaee9129af2e1b54bab839400f029fd}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-C\-O\-N\-F\-I\-G\-\_\-\-R\-E\-G\-\_\-\-P\-E\-\_\-\-O\-F\-S\-T}~(0)}}\label{nios2_8h_a1eaee9129af2e1b54bab839400f029fd}
+\hypertarget{nios2_8h_a7908bed7102290cfa768b95539b6125f}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D@{\-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D}}
+\index{\-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D@{\-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-C\-P\-U\-I\-D}~cpuid}}\label{nios2_8h_a7908bed7102290cfa768b95539b6125f}
+\hypertarget{nios2_8h_a7d034056f9e1737521bfb86e1bc4f0ab}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-E\-S\-T\-A\-T\-U\-S}~estatus}}\label{nios2_8h_a7d034056f9e1737521bfb86e1bc4f0ab}
+\hypertarget{nios2_8h_aa3e05815adb290916e9f699af8c9cc11}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-M\-A\-S\-K}~(0x0000007c)}}\label{nios2_8h_aa3e05815adb290916e9f699af8c9cc11}
+\hypertarget{nios2_8h_a56440808e259123a40ee625b56935ff6}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N\-\_\-\-R\-E\-G\-\_\-\-C\-A\-U\-S\-E\-\_\-\-O\-F\-S\-T}~(2)}}\label{nios2_8h_a56440808e259123a40ee625b56935ff6}
+\hypertarget{nios2_8h_ace4053c902157cae6da788ad0f822e35}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E@{\-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E}}
+\index{\-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E@{\-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-I\-E\-N\-A\-B\-L\-E}~ienable}}\label{nios2_8h_ace4053c902157cae6da788ad0f822e35}
+\hypertarget{nios2_8h_a531b545c2314222d0cd5cf83e3df451c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G@{\-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}}
+\index{\-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G@{\-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}~ipending}}\label{nios2_8h_a531b545c2314222d0cd5cf83e3df451c}
+\hypertarget{nios2_8h_aa22a5a4fe42cb02a6ec97c90665472d1}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-M\-A\-S\-K}~(0x00000020)}}\label{nios2_8h_aa22a5a4fe42cb02a6ec97c90665472d1}
+\hypertarget{nios2_8h_a878e4e5d4a30f0ffa1a13412ac3d632c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-C\-\_\-\-O\-F\-S\-T}~(5)}}\label{nios2_8h_a878e4e5d4a30f0ffa1a13412ac3d632c}
+\hypertarget{nios2_8h_a40b536937f0ebf231d08b1e1b8348cc2}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-M\-A\-S\-K}~(0xffffffc0)}}\label{nios2_8h_a40b536937f0ebf231d08b1e1b8348cc2}
+\hypertarget{nios2_8h_a5bd84a46c3b6bb33f66e4f0a44d1823c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-L\-I\-M\-I\-T\-\_\-\-O\-F\-S\-T}~(6)}}\label{nios2_8h_a5bd84a46c3b6bb33f66e4f0a44d1823c}
+\hypertarget{nios2_8h_ae81675d911ca2c34da95b24f7158c4e0}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-M\-A\-S\-K}~(0xffffffc0)}}\label{nios2_8h_ae81675d911ca2c34da95b24f7158c4e0}
+\hypertarget{nios2_8h_a1d4be3f49cdaef1f58e88a8a5c854fc7}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-M\-A\-S\-K\-\_\-\-O\-F\-S\-T}~(6)}}\label{nios2_8h_a1d4be3f49cdaef1f58e88a8a5c854fc7}
+\hypertarget{nios2_8h_a5d9ba76e47ae29b02fa6d4dfe54a4826}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-M\-A\-S\-K}~(0x0000001c)}}\label{nios2_8h_a5d9ba76e47ae29b02fa6d4dfe54a4826}
+\hypertarget{nios2_8h_a36e8385c8c83bc5a25a2a07746bb9f1b}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-P\-E\-R\-M\-\_\-\-O\-F\-S\-T}~(2)}}\label{nios2_8h_a36e8385c8c83bc5a25a2a07746bb9f1b}
+\hypertarget{nios2_8h_a24c0c5678a5a7ba9caabcb19ca6acfc0}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-M\-A\-S\-K}~(0x00000002)}}\label{nios2_8h_a24c0c5678a5a7ba9caabcb19ca6acfc0}
+\hypertarget{nios2_8h_a066005379b28b72b5b38227b0e55e693}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-R\-D\-\_\-\-O\-F\-S\-T}~(1)}}\label{nios2_8h_a066005379b28b72b5b38227b0e55e693}
+\hypertarget{nios2_8h_a7b26c566bb8094eaefe661b504164dce}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-M\-A\-S\-K}~(0x00000001)}}\label{nios2_8h_a7b26c566bb8094eaefe661b504164dce}
+\hypertarget{nios2_8h_a4c849d299cc5c64ae4c92925e1a2e370}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-A\-C\-C\-\_\-\-W\-R\-\_\-\-O\-F\-S\-T}~(0)}}\label{nios2_8h_a4c849d299cc5c64ae4c92925e1a2e370}
+\hypertarget{nios2_8h_acd0cc782bd29cac75c4bd0f30407e3e7}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-M\-A\-S\-K}~(0xffffffc0)}}\label{nios2_8h_acd0cc782bd29cac75c4bd0f30407e3e7}
+\hypertarget{nios2_8h_a6e6758f1584275c132bc897aa9fbc140}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-B\-A\-S\-E\-\_\-\-A\-D\-D\-R\-\_\-\-O\-F\-S\-T}~(6)}}\label{nios2_8h_a6e6758f1584275c132bc897aa9fbc140}
+\hypertarget{nios2_8h_a0cc7dd3fc32c21c67ae115c5c84e14fa}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-M\-A\-S\-K}~(0x00000001)}}\label{nios2_8h_a0cc7dd3fc32c21c67ae115c5c84e14fa}
+\hypertarget{nios2_8h_a9ec3f5a0c0f778017a3013ef1094c910}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-D\-\_\-\-O\-F\-S\-T}~(0)}}\label{nios2_8h_a9ec3f5a0c0f778017a3013ef1094c910}
+\hypertarget{nios2_8h_a6b1e1e8fc7a0d87eef65d760664002aa}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-M\-A\-S\-K}~(0x0000003e)}}\label{nios2_8h_a6b1e1e8fc7a0d87eef65d760664002aa}
+\hypertarget{nios2_8h_a46a88b78e0e8fc790984976f806b677d}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-M\-P\-U\-B\-A\-S\-E\-\_\-\-I\-N\-D\-E\-X\-\_\-\-O\-F\-S\-T}~(1)}}\label{nios2_8h_a46a88b78e0e8fc790984976f806b677d}
+\hypertarget{nios2_8h_abd1039763ffe41f4858f7089cee25e9f}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q@{\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}}
+\index{\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q@{\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-N\-I\-R\-Q}~32}}\label{nios2_8h_abd1039763ffe41f4858f7089cee25e9f}
+\hypertarget{nios2_8h_a9748570dfcacbc2ff6fe7498c79af465}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-B\-S\-T\-A\-T\-U\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{dest}
+\end{DoxyParamCaption}
+)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(2); \} while (0)}}\label{nios2_8h_a9748570dfcacbc2ff6fe7498c79af465}
+\hypertarget{nios2_8h_ab7ee70246af44f3fa0a2493bfceda237}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-C\-P\-U\-I\-D}(
+\begin{DoxyParamCaption}
+\item[{}]{dest}
+\end{DoxyParamCaption}
+)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(5); \} while (0)}}\label{nios2_8h_ab7ee70246af44f3fa0a2493bfceda237}
+\hypertarget{nios2_8h_a650b7547049556cc3a8f2bffd9546094}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-S\-T\-A\-T\-U\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{dest}
+\end{DoxyParamCaption}
+)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(1); \} while (0)}}\label{nios2_8h_a650b7547049556cc3a8f2bffd9546094}
+\hypertarget{nios2_8h_a3f027a5a7fad410b1632a912c8535589}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-E\-T}(
+\begin{DoxyParamCaption}
+\item[{}]{et}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm (\char`\"{}mov \%0, et\char`\"{} \-: \char`\"{}=r\char`\"{} (et) ); \} while (0)}}\label{nios2_8h_a3f027a5a7fad410b1632a912c8535589}
+\hypertarget{nios2_8h_af9afd57142bb960a25c8c9fec953a5c6}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-E\-N\-A\-B\-L\-E}(
+\begin{DoxyParamCaption}
+\item[{}]{dest}
+\end{DoxyParamCaption}
+)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(3); \} while (0)}}\label{nios2_8h_af9afd57142bb960a25c8c9fec953a5c6}
+\hypertarget{nios2_8h_ad754ba8ddf36bff36bbe6ce921dbbd80}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-I\-P\-E\-N\-D\-I\-N\-G}(
+\begin{DoxyParamCaption}
+\item[{}]{dest}
+\end{DoxyParamCaption}
+)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(4); \} while (0)}}\label{nios2_8h_ad754ba8ddf36bff36bbe6ce921dbbd80}
+\hypertarget{nios2_8h_a9b2388f2038197c762b6345fd904e889}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-P}(
+\begin{DoxyParamCaption}
+\item[{}]{sp}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm (\char`\"{}mov \%0, sp\char`\"{} \-: \char`\"{}=r\char`\"{} (sp) ); \} while (0)}}\label{nios2_8h_a9b2388f2038197c762b6345fd904e889}
+\hypertarget{nios2_8h_aa958b3987ddd03320537f37f2276c44f}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-A\-D\-\_\-\-S\-T\-A\-T\-U\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{dest}
+\end{DoxyParamCaption}
+)~do \{ dest = \-\_\-\-\_\-builtin\-\_\-rdctl(0); \} while (0)}}\label{nios2_8h_aa958b3987ddd03320537f37f2276c44f}
+\hypertarget{nios2_8h_a49afea648f99c88a26acbac6246cc23d}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W@{\-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W}}
+\index{\-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W@{\-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-R\-E\-P\-O\-R\-T\-\_\-\-S\-T\-A\-C\-K\-\_\-\-O\-V\-E\-R\-F\-L\-O\-W}(
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm volatile(\char`\"{}break 3\char`\"{}); \} while (0)}}\label{nios2_8h_a49afea648f99c88a26acbac6246cc23d}
+\hypertarget{nios2_8h_ad34427532598ae3ebfa7d23d3b17b608}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S}~status}}\label{nios2_8h_ad34427532598ae3ebfa7d23d3b17b608}
+\hypertarget{nios2_8h_adb909a5a4a6624d47ecc4fcb1099d1a9}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-M\-S\-K}~(0x0000fc00)}}\label{nios2_8h_adb909a5a4a6624d47ecc4fcb1099d1a9}
+\hypertarget{nios2_8h_a8ffd44e86e548dc548c6768f29d198b1}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-C\-R\-S\-\_\-\-O\-F\-S\-T}~(10)}}\label{nios2_8h_a8ffd44e86e548dc548c6768f29d198b1}
+\hypertarget{nios2_8h_a64888be8f301859fc55000100d8b262c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-M\-S\-K}~(0x00000004)}}\label{nios2_8h_a64888be8f301859fc55000100d8b262c}
+\hypertarget{nios2_8h_acb2607282fef918f3617104e8265c6bf}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-E\-H\-\_\-\-O\-F\-S\-T}~(2)}}\label{nios2_8h_acb2607282fef918f3617104e8265c6bf}
+\hypertarget{nios2_8h_a9cffcdafe76226a1ead22925e42eb2a1}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-M\-S\-K}~(0x00000008)}}\label{nios2_8h_a9cffcdafe76226a1ead22925e42eb2a1}
+\hypertarget{nios2_8h_a377f98e7303a4f6a206337b46bcf4f7b}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-H\-\_\-\-O\-F\-S\-T}~(3)}}\label{nios2_8h_a377f98e7303a4f6a206337b46bcf4f7b}
+\hypertarget{nios2_8h_ae7b58cda92c4f6f6c83a9e2daeffdfdf}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-M\-S\-K}~(0x000003f0)}}\label{nios2_8h_ae7b58cda92c4f6f6c83a9e2daeffdfdf}
+\hypertarget{nios2_8h_ad084220bf77c1d9d039851729cc30df3}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-I\-L\-\_\-\-O\-F\-S\-T}~(4)}}\label{nios2_8h_ad084220bf77c1d9d039851729cc30df3}
+\hypertarget{nios2_8h_a6152da1c59926c2740dcb9fbdfd3e96c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-M\-S\-K}~(0x00400000)}}\label{nios2_8h_a6152da1c59926c2740dcb9fbdfd3e96c}
+\hypertarget{nios2_8h_a53e628ac5b14ac1bd602d12537915d9c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-N\-M\-I\-\_\-\-O\-F\-S\-T}~(22)}}\label{nios2_8h_a53e628ac5b14ac1bd602d12537915d9c}
+\hypertarget{nios2_8h_ab72a90fc3af428ec4aeabaecd009be0e}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-M\-S\-K}~(0x00000001)}}\label{nios2_8h_ab72a90fc3af428ec4aeabaecd009be0e}
+\hypertarget{nios2_8h_a802439d6552d752804a47e843ea03b62}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-I\-E\-\_\-\-O\-F\-S\-T}~(0)}}\label{nios2_8h_a802439d6552d752804a47e843ea03b62}
+\hypertarget{nios2_8h_a50383173c2fe598509f261ff1ba62c3c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-M\-S\-K}~(0x003f0000)}}\label{nios2_8h_a50383173c2fe598509f261ff1ba62c3c}
+\hypertarget{nios2_8h_a5d847db40d631480824d77a1909434bc}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-P\-R\-S\-\_\-\-O\-F\-S\-T}~(16)}}\label{nios2_8h_a5d847db40d631480824d77a1909434bc}
+\hypertarget{nios2_8h_aa65e3c7cd868e0409f30b4efb3293339}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-M\-S\-K}~(0x00800000)}}\label{nios2_8h_aa65e3c7cd868e0409f30b4efb3293339}
+\hypertarget{nios2_8h_a643fb9a1fe3b029060a1c4f7882d248c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-R\-S\-I\-E\-\_\-\-O\-F\-S\-T}~(23)}}\label{nios2_8h_a643fb9a1fe3b029060a1c4f7882d248c}
+\hypertarget{nios2_8h_a5bc9644ac75f8d2f5d1527b472fa0267}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-M\-S\-K}~(0x80000000)}}\label{nios2_8h_a5bc9644ac75f8d2f5d1527b472fa0267}
+\hypertarget{nios2_8h_a24b97dd63c602153a21059a16f151049}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-S\-R\-S\-\_\-\-O\-F\-S\-T}~(31)}}\label{nios2_8h_a24b97dd63c602153a21059a16f151049}
+\hypertarget{nios2_8h_a8b4290b0e9594bcbaf2dd399f37303f8}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-M\-S\-K}~(0x00000002)}}\label{nios2_8h_a8b4290b0e9594bcbaf2dd399f37303f8}
+\hypertarget{nios2_8h_a7bea56bb0028e97c89d03a424372e0a7}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T@{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-S\-T\-A\-T\-U\-S\-\_\-\-U\-\_\-\-O\-F\-S\-T}~(1)}}\label{nios2_8h_a7bea56bb0028e97c89d03a424372e0a7}
+\hypertarget{nios2_8h_af5e20c4521f0800f2ed22939a7d114d6}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T@{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T}}
+\index{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T@{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-E\-T}(
+\begin{DoxyParamCaption}
+\item[{}]{et}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-asm volatile (\char`\"{}mov et, \%z0\char`\"{} \-: \-: \char`\"{}r\-M\char`\"{} (et)); \} while (0)}}\label{nios2_8h_af5e20c4521f0800f2ed22939a7d114d6}
+\hypertarget{nios2_8h_af79e611c38be6e02449bb916de76f664}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E@{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E}}
+\index{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E@{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-I\-E\-N\-A\-B\-L\-E}(
+\begin{DoxyParamCaption}
+\item[{}]{src}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-builtin\-\_\-wrctl(3, src); \} while (0)}}\label{nios2_8h_af79e611c38be6e02449bb916de76f664}
+\hypertarget{nios2_8h_a3adafd4d9a38bd8589a0e46c44ec761c}{\index{nios2.\-h@{nios2.\-h}!\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S}}
+\index{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S@{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S}!nios2.h@{nios2.\-h}}
+\subsubsection[{\-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-I\-O\-S2\-\_\-\-W\-R\-I\-T\-E\-\_\-\-S\-T\-A\-T\-U\-S}(
+\begin{DoxyParamCaption}
+\item[{}]{src}
+\end{DoxyParamCaption}
+)~do \{ \-\_\-\-\_\-builtin\-\_\-wrctl(0, src); \} while (0)}}\label{nios2_8h_a3adafd4d9a38bd8589a0e46c44ec761c}

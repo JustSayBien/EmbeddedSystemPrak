@@ -1,0 +1,25 @@
+\hypertarget{alt__debug_8h}{\section{include/sys/alt\-\_\-debug.h \-File \-Reference}
+\label{alt__debug_8h}\index{include/sys/alt\-\_\-debug.\-h@{include/sys/alt\-\_\-debug.\-h}}
+}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{alt__debug_8h_a936c5fe92715446c8d2e0794e2ef0b2b}{\-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T}(condition)
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{alt__debug_8h_a936c5fe92715446c8d2e0794e2ef0b2b}{\index{alt\-\_\-debug.\-h@{alt\-\_\-debug.\-h}!\-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T@{\-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T}}
+\index{\-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T@{\-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T}!alt_debug.h@{alt\-\_\-debug.\-h}}
+\subsubsection[{\-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-L\-T\-\_\-\-D\-E\-B\-U\-G\-\_\-\-A\-S\-S\-E\-R\-T}(
+\begin{DoxyParamCaption}
+\item[{}]{condition}
+\end{DoxyParamCaption}
+)}}\label{alt__debug_8h_a936c5fe92715446c8d2e0794e2ef0b2b}
+{\bfseries \-Value\-:}
+\begin{DoxyCode}
+if (!condition) \
+{                                                   \
+  __asm__ volatile ("break");                       \
+}
+\end{DoxyCode}
