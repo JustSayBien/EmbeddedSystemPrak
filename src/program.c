@@ -1,5 +1,5 @@
 #include "program.h"
-
+#include "mymath.h"
 
 /** stores the queried button state */
 volatile uint8_t button_state;
@@ -16,7 +16,6 @@ int32_t planned_distance = 0;
 /** planned angle */
 int32_t planned_angle = 0;
 
-
 /** driven angle */
 int32_t driven_angle = 0;
 
@@ -30,6 +29,10 @@ enum drivestate drive_state;
 
 /** current calibrate state */
 enum calibratestate calibrate_state;
+
+
+
+
 
 
 void program_run() {
