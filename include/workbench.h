@@ -17,14 +17,26 @@ typedef struct{
 
 
 const workbench DEFAULT_WORKBENCH = { 0, 0, 0, 0, {ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN}, {0, 0, 0, 0, 0}};
-
 const workbench workbenches[] = {DEFAULT_WORKBENCH, DEFAULT_WORKBENCH, DEFAULT_WORKBENCH, DEFAULT_WORKBENCH, DEFAULT_WORKBENCH};
 
 
 
 
 
+int16_t get_angle(uint8_t id_from, uint8_t id_to){
 
+	if(id_from == 0 || id_to == 0 || id_from - 1 >= MAX_COUNT_WORKBENCHES || id_to - 1 >= MAX_COUNT_WORKBENCHES){
+		//base not configured -> return;
+	}
+
+	if(workbenches[id_from-1].angle_to_workbench[id_to-1] != ANGLE_UNKNOWN){
+		int8_t distance_x = workbenches[id_to-1].distance_to_base_x - workbenches[id_from-1].distance_to_base_x;
+		int8_t distance_y = workbenches[id_to-1].distance_to_base_y - workbenches[id_from-1].distance_to_base_y;
+
+		//TODO
+	}	
+	
+}
 
 
 

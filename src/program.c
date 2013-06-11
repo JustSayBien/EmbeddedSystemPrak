@@ -6,6 +6,7 @@ volatile uint8_t button_state;
 
 /** stores the queried bumper state */
 volatile int32_t bumper_state;
+volatile int32_t light_bumper_state;
 
 /** bool to switch between displaying trip or whole distance */
 uint8_t display_whole_distance = 0;
@@ -29,6 +30,7 @@ enum drivestate drive_state;
 
 /** current calibrate state */
 enum calibratestate calibrate_state;
+
 
 
 
@@ -113,6 +115,10 @@ void setProgramState(enum programstate state){
 		case COLLISION:
 			setLed(LED_CHECK_ROBOT_RED, 0, 0);
 			break;
+		case SEEKDOCK:
+			//TODO use defines
+			setLed(0, 255, 255);
+			break;
 	}
 	program_state = state;
 }
@@ -135,7 +141,6 @@ void handleStateInit(){
 	//switch to drive mode
 	if(button_state == BTN_DAY){
 		roombadata.trip_meter = 0;
-		drive_state = DRIVING;
 		setProgramState(DRIVE);
 	}
 	
@@ -193,10 +198,10 @@ void handleStateCalibrate(){
 
 void handleStateDrive(){
 
-
+	//any collision detected?
 	bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
-	// bumper and wheeldrop collision detected ?
-	if(bumper_state != 0){
+	light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+	if(bumper_state != 0 || light_bumper_state != 0){
 		stop();
 		setProgramState(COLLISION);
 		//return immediately
@@ -204,76 +209,44 @@ void handleStateDrive(){
 	}
 
 
-	query_sensor(PACKET_DISTANCE);
-	int32_t angle = query_sensor(PACKET_ANGLE);
-	driven_angle += angle;
-	
 	switch(drive_state){
-
-		case DRIVING:
-
-			//start driving
-			if(!roombadata.is_moving){
-				drive(DEFAULT_VELOCITY, (int16_t) 0);
-			}
-
-			else{
-				int32_t light_bumper = query_sensor(PACKET_LIGHT_BUMPER);
-				if(light_bumper != 0){
-					if(light_bumper & 0x7 && light_bumper & 0x38){
-						planned_angle = -roombadata.angle_360_degrees/2;
-						drive_state = TURNING;
-						stop();
-					}
-					else if(light_bumper & 0x7){
-						planned_angle = -roombadata.angle_360_degrees/12;
-						drive_state = TURNING;
-						stop();
-					}
-					else{
-						planned_angle = roombadata.angle_360_degrees/12;
-						drive_state = TURNING;
-						stop();
-					}
-				}					
-				
-			}
-
+		case ANGLE_APPROACH:
+			handleSubStateAngleApproach();
 			break;
-		case TURNING:
-
-			//start turning
-			if(!roombadata.is_moving){
-				int16_t direction = planned_angle < 0 ? -1 : 1;
-				drive(DEFAULT_VELOCITY, direction);
-			}
-			else{
-				//finished turning ?
-				if((planned_angle < 0 && driven_angle <= planned_angle) || (planned_angle > 0 && driven_angle >= planned_angle)){
-					driven_angle = 0;
-					planned_angle = 0;
-					stop();
-					drive_state = DRIVING;	
-				}						
-				
-			}
-
+		case LINE_APPROACH:
+			handleSubStateLineApproach();
 			break;
-		}
-				
-		
-		// print distance
-		int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_meter/10;
-		if(intToAscii(distance_centimeter, roomba_sevenseg_digits) != 1){
-			setWeekdayLed(distance_centimeter / 10000);	
-		}
-		else{
-			setWeekdayLed(0);
-		}
-		write_sevenseg_digits();
+		case FENCE_APPROACH:
+			handleSubStateFenceApproach();
+			break;
+
+	}
 }
 
 void handleStateCollision(){
+
+
+
+	//old light bumper code....
+	/*if(light_bumper_state != 0){
+		if(light_bumper_state & 0x7 && light_bumper_state & 0x38){
+			planned_angle = -roombadata.angle_360_degrees/2;
+			drive_state = TURNING;
+			stop();
+		}
+		else if(light_bumper_state & 0x7){
+			planned_angle = -roombadata.angle_360_degrees/12;
+			drive_state = TURNING;
+			stop();
+		}
+		else{
+			planned_angle = roombadata.angle_360_degrees/12;
+			drive_state = TURNING;
+			stop();
+		}
+	} */
+
+
 
 	int16_t radius;
 	int32_t planned_angle = 0;
@@ -331,7 +304,61 @@ void handleStateCollision(){
 	}
 	stop();
 
-	drive_state = DRIVING;
+	
 	setProgramState(DRIVE);
+}
+
+
+void handleStateSeekdock(){
+
+
+	
+	
+
+
+	/*switch(seekdock_state){
+		case FORCEFIELD:
+
+			break;
+		case GREENBUOY:
+
+			break;
+		case REDBUOY:
+
+			break;
+		case GREENBUOY_AND_FORCEFIELD:
+
+			break;
+		case REDBUOY_AND_FORCEFIELD:
+
+			break;
+		case GREENBUOY_AND_REDBUOY:
+
+			break;
+		case GREENBUOY_REDBUOY_AND_FORCEFIELD:
+
+			break;
+
+
+	}*/
+
+}
+
+void handleStateDocked(){
+
+}
+
+
+
+
+
+void handleSubStateAngleApproach(){
+
+}
+
+void handleSubStateLineApproach(){
+}
+
+void handleSubStateFenceApproach(){
 }
 

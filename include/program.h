@@ -14,9 +14,10 @@
 /******************************************************************* Defines */
 
 
-enum programstate { INIT, CALIBRATE, DRIVE, COLLISION};
-enum drivestate {TURNING, DRIVING};
+enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED};
+enum drivestate {ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH};
 enum calibratestate {DISTANCE, ANGLE};
+//enum seekdockstate {FORCEFIELD, GREENBUOY, REDBUOY, GREENBUOY_AND_FORCEFIELD, REDBUOY_AND_FORCEFIELD, GREENBUOY_AND_REDBUOY, GREENBUOY_REDBUOY_AND_FORCEFIELD};
 
 
 /******************************************************* Function prototypes */
@@ -78,6 +79,17 @@ void handleStateCollision();
   *
   */
 void handleStateCalibrate();
+
+
+void handleStateSeekdock();
+
+void handleStateDocked();
+
+void handleSubStateAngleApproach();
+
+void handleSubStateLineApproach();
+
+void handleSubStateFenceApproach();
 
 
 
