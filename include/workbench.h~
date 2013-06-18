@@ -72,7 +72,7 @@ int16_t get_angle(uint8_t id_from, uint8_t id_to){
 				angle = 90 - angle;
 				break;
 			case 3:
-				angle = (270 + angle) * -1;
+				angle = 90 + angle; //(270 + angle) * -1;
 				break;
 			case 4:
 				angle = 90 - angle;
