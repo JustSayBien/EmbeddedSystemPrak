@@ -232,12 +232,22 @@ int32_t query_sensor(packet query_packet){
 
 	if(query_packet.id == PACKET_DISTANCE.id){
 		int32_t distance_value = result < 0 ? result * -1 : result;
-		distance_value = (int32_t) (distance_value * (1000.0f/roombadata.distance_1_meter));
+		distance_value = as_calibrated_distance(distance_value);
 		roombadata.driven_distance += distance_value;
 		roombadata.trip_meter += distance_value;
 	}
 
 	return result;
+}
+
+
+
+int32_t as_calibrated_angle(int32_t angle_raw){
+	return (int32_t) (angle_raw * (360.0f / roombadata.angle_360_degrees));
+}
+
+int32_t as_calibrated_distance(int32_t distance_raw){
+	return (int32_t) (distance_raw * (1000.0f/roombadata.distance_1_meter));
 }
 
 

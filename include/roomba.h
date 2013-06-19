@@ -198,6 +198,9 @@ void roomba_calibrate_distance();
 int32_t query_sensor(packet query_packet);
 
 
+int32_t as_calibrated_angle(int32_t angle_raw);
+int32_t as_calibrated_distance(int32_t distance_raw);
+
 /**
   * \brief  query sensor list function
   *

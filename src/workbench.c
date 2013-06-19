@@ -8,6 +8,14 @@ void workbenches_init(){
 	for(i=0; i < MAX_COUNT_WORKBENCHES; i++){
 		workbenches[i] = DEFAULT_WORKBENCH;
 	}	
+
+
+	//test
+	(&workbenches[0])->id = 1;
+	(&workbenches[1])->id = 2;
+	(&workbenches[1])->distance_to_base_x = 1;
+	(&workbenches[1])->distance_to_base_y = 2;
+
 }
 
 
@@ -83,7 +91,7 @@ int16_t get_angle(uint8_t id_from, uint8_t id_to){
 		//workbenches[id_from-1].angle_to_workbench[id_to-1] = angle;
 	}
 
-	return workbenches[id_from-1].angle_to_workbench[id_to-1];
+	return -workbenches[id_from-1].angle_to_workbench[id_to-1];
 }
 
 
@@ -104,7 +112,7 @@ int16_t get_distance(uint8_t id_from, uint8_t id_to){
 		}
 
 		float square_root = my_square_root(distance_y * distance_y + distance_x * distance_x);
-		int16_t square_root_int = (int16_t) (square_root * 100);
+		int16_t square_root_int = (int16_t) (square_root * 1000);
 		
 		workbench* pointer = (workbench*) &workbenches[id_from-1];
 		pointer->distance_to_workbench[id_to-1] = square_root_int;

@@ -21,13 +21,16 @@ int32_t planned_angle = 0;
 /** driven angle */
 int32_t driven_angle = 0;
 
+int32_t driven_distance = 0;
+
 /** current program state */
 enum programstate program_state;
 
 
 /** current drive state */
-enum drivestate drive_state;
+enum drivestate drive_state = LEAVE_DOCK;
 
+enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
 
 /** current calibrate state */
 enum calibratestate calibrate_state;
@@ -49,20 +52,13 @@ void program_run() {
 
 	workbenches_init();
 
-	(&workbenches[0])->id = 1;
-	(&workbenches[1])->id = 2;
-	(&workbenches[1])->distance_to_base_x = -2;
-	(&workbenches[1])->distance_to_base_y = -2;
 
-		
+	//test
 	int16_t angle = get_angle(1,2);
-
 	int16_t distance_cm = get_distance(1,2);
-
-	
-	intToAscii(distance_cm, roomba_sevenseg_digits);
+	intToAscii(angle, roomba_sevenseg_digits);
 	write_sevenseg_digits();
-	
+	//
 
 	//main loop
 	while(1){
@@ -238,6 +234,9 @@ void handleStateDrive(){
 
 
 	switch(drive_state){
+		case LEAVE_DOCK:
+			handleSubStateLeaveDock();
+			break;
 		case ANGLE_APPROACH:
 			handleSubStateAngleApproach();
 			break;
@@ -379,8 +378,61 @@ void handleStateDocked(){
 
 
 
+void handleSubStateLeaveDock(){
+	int32_t driven_distance = 0;
+	int32_t driven_angle = 0;
+
+	//drive a bit backward
+	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
+	while(driven_distance <= 10){
+		my_msleep(200);
+		int32_t distance = query_sensor(PACKET_DISTANCE);
+		driven_distance += distance;
+	}
+	stop();
+
+	drive_state = ANGLE_APPROACH;
+}
+
+
+
 
 void handleSubStateAngleApproach(){
+
+	int16_t angle_to_drive = get_angle(1,2);
+	int16_t distance_to_drive = get_distance(1,2);
+
+	switch(angle_approach_state){
+		case DRIVE_ANGLE:
+			
+			if(!roombadata.is_moving){
+				int16_t direction = angle_to_drive < 0 ? -1 : 1;
+				drive(DEFAULT_VELOCITY, direction);
+			}
+			
+
+			driven_angle += as_calibrated_angle(query_sensor(PACKET_ANGLE));
+			if((angle_to_drive < 0 && driven_angle <= angle_to_drive) || (angle_to_drive > 0 && driven_angle >= angle_to_drive)){
+				stop();
+				angle_approach_state = DRIVE_DISTANCE;
+			}
+				
+			break;
+		case DRIVE_DISTANCE:
+			if(!roombadata.is_moving){
+				drive(DEFAULT_VELOCITY, 0);
+			}
+			
+			query_sensor(PACKET_DISTANCE);
+			if(roombadata.trip_meter >= distance_to_drive){
+				stop();
+			}
+
+			break;
+	
+	}
+
+
 
 }
 
