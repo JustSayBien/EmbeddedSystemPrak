@@ -93,12 +93,7 @@ float degToRad(float value){
 
 
 float my_square_root(float value){
-	float n = value / 2.0f;
- 	float lstX = 0.0f; 
- 	while(n != lstX)  
- 	{ 
- 		lstX = n;
- 		n = (n + value/n) / 2.0f; 
- 	}
- 	return n;
+	_asm fld qword ptr [esp+4]
+	_asm fsqrt
+	_asm ret 8
 }

@@ -51,14 +51,16 @@ void program_run() {
 
 	(&workbenches[0])->id = 1;
 	(&workbenches[1])->id = 2;
-	(&workbenches[1])->distance_to_base_x = -1;
+	(&workbenches[1])->distance_to_base_x = -2;
 	(&workbenches[1])->distance_to_base_y = -2;
 
 		
 	int16_t angle = get_angle(1,2);
 
+	int16_t distance_cm = get_distance(1,2);
+
 	
-	intToAscii(angle, roomba_sevenseg_digits);
+	intToAscii(distance_cm, roomba_sevenseg_digits);
 	write_sevenseg_digits();
 	
 
