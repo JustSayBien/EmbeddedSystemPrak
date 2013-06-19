@@ -151,7 +151,8 @@ extern const packet * packet_queries[QUERY_LENGTH];
 extern volatile int32_t query_results[QUERY_LENGTH];
 extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
-
+//TODO add driven_angle/angle_meter field in struct
+//TODO add docked_at_id field
 typedef struct{
 	uint8_t is_moving;
 	int16_t current_velocity;
