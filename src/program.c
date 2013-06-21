@@ -18,14 +18,8 @@ int32_t planned_distance = 0;
 /** planned angle */
 int32_t planned_angle = 0;
 
-/** driven angle */
-int32_t driven_angle = 0;
-
-int32_t driven_distance = 0;
-
 /** current program state */
 enum programstate program_state;
-
 
 /** current drive state */
 enum drivestate drive_state = LEAVE_DOCK;
@@ -86,7 +80,7 @@ void program_run() {
 		//global reset for all states
 		if(button_state == BTN_CLEAN){
 			stop();
-			int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_meter/10;
+			int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_distance/10;
 			if(intToAscii(distance_centimeter, roomba_sevenseg_digits) != 1){
 				setWeekdayLed(distance_centimeter / 10000);	
 			}
@@ -151,7 +145,7 @@ void handleStateInit(){
 	//display trip or whole distance
 	if(button_state == BTN_SPOT || button_state == BTN_DOCK){
 		display_whole_distance = !display_whole_distance;
-		int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_meter/10;
+		int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_distance/10;
 		if(intToAscii(distance_centimeter, roomba_sevenseg_digits) != 1){
 			setWeekdayLed(distance_centimeter / 10000);	
 		}
@@ -164,7 +158,7 @@ void handleStateInit(){
 
 	//switch to drive mode
 	if(button_state == BTN_DAY){
-		roombadata.trip_meter = 0;
+		roombadata.trip_distance = 0;
 		setProgramState(DRIVE);
 	}
 	
@@ -223,14 +217,14 @@ void handleStateCalibrate(){
 void handleStateDrive(){
 
 	//any collision detected?
-	bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+	/*bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
 	light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
 	if(bumper_state != 0 || light_bumper_state != 0){
 		stop();
 		setProgramState(COLLISION);
 		//return immediately
 		return;
-	}
+	}*/
 
 
 	switch(drive_state){
@@ -379,19 +373,17 @@ void handleStateDocked(){
 
 
 void handleSubStateLeaveDock(){
-	int32_t driven_distance = 0;
-	int32_t driven_angle = 0;
 
+	reset_trips();
 	//drive a bit backward
 	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
-	while(driven_distance <= 10){
+	while(roombadata.trip_distance <= DIFFERENCE_TO_BASE){
 		my_msleep(200);
-		int32_t distance = query_sensor(PACKET_DISTANCE);
-		driven_distance += distance;
+		query_sensor(PACKET_DISTANCE);
 	}
 	stop();
-
 	drive_state = ANGLE_APPROACH;
+	reset_trips();
 }
 
 
@@ -411,8 +403,8 @@ void handleSubStateAngleApproach(){
 			}
 			
 
-			driven_angle += as_calibrated_angle(query_sensor(PACKET_ANGLE));
-			if((angle_to_drive < 0 && driven_angle <= angle_to_drive) || (angle_to_drive > 0 && driven_angle >= angle_to_drive)){
+			query_sensor(PACKET_ANGLE);
+			if((angle_to_drive < 0 && roombadata.trip_angle <= angle_to_drive) || (angle_to_drive > 0 && roombadata.trip_angle >= angle_to_drive)){
 				stop();
 				angle_approach_state = DRIVE_DISTANCE;
 			}
@@ -424,9 +416,22 @@ void handleSubStateAngleApproach(){
 			}
 			
 			query_sensor(PACKET_DISTANCE);
-			if(roombadata.trip_meter >= distance_to_drive){
-				stop();
+			int32_t infrared_value = 0;
+			
+			// 1 meter before whole distance is reached we check infrared sensors
+			if(roombadata.trip_distance >= distance_to_drive - SEEKDOCK_TRIGGER_DISTANCE){
+				infrared_value = query_sensor(PACKET_INFRARED_CHARACTER_LEFT);
+				infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
+				infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_OMNI) : infrared_value;
 			}
+
+			// found infrared sensor or reached whole distance
+			if(infrared_value > 160/* || roombadata.trip_distance >= distance_to_drive*/){
+				stop();
+				setProgramState(SEEKDOCK);
+				seekdock();
+			}
+			
 
 			break;
 	

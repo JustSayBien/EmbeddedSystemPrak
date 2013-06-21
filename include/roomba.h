@@ -128,6 +128,7 @@
 #define DRIVE_ON_CHARGER_FORCEFIELD 0xA1
 #define DRIVE_ON_CHARGER_GREENBUOY 0xA4
 #define DRIVE_ON_CHARGER_REDBUOY 0xA8
+#define DRIVE_ON_CHARGER_ALL 0xAD
 
 
 
@@ -157,12 +158,15 @@ typedef struct{
 	uint8_t is_moving;
 	int16_t current_velocity;
 	int32_t driven_distance;
-	int32_t trip_meter;
+	int32_t trip_distance;
+	int32_t trip_angle;
 	int32_t angle_360_degrees;
 	int32_t distance_1_meter;
 } roomba_data;
 
 extern roomba_data roombadata;
+
+
 
 /******************************************************* Function prototypes */
 /**
@@ -201,6 +205,8 @@ int32_t query_sensor(packet query_packet);
 
 int32_t as_calibrated_angle(int32_t angle_raw);
 int32_t as_calibrated_distance(int32_t distance_raw);
+void seekdock();
+void reset_trips();
 
 /**
   * \brief  query sensor list function

@@ -150,7 +150,7 @@ void roomba_calibrate_angle() {
 	}
 	stop();
 	int32_t angle = query_sensor(PACKET_ANGLE);
-	roombadata.angle_360_degrees = angle;
+	roombadata.angle_360_degrees = angle; //+ ((int32_t) (((float) angle) * 0.03f));
 	roomba_sevenseg_digits[0] = 'K';
 	roomba_sevenseg_digits[1] = 'O';
 	roomba_sevenseg_digits[2] = ' ';
@@ -234,7 +234,11 @@ int32_t query_sensor(packet query_packet){
 		int32_t distance_value = result < 0 ? result * -1 : result;
 		distance_value = as_calibrated_distance(distance_value);
 		roombadata.driven_distance += distance_value;
-		roombadata.trip_meter += distance_value;
+		roombadata.trip_distance += distance_value;
+	}
+
+	if(query_packet.id == PACKET_ANGLE.id){
+		roombadata.trip_angle += as_calibrated_angle(result);
 	}
 
 	return result;
@@ -248,6 +252,16 @@ int32_t as_calibrated_angle(int32_t angle_raw){
 
 int32_t as_calibrated_distance(int32_t distance_raw){
 	return (int32_t) (distance_raw * (1000.0f/roombadata.distance_1_meter));
+}
+
+
+void seekdock(){
+	uart_write_byte(CMD_DOCK);
+}
+
+void reset_trips() {
+	roombadata.trip_angle = 0;
+	roombadata.trip_distance = 0;
 }
 
 

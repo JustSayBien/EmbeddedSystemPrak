@@ -9,12 +9,11 @@ void workbenches_init(){
 		workbenches[i] = DEFAULT_WORKBENCH;
 	}	
 
-
 	//test
 	(&workbenches[0])->id = 1;
 	(&workbenches[1])->id = 2;
-	(&workbenches[1])->distance_to_base_x = 1;
-	(&workbenches[1])->distance_to_base_y = 2;
+	(&workbenches[1])->distance_to_base_x = 4;
+	(&workbenches[1])->distance_to_base_y = 0;
 
 }
 
@@ -66,6 +65,9 @@ int16_t get_angle(uint8_t id_from, uint8_t id_to){
 				break;
 	
 		}
+
+
+		//TODO use DIFFERENCE_TO_BASE
 
 
 		int16_t dock_angle = workbenches[id_from-1].dock_angle_multiplier * DOCK_ANGLE_INCREMENT;
