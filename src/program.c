@@ -75,6 +75,11 @@ void program_run() {
 			case COLLISION:	
 				handleStateCollision();
 				break;
+			case SEEKDOCK:
+				handleStateSeekdock();
+				break;
+			case DOCKED:
+				handleStateDocked();
 		}
 		
 		//global reset for all states
@@ -136,6 +141,9 @@ void setProgramState(enum programstate state){
 		case SEEKDOCK:
 			//TODO use defines
 			setLed(0, 255, 255);
+			break;
+		case DOCKED:
+			setLed(0,100,100);
 			break;
 	}
 	program_state = state;
@@ -332,10 +340,12 @@ void handleStateCollision(){
 
 void handleStateSeekdock(){
 
+	if(query_sensor(PACKET_CHARGING_SOURCES_AVAILABLE) == CHARGING_SOURCE_HOMEBASE){
+		setProgramState(DOCKED);
+		init_roomba();
+	}
 
 	
-	
-
 
 	/*switch(seekdock_state){
 		case FORCEFIELD:
@@ -366,7 +376,7 @@ void handleStateSeekdock(){
 }
 
 void handleStateDocked(){
-
+	setWeekdayLed(1);
 }
 
 
@@ -406,6 +416,7 @@ void handleSubStateAngleApproach(){
 			query_sensor(PACKET_ANGLE);
 			if((angle_to_drive < 0 && roombadata.trip_angle <= angle_to_drive) || (angle_to_drive > 0 && roombadata.trip_angle >= angle_to_drive)){
 				stop();
+				reset_trips();
 				angle_approach_state = DRIVE_DISTANCE;
 			}
 				
@@ -426,8 +437,9 @@ void handleSubStateAngleApproach(){
 			}
 
 			// found infrared sensor or reached whole distance
-			if(infrared_value > 160/* || roombadata.trip_distance >= distance_to_drive*/){
+			if(infrared_value > 160 || roombadata.trip_distance >= distance_to_drive){
 				stop();
+				reset_trips();
 				setProgramState(SEEKDOCK);
 				seekdock();
 			}
