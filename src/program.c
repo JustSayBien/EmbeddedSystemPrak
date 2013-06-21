@@ -443,8 +443,6 @@ void handleSubStateAngleApproach(){
 				setProgramState(SEEKDOCK);
 				seekdock();
 			}
-			
-
 			break;
 	
 	}
