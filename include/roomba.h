@@ -153,10 +153,12 @@ extern const packet * packet_queries[QUERY_LENGTH];
 extern volatile int32_t query_results[QUERY_LENGTH];
 extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
-//TODO add driven_angle/angle_meter field in struct
+
 //TODO add docked_at_id field
 typedef struct{
 	uint8_t is_moving;
+	uint8_t current_base_id;
+	uint8_t destination_base_id;
 	int16_t current_velocity;
 	int32_t driven_distance;
 	int32_t trip_distance;
@@ -208,6 +210,7 @@ int32_t as_calibrated_angle(int32_t angle_raw);
 int32_t as_calibrated_distance(int32_t distance_raw);
 void seekdock();
 void reset_trips();
+
 
 /**
   * \brief  query sensor list function

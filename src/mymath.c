@@ -69,7 +69,7 @@ float my_atan2(float y, float x)
                  /* y negligible compared to x */
                  val = 0.0;
          }
-         else    val = atan(y/x);
+         else    val = my_atan(y/x);
          if (x > 0) {
                  /* first or fourth quadrant; already correct */
                  return val;

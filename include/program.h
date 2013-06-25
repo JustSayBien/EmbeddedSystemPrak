@@ -18,7 +18,7 @@ enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED};
 enum drivestate {ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK};
 enum angleapproachstate {DRIVE_ANGLE, DRIVE_DISTANCE};
 enum calibratestate {DISTANCE, ANGLE};
-//enum seekdockstate {FORCEFIELD, GREENBUOY, REDBUOY, GREENBUOY_AND_FORCEFIELD, REDBUOY_AND_FORCEFIELD, GREENBUOY_AND_REDBUOY, GREENBUOY_REDBUOY_AND_FORCEFIELD};
+
 
 
 /******************************************************* Function prototypes */
@@ -54,7 +54,7 @@ void setProgramState(enum programstate state);
   *         this function handles the INIT programm state
   *
   */
-void handleStateInit();
+enum programstate handleStateInit();
 
 /**
   * \brief	Handle DRIVE state
@@ -62,7 +62,7 @@ void handleStateInit();
   *         this function handles the DRIVE programm state
   *
   */
-void handleStateDrive();
+enum programstate handleStateDrive();
 
 /**
   * \brief	Handle COLLISION state
@@ -70,7 +70,7 @@ void handleStateDrive();
   *         this function handles the COLLISION programm state
   *
   */
-void handleStateCollision();
+enum programstate handleStateCollision();
 
 
 /**
@@ -79,18 +79,20 @@ void handleStateCollision();
   *         this function handles the CALIBRATE programm state
   *
   */
-void handleStateCalibrate();
+enum programstate handleStateCalibrate();
 
 
-void handleStateSeekdock();
+enum programstate handleStateSeekdock();
 
-void handleStateDocked();
+enum programstate handleStateDocked();
 
-void handleSubStateAngleApproach();
+enum programstate handleSubStateAngleApproach();
 
-void handleSubStateLineApproach();
+enum programstate handleSubStateLeaveDock();
 
-void handleSubStateFenceApproach();
+enum programstate handleSubStateLineApproach();
+
+enum programstate handleSubStateFenceApproach();
 
 
 

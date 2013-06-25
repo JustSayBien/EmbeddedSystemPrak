@@ -31,7 +31,7 @@ Modification history:
 const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET_INFRARED_CHARACTER_OMNI, &PACKET_DISTANCE, &PACKET_ANGLE, &PACKET_TEMPERATURE};
 volatile int32_t query_results[QUERY_LENGTH];
 
-roomba_data roombadata = {0, 0, 0, 0, 130, 1000};
+roomba_data roombadata = {0, 0, 0, 0, 0, 0, 130, 1000};
 
 // array of currently displayed digits on Roomba's seven segment display
 int32_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
