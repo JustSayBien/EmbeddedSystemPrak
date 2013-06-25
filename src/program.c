@@ -434,29 +434,51 @@ enum programstate handleSubStateLineApproach(){
 		drive(DEFAULT_VELOCITY, 0);
 	}
 	
-	int32_t cliff_signal_left = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-	int32_t cliff_signal_right = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
 
-	// just drive on
-	if(cliff_signal_left < 1200 && cliff_signal_right < 1200){
-		drive(DEFAULT_VELOCITY, 0);
+	int32_t cliff_left_signal = query_sensor(PACKET_CLIFF_LEFT_SIGNAL);
+	int32_t cliff_right_signal = query_sensor(PACKET_CLIFF_RIGHT_SIGNAL);
+	if(cliff_left_signal >= 1200 && cliff_right_signal >= 1200){
+		int32_t infrared_value = 0;
+		infrared_value = query_sensor(PACKET_INFRARED_CHARACTER_LEFT);
+		infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
+		infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_OMNI) : infrared_value;
+		if(infrared_value > 160){
+			stop();
+			reset_trips();
+			seekdock();
+			return SEEKDOCK;
+		}
+		else{
+			
+			drive(DEFAULT_VELOCITY, 1);
+			return DRIVE;
+		}
 	}
-	// turn left
-	else if(cliff_signal_left >= 1200){
-		drive(DEFAULT_VELOCITY, 200);
+	else{
+		int32_t cliff_front_left_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+		int32_t cliff_front_right_signal = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
+
+		// just drive on
+		if(cliff_front_left_signal < 1200 && cliff_front_right_signal < 1200){
+			drive(DEFAULT_VELOCITY, 0);
+		}	
+		// turn left
+		else if(cliff_front_left_signal >= 1200 && cliff_front_right_signal < 1200){
+			drive(DEFAULT_VELOCITY/2, 150);
+		}
+		//turn right
+		else if(cliff_front_right_signal >= 1200 && cliff_front_left_signal < 1200){		
+			drive(DEFAULT_VELOCITY/2, -150);
+		}
+		else{
+			drive(DEFAULT_VELOCITY/2, 50);
+		}
+
+		return DRIVE;
 	}
-	//turn right
-	else if(cliff_signal_right >= 1200){
-		drive(DEFAULT_VELOCITY, -200);
-		
-	}
-	roomba_sevenseg_digits[0] = 'K';
-	roomba_sevenseg_digits[1] = 'K';
-	roomba_sevenseg_digits[2] = 'K';
-	roomba_sevenseg_digits[3] = 'K';
-	write_sevenseg_digits();
-	
-	return DRIVE;
+
+
+
 }
 
 enum programstate handleSubStateFenceApproach(){
