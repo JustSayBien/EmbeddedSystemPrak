@@ -5,9 +5,6 @@
 /** stores the queried button state */
 volatile uint8_t button_state;
 
-/** stores the queried bumper state */
-volatile int32_t bumper_state;
-volatile int32_t light_bumper_state;
 
 /** bool to switch between displaying trip or whole distance */
 uint8_t display_whole_distance = 0;
@@ -19,6 +16,8 @@ enum programstate program_state;
 enum drivestate drive_state = LEAVE_DOCK;
 
 enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
+
+enum collisionstate collision_state;
 
 /** current calibrate state */
 enum calibratestate calibrate_state;
@@ -241,90 +240,98 @@ enum programstate handleStateDrive(){
 }
 
 enum programstate handleStateCollision(){
-
-
-
-	//old light bumper code....
-	/*if(light_bumper_state != 0){
-		if(light_bumper_state & 0x7 && light_bumper_state & 0x38){
-			planned_angle = -roombadata.angle_360_degrees/2;
-			drive_state = TURNING;
-			stop();
-		}
-		else if(light_bumper_state & 0x7){
-			planned_angle = -roombadata.angle_360_degrees/12;
-			drive_state = TURNING;
-			stop();
-		}
-		else{
-			planned_angle = roombadata.angle_360_degrees/12;
-			drive_state = TURNING;
-			stop();
-		}
-	} */
-
-
-
-	int16_t radius;
-	int32_t planned_angle = 0;
-	//right bumper
-	if(bumper_state == 1) {
-		radius = 1;
-		planned_angle = roombadata.angle_360_degrees/4;
-	}
-	//left bumper
-	else if(bumper_state == 2){	
-		radius = -1;
-		planned_angle = roombadata.angle_360_degrees/4;
-		
-	}
-	//both bumpers
-	else if(bumper_state == 3){
-		//TODO random -1 and 1
-		radius = 1;		
-		planned_angle = roombadata.angle_360_degrees/3;
-	}
-	//any wheeldrop 
-	else{
-		//use Day button to return to drive mode
-		if(button_state == BTN_DAY){
-			return DRIVE;
-		}
-		else{
-			return COLLISION;
-		}
-	}
-
-
-	//consume sensor values
-	query_sensor(PACKET_DISTANCE);
-	query_sensor(PACKET_ANGLE);
-
-	int32_t driven_distance = 0;
-	int32_t driven_angle = 0;
-
-	//drive a bit backward
-	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
-	while(driven_distance <= 10){
-		my_msleep(200);
-		int32_t distance = query_sensor(PACKET_DISTANCE);
-		driven_distance += distance;
-	}
-	stop();
-
-
-	//turn away
-	drive(DEFAULT_VELOCITY/2, radius);
-	while(driven_angle <= planned_angle){
-		my_msleep(200);
-		int32_t angle = query_sensor(PACKET_ANGLE);
-		driven_angle += angle < 0 ? angle * -1 : angle;
-
-	}
-	stop();
-
 	
-	return DRIVE;
+	switch(collision_state){
+		case COLLISION_TURN:
+			if(!roombadata.is_moving){
+
+				//TODO maybe do planned_angle calculation directly in on_collision_detected() function
+
+				//check physical bumpers and wheeldrops before light bumps to ensure that they have priority
+				if(collisiondata.bumper_state != 0){
+					//both bumpers
+					if(collisiondata.bumper_state == 0x3){
+						//TODO random - and +
+						collisiondata.planned_angle = -roombadata.angle_360_degrees/4;
+					}
+					//right bumper
+					else if(collisiondata.bumper_state == 0x1) {
+						collisiondata.planned_angle = roombadata.angle_360_degrees/8;
+					}
+					//left bumper
+					else if(collisiondata.bumper_state == 0x2){	
+						collisiondata.planned_angle = -roombadata.angle_360_degrees/8;
+					}
+					//any wheeldrop 
+					else{
+						//use Day button to return to drive mode
+						if(button_state == BTN_DAY){
+							//TODO restore trip meters from collisiondata
+							on_collision_cleared();
+							return DRIVE;
+						}
+						else{
+							return COLLISION;
+						}
+					}
+					drive_a_bit_backward();
+				}
+
+				else if(collisiondata.light_bumper_state != 0){
+					//both bumpers
+					if(collisiondata.light_bumper_state & 0x7 && collisiondata.light_bumper_state & 0x38){
+						collisiondata.planned_angle = -roombadata.angle_360_degrees/4;
+					}
+					//right bumper
+					else if(collisiondata.light_bumper_state & 0x7){
+						collisiondata.planned_angle = -roombadata.angle_360_degrees/8;
+					}
+					//left bumper
+					else{
+						collisiondata.planned_angle = roombadata.angle_360_degrees/8;
+					}
+				}
+	
+				drive(DEFAULT_VELOCITY, -1);
+
+			}
+			else{
+				// reached planned angle?
+				if((collisiondata.planned_angle < 0 && roombadata.trip_angle <= collisiondata.planned_angle) ||
+ 					(collisiondata.planned_angle >= 0 && roombadata.trip_angle >= collisiondata.planned_angle)){
+					stop();
+					collisiondata.angle_sum += collisiondata.planned_angle;
+					collisiondata.planned_angle = 0;
+					collisiondata.planned_distance = 20;
+					drive(DEFAULT_VELOCITY, 0);
+				}
+			}
+			break;
+		case COLLISION_DRIVE:
+
+			if(!roombadata.is_moving){
+				drive(DEFAULT_VELOCITY, 0);
+			}
+			else{
+				//while driving planned distance, check if new collisions are detected
+				int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+				int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+				if(bumper_state != 0 || light_bumper_state != 0){
+					//TODO restore trip distance before calling on_collision_detected
+					on_collision_detected(bumper_state, light_bumper_state);
+					return COLLISION;
+				}
+	
+				if(roombadata.trip_distance >= collisiondata.planned_distance){
+					collisiondata.distance_sum += collisiondata.planned_distance;
+					stop();
+				}
+			}
+			break;
+
+	}
+
+	return COLLISION;
 }
 
 
@@ -340,6 +347,11 @@ enum programstate handleStateSeekdock(){
 }
 
 enum programstate handleStateDocked(){
+
+
+
+
+
 	return DOCKED;
 }
 
@@ -348,14 +360,8 @@ enum programstate handleStateDocked(){
 
 enum programstate handleSubStateLeaveDock(){
 
-	reset_trips();
-	//drive a bit backward
-	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
-	while(roombadata.trip_distance <= DIFFERENCE_TO_BASE){
-		my_msleep(200);
-		query_sensor(PACKET_DISTANCE);
-	}
-	stop();
+	drive_a_bit_backward();
+
 	drive_state = LINE_APPROACH;
 	reset_trips();
 
@@ -391,10 +397,10 @@ enum programstate handleSubStateAngleApproach(){
 		case DRIVE_DISTANCE:
 
 			//check if collisions are detected
-			/*bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
-			light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
-			if(drive_state != LEAVE_DOCK && (bumper_state != 0 || light_bumper_state != 0)){
-				stop();
+			/*int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+			int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+			if(bumper_state != 0 || light_bumper_state != 0){
+				on_collision_detected(bumper_state, light_bumper_state);
 				return COLLISION;
 			}*/
 
@@ -420,6 +426,7 @@ enum programstate handleSubStateAngleApproach(){
 				seekdock();
 				return SEEKDOCK;
 			}
+
 			break;
 	
 	}
@@ -434,7 +441,6 @@ enum programstate handleSubStateLineApproach(){
 		drive(DEFAULT_VELOCITY, 0);
 	}
 	
-
 	int32_t cliff_left_signal = query_sensor(PACKET_CLIFF_LEFT_SIGNAL);
 	int32_t cliff_right_signal = query_sensor(PACKET_CLIFF_RIGHT_SIGNAL);
 	if(cliff_left_signal >= 1200 && cliff_right_signal >= 1200){
@@ -450,7 +456,7 @@ enum programstate handleSubStateLineApproach(){
 		}
 		else{
 			
-			drive(DEFAULT_VELOCITY, 1);
+			drive(DEFAULT_VELOCITY, 0);
 			return DRIVE;
 		}
 	}

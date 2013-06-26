@@ -4,6 +4,7 @@
 /****************************************************************** Includes */
 #include <stdint.h>
 #include "uart.h"
+#include "workbench.h"
 
 /******************************************************************* Defines */
 
@@ -154,7 +155,7 @@ extern volatile int32_t query_results[QUERY_LENGTH];
 extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
 
-//TODO add docked_at_id field
+
 typedef struct{
 	uint8_t is_moving;
 	uint8_t current_base_id;
@@ -168,6 +169,19 @@ typedef struct{
 } roomba_data;
 
 extern roomba_data roombadata;
+
+typedef struct{
+	int32_t angle_sum;
+	int32_t distance_sum;
+	int32_t bumper_state;
+	int32_t light_bumper_state;
+	int32_t planned_angle;
+	int32_t planned_distance;
+	int32_t trip_distance_at_collision;
+	int32_t trip_angle_at_collision;
+} collision_data;
+
+extern collision_data collisiondata;
 
 
 
@@ -210,6 +224,10 @@ int32_t as_calibrated_angle(int32_t angle_raw);
 int32_t as_calibrated_distance(int32_t distance_raw);
 void seekdock();
 void reset_trips();
+
+void drive_a_bit_backward();
+void on_collision_detected();
+void on_collision_cleared();
 
 
 /**

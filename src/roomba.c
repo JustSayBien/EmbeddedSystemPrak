@@ -32,6 +32,7 @@ const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET
 volatile int32_t query_results[QUERY_LENGTH];
 
 roomba_data roombadata = {0, 0, 0, 0, 0, 0, 130, 1000};
+collision_data collisiondata = {0, 0, 0, 0, 0, 0, 0, 0};
 
 // array of currently displayed digits on Roomba's seven segment display
 int32_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
@@ -109,6 +110,8 @@ const packet PACKET_STASIS                    = {58, 1, 0};
 /******************************************************************** Macros */
 
 /********************************************************** Global functions */
+
+
 void init_roomba() {
 	uart_write_byte(CMD_START);
 	uart_write_byte(CMD_FULL);
@@ -362,6 +365,53 @@ uint8_t check_button(){
 int32_t calculateTimeToDrive (int32_t distance, int32_t velocity){
 	return ((int32_t)(distance/velocity))*1000;
 }
+
+void drive_a_bit_backward(){
+	int32_t trip_distance_backup = roombadata.trip_distance;
+	int32_t trip_angle_backup = roombadata.trip_angle;
+	reset_trips();
+	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
+	while(roombadata.trip_distance <= DIFFERENCE_TO_BASE){
+		my_msleep(200);
+		query_sensor(PACKET_DISTANCE);
+	}
+	stop();
+	roombadata.trip_distance = trip_distance_backup;
+	roombadata.trip_angle = trip_angle_backup;
+}
+
+void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state){
+	stop();
+
+	//TODO calculate planned angle based on bumper state and old angle sum (rechte hand regel)
+	collisiondata.angle_sum = 0;
+	collisiondata.distance_sum = 0;
+	collisiondata.light_bumper_state = light_bumper_state;
+	collisiondata.bumper_state = bumper_state;
+	collisiondata.planned_angle = 0;
+	collisiondata.planned_distance = 0;
+	collisiondata.trip_distance_at_collision = roombadata.trip_distance;
+	collisiondata.trip_angle_at_collision = roombadata.trip_angle;
+	reset_trips();
+
+
+
+
+
+
+
+
+}
+
+void on_collision_cleared(){
+
+	//TODO restore trip meters
+
+	collisiondata.angle_sum = 0;
+	collisiondata.distance_sum = 0;
+	
+}
+
  
 
 
