@@ -14,15 +14,26 @@
 /******************************************************************* Defines */
 
 
-enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED};
-enum drivestate {ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK};
-enum angleapproachstate {DRIVE_ANGLE, DRIVE_DISTANCE};
-enum collisionstate {COLLISION_TURN, COLLISION_DRIVE};
-enum calibratestate {DISTANCE, ANGLE};
+enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED };
+enum base_config_states { BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y, BASE_ROTATION };
+enum drivestate { ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK };
+enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
+enum fenceapproachstate { STRAIGHT, CORRECTION };
+enum collisionstate { COLLISION_TURN, COLLISION_DRIVE };
+enum calibratestate { DISTANCE, ANGLE, BASE, START };
+
+typedef unsigned long millis_t;
 
 
 
 /******************************************************* Function prototypes */
+
+
+/** Global clock; incremented in every iteration of the main loop */
+extern millis_t global_clock;
+
+/** Current state of the base configuration module */
+extern uint8_t base_config_state;
 
 
 void program_run();
