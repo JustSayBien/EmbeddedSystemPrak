@@ -384,8 +384,6 @@ void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state){
 	stop();
 
 	//TODO calculate planned angle based on bumper state and old angle sum (rechte hand regel)
-	collisiondata.angle_sum = 0;
-	collisiondata.distance_sum = 0;
 	collisiondata.light_bumper_state = light_bumper_state;
 	collisiondata.bumper_state = bumper_state;
 	collisiondata.planned_angle = 0;

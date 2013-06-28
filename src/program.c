@@ -245,22 +245,20 @@ enum programstate handleStateCollision(){
 		case COLLISION_TURN:
 			if(!roombadata.is_moving){
 
-				//TODO maybe do planned_angle calculation directly in on_collision_detected() function
-
 				//check physical bumpers and wheeldrops before light bumps to ensure that they have priority
 				if(collisiondata.bumper_state != 0){
 					//both bumpers
 					if(collisiondata.bumper_state == 0x3){
 						//TODO random - and +
-						collisiondata.planned_angle = -roombadata.angle_360_degrees/4;
+						collisiondata.planned_angle = -90;
 					}
 					//right bumper
 					else if(collisiondata.bumper_state == 0x1) {
-						collisiondata.planned_angle = roombadata.angle_360_degrees/8;
+						collisiondata.planned_angle = 45;
 					}
 					//left bumper
 					else if(collisiondata.bumper_state == 0x2){	
-						collisiondata.planned_angle = -roombadata.angle_360_degrees/8;
+						collisiondata.planned_angle = -45;
 					}
 					//any wheeldrop 
 					else{
@@ -280,30 +278,56 @@ enum programstate handleStateCollision(){
 				else if(collisiondata.light_bumper_state != 0){
 					//both bumpers
 					if(collisiondata.light_bumper_state & 0x7 && collisiondata.light_bumper_state & 0x38){
-						collisiondata.planned_angle = -roombadata.angle_360_degrees/4;
+						collisiondata.planned_angle = -90;
 					}
-					//right bumper
 					else if(collisiondata.light_bumper_state & 0x7){
-						collisiondata.planned_angle = -roombadata.angle_360_degrees/8;
+						collisiondata.planned_angle = -45;
 					}
-					//left bumper
 					else{
-						collisiondata.planned_angle = roombadata.angle_360_degrees/8;
+						collisiondata.planned_angle = 45;
 					}
 				}
-	
-				drive(DEFAULT_VELOCITY, -1);
+				// no collision, we can balance angle_sum
+				else{
+					//angle_sum is already balanced
+					if(collisiondata.angle_sum == 0){
+						//TODO check and balance distance sum
+						on_collision_cleared();
+						return DRIVE;
+					}
+					else{
+						collisiondata.planned_angle = collisiondata.angle_sum * -1;
+					}
+				}
+
+
+				collisiondata.bumper_state = 0;
+				collisiondata.light_bumper_state = 0;
+				int16_t direction = collisiondata.planned_angle < 0 ? -1 : 1;
+				drive(DEFAULT_VELOCITY, direction);
 
 			}
 			else{
+				query_sensor(PACKET_ANGLE);
 				// reached planned angle?
 				if((collisiondata.planned_angle < 0 && roombadata.trip_angle <= collisiondata.planned_angle) ||
  					(collisiondata.planned_angle >= 0 && roombadata.trip_angle >= collisiondata.planned_angle)){
-					stop();
+
 					collisiondata.angle_sum += collisiondata.planned_angle;
 					collisiondata.planned_angle = 0;
-					collisiondata.planned_distance = 20;
-					drive(DEFAULT_VELOCITY, 0);
+					reset_trips();
+					stop();
+				
+					int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+					int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+					if(bumper_state != 0 || light_bumper_state != 0){
+						collisiondata.bumper_state = bumper_state;
+						collisiondata.light_bumper_state = light_bumper_state;
+					}
+					else{
+						collisiondata.planned_distance = 300;
+						collision_state = COLLISION_DRIVE;
+					}
 				}
 			}
 			break;
@@ -313,18 +337,29 @@ enum programstate handleStateCollision(){
 				drive(DEFAULT_VELOCITY, 0);
 			}
 			else{
+
+				query_sensor(PACKET_DISTANCE);
 				//while driving planned distance, check if new collisions are detected
 				int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
 				int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
 				if(bumper_state != 0 || light_bumper_state != 0){
-					//TODO restore trip distance before calling on_collision_detected
-					on_collision_detected(bumper_state, light_bumper_state);
-					return COLLISION;
-				}
-	
-				if(roombadata.trip_distance >= collisiondata.planned_distance){
-					collisiondata.distance_sum += collisiondata.planned_distance;
 					stop();
+					reset_trips();
+					//TODO calculate distance value based on trigonometrie
+					collisiondata.distance_sum += roombadata.trip_distance;
+					collisiondata.bumper_state = bumper_state;
+					collisiondata.light_bumper_state = light_bumper_state;
+					collision_state = COLLISION_TURN;
+				}
+				else{
+					if(roombadata.trip_distance >= collisiondata.planned_distance){
+						//TODO distance_sum should be distance value which roomba is away from his course(trigonometrie)
+						collisiondata.distance_sum += collisiondata.planned_distance;
+						collisiondata.planned_distance = 0;
+						stop();
+						reset_trips();
+						collision_state = COLLISION_TURN;
+					}
 				}
 			}
 			break;
@@ -395,14 +430,14 @@ enum programstate handleSubStateAngleApproach(){
 				
 			break;
 		case DRIVE_DISTANCE:
-
+			{
 			//check if collisions are detected
-			/*int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+			int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
 			int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
 			if(bumper_state != 0 || light_bumper_state != 0){
 				on_collision_detected(bumper_state, light_bumper_state);
 				return COLLISION;
-			}*/
+			}
 
 			//start driving if necessary
 			if(!roombadata.is_moving){
@@ -428,6 +463,7 @@ enum programstate handleSubStateAngleApproach(){
 			}
 
 			break;
+			}
 	
 	}
 
@@ -441,6 +477,16 @@ enum programstate handleSubStateLineApproach(){
 		drive(DEFAULT_VELOCITY, 0);
 	}
 	
+
+	//check if collisions are detected
+	int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+	int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+	if(bumper_state != 0 || light_bumper_state != 0){
+		on_collision_detected(bumper_state, light_bumper_state);
+		return COLLISION;
+	}
+	
+
 	int32_t cliff_left_signal = query_sensor(PACKET_CLIFF_LEFT_SIGNAL);
 	int32_t cliff_right_signal = query_sensor(PACKET_CLIFF_RIGHT_SIGNAL);
 	if(cliff_left_signal >= 1200 && cliff_right_signal >= 1200){
