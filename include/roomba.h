@@ -226,7 +226,7 @@ void seekdock();
 void reset_trips();
 
 void drive_a_bit_backward();
-void on_collision_detected();
+void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state);
 void on_collision_cleared();
 
 

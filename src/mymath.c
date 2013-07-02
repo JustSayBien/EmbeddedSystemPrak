@@ -24,8 +24,8 @@ float my_atan(float x)
                  MATH_PI3   /* pi/3 */
          };
  
-         int     neg = x < 0;
-         int     n;
+         int32_t     neg = x < 0;
+         int32_t     n;
          float  g;
  
          if (neg) {
@@ -80,6 +80,136 @@ float my_atan2(float y, float x)
          }
          return val + MATH_PI;
 }
+
+
+
+
+float my_sinus(float x, int8_t cos_flag)
+{
+        /*      Algorithm and coefficients from:
+                        "Software manual for the elementary functions"
+                        by W.J. Cody and W. Waite, Prentice-Hall, 1980
+        */
+
+         static float r[] = {
+                 -0.16666666666666665052e+0,
+                  0.83333333333331650314e-2,
+                -0.19841269841201840457e-3,
+                  0.27557319210152756119e-5,
+               -0.25052106798274584544e-7,
+                 0.16058936490371589114e-9,
+                -0.76429178068910467734e-12,
+                  0.27204790957888846175e-14
+         };
+ 
+         float y;
+         int8_t neg = 1;
+ 
+
+         if (x < 0) {
+                 x = -x;
+                 neg = -1;
+         }
+         if (cos_flag) {
+                 neg = 1;
+                 y = MATH_PI2 + x;
+         }
+         else {  
+		y = x;
+	 } 
+         /* ??? avoid loss of significance, if y is too large, error ??? */
+ 
+         y = y * MATH_1_PI + 0.5;
+ 
+        if (y >= FLOAT_MAX/MATH_PI) return 0.0;
+ 
+         /*      Use extended precision to calculate reduced argument.
+                Here we used 12 bits of the mantissa for a1.
+                 Also split x in integer part x1 and fraction part x2.
+         */
+ #define A1 3.1416015625
+ #define A2 -8.908910206761537356617e-6
+        {
+                 float x1, x2;
+ 
+                 my_modf(y, &y);
+                 if (my_modf(0.5*y, &x1)) neg = -neg;
+                 if (cos_flag) y -= 0.5;
+                 x2 = my_modf(x, &x1);
+                 x = x1 - y * A1;
+                 x += x2;
+                 x -= y * A2;
+ #undef A1
+ #undef A2
+         }
+  
+         if (x < 0) {
+                 neg = -neg;
+                 x = -x;
+         }
+ 
+        /* ??? avoid underflow ??? */
+ 
+         y = x * x;
+         x += x * y * POLYNOM7(y, r);
+         return neg==-1 ? -x : x;
+}
+ 
+float my_sin(float x)
+{
+        return my_sinus(x, 0);
+}
+
+float my_cos(float x)
+{
+         if (x < 0) x = -x;
+         return my_sinus(x, 1);
+}
+
+
+float my_modf(float value,float *iptr)
+{
+         struct f64 *f64p;
+         float tmp;
+         int32_t exp;
+         int32_t mask_bits;
+         uint32_t mant;
+ 
+        f64p= (struct f64 *)&value;
+ 
+         exp= F64_GET_EXP(f64p);
+         exp -= F64_EXP_BIAS;
+         if (exp < 0)
+         {
+                 *iptr= 0;
+                 return value;
+         }
+         mask_bits= 52-exp;
+         if (mask_bits <= 0)
+         {
+                 *iptr= value;
+                 return 0;
+         }
+         tmp= value;
+         if (mask_bits >= 32)
+         {
+                 F64_SET_MANT_LOW(f64p, 0);
+                 mask_bits -= 32;
+                 mant= F64_GET_MANT_HIGH(f64p);
+                 mant &= ~((1 << mask_bits)-1);
+                 F64_SET_MANT_HIGH(f64p, mant);
+         }
+         else
+         {
+                 mant= F64_GET_MANT_LOW(f64p);
+                 mant &= ~((1 << mask_bits)-1);
+                F64_SET_MANT_LOW(f64p, mant);
+         }
+         *iptr= value;
+         return tmp-value;
+}
+
+
 
 float radToDeg(float value){
 	return value * 180.0f / MATH_PI;	
