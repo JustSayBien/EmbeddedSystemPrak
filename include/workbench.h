@@ -1,9 +1,7 @@
 #ifndef _WORKBENCH_H
 #define _WORKBENCH_H
 
-
-#include "uart.h"
-#include "mymath.h"
+#include <stdint.h>
 
 #define MAX_COUNT_WORKBENCHES 0x6
 #define DOCK_ANGLE_INCREMENT 0x2D

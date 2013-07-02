@@ -73,7 +73,7 @@ CPP_BOARD   = -D__BOARD=$(BOARD)
 CPP_DEF =-DSYSTEM_BUS_WIDTH=32 -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED
 
 # cflags
-C_OPTIMIZE = #-O2
+C_OPTIMIZE = -O1
 
 # ldflags
 LD_CRT = $(CRT)
@@ -119,6 +119,7 @@ lib: $(LIB)
 
 .PHONY: $(TARGET)
 $(TARGET): $(TARGET).elf
+
 
 ###############################################################################
 # here come the actual rules
@@ -166,8 +167,6 @@ clean:
 .PHONY: new
 new: clean all
 
-
-
 # Running the file
 
 .PHONY: upload
@@ -185,3 +184,5 @@ cont:
 .PHONY: stop
 stop:
 	$(N2DOWNLOAD) --stop
+
+

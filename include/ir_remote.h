@@ -22,6 +22,10 @@ Created: 28.06.2013
 /****************************************************************** Includes */
 
 #include "program.h"
+#include "workbench.h"
+#include "tools.h"
+#include <stdint.h>
+
 
 /******************************************************************* Defines */
 
@@ -71,7 +75,7 @@ enum roomba_action_indices {
 	ROOMBA_REMOTE_NUM_6_INDEX
 };
 
-//extern bool_t roomba_remote_discrete_pressed[NUM_ROOMBA_REMOTE_BUTTONS];
+//extern volatile bool_t roomba_remote_discrete_pressed[NUM_ROOMBA_REMOTE_BUTTONS];
 
 extern millis_t roomba_remote_activation_times[NUM_ROOMBA_REMOTE_BUTTONS];
 
@@ -104,6 +108,6 @@ void printString (char string[]);
 
 void handleBaseSelect (uint8_t base_num);
 
-void checkDiscreteRoombaButtonArray (int index);
+bool_t checkDiscreteRoombaButtonArray (int index);
 
 #endif  // _IR_REMOTE_H

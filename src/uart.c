@@ -101,6 +101,7 @@ int32_t uart_read_byte(void){
   char b = -1;
   while ( !(IORD32(A_UART, UART_ST) & UART_ST_RRDY) );
   b = IORD8(A_UART, UART_RX);
+  return (int32_t)b;
 }
 
 /*********************************************************** Local functions */
