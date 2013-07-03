@@ -128,6 +128,8 @@ void roomba_calibrate_angle() {
 	int32_t cliff_signal;
 
 	drive(DEFAULT_VELOCITY, 1);
+	
+	query_sensor(PACKET_ANGLE);
 
 	while(1){
 		cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);

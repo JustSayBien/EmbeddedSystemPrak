@@ -4,7 +4,7 @@
 
 /****************************************************************** Includes */
 
-
+#include "tools.h"
 
 /******************************************************************* Defines */
 
@@ -29,6 +29,9 @@ float atan(float x);
 float atan2(float y, float x);
 float radToDeg(float value);
 float degToRad(float value);
+
+int myAbs (int value);
+bool_t mySign (int value);
 
 
 #endif
