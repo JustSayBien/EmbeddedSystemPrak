@@ -1,5 +1,5 @@
 /**
- * $Id: uart.c 672 2013-04-12 10:30:44Z klugeflo $
+ * $Id: uart.c 683 2013-05-15 08:36:23Z klugeflo $
  */
 
 /******************************************************************************
@@ -101,7 +101,9 @@ int32_t uart_read_byte(void){
   char b = -1;
   while ( !(IORD32(A_UART, UART_ST) & UART_ST_RRDY) );
   b = IORD8(A_UART, UART_RX);
+  return (int32_t)b;
 }
+
 
 /*********************************************************** Local functions */
 

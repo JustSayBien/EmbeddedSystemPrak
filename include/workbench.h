@@ -2,8 +2,10 @@
 #define _WORKBENCH_H
 
 
+
 #include "uart.h"
 #include "mymath.h"
+
 
 #define MAX_COUNT_WORKBENCHES 0x6
 #define DOCK_ANGLE_INCREMENT 0x2D
@@ -24,6 +26,11 @@ typedef struct{
 
 extern workbench DEFAULT_WORKBENCH;
 workbench workbenches[MAX_COUNT_WORKBENCHES];
+
+
+
+
+
 
 
 

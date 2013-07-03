@@ -436,14 +436,6 @@ void checkDiscreteRoombaButtonArray (int index) {
 	}
 }
 
-int myAbs (int value) {
-	return (value < 0) ? -value : value;
-}
-
-bool_t mySign (int value) {
-	return (value < 0);
-}
-
 void printXcoordinate (workbench *toPrint) {
 	roomba_sevenseg_digits[3] = 'H';
 	roomba_sevenseg_digits[2] = ' ';

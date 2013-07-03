@@ -88,10 +88,6 @@ int getIRAction ();
 
 int getIRActionIndex (int character);
 
-int myAbs (int value);
-
-bool_t mySign (int value);
-
 void printXcoordinate (workbench *toPrint);
 
 void printYcoordinate (workbench *toPrint);
