@@ -20,7 +20,7 @@ enum drivestate { ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK };
 enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
 enum fenceapproachstate { STRAIGHT, CORRECTION };
 enum collisionstate { COLLISION_TURN, COLLISION_DRIVE };
-enum calibratestate { DISTANCE, ANGLE, BASE, START };
+enum calibratestate { DISTANCE, ANGLE, BASE/*, START*/ };
 
 typedef unsigned long millis_t;
 
@@ -34,6 +34,9 @@ extern millis_t global_clock;
 
 /** Current state of the base configuration module */
 extern uint8_t base_config_state;
+
+/** stores the queried ir button state */
+extern volatile int32_t ir_action;
 
 
 void program_run();
