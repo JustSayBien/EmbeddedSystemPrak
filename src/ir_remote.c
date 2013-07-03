@@ -17,9 +17,9 @@ Created: 28.06.2013
 /****************************************************************** Includes */
 
 #include "ir_remote.h"
-#include "program.h"
 #include "roomba.h"
 #include "button.h"
+#include "mymath.h"
 
 #include <asm/io.h>
 
