@@ -173,10 +173,11 @@ extern roomba_data roombadata;
 typedef struct{
 	int32_t angle_sum;
 	int32_t distance_sum;
+	int32_t driven_trip_distance;
 	int32_t bumper_state;
 	int32_t light_bumper_state;
-	int32_t planned_angle;
-	int32_t planned_distance;
+	int32_t program_tick_counter;
+	int8_t played_acustic_feedback;
 	int32_t trip_distance_at_collision;
 	int32_t trip_angle_at_collision;
 } collision_data;
@@ -225,9 +226,14 @@ int32_t as_calibrated_distance(int32_t distance_raw);
 void seekdock();
 void reset_trips();
 
-void drive_a_bit_backward();
+void drive_a_bit_backward(int32_t backward_distance);
 void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state);
 void on_collision_cleared();
+
+void play_song_theme();
+void play_song_collision();
+void play_song_done();
+void play_song_beep();
 
 
 /**

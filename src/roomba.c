@@ -32,7 +32,7 @@ const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET
 volatile int32_t query_results[QUERY_LENGTH];
 
 roomba_data roombadata = {0, 0, 0, 0, 0, 0, 130, 1000};
-collision_data collisiondata = {0, 0, 0, 0, 0, 0, 0, 0};
+collision_data collisiondata = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // array of currently displayed digits on Roomba's seven segment display
 int32_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
@@ -159,6 +159,9 @@ void roomba_calibrate_angle() {
 	roomba_sevenseg_digits[2] = ' ';
 	roomba_sevenseg_digits[3] = ' ';
 	write_sevenseg_digits();
+
+
+	play_song_done();
 }	
 
 void roomba_calibrate_distance(){
@@ -197,6 +200,8 @@ void roomba_calibrate_distance(){
 	roomba_sevenseg_digits[2] = ' ';
 	roomba_sevenseg_digits[3] = ' ';
 	write_sevenseg_digits();
+	
+	play_song_done();
 
 
 }
@@ -366,12 +371,12 @@ int32_t calculateTimeToDrive (int32_t distance, int32_t velocity){
 	return ((int32_t)(distance/velocity))*1000;
 }
 
-void drive_a_bit_backward(){
+void drive_a_bit_backward(int32_t backward_distance){
 	int32_t trip_distance_backup = roombadata.trip_distance;
 	int32_t trip_angle_backup = roombadata.trip_angle;
 	reset_trips();
 	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
-	while(roombadata.trip_distance <= DIFFERENCE_TO_BASE){
+	while(roombadata.trip_distance <= backward_distance){
 		my_msleep(200);
 		query_sensor(PACKET_DISTANCE);
 	}
@@ -383,13 +388,12 @@ void drive_a_bit_backward(){
 void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state){
 	stop();
 
-	//TODO calculate planned angle based on bumper state and old angle sum (rechte hand regel)
+
 	collisiondata.light_bumper_state = light_bumper_state;
 	collisiondata.bumper_state = bumper_state;
-	collisiondata.planned_angle = 0;
-	collisiondata.planned_distance = 0;
 	collisiondata.trip_distance_at_collision = roombadata.trip_distance;
 	collisiondata.trip_angle_at_collision = roombadata.trip_angle;
+	collisiondata.program_tick_counter = 0;
 	reset_trips();
 
 
@@ -403,14 +407,130 @@ void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state){
 
 void on_collision_cleared(){
 
-	//TODO restore trip meters
-
 	collisiondata.angle_sum = 0;
 	collisiondata.distance_sum = 0;
+	collisiondata.light_bumper_state = 0;
+	collisiondata.bumper_state = 0;
+	collisiondata.program_tick_counter = 0;
+	collisiondata.driven_trip_distance = 0;
+	collisiondata.played_acustic_feedback = 0;
+
+	//restore trip meters
+	roombadata.trip_distance = collisiondata.trip_distance_at_collision;
+	roombadata.trip_angle = 0;
 	
 }
 
- 
+void play_song_theme(){
+	#ifndef _SONG_THEME
+	#define _SONG_THEME
+	uart_write_byte(0x8C);
+	uart_write_byte(0x01);
+	uart_write_byte(0x11);
+
+	uart_write_byte(0x3C);
+	uart_write_byte(0x10);
+	uart_write_byte(0x35);
+	uart_write_byte(0x20);
+	uart_write_byte(0x39);
+	uart_write_byte(0x10);
+	uart_write_byte(0x3C);
+	uart_write_byte(0x10);
+	uart_write_byte(0x35);
+	uart_write_byte(0x20);
+	uart_write_byte(0x39);
+	uart_write_byte(0x10);
+	uart_write_byte(0x3C);
+	uart_write_byte(0x0E);
+	uart_write_byte(0x40);
+	uart_write_byte(0x0E);
+	uart_write_byte(0x3E);
+	uart_write_byte(0x10);
+	uart_write_byte(0x3B);
+	uart_write_byte(0x10);
+	uart_write_byte(0x39);
+	uart_write_byte(0x0E);
+	uart_write_byte(0x3B);
+	uart_write_byte(0x0E);
+	uart_write_byte(0x3C);
+	uart_write_byte(0x10);
+	uart_write_byte(0x35);
+	uart_write_byte(0x10);
+	uart_write_byte(0x34);
+	uart_write_byte(0x0E);
+	uart_write_byte(0x37);
+	uart_write_byte(0x0E);
+	uart_write_byte(0x35);
+	uart_write_byte(0x40);
+	#endif
+
+	uart_write_byte(0x8D);
+	uart_write_byte(0x01);
+}
+
+void play_song_collision(){
+	#ifndef _SONG_COLLISION
+	#define _SONG_COLLISION
+	uart_write_byte(0x8C);
+	uart_write_byte(0x02);
+	uart_write_byte(0x14);
+
+	int i;
+	for(i=0; i < 20; i++){
+		uart_write_byte(0x67);
+		uart_write_byte(0x10);
+	}
+	#endif
+
+	uart_write_byte(0x8D);
+	uart_write_byte(0x02);	
+}
+
+void play_song_done(){
+	#ifndef _SONG_DONE
+	#define _SONG_DONE
+	uart_write_byte(0x8C);
+	uart_write_byte(0x03);
+	uart_write_byte(0x06);
+
+
+	uart_write_byte(0x56);
+	uart_write_byte(0x20);
+	uart_write_byte(0x59);
+	uart_write_byte(0x10);
+	uart_write_byte(0x5B);
+	uart_write_byte(0x10);
+	uart_write_byte(0x60);
+	uart_write_byte(0x20);
+	uart_write_byte(0x6B);
+	uart_write_byte(0x08);
+	uart_write_byte(0x6B);
+	uart_write_byte(0x08);
+	#endif
+
+	uart_write_byte(0x8D);
+	uart_write_byte(0x03);	
+}
+
+void play_song_beep(){
+	#ifndef _SONG_BEEP
+	#define _SONG_BEEP
+	uart_write_byte(0x8C);
+	uart_write_byte(0x00);
+	uart_write_byte(0x02);
+
+	uart_write_byte(0x60);
+	uart_write_byte(0x20);
+	uart_write_byte(0x60);
+	uart_write_byte(0x20);
+	#endif
+
+	uart_write_byte(0x8D);
+	uart_write_byte(0x00);	
+}
+
+
+
 
 
 /*********************************************************** Local functions */

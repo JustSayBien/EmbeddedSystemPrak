@@ -47,6 +47,11 @@ void program_run() {
 	write_sevenseg_digits();
 	//
 
+	roombadata.current_base_id = 1;
+	roombadata.destination_base_id = 2;
+
+	play_song_done();
+
 	//main loop
 	while(1){
 		led_set_blue(ledb_vals[3]);
@@ -85,6 +90,10 @@ void program_run() {
 			else{
 				setWeekdayLed(0);
 			}
+
+			drive_state = LEAVE_DOCK;
+			angle_approach_state = DRIVE_ANGLE;
+			on_collision_cleared();
 			write_sevenseg_digits();
 			setProgramState(INIT);
 		}
@@ -149,14 +158,13 @@ enum programstate handleStateInit(){
 	//display trip or whole distance
 	if(button_state == BTN_SPOT || button_state == BTN_DOCK){
 		display_whole_distance = !display_whole_distance;
-		int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_distance/10;
-		if(intToAscii(distance_centimeter, roomba_sevenseg_digits) != 1){
-			setWeekdayLed(distance_centimeter / 10000);	
+
+		if(display_whole_distance){
+			setWeekdayLed(1);
 		}
 		else{
 			setWeekdayLed(0);
 		}
-		write_sevenseg_digits();
 	}
 				
 
@@ -239,11 +247,64 @@ enum programstate handleStateDrive(){
 	
 }
 
+
+void update_distance_sum(){
+	int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
+	//check angle quadrant and if roomba drives left(+) or right(-) away
+	int8_t distance_neg_sign = (angle_sum_abs / 180) % 2;
+						
+	//roomba isnt away from or parallel to his course
+	if(angle_sum_abs % 180 == 0){
+		if(angle_sum_abs % 360 == 0){
+			collisiondata.driven_trip_distance += roombadata.trip_distance;
+		}
+		else{
+			collisiondata.driven_trip_distance -= roombadata.trip_distance;
+		}
+	}
+	else if(angle_sum_abs % 90 == 0){
+		int32_t distance_diff = distance_neg_sign ? -roombadata.trip_distance : roombadata.trip_distance;
+		if(collisiondata.angle_sum < 0){
+			distance_diff = -distance_diff;
+		}
+		collisiondata.distance_sum += distance_diff;
+	}
+	else{
+		angle_sum_abs %= 180;
+		if(angle_sum_abs > 90){
+			angle_sum_abs = 180 - angle_sum_abs;
+		}
+		else{
+							
+		}
+
+		//TODO calc degToRad only one....
+
+		int32_t trip_distance_diff = (int32_t) (my_cos(degToRad((float)angle_sum_abs)) * roombadata.trip_distance);
+		collisiondata.driven_trip_distance += trip_distance_diff;
+
+		int32_t distance_diff = (int32_t) (my_sin(degToRad((float)angle_sum_abs)) * roombadata.trip_distance);
+		if(distance_diff < 0){
+			distance_diff = -distance_diff;
+		}
+		distance_diff = distance_neg_sign ? -distance_diff : distance_diff;
+		if(collisiondata.angle_sum < 0){
+				distance_diff = -distance_diff;
+		}
+		collisiondata.distance_sum += distance_diff;
+	}
+}
+
+
+int32_t lost_counter = 0;
+
+
+
+
 enum programstate handleStateCollision(){
-	
 
-	volatile int32_t light_signal = 0;
 
+	collisiondata.program_tick_counter++;
 
 	switch(collision_state){
 		case COLLISION_TURN:
@@ -255,7 +316,6 @@ enum programstate handleStateCollision(){
 					if(collisiondata.bumper_state >= 0x4){
 						//use Day button to return to drive mode
 						if(button_state == BTN_DAY){
-							//TODO restore trip meters from collisiondata
 							on_collision_cleared();
 							return DRIVE;
 						}
@@ -263,20 +323,47 @@ enum programstate handleStateCollision(){
 							return COLLISION;
 						}
 					}
-					drive_a_bit_backward();
+
+					drive_a_bit_backward(DIFFERENCE_TO_BASE/4);
 				}
 
 				reset_trips();
-				
-				drive(DEFAULT_VELOCITY/4, 1);
+					
 
+				if(!collisiondata.played_acustic_feedback){
+					play_song_collision();
+					my_msleep(10000);
+					//check if collision still exists
+					collisiondata.bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+					collisiondata.light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+					if(collisiondata.bumper_state == 0 && collisiondata.light_bumper_state == 0){
+						on_collision_cleared();
+						return DRIVE;
+					}
+					//any wheeldrop 
+					else if(collisiondata.bumper_state >= 0x4){
+						return COLLISION;
+					}
+					collisiondata.played_acustic_feedback = 1;
+				}
+
+				drive(DEFAULT_VELOCITY/2, 1);
 			}
 			else{
-				//int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
-				int32_t light_signal = query_sensor(PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
-				if(light_signal >= 50 && light_signal <= 300){
+
+				query_sensor(PACKET_ANGLE);
+				//didnt find any collision
+				if(roombadata.trip_angle >= 350){
 					stop();
-					collisiondata.angle_sum = roombadata.trip_angle;
+					on_collision_cleared();
+					return DRIVE;
+				}
+
+
+				int32_t light_signal = query_sensor(PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
+				if(light_signal >= 30 && light_signal <= 400){
+					stop();
+					collisiondata.angle_sum += roombadata.trip_angle;
 					reset_trips();
 					collision_state = COLLISION_DRIVE;
 				}
@@ -288,41 +375,16 @@ enum programstate handleStateCollision(){
 				drive(DEFAULT_VELOCITY/2, 0);
 			}
 			else{
+				query_sensor(PACKET_ANGLE);
+				query_sensor(PACKET_DISTANCE);
+
 				//while driving check if new collisions are detected
 				int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
 				int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
 				if(bumper_state != 0 || light_bumper_state != 0){
-						int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
-						//check angle quadrant and if roomba drives left(+) or right(-) away
-						int8_t distance_neg_sign = (angle_sum_abs / 180) % 2;
-						
-						//roomba isnt away from or parallel to his course
-						if(angle_sum_abs % 180 == 0){
-							//TODO trip distance
-						}
-						else if(angle_sum_abs % 90 == 0){
-							int32_t distance_diff = distance_neg_sign ? -roombadata.trip_distance : roombadata.trip_distance;
-							if(collisiondata.angle_sum < 0){
-								distance_diff = -distance_diff;
-							}
-							collisiondata.distance_sum += distance_diff;
-						}
-						else{
-							angle_sum_abs %= 180;
-							if(angle_sum_abs > 90){
-								angle_sum_abs = 180 - angle_sum_abs;
-							}
-							else{
-							
-							}
 
-							int32_t distance_diff = cos(angle_sum_abs) * roombadata.trip_distance;
-							distance_diff = distance_neg_sign ? -distance_diff : distance_diff;
-							if(collisiondata.angle_sum < 0){
-								distance_diff = -distance_diff;
-							}
-							collisiondata.distance_sum += distance_diff;
-						}
+						collisiondata.angle_sum += roombadata.trip_angle;
+						update_distance_sum();
 						stop();
 						reset_trips();
 						collisiondata.bumper_state = bumper_state;
@@ -332,31 +394,130 @@ enum programstate handleStateCollision(){
 				else{
 					int32_t light_signal = query_sensor(PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
 					//lost right bumper
-					if(light_signal <= 50){
-						drive(DEFAULT_VELOCITY/4, -1);
-						if(roombadata.trip_angle / 360 != 0){
-							drive(DEFAULT_VELOCITY/2, 0);
-							reset_trips();
+					if(light_signal <= 30){
+						
+						lost_counter++;
+						if(lost_counter == 5){
+							//TODO drive back to course
 						}
+						
+						int32_t distance_value = roombadata.trip_distance + DIFFERENCE_TO_BASE/6;
+						drive(DEFAULT_VELOCITY/2, (int16_t) 0);
+						while(roombadata.trip_distance <= distance_value){
+							my_msleep(50);
+							query_sensor(PACKET_DISTANCE);
+						}
+						stop();
+
+						collisiondata.angle_sum += roombadata.trip_angle;
+						update_distance_sum();
+						reset_trips();
+					
+
+						drive(DEFAULT_VELOCITY/2, -1);
 					}
-					else if(light_signal >= 300){
-						drive(DEFAULT_VELOCITY/4, 1);
-						if(roombadata.trip_angle / 360 != 0){
-							drive(DEFAULT_VELOCITY/2, 0);
-							reset_trips();
-						}
+					else if(light_signal >= 400){
+						collisiondata.angle_sum += roombadata.trip_angle;
+						update_distance_sum();
+						reset_trips();
+						lost_counter = 0;
+						drive(DEFAULT_VELOCITY/2, 1);
 					}
 					else{
-						drive(DEFAULT_VELOCITY/4, 0);
-						reset_trips();
+						lost_counter = 0;
+						drive(DEFAULT_VELOCITY/2, 0);
 					}
+
+
+					//after 3 seconds in collision mode begin to check if collision is avoided
+					if(collisiondata.program_tick_counter >= 20){
+						if(drive_state == LINE_APPROACH){
+							int32_t cliff_front_left_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+							int32_t cliff_front_right_signal = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
+							if(cliff_front_left_signal >= 1200 && cliff_front_right_signal >= 1200){
+								stop();
+								reset_trips();
+								int32_t angle_to_turn = 45;
+								drive(DEFAULT_VELOCITY/2, 1);
+								if(angle_to_turn < 0) {
+									angle_to_turn = -angle_to_turn;
+								}
+								while(roombadata.trip_angle <= angle_to_turn){
+									my_msleep(50);
+									query_sensor(PACKET_ANGLE);
+								}
+								stop();
+								on_collision_cleared();
+								return DRIVE;
+							}
+							else if(cliff_front_left_signal >= 1200){
+								stop();
+								reset_trips();
+								int32_t angle_to_turn = 75;
+								drive(DEFAULT_VELOCITY/2, 1);
+		
+								if(angle_to_turn < 0) {
+									angle_to_turn = -angle_to_turn;
+								}
+								while(roombadata.trip_angle <= angle_to_turn){
+									my_msleep(50);
+									query_sensor(PACKET_ANGLE);
+								}
+								stop();
+								on_collision_cleared();
+								return DRIVE;
+							}
+							else if(cliff_front_right_signal >= 1200){
+								stop();
+								reset_trips();
+								on_collision_cleared();
+								return DRIVE;
+
+							}
+						}
+						else if(drive_state == ANGLE_APPROACH){
+							if(collisiondata.distance_sum > 0 && collisiondata.distance_sum <= 80){
+								stop();
+								//consume sensor value
+								query_sensor(PACKET_ANGLE);
+								reset_trips();
+								
+								int32_t angle_to_turn = 0;
+								int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
+								angle_sum_abs %= 360;
+								if(angle_sum_abs > 180){
+									angle_to_turn = -(360 - angle_sum_abs);
+								}
+								angle_to_turn = collisiondata.angle_sum < 0 ? angle_to_turn : -angle_to_turn;
+								
+								//test
+								//angle_to_turn = 90;
+								int8_t direction = angle_to_turn < 0 ? -1 : 1;
+								drive(DEFAULT_VELOCITY/2, direction);
+
+								while((angle_to_turn > 0 && roombadata.trip_angle < angle_to_turn) || (angle_to_turn < 0 && roombadata.trip_angle > angle_to_turn)){
+									my_msleep(50);
+									query_sensor(PACKET_ANGLE);
+								}
+								stop();
+								reset_trips();
+								
+								on_collision_cleared();
+								return DRIVE;
+							}
+						}
+					}
+
+
+
+
 				}
 			}
 			break;
 
 	}
 
-	intToAscii(light_signal, roomba_sevenseg_digits);
+	intToAscii(collisiondata.distance_sum, roomba_sevenseg_digits);
 	write_sevenseg_digits();
 
 	return COLLISION;
@@ -388,9 +549,9 @@ enum programstate handleStateDocked(){
 
 enum programstate handleSubStateLeaveDock(){
 
-	drive_a_bit_backward();
+	drive_a_bit_backward(DIFFERENCE_TO_BASE);
 
-	drive_state = LINE_APPROACH;
+	drive_state = display_whole_distance ? LINE_APPROACH : ANGLE_APPROACH;
 	reset_trips();
 
 	return DRIVE;
@@ -401,8 +562,8 @@ enum programstate handleSubStateLeaveDock(){
 
 enum programstate handleSubStateAngleApproach(){
 
-	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
-	int16_t distance_to_drive = get_distance(roombadata.current_base_id, roombadata.destination_base_id);
+	volatile int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
+	volatile int16_t distance_to_drive = get_distance(roombadata.current_base_id, roombadata.destination_base_id);
 
 	switch(angle_approach_state){
 		case DRIVE_ANGLE:

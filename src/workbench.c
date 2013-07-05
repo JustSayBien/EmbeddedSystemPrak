@@ -12,8 +12,8 @@ void workbenches_init(){
 	//test
 	(&workbenches[0])->id = 1;
 	(&workbenches[1])->id = 2;
-	(&workbenches[1])->distance_to_base_x = 4;
-	(&workbenches[1])->distance_to_base_y = 0;
+	(&workbenches[1])->distance_to_base_x = -2;
+	(&workbenches[1])->distance_to_base_y = 4;
 
 }
 
