@@ -18,40 +18,29 @@ Created: 28.06.2013
 
 #include "ir_remote.h"
 #include "program.h"
+#include "roomba.h"
+#include "workbench.h"
+#include "button.h"
 
-bool_t roomba_remote_discrete_pressed[NUM_ROOMBA_REMOTE_BUTTONS] = {
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false
+#include <asm/io.h>
+
+
+static uint32_t roomba_remote_discrete_pressed[NUM_ROOMBA_REMOTE_BUTTONS] = {
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0
 };
-
-/*bool_t roomba_remote_discrete[NUM_ROOMBA_REMOTE_BUTTONS] = {
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false,
-	false
-};*/
 
 millis_t roomba_remote_activation_times[NUM_ROOMBA_REMOTE_BUTTONS] = {
 	0,
@@ -131,6 +120,11 @@ uint16_t roomba_remote_repeat_time_values[] = {
 
 uint8_t current_base = 0;
 
+
+int led = 0;
+int power = 0;
+int intensity = 0;
+
 // UP, DOWN:  CHANGE VALUE
 // OK:	      NEXT_VALUE / FINISH
 // NUM KEYS:  SELECT BASE TO CONFIGURE
@@ -138,52 +132,21 @@ uint8_t current_base = 0;
 // BASE_COORDINATE_X, BASE_COORDINATE_Y: METERS 1-99
 // BASE_ROTATION: SAVE INCREMENTS OF 45 DEGREES
 
-
-
-/*int main(int argc, char *argv[]) {
-	int i;
-	for (i=0; i<MAX_COUNT_WORKBENCHES; i++) {
-		workbenches[i] = DEFAULT_WORKBENCH;
-	}
-	
-	//init program
-	//led_set_blue(ledb_vals[0] | ledb_vals[1]);
-
-	//button_wait(0);
-
-	init_roomba();
-	
-	led_set_blue(ledb_vals[2] | ledb_vals[3]);
-	
-	roomba_sevenseg_digits[3] = 'R';
-	roomba_sevenseg_digits[2] = 'U';
-	roomba_sevenseg_digits[1] = 'N';
-	roomba_sevenseg_digits[0] = ' ';
-	write_sevenseg_digits();
-	
-	my_msleep(2000);
-	
-	led_set_blue(ledb_vals[4] | ledb_vals[5]);
-	
-	while(true) {
-		
-		my_msleep(50);
-		global_clock += 50;
-	}
-	
-	
-  	return 0;
-}*/
+volatile workbench* current_workbench;
 
 enum programstate handleSubstateBaseSetup () {
 	int32_t action = getIRAction();
-		
-	workbench* current_workbench;
+	
+	if (action == ROOMBA_REMOTE_CROSS_UP) {
+		led |= LED_DOCK_GREEN;
+	} else {
+		led &= ~LED_DOCK_GREEN;
+	}
+	
+	int8_t temp;
 
 	switch (base_config_state) {
-		case BASE_SELECT:
-			led_set_blue(ledb_vals[0]);
-			
+		case BASE_SELECT:			
 			roomba_sevenseg_digits[3] = 'B';
 			roomba_sevenseg_digits[2] = 'A';
 			roomba_sevenseg_digits[1] = 'S';
@@ -216,9 +179,8 @@ enum programstate handleSubstateBaseSetup () {
 			break;
 
 
-		case BASE_COORDINATE_X:				
-			led_set_blue(ledb_vals[1]);
-			current_workbench = &workbenches[current_base-1];
+		case BASE_COORDINATE_X:
+			temp = current_workbench->distance_to_base_x;
 			
 			switch (action) {
 				case ROOMBA_REMOTE_BACK:
@@ -228,23 +190,32 @@ enum programstate handleSubstateBaseSetup () {
 					base_config_state = BASE_COORDINATE_Y;
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
-					if (current_workbench->distance_to_base_x < 99)
-						current_workbench->distance_to_base_x++;
+					if (current_workbench->distance_to_base_x < 99) {
+						temp++;
+						//led_set_blue(ledb_vals[0] | ledb_vals[1]);
+					} else {
+						//led_set_blue(ledb_vals[4] | ledb_vals[5]);
+					}
 					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
-					if (current_workbench->distance_to_base_x > -99)
-						current_workbench->distance_to_base_x--;
+					if (current_workbench->distance_to_base_x > -99) {
+						temp--;
+						//led_set_blue(ledb_vals[0] | ledb_vals[1]);
+					} else {
+						//led_set_blue(ledb_vals[4] | ledb_vals[5]);
+					}
 					break;
 			}
-			
+			//led_set_blue(temp);
+			current_workbench->distance_to_base_x = temp;
+			//intToAscii(temp, roomba_sevenseg_digits);
 			printXcoordinate(current_workbench);
 			break;
 
 
-		case BASE_COORDINATE_Y:				
-			led_set_blue(ledb_vals[2]);
-			current_workbench = &workbenches[current_base-1];
-			
+		case BASE_COORDINATE_Y:
+			temp = current_workbench->distance_to_base_x;
+
 			switch (action) {
 				case ROOMBA_REMOTE_BACK:
 					base_config_state = BASE_COORDINATE_X;
@@ -253,12 +224,23 @@ enum programstate handleSubstateBaseSetup () {
 					base_config_state = BASE_ROTATION;
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
-					if (current_workbench->distance_to_base_y < 99)
+					if (current_workbench->distance_to_base_y < 99) {
 						current_workbench->distance_to_base_y++;
+						//led_set_blue(ledb_vals[0] | ledb_vals[1]);
+					} else {
+						//led_set_blue(ledb_vals[4] | ledb_vals[5]);
+					}
 					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
-					if (current_workbench->distance_to_base_y > -99)
+					if (current_workbench->distance_to_base_y > -99) {
 						current_workbench->distance_to_base_y--;
+						//led_set_blue(ledb_vals[0] | ledb_vals[1]);
+					} else {
+						//led_set_blue(ledb_vals[4] | ledb_vals[5]);
+					}
+					break;
+				default:
+					//led_set_blue(ledb_vals[0] | ledb_vals[1] | ledb_vals[4] | ledb_vals[5]);
 					break;
 			}
 			
@@ -267,8 +249,7 @@ enum programstate handleSubstateBaseSetup () {
 
 
 		case BASE_ROTATION:				
-			led_set_blue(ledb_vals[3]);
-			current_workbench = &workbenches[current_base-1];
+			//led_set_blue(ledb_vals[3]);
 			switch (action) {
 				case ROOMBA_REMOTE_BACK:
 					base_config_state = BASE_COORDINATE_Y;
@@ -336,6 +317,21 @@ int getIRAction () {
 	int index = getIRActionIndex(character);
 	checkDiscreteRoombaButtonArray(index);
 	
+	if (index == ROOMBA_REMOTE_CROSS_UP_INDEX)
+		led |= LED_SPOT_GREEN;
+	else
+		led &= ~LED_SPOT_GREEN;
+	
+		int power = 0;
+		int intensity = 0;
+	if (roomba_remote_discrete_pressed[index]) {
+		power = 255;
+		intensity = 255; }
+
+	setLed(led, power, intensity);
+
+
+	
 	if (index != -1 && roomba_remote_discrete_pressed[index])
 		return character;
 	return -1;
@@ -376,15 +372,11 @@ int getIRActionIndex (int character) {
 	}
 }
 
-int led = 0;
-int power = 0;
-int intensity = 0;
-
 void checkDiscreteRoombaButtonArray (int index) {
 	int i;
 	for (i=0; i<NUM_ROOMBA_REMOTE_BUTTONS; i++) {
 		if (i != index) {
-			roomba_remote_discrete_pressed[i] = false;
+			roomba_remote_discrete_pressed[i] = 0;
 			roomba_remote_activation_times[i] = 0;
 			roomba_remote_repeat_times[i] = roomba_remote_default_repeat_times[i];
 			
@@ -396,27 +388,30 @@ void checkDiscreteRoombaButtonArray (int index) {
 			}*/
 			// END: DEBUG
 		} else {
-			led = 0;
+			//led = 0;
 			millis_t difference = global_clock - roomba_remote_activation_times[i];
 			if (roomba_remote_activation_times[i] == 0 || difference >= roomba_remote_repeat_time_values[roomba_remote_repeat_times[i]]) {
 				// START: DEBUG
-				if (i == ROOMBA_REMOTE_CROSS_OK_INDEX) {
+				/*if (i == ROOMBA_REMOTE_CROSS_OK_INDEX) {
 					power = 255;
 					intensity = 255;
-				}
+				}*/
 				// END: DEBUG
 				
-				roomba_remote_discrete_pressed[i] = true;
+				roomba_remote_discrete_pressed[i] = 1;
 				roomba_remote_activation_times[i] = global_clock;
 				roomba_remote_repeat_counters[i]++;
+				led_set_blue(roomba_remote_repeat_counters[i]);
 				
+				led = 0;
 				if (roomba_remote_repeat_counters[i] >= 10 && roomba_remote_repeat_times[i] > 0) {
 					roomba_remote_repeat_times[i]--;
 					roomba_remote_repeat_counters[i] = 0;
+					led = LED_DIRT_DETECT_BLUE;
 				}
 				
 				// START: DEBUG
-				//setWeekdayLed(roomba_remote_repeat_times[i]);
+				setWeekdayLed(roomba_remote_repeat_times[i]);
 				// END: DEBUG
 			} else {
 				// START: DEBUG
@@ -426,12 +421,21 @@ void checkDiscreteRoombaButtonArray (int index) {
 				}*/
 				// END: DEBUG
 				
-				roomba_remote_discrete_pressed[i] = false;
+				roomba_remote_discrete_pressed[i] = 0;
 			}
+			
+			/*if (roomba_remote_discrete_pressed[i]) {
+				power = 255;
+				intensity = 255;
+			} else {
+				power = 0;
+				intensity = 0;
+			}*/
 		}
 		// START: DEBUG
-		/*if (i == ROOMBA_REMOTE_CROSS_OK_INDEX)
-			setLed(led, power, intensity);*/
+		//if (i == ROOMBA_REMOTE_CROSS_OK_INDEX)
+		//setLed(led, power, intensity);
+		//button_wait(0);
 		// END: DEBUG
 	}
 }
@@ -482,6 +486,8 @@ void printString (char string[]) {
 void handleBaseSelect (uint8_t base_num) {
 	current_base = base_num;
 	base_config_state = BASE_COORDINATE_X;
+	
+	current_workbench = (&workbenches[base_num-1]);
 	
 	roomba_sevenseg_digits[3] = 'B';
 	roomba_sevenseg_digits[2] = 'A';

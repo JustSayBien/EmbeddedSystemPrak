@@ -71,7 +71,7 @@ enum roomba_action_indices {
 	ROOMBA_REMOTE_NUM_6_INDEX
 };
 
-//extern bool_t roomba_remote_discrete_pressed[NUM_ROOMBA_REMOTE_BUTTONS];
+//extern volatile bool_t roomba_remote_discrete_pressed[NUM_ROOMBA_REMOTE_BUTTONS];
 
 extern millis_t roomba_remote_activation_times[NUM_ROOMBA_REMOTE_BUTTONS];
 
