@@ -21,8 +21,14 @@ enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
 enum fenceapproachstate { STRAIGHT, CORRECTION };
 enum collisionstate { COLLISION_TURN, COLLISION_DRIVE };
 enum calibratestate { DISTANCE, ANGLE, BASE/*, START*/ };
+enum nextbasestate { BASE_NUM, APPROACH };
 
 typedef unsigned long millis_t;
+
+typedef enum {
+	LEFT = -1,
+	RIGHT = 1
+} direction;
 
 
 

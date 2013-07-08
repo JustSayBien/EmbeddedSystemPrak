@@ -2,6 +2,7 @@
 #include "mymath.h"
 #include "workbench.h"
 #include "ir_remote.h"
+#include "ir_base.h"
 
 /** stores the queried button state */
 volatile uint8_t button_state;
@@ -21,6 +22,7 @@ enum programstate program_state;
 
 /** current drive state */
 enum drivestate drive_state = LEAVE_DOCK;
+//enum drivestate drive_state = DOCKED;
 
 enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
 
@@ -31,6 +33,10 @@ enum calibratestate calibrate_state;
 
 /** current nextbase state */
 enum nextbasestate nextbase_state = BASE_NUM;
+
+
+int32_t roomba_default_evasive_angle = 0;
+int32_t roomba_current_evasive_angle = 0;
 
 
 
@@ -135,7 +141,7 @@ int intToAscii(int32_t value, int32_t out[]){
 }
 
 void setProgramState(enum programstate state){
-	/*switch(state) {
+	switch(state) {
 		case INIT:
 			setLed(LED_DOCK_GREEN, 0, 0);	
 			break;
@@ -155,7 +161,7 @@ void setProgramState(enum programstate state){
 		case DOCKED:
 			setLed(0,100,100);
 			break;
-	}*/
+	}
 	program_state = state;
 }
 
@@ -231,6 +237,7 @@ enum programstate handleStateCalibrate(){
 			switch (ir_action) {
 				case ROOMBA_REMOTE_CROSS_OK:
 					roomba_calibrate_angle();
+					roomba_current_evasive_angle = roomba_default_evasive_angle = (roombadata.angle_360_degrees / 10);     //  36 degrees
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
 					calibrate_state = BASE;
@@ -423,7 +430,13 @@ enum programstate handleStateSeekdock(){
 bool_t docked_in_menu = false;
 uint8_t next_base_num = 1;
 enum programstate handleStateDocked() {
-	// TODO: CHECK IF CORRECT BASE REACHED
+	roombadata.current_base_id = check_discrete_base_id();
+	if (roombadata.current_base_id != roombadata.destination_base_id) {
+		return DRIVE;
+	} else {
+		roombadata.destination_base_id = 0;
+	}
+	
 	switch (nextbase_state) {
 		case BASE_NUM:
 			if (!docked_in_menu) {
@@ -444,6 +457,9 @@ enum programstate handleStateDocked() {
 				}
 			} else {
 				switch (ir_action) {
+					case ROOMBA_REMOTE_CROSS_OK:
+						docked_in_menu = false;
+						break;
 					case ROOMBA_REMOTE_NUM_1:
 						next_base_num = 1;
 						break;
@@ -490,6 +506,9 @@ enum programstate handleStateDocked() {
 						break;
 				}
 			} else {
+				if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
+					docked_in_menu = false;
+				}
 				switch (drive_state) {
 					case ANGLE_APPROACH:
 						roomba_sevenseg_digits[3] = 'A';
@@ -530,11 +549,9 @@ enum programstate handleStateDocked() {
 		default:
 			break;
 	}
+	
 	write_sevenseg_digits();
-
-
-
-
+	
 	return DOCKED;
 }
 
@@ -681,8 +698,42 @@ enum programstate handleSubStateLineApproach(){
 
 }
 
+bool_t evasive = false;
+direction previous_direction = LEFT;
+direction current_direction = 0;
+int32_t recog_counter = 0;
+uint8_t turn_counter = 0;
+
 enum programstate handleSubStateFenceApproach(){
-	
+	if (query_sensor(PACKET_VIRTUAL_WALL) == 1) {
+		if (evasive == false) {
+			recog_counter++;
+			evasive = true;
+			current_direction = (previous_direction == RIGHT ? LEFT : RIGHT);
+			drive(DEFAULT_VELOCITY, current_direction);
+		}
+		query_sensor(PACKET_ANGLE);
+		
+		if (myAbs(roombadata.trip_angle) >= roomba_current_evasive_angle) {
+			turn_counter++;
+			current_direction = (current_direction == RIGHT ? LEFT : RIGHT);
+			drive(DEFAULT_VELOCITY, current_direction);
+			roombadata.trip_angle = 0;
+			if (turn_counter < 3)
+				roomba_current_evasive_angle = roomba_default_evasive_angle * (turn_counter+1);
+			//roomba_current_evasive_angle = roomba_default_evasive_angle * 2;
+		}
+	} else {
+		if (evasive == true) {
+			evasive = false;
+			previous_direction = current_direction;
+			current_direction = 0;
+			turn_counter = 0;
+			drive(DEFAULT_VELOCITY, 0);
+			roombadata.trip_angle = 0;
+			roomba_current_evasive_angle = roomba_default_evasive_angle;
+		}
+	}
 	return DRIVE;
 }
 
