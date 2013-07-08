@@ -35,6 +35,9 @@ extern millis_t global_clock;
 /** Current state of the base configuration module */
 extern uint8_t base_config_state;
 
+/** stores the queried ir button state */
+extern volatile int32_t ir_action;
+
 
 void program_run();
 

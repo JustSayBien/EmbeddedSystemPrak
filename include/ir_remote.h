@@ -22,6 +22,10 @@ Created: 28.06.2013
 /****************************************************************** Includes */
 
 #include "program.h"
+#include "workbench.h"
+#include "tools.h"
+#include <stdint.h>
+
 
 /******************************************************************* Defines */
 
@@ -88,10 +92,6 @@ int getIRAction ();
 
 int getIRActionIndex (int character);
 
-int myAbs (int value);
-
-bool_t mySign (int value);
-
 void printXcoordinate (workbench *toPrint);
 
 void printYcoordinate (workbench *toPrint);
@@ -104,6 +104,6 @@ void printString (char string[]);
 
 void handleBaseSelect (uint8_t base_num);
 
-void checkDiscreteRoombaButtonArray (int index);
+bool_t checkDiscreteRoombaButtonArray (int index);
 
 #endif  // _IR_REMOTE_H

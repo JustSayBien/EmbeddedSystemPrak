@@ -4,7 +4,7 @@
 
 /****************************************************************** Includes */
 
-
+#include "tools.h"
 
 /******************************************************************* Defines */
 
@@ -30,6 +30,9 @@ float my_atan2(float y, float x);
 float radToDeg(float value);
 float degToRad(float value);
 float my_square_root(float value);
+
+int myAbs (int value);
+bool_t mySign (int value);
 
 
 #endif
