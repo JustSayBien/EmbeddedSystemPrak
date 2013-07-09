@@ -50,7 +50,7 @@ void program_run() {
 	write_sevenseg_digits();	
 
 	//set to init programm state
-	setProgramState(INIT);
+	setProgramState(CALIBRATE);
 
 
 	workbenches_init();
@@ -74,9 +74,9 @@ void program_run() {
 
 		//switch block according to state chart
 		switch(program_state){
-			case INIT:
+			/*case INIT:
 				program_state = handleStateInit();
-				break;
+				break;*/
 			case CALIBRATE:
 				program_state = handleStateCalibrate();
 				break;
@@ -105,7 +105,7 @@ void program_run() {
 				setWeekdayLed(0);
 			}
 			write_sevenseg_digits();
-			setProgramState(INIT);
+			setProgramState(CALIBRATE);
 		}
 		else{
 			setProgramState(program_state);
@@ -143,9 +143,9 @@ int intToAscii(int32_t value, int32_t out[]){
 
 void setProgramState(enum programstate state){
 	switch(state) {
-		case INIT:
+		/*case INIT:
 			setLed(LED_DOCK_GREEN, 0, 0);	
-			break;
+			break;*/
 		case CALIBRATE:
 			setLed(LED_DIRT_DETECT_BLUE, 0, 0);
 			break;
@@ -166,12 +166,12 @@ void setProgramState(enum programstate state){
 	program_state = state;
 }
 
-enum programstate handleStateInit(){
+/*enum programstate handleStateInit(){
 	//intToAscii(ir_action, roomba_sevenseg_digits);
 	//write_sevenseg_digits();
 	
 	//display trip or whole distance
-	if(ir_action == ROOMBA_REMOTE_CROSS_UP || ir_action == ROOMBA_REMOTE_CROSS_DOWN){
+	/*if(ir_action == ROOMBA_REMOTE_CROSS_UP || ir_action == ROOMBA_REMOTE_CROSS_DOWN){
 		display_whole_distance = !display_whole_distance;
 		int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_distance/10;
 		if(intToAscii(distance_centimeter, roomba_sevenseg_digits) != 1){
@@ -181,11 +181,11 @@ enum programstate handleStateInit(){
 			setWeekdayLed(0);
 		}
 		write_sevenseg_digits();
-	}
+	}*/
 				
 
 	//switch to drive mode
-	if(ir_action == ROOMBA_REMOTE_CROSS_OK){
+	/*if(ir_action == ROOMBA_REMOTE_CROSS_OK){
 		roombadata.trip_distance = 0;
 		
 		roomba_sevenseg_digits[3] = 'D';
@@ -209,16 +209,16 @@ enum programstate handleStateInit(){
 		roomba_sevenseg_digits[3] = 'C';
 		write_sevenseg_digits();*/
 		
-		return CALIBRATE;
+	/*	return CALIBRATE;
 	}
 	else{
 		return INIT;
 	}
-}
+}*/
 
 enum programstate handleStateCalibrate(){		
 	switch(calibrate_state) {
-		/*case CALIBRATE_DRIVE:
+		case CALIBRATE_DRIVE:
 			base_config_state = BASE_SELECT;
 			roomba_sevenseg_digits[3] = 'D';
 			roomba_sevenseg_digits[2] = 'R';
@@ -227,7 +227,8 @@ enum programstate handleStateCalibrate(){
 			write_sevenseg_digits();
 			
 			if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
-				
+				my_msleep(1000);		
+				return DRIVE;
 			}
 			switch (ir_action) {
 				case ROOMBA_REMOTE_CROSS_OK:
@@ -240,7 +241,7 @@ enum programstate handleStateCalibrate(){
 					calibrate_state = CALIBRATE_DISTANCE;
 					break;
 			}
-			break;*/
+			break;
 		case CALIBRATE_DRIVE:
 			break;
 			

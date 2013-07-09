@@ -14,7 +14,7 @@
 /******************************************************************* Defines */
 
 
-enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED };
+enum programstate { /*INIT,*/ CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED };
 enum base_config_states { BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y, BASE_ROTATION };
 enum drivestate { ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK };
 enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
