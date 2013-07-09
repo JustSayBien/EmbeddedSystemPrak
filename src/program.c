@@ -471,8 +471,10 @@ enum programstate handleStateSeekdock(){
 bool_t docked_in_menu = false;
 
 enum programstate handleStateDocked() {
+	uint8_t old_current_base_id = roombadata.current_base_id;
 	roombadata.current_base_id = check_discrete_base_id();
-	if (roombadata.current_base_id != roombadata.destination_base_id) {
+	if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
+		drive_state = LEAVE_DOCK;
 		return DRIVE;
 	} else {
 		roombadata.destination_base_id = 0;
@@ -762,35 +764,63 @@ direction previous_direction = LEFT;
 direction current_direction = 0;
 int32_t recog_counter = 0;
 uint8_t turn_counter = 0;
+bool_t lighthouse_has_turned = false;
 
-enum programstate handleSubStateFenceApproach(){
-	if (query_sensor(PACKET_VIRTUAL_WALL) == 1) {
-		if (evasive == false) {
-			recog_counter++;
-			evasive = true;
-			current_direction = (previous_direction == RIGHT ? LEFT : RIGHT);
-			drive(DEFAULT_VELOCITY, current_direction);
+enum programstate handleSubStateFenceApproach() {
+	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
+	
+	if (!lighthouse_has_turned) {
+		//start turning if necessary
+		if(!roombadata.is_moving){
+			reset_trips();
+			direction dir = angle_to_drive < 0 ? RIGHT : LEFT;
+			drive(DEFAULT_VELOCITY, dir);
 		}
-		query_sensor(PACKET_ANGLE);
 		
-		if (myAbs(roombadata.trip_angle) >= roomba_current_evasive_angle) {
-			turn_counter++;
-			current_direction = (current_direction == RIGHT ? LEFT : RIGHT);
-			drive(DEFAULT_VELOCITY, current_direction);
-			roombadata.trip_angle = 0;
-			if (turn_counter < 3)
-				roomba_current_evasive_angle = roomba_default_evasive_angle * (turn_counter+1);
-			//roomba_current_evasive_angle = roomba_default_evasive_angle * 2;
-		}
+		//check if defined angle is reached
+		query_sensor(PACKET_ANGLE);
+		if((angle_to_drive < 0 && roombadata.trip_angle <= angle_to_drive) || (angle_to_drive > 0 && roombadata.trip_angle >= angle_to_drive)){
+			stop();
+			reset_trips();
+			lighthouse_has_turned = true;
+		}	
 	} else {
-		if (evasive == true) {
-			evasive = false;
-			previous_direction = current_direction;
-			current_direction = 0;
-			turn_counter = 0;
-			drive(DEFAULT_VELOCITY, 0);
-			roombadata.trip_angle = 0;
-			roomba_current_evasive_angle = roomba_default_evasive_angle;
+		//check if collisions are detected
+		int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+		int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+		if(bumper_state != 0 || light_bumper_state != 0){
+			on_collision_detected(bumper_state, light_bumper_state);
+			return COLLISION;
+		}
+		
+		if (query_sensor(PACKET_VIRTUAL_WALL) == 1) {
+			if (evasive == false) {
+				recog_counter++;
+				evasive = true;
+				current_direction = (previous_direction == RIGHT ? LEFT : RIGHT);
+				drive(DEFAULT_VELOCITY, current_direction);
+			}
+			query_sensor(PACKET_ANGLE);
+			
+			if (myAbs(roombadata.trip_angle) >= roomba_current_evasive_angle) {
+				turn_counter++;
+				current_direction = (current_direction == RIGHT ? LEFT : RIGHT);
+				drive(DEFAULT_VELOCITY, current_direction);
+				roombadata.trip_angle = 0;
+				if (turn_counter < 3)
+					roomba_current_evasive_angle = roomba_default_evasive_angle * (turn_counter+1);
+				//roomba_current_evasive_angle = roomba_default_evasive_angle * 2;
+			}
+		} else {
+			if (evasive == true) {
+				evasive = false;
+				previous_direction = current_direction;
+				current_direction = 0;
+				turn_counter = 0;
+				drive(DEFAULT_VELOCITY, 0);
+				roombadata.trip_angle = 0;
+				roomba_current_evasive_angle = roomba_default_evasive_angle;
+			}
 		}
 	}
 	return DRIVE;
