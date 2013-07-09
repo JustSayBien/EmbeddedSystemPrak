@@ -226,7 +226,6 @@ enum programstate handleSubstateBaseSetup () {
 					}
 					current_base = 0;
 					base_config_state = BASE_SELECT;
-					//my_msleep(500);
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
 					if (current_workbench->dock_angle_multiplier < 7)
@@ -330,13 +329,6 @@ bool_t checkDiscreteRoombaButtonArray (int index) {
 			//led = 0;
 			millis_t difference = global_clock - roomba_remote_activation_times[i];
 			if (roomba_remote_activation_times[i] == 0 || difference >= roomba_remote_repeat_time_values[roomba_remote_repeat_times[i]]) {
-				// START: DEBUG
-				/*if (i == ROOMBA_REMOTE_CROSS_OK_INDEX) {
-					power = 255;
-					intensity = 255;
-				}*/
-				// END: DEBUG
-
 				roomba_remote_discrete_pressed[i] = 1;
 				roomba_remote_activation_times[i] = global_clock;
 				roomba_remote_repeat_counters[i]++;
@@ -351,14 +343,6 @@ bool_t checkDiscreteRoombaButtonArray (int index) {
 			} else {
 				roomba_remote_discrete_pressed[i] = 0;
 			}
-			
-			/*if (roomba_remote_discrete_pressed[i]) {
-				power = 255;
-				intensity = 255;
-			} else {
-				power = 0;
-				intensity = 0;
-			}*/
 		}
 	}
 	return roomba_remote_discrete_pressed[index];
