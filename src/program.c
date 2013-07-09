@@ -471,6 +471,9 @@ enum programstate handleStateSeekdock(){
 bool_t docked_in_menu = false;
 
 enum programstate handleStateDocked() {
+	// Reset boolean value for fence approach
+	lighthouse_has_turned = false;
+	
 	uint8_t old_current_base_id = roombadata.current_base_id;
 	roombadata.current_base_id = check_discrete_base_id();
 	if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
