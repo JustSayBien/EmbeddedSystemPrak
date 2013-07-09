@@ -386,23 +386,14 @@ void drive_a_bit_backward(int32_t backward_distance){
 }
 
 void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state){
+
 	stop();
-
-
 	collisiondata.light_bumper_state = light_bumper_state;
 	collisiondata.bumper_state = bumper_state;
 	collisiondata.trip_distance_at_collision = roombadata.trip_distance;
 	collisiondata.trip_angle_at_collision = roombadata.trip_angle;
 	collisiondata.program_tick_counter = 0;
 	reset_trips();
-
-
-
-
-
-
-
-
 }
 
 void on_collision_cleared(){
@@ -416,7 +407,7 @@ void on_collision_cleared(){
 	collisiondata.played_acustic_feedback = 0;
 
 	//restore trip meters
-	roombadata.trip_distance = collisiondata.trip_distance_at_collision;
+	roombadata.trip_distance = collisiondata.trip_distance_at_collision + collisiondata.driven_trip_distance;
 	roombadata.trip_angle = 0;
 	
 }

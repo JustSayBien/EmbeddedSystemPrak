@@ -17,6 +17,7 @@
 enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED};
 enum drivestate {ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK};
 enum angleapproachstate {DRIVE_ANGLE, DRIVE_DISTANCE};
+enum lineapproachstate {LINE_TURN_FROM_BASE, LINE_DRIVE};
 enum collisionstate {COLLISION_TURN, COLLISION_DRIVE};
 enum calibratestate {DISTANCE, ANGLE};
 

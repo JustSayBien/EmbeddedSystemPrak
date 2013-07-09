@@ -10,7 +10,7 @@
 #define ANGLE_UNKNOWN 0xFFF
 #define DISTANCE_UNKNOWN -1
 #define DIFFERENCE_TO_BASE 0xC8
-#define SEEKDOCK_TRIGGER_DISTANCE 0x3E8
+#define SEEKDOCK_TRIGGER_DISTANCE 0x5DC
 
 typedef struct{
 	uint8_t id;

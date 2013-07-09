@@ -17,6 +17,8 @@ enum drivestate drive_state = LEAVE_DOCK;
 
 enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
 
+enum lineapproachstate line_approach_state = LINE_TURN_FROM_BASE;
+
 enum collisionstate collision_state;
 
 /** current calibrate state */
@@ -93,6 +95,7 @@ void program_run() {
 
 			drive_state = LEAVE_DOCK;
 			angle_approach_state = DRIVE_ANGLE;
+			line_approach_state = LINE_TURN_FROM_BASE;
 			on_collision_cleared();
 			write_sevenseg_digits();
 			setProgramState(INIT);
@@ -305,6 +308,18 @@ enum programstate handleStateCollision(){
 
 
 	collisiondata.program_tick_counter++;
+	//after 30 seconds in collision mode stop driving and wait for user action
+	if(collisiondata.program_tick_counter >= 200){
+		stop();
+		play_song_beep();
+		if(button_state == BTN_DAY){
+			on_collision_cleared();
+			return DRIVE;
+		}
+		else{
+			return COLLISION;
+		}
+	}
 
 	switch(collision_state){
 		case COLLISION_TURN:
@@ -353,7 +368,7 @@ enum programstate handleStateCollision(){
 
 				query_sensor(PACKET_ANGLE);
 				//didnt find any collision
-				if(roombadata.trip_angle >= 350){
+				if(roombadata.trip_angle >= 360){
 					stop();
 					on_collision_cleared();
 					return DRIVE;
@@ -425,12 +440,18 @@ enum programstate handleStateCollision(){
 					}
 					else{
 						lost_counter = 0;
+						if(roombadata.trip_distance > 0 && roombadata.trip_distance >= 50){
+							collisiondata.angle_sum += roombadata.trip_angle;
+							update_distance_sum();
+							reset_trips();
+						}
+
 						drive(DEFAULT_VELOCITY/2, 0);
 					}
 
 
-					//after 5 seconds in collision mode begin to check if collision is avoided
-					if(collisiondata.program_tick_counter >= 34){
+					//after 3 seconds in collision mode begin to check if collision is avoided
+					if(collisiondata.program_tick_counter >= 20){
 						if(drive_state == LINE_APPROACH){
 							int32_t cliff_front_left_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
 							int32_t cliff_front_right_signal = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
@@ -475,11 +496,13 @@ enum programstate handleStateCollision(){
 
 							}
 						}
-						else if(drive_state == ANGLE_APPROACH){
-							if(collisiondata.distance_sum > 0 && collisiondata.distance_sum <= 100){
+					}
+
+					if(collisiondata.driven_trip_distance >= 200){
+						if(drive_state == ANGLE_APPROACH){
+							if(collisiondata.distance_sum < 40 && collisiondata.distance_sum > -40){
 								stop();
 								reset_trips();
-								
 								int32_t angle_to_turn = 0;
 								int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
 								angle_sum_abs %= 360;
@@ -497,10 +520,12 @@ enum programstate handleStateCollision(){
 								reset_trips();
 								
 								on_collision_cleared();
+		
 								return DRIVE;
 							}
 						}
 					}
+					
 
 
 
@@ -511,7 +536,7 @@ enum programstate handleStateCollision(){
 
 	}
 
-	intToAscii(collisiondata.distance_sum, roomba_sevenseg_digits);
+	intToAscii(collisiondata.driven_trip_distance, roomba_sevenseg_digits);
 	write_sevenseg_digits();
 
 	return COLLISION;
@@ -522,6 +547,9 @@ enum programstate handleStateSeekdock(){
 	//check if we reached the dock?
 	if(query_sensor(PACKET_CHARGING_SOURCES_AVAILABLE) == CHARGING_SOURCE_HOMEBASE){
 		init_roomba();
+		//consume sensor values
+		query_sensor(PACKET_ANGLE);
+		query_sensor(PACKET_DISTANCE);
 		return DOCKED;
 	}
 	else{
@@ -543,6 +571,7 @@ enum programstate handleStateDocked(){
 
 enum programstate handleSubStateLeaveDock(){
 
+	reset_trips();
 	drive_a_bit_backward(DIFFERENCE_TO_BASE);
 
 	drive_state = display_whole_distance ? LINE_APPROACH : ANGLE_APPROACH;
@@ -595,7 +624,7 @@ enum programstate handleSubStateAngleApproach(){
 			query_sensor(PACKET_DISTANCE);
 			int32_t infrared_value = 0;
 			
-			// 1 meter before whole distance is reached we check infrared sensors
+			// 2 meter before whole distance is reached we check infrared sensors
 			if(roombadata.trip_distance >= distance_to_drive - SEEKDOCK_TRIGGER_DISTANCE){
 				infrared_value = query_sensor(PACKET_INFRARED_CHARACTER_LEFT);
 				infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
@@ -620,65 +649,79 @@ enum programstate handleSubStateAngleApproach(){
 
 enum programstate handleSubStateLineApproach(){
 
-	//start driving if necessary
-	if(!roombadata.is_moving){
-		drive(DEFAULT_VELOCITY, 0);
-	}
+	switch(line_approach_state){
+		case LINE_TURN_FROM_BASE:
+			//start driving if necessary
+			if(!roombadata.is_moving){
+				drive(DEFAULT_VELOCITY, 1);
+			}
+			else{
+				//update trip angle value
+				query_sensor(PACKET_ANGLE);
+				if(roombadata.trip_angle >= 180){
+					stop();
+					reset_trips();
+					line_approach_state = LINE_DRIVE;
+				}
+			}
+			break;
+		case LINE_DRIVE:
+			//start driving if necessary
+			if(!roombadata.is_moving){
+				drive(DEFAULT_VELOCITY, 0);
+			}
 	
 
-	//check if collisions are detected
-	int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
-	int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
-	if(bumper_state != 0 || light_bumper_state != 0){
-		on_collision_detected(bumper_state, light_bumper_state);
-		return COLLISION;
-	}
+			//check if collisions are detected
+			int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+			int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+			if(bumper_state != 0 || light_bumper_state != 0){
+				on_collision_detected(bumper_state, light_bumper_state);
+				return COLLISION;
+			}
 	
 
-	int32_t cliff_left_signal = query_sensor(PACKET_CLIFF_LEFT_SIGNAL);
-	int32_t cliff_right_signal = query_sensor(PACKET_CLIFF_RIGHT_SIGNAL);
-	if(cliff_left_signal >= 1200 && cliff_right_signal >= 1200){
-		int32_t infrared_value = 0;
-		infrared_value = query_sensor(PACKET_INFRARED_CHARACTER_LEFT);
-		infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
-		infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_OMNI) : infrared_value;
-		if(infrared_value > 160){
-			stop();
-			reset_trips();
-			seekdock();
-			return SEEKDOCK;
-		}
-		else{
-			
-			drive(DEFAULT_VELOCITY, 0);
-			return DRIVE;
-		}
-	}
-	else{
-		int32_t cliff_front_left_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-		int32_t cliff_front_right_signal = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
-
-		// just drive on
-		if(cliff_front_left_signal < 1200 && cliff_front_right_signal < 1200){
-			drive(DEFAULT_VELOCITY, 0);
-		}	
-		// turn left
-		else if(cliff_front_left_signal >= 1200 && cliff_front_right_signal < 1200){
-			drive(DEFAULT_VELOCITY/2, 150);
-		}
-		//turn right
-		else if(cliff_front_right_signal >= 1200 && cliff_front_left_signal < 1200){		
-			drive(DEFAULT_VELOCITY/2, -150);
-		}
-		else{
-			drive(DEFAULT_VELOCITY/2, 50);
-		}
-
-		return DRIVE;
+			int32_t cliff_left_signal = query_sensor(PACKET_CLIFF_LEFT_SIGNAL);
+			int32_t cliff_right_signal = query_sensor(PACKET_CLIFF_RIGHT_SIGNAL);
+			if(cliff_left_signal >= 1200 && cliff_right_signal >= 1200){
+				int32_t infrared_value = 0;
+				infrared_value = query_sensor(PACKET_INFRARED_CHARACTER_LEFT);
+				infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
+				infrared_value = infrared_value <= 160 ? query_sensor(PACKET_INFRARED_CHARACTER_OMNI) : infrared_value;
+				if(infrared_value > 160){
+					stop();
+					reset_trips();
+					seekdock();
+					return SEEKDOCK;
+				}
+				else{
+					drive(DEFAULT_VELOCITY, 0);
+				}
+			}
+			else{
+				int32_t cliff_front_left_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+				int32_t cliff_front_right_signal = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
+		
+				// just drive on
+				if(cliff_front_left_signal < 1200 && cliff_front_right_signal < 1200){
+					drive(DEFAULT_VELOCITY, 0);
+				}	
+				// turn left
+				else if(cliff_front_left_signal >= 1200 && cliff_front_right_signal < 1200){
+					drive(DEFAULT_VELOCITY/2, 150);
+				}
+				//turn right
+				else if(cliff_front_right_signal >= 1200 && cliff_front_left_signal < 1200){		
+					drive(DEFAULT_VELOCITY/2, -150);
+				}
+				else{
+					drive(DEFAULT_VELOCITY/2, 50);
+				}	
+			}
+			break;
 	}
 
-
-
+	return DRIVE;
 }
 
 enum programstate handleSubStateFenceApproach(){
