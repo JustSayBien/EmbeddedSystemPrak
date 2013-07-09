@@ -429,8 +429,8 @@ enum programstate handleStateCollision(){
 					}
 
 
-					//after 3 seconds in collision mode begin to check if collision is avoided
-					if(collisiondata.program_tick_counter >= 20){
+					//after 5 seconds in collision mode begin to check if collision is avoided
+					if(collisiondata.program_tick_counter >= 34){
 						if(drive_state == LINE_APPROACH){
 							int32_t cliff_front_left_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
 							int32_t cliff_front_right_signal = query_sensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
@@ -476,22 +476,16 @@ enum programstate handleStateCollision(){
 							}
 						}
 						else if(drive_state == ANGLE_APPROACH){
-							if(collisiondata.distance_sum > 0 && collisiondata.distance_sum <= 80){
+							if(collisiondata.distance_sum > 0 && collisiondata.distance_sum <= 100){
 								stop();
-								//consume sensor value
-								query_sensor(PACKET_ANGLE);
 								reset_trips();
 								
 								int32_t angle_to_turn = 0;
 								int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
 								angle_sum_abs %= 360;
-								if(angle_sum_abs > 180){
-									angle_to_turn = -(360 - angle_sum_abs);
-								}
+								angle_to_turn = angle_sum_abs > 180 ? -(360 - angle_sum_abs) : angle_sum_abs;
 								angle_to_turn = collisiondata.angle_sum < 0 ? angle_to_turn : -angle_to_turn;
-								
-								//test
-								//angle_to_turn = 90;
+					
 								int8_t direction = angle_to_turn < 0 ? -1 : 1;
 								drive(DEFAULT_VELOCITY/2, direction);
 
