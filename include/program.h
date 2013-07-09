@@ -26,8 +26,8 @@ enum nextbasestate { NEXTBASE_DRIVE, NEXTBASE_NUM, NEXTBASE_APPROACH };
 typedef unsigned long millis_t;
 
 typedef enum {
-	LEFT = -1,
-	RIGHT = 1
+	LEFT = 1,
+	RIGHT = -1
 } direction;
 
 
