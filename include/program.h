@@ -18,9 +18,10 @@ enum programstate { /*INIT,*/ CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED };
 enum base_config_states { BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y, BASE_ROTATION };
 enum drivestate { ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK };
 enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
+enum lineapproachstate { LINE_TURN_FROM_BASE, LINE_DRIVE };
 enum fenceapproachstate { STRAIGHT, CORRECTION };
 enum collisionstate { COLLISION_TURN, COLLISION_DRIVE };
-enum calibratestate { CALIBRATE_DRIVE, CALIBRATE_DISTANCE, CALIBRATE_ANGLE, CALIBRATE_BASE };
+enum calibratestate { CALIBRATE_DISTANCE, CALIBRATE_ANGLE, CALIBRATE_BASE, CALIBRATE_DONE };
 enum nextbasestate { NEXTBASE_DRIVE, NEXTBASE_NUM, NEXTBASE_APPROACH };
 
 typedef unsigned long millis_t;

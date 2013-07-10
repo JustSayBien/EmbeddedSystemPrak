@@ -65,19 +65,23 @@ uint8_t check_discrete_base_id () {
 				base_recog_counter[i] = 0;
 			}
 			
-			if (base_id_activation_times[i] == 0 || difference <= IR_RECOG_END_TIME) {
+			while (base_id_activation_times[i] == 0 || difference <= IR_RECOG_END_TIME) {
 				intToAscii(global_clock, roomba_sevenseg_digits);
 				base_id_activation_times[i] = global_clock;
 				write_sevenseg_digits();
 				base_recog_counter[i]++;
 				
 				if (base_recog_counter[i] > 10) {
+					base_recog_counter[i] = 0;
 					return (i+1);
 				}
+				value = query_sensor(PACKET_INFRARED_CHARACTER_OMNI);
 			}
-		} else if (difference > IR_RECOG_END_TIME) {
+			base_recog_counter[i] = 0;
 			base_id_activation_times[i] = 0;
-		}
+		}/* else if (difference > IR_RECOG_END_TIME) {
+			base_id_activation_times[i] = 0;
+		}*/
 	}
 	return 0;
 }

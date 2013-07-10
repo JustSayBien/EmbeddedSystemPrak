@@ -125,8 +125,8 @@ void program_run() {
 
 		button_state = 0;
 		ir_action = 0;
-		my_msleep(150);
-		global_clock += 150;
+		my_msleep(50);
+		global_clock += 50;
 	}
 }
 
@@ -155,9 +155,9 @@ int intToAscii(int32_t value, int32_t out[]){
 
 void setProgramState(enum programstate state){
 	switch(state) {
-		/*case INIT:
-			setLed(LED_DOCK_GREEN, 0, 0);	
-			break;*/
+		//case INIT:
+			//setLed(LED_DOCK_GREEN, 0, 0);	
+			//break;
 		case CALIBRATE:
 			setLed(LED_DIRT_DETECT_BLUE, 0, 0);
 			break;
@@ -214,7 +214,7 @@ void setProgramState(enum programstate state){
 	//switch to calibration mode
 	else if(ir_action == ROOMBA_REMOTE_PAUSE){
 		calibrate_state = CALIBRATE_DRIVE;
-		/*roomba_sevenseg_digits[0] = 'D';
+		roomba_sevenseg_digits[0] = 'D';
 		roomba_sevenseg_digits[1] = 'L';
 		roomba_sevenseg_digits[2] = 'A';
 		roomba_sevenseg_digits[3] = 'C';
@@ -229,33 +229,6 @@ void setProgramState(enum programstate state){
 
 enum programstate handleStateCalibrate(){		
 	switch(calibrate_state) {
-		case CALIBRATE_DRIVE:
-			base_config_state = BASE_SELECT;
-			roomba_sevenseg_digits[3] = 'D';
-			roomba_sevenseg_digits[2] = 'R';
-			roomba_sevenseg_digits[1] = 'I';
-			roomba_sevenseg_digits[0] = 'V';
-			write_sevenseg_digits();
-			
-			if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
-				my_msleep(1000);		
-				return DRIVE;
-			}
-			switch (ir_action) {
-				case ROOMBA_REMOTE_CROSS_OK:
-					return DRIVE;
-					break;
-				case ROOMBA_REMOTE_CROSS_UP:
-					calibrate_state = CALIBRATE_BASE;
-					break;
-				case ROOMBA_REMOTE_CROSS_DOWN:
-					calibrate_state = CALIBRATE_DISTANCE;
-					break;
-			}
-			break;
-		/*case CALIBRATE_DRIVE:
-			break;*/
-			
 		case CALIBRATE_DISTANCE:
 			base_config_state = BASE_SELECT;
 			roomba_sevenseg_digits[3] = 'C';
@@ -268,11 +241,11 @@ enum programstate handleStateCalibrate(){
 				case ROOMBA_REMOTE_CROSS_OK:
 					roomba_calibrate_distance();
 					break;
+				case ROOMBA_REMOTE_CROSS_DOWN:
+					calibrate_state = CALIBRATE_DONE;
+					break;
 				case ROOMBA_REMOTE_CROSS_UP:
 					calibrate_state = CALIBRATE_ANGLE;
-					break;
-				case ROOMBA_REMOTE_CROSS_DOWN:
-					calibrate_state = CALIBRATE_BASE;
 					break;
 			}
 			break;
@@ -290,29 +263,50 @@ enum programstate handleStateCalibrate(){
 					roomba_calibrate_angle();
 					roomba_current_evasive_angle = roomba_default_evasive_angle = (roombadata.angle_360_degrees / 12);     //  30 degrees
 					break;
-				case ROOMBA_REMOTE_CROSS_UP:
-					calibrate_state = CALIBRATE_BASE;
-					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
 					calibrate_state = CALIBRATE_DISTANCE;
+					break;
+				case ROOMBA_REMOTE_CROSS_UP:
+					calibrate_state = CALIBRATE_BASE;
 					break;
 			}
 			break;
 			
 		case CALIBRATE_BASE:
-			if (calibrate_state == BASE_SELECT) {
+			if (base_config_state == BASE_SELECT) {
 				switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_UP:
-						calibrate_state = CALIBRATE_BASE;
-						break;
 					case ROOMBA_REMOTE_CROSS_DOWN:
-						calibrate_state = CALIBRATE_DISTANCE;
+						calibrate_state = CALIBRATE_ANGLE;
+						break;
+					case ROOMBA_REMOTE_CROSS_UP:
+						calibrate_state = CALIBRATE_DONE;
 						break;
 				}
 			}
 			
 			// base calibration starts when number key is pressed
 			handleSubstateBaseSetup();
+			break;
+			
+		case CALIBRATE_DONE:
+			base_config_state = BASE_SELECT;
+			roomba_sevenseg_digits[3] = 'D';
+			roomba_sevenseg_digits[2] = 'O';
+			roomba_sevenseg_digits[1] = 'N';
+			roomba_sevenseg_digits[0] = 'E';
+			write_sevenseg_digits();
+			
+			switch (ir_action) {
+				case ROOMBA_REMOTE_CROSS_OK:
+					my_msleep(1000);
+					return DOCKED;
+				case ROOMBA_REMOTE_CROSS_DOWN:
+					calibrate_state = CALIBRATE_BASE;
+					break;
+				case ROOMBA_REMOTE_CROSS_UP:
+					calibrate_state = CALIBRATE_DISTANCE;
+					break;
+			}
 			break;
 	
 	}
@@ -645,6 +639,7 @@ enum programstate handleStateSeekdock(){
 }
 
 bool_t docked_in_menu = false;
+bool_t lighthouse_has_turned = false;
 
 enum programstate handleStateDocked() {
 	// Reset boolean value for fence approach
@@ -652,6 +647,15 @@ enum programstate handleStateDocked() {
 	
 	uint8_t old_current_base_id = roombadata.current_base_id;
 	roombadata.current_base_id = check_discrete_base_id();
+	
+	roomba_sevenseg_digits[3] = 'A';
+	roomba_sevenseg_digits[2] = 'T';
+	roomba_sevenseg_digits[1] = ' ';
+	roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
+	write_sevenseg_digits();
+	
+	return DOCKED;
+	
 	if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
 		drive_state = LEAVE_DOCK;
 		return DRIVE;
@@ -958,7 +962,6 @@ direction previous_direction = LEFT;
 direction current_direction = 0;
 int32_t recog_counter = 0;
 uint8_t turn_counter = 0;
-bool_t lighthouse_has_turned = false;
 
 enum programstate handleSubStateFenceApproach() {
 	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
