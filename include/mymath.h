@@ -5,6 +5,7 @@
 /****************************************************************** Includes */
 
 #include "uart.h"
+#include "tools.h"
 
 /******************************************************************* Defines */
 
@@ -82,6 +83,9 @@ float my_modf(float value, float *iptr);
 float radToDeg(float value);
 float degToRad(float value);
 float my_square_root(float value);
+
+int myAbs (int value);
+bool_t mySign (int value);
 
 
 #endif

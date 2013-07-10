@@ -212,13 +212,19 @@ float my_modf(float value,float *iptr)
 
 
 float radToDeg(float value){
-	return value * 180.0f / MATH_PI;	
-
+	return value * 180.0f / MATH_PI;
 }
 
 float degToRad(float value){
 	return MATH_PI * value / 180.0f;
+}
 
+int myAbs (int value) {
+	return (value < 0) ? -value : value;
+}
+
+bool_t mySign (int value) {
+	return (value < 0);
 }
 
 

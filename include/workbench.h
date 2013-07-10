@@ -4,6 +4,9 @@
 
 #include "uart.h"
 #include "mymath.h"
+#include <stdint.h>
+
+
 
 #define MAX_COUNT_WORKBENCHES 0x6
 #define DOCK_ANGLE_INCREMENT 0x2D
@@ -12,7 +15,7 @@
 #define DIFFERENCE_TO_BASE 0xC8
 #define SEEKDOCK_TRIGGER_DISTANCE 0x5DC
 
-typedef struct{
+typedef volatile struct{
 	uint8_t id;
 	int8_t distance_to_base_x;
 	int8_t distance_to_base_y;
@@ -24,6 +27,11 @@ typedef struct{
 
 extern workbench DEFAULT_WORKBENCH;
 workbench workbenches[MAX_COUNT_WORKBENCHES];
+
+
+
+
+
 
 
 

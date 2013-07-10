@@ -14,16 +14,35 @@
 /******************************************************************* Defines */
 
 
-enum programstate { INIT, CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED};
-enum drivestate {ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK};
-enum angleapproachstate {DRIVE_ANGLE, DRIVE_DISTANCE};
-enum lineapproachstate {LINE_TURN_FROM_BASE, LINE_DRIVE};
-enum collisionstate {COLLISION_TURN, COLLISION_DRIVE};
-enum calibratestate {DISTANCE, ANGLE};
+enum programstate { /*INIT,*/ CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED };
+enum base_config_states { BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y, BASE_ROTATION };
+enum drivestate { ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK };
+enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
+enum fenceapproachstate { STRAIGHT, CORRECTION };
+enum collisionstate { COLLISION_TURN, COLLISION_DRIVE };
+enum calibratestate { CALIBRATE_DRIVE, CALIBRATE_DISTANCE, CALIBRATE_ANGLE, CALIBRATE_BASE };
+enum nextbasestate { NEXTBASE_DRIVE, NEXTBASE_NUM, NEXTBASE_APPROACH };
+
+typedef unsigned long millis_t;
+
+typedef enum {
+	LEFT = 1,
+	RIGHT = -1
+} direction;
 
 
 
 /******************************************************* Function prototypes */
+
+
+/** Global clock; incremented in every iteration of the main loop */
+extern millis_t global_clock;
+
+/** Current state of the base configuration module */
+extern uint8_t base_config_state;
+
+/** stores the queried ir button state */
+extern volatile int32_t ir_action;
 
 
 void program_run();

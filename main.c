@@ -36,6 +36,7 @@ Modification history:
 
 #include "program.h"
 #include "roomba.h"
+#include "button.h"
 
 /******************************************************************* Defines */
 
@@ -68,6 +69,11 @@ int main(int argc, char *argv[]) {
 	init_roomba();
 
 	program_run();
+	/*while (true) {
+		intToAscii(query_sensor(PACKET_INFRARED_CHARACTER_OMNI), roomba_sevenseg_digits);
+		write_sevenseg_digits();
+		my_msleep(50);
+	}*/
 	
   	return 0;
 }
