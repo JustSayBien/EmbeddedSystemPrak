@@ -161,9 +161,9 @@ enum programstate handleSubstateBaseSetup () {
 				case ROOMBA_REMOTE_NUM_5:
 					handleBaseSelect(5);
 					break;
-				case ROOMBA_REMOTE_NUM_6:
+				/*case ROOMBA_REMOTE_NUM_6:
 					handleBaseSelect(6);
-					break;
+					break;*/
 				default:
 					break;
 			}

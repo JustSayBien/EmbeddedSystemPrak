@@ -22,6 +22,7 @@ enum programstate program_state;
 
 /** current drive state */
 enum drivestate drive_state = LEAVE_DOCK;
+enum drivestate current_approach = ANGLE_APPROACH;
 //enum drivestate drive_state = DOCKED;
 
 enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
@@ -63,9 +64,6 @@ void program_run() {
 	//int16_t distance_cm = get_distance(1,2);
 	intToAscii(angle, roomba_sevenseg_digits);
 	write_sevenseg_digits();
-
-	roombadata.current_base_id = 1;
-	roombadata.destination_base_id = 2;
 
 	play_song_done();
 
@@ -580,7 +578,7 @@ enum programstate handleStateCollision(){
 					}
 
 					if(collisiondata.driven_trip_distance >= 200){
-						if(drive_state == ANGLE_APPROACH){
+						if(drive_state == ANGLE_APPROACH  || drive_state == FENCE_APPROACH){
 							if(collisiondata.distance_sum < 40 && collisiondata.distance_sum > -40){
 								stop();
 								reset_trips();
@@ -640,12 +638,33 @@ enum programstate handleStateSeekdock(){
 
 bool_t docked_in_menu = false;
 bool_t lighthouse_has_turned = false;
+bool_t has_assigned_baseid = false;
+
 
 enum programstate handleStateDocked() {
 	// Reset boolean value for fence approach
 	lighthouse_has_turned = false;
 	
-	uint8_t old_current_base_id = roombadata.current_base_id;
+	if(roombadata.current_base_id || !has_assigned_baseid){
+		uint8_t old_current_base_id = roombadata.current_base_id;
+		roombadata.current_base_id = check_discrete_base_id();
+		if (roombadata.current_base_id != 0)
+			has_assigned_baseid = true;
+		if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
+			drive_state = LEAVE_DOCK;
+			return DRIVE;
+		} else {
+			roombadata.destination_base_id = 0;
+		}
+
+		roomba_sevenseg_digits[3] = 'A';
+		roomba_sevenseg_digits[2] = 'T';
+		roomba_sevenseg_digits[1] = ' ';
+		roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
+		write_sevenseg_digits();
+	}
+
+	/*uint8_t old_current_base_id = roombadata.current_base_id;
 	roombadata.current_base_id = check_discrete_base_id();
 	
 	roomba_sevenseg_digits[3] = 'A';
@@ -654,14 +673,13 @@ enum programstate handleStateDocked() {
 	roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
 	write_sevenseg_digits();
 	
-	return DOCKED;
 	
 	if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
 		drive_state = LEAVE_DOCK;
 		return DRIVE;
 	} else {
 		roombadata.destination_base_id = 0;
-	}
+	}*/
 	
 	switch (nextbase_state) {
 		case NEXTBASE_DRIVE:
@@ -669,13 +687,30 @@ enum programstate handleStateDocked() {
 			roomba_sevenseg_digits[2] = 'R';
 			roomba_sevenseg_digits[1] = 'I';
 			roomba_sevenseg_digits[0] = 'V';
-			if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
-				docked_in_menu = false;
-			}
+			switch (ir_action) {
+					case ROOMBA_REMOTE_CROSS_OK:
+						if(roombadata.current_base_id != 0 && roombadata.destination_base_id != 0){
+							docked_in_menu = false;
+							drive_state = LEAVE_DOCK;
+							has_assigned_baseid = false;
+							return DRIVE;
+						}
+						break;
+					case ROOMBA_REMOTE_CROSS_DOWN:
+						nextbase_state = NEXTBASE_NUM;
+						docked_in_menu = false;
+						break;
+					case ROOMBA_REMOTE_CROSS_UP:
+						nextbase_state = NEXTBASE_APPROACH;
+						docked_in_menu = false;
+						break;
+					default:
+						break;
+				}
 			break;
 			
 		case NEXTBASE_NUM:
-			if (!docked_in_menu) {
+			/*if (!docked_in_menu) {
 				roomba_sevenseg_digits[3] = 'B';
 				roomba_sevenseg_digits[2] = 'N';
 				roomba_sevenseg_digits[1] = 'U';
@@ -684,18 +719,20 @@ enum programstate handleStateDocked() {
 					case ROOMBA_REMOTE_CROSS_OK:
 						docked_in_menu = true;
 						break;
-					case ROOMBA_REMOTE_CROSS_UP:
-						nextbase_state = NEXTBASE_DRIVE;
-						break;
 					case ROOMBA_REMOTE_CROSS_DOWN:
 						nextbase_state = NEXTBASE_APPROACH;
+						docked_in_menu = false;
+						break;
+					case ROOMBA_REMOTE_CROSS_UP:
+						nextbase_state = NEXTBASE_DRIVE;
+						docked_in_menu = false;
 						break;
 					default:
 						break;
 				}
 			} else {
 				switch (ir_action) {
-					case ROOMBA_REMOTE_BACK:
+					case ROOMBA_REMOTE_CROSS_OK:
 						docked_in_menu = false;
 						break;
 					case ROOMBA_REMOTE_NUM_1:
@@ -725,7 +762,47 @@ enum programstate handleStateDocked() {
 					roomba_sevenseg_digits[1] = ' ';
 					roomba_sevenseg_digits[0] = (roombadata.destination_base_id + ASCII_NUMBER_START);
 				}
-			}
+			}*/
+				roomba_sevenseg_digits[3] = 'B';
+				roomba_sevenseg_digits[2] = 'N';
+				roomba_sevenseg_digits[1] = 'U';
+				roomba_sevenseg_digits[0] = 'M';
+				switch (ir_action) {
+					case ROOMBA_REMOTE_CROSS_DOWN:
+						nextbase_state = NEXTBASE_APPROACH;
+						break;
+					case ROOMBA_REMOTE_CROSS_UP:
+						nextbase_state = NEXTBASE_DRIVE;
+						break;
+					case ROOMBA_REMOTE_NUM_1:
+						roombadata.destination_base_id = 1;
+						break;
+					case ROOMBA_REMOTE_NUM_2:
+						roombadata.destination_base_id = 2;
+						break;
+					case ROOMBA_REMOTE_NUM_3:
+						roombadata.destination_base_id = 3;
+						break;
+					case ROOMBA_REMOTE_NUM_4:
+						roombadata.destination_base_id = 4;
+						break;
+					case ROOMBA_REMOTE_NUM_5:
+						roombadata.destination_base_id = 5;
+						break;
+					case ROOMBA_REMOTE_NUM_6:
+						roombadata.destination_base_id = 6;
+						break;
+					default:
+						break;
+				}
+			
+				if (roombadata.destination_base_id != 0) {
+					roomba_sevenseg_digits[3] = 'B';
+					roomba_sevenseg_digits[2] = 'A';
+					roomba_sevenseg_digits[1] = ' ';
+					roomba_sevenseg_digits[0] = (roombadata.destination_base_id + ASCII_NUMBER_START);
+				}
+				docked_in_menu = false;
 			
 			break;
 			
@@ -741,27 +818,30 @@ enum programstate handleStateDocked() {
 						break;
 					case ROOMBA_REMOTE_CROSS_UP:
 						nextbase_state = NEXTBASE_NUM;
+						docked_in_menu = false;
 						break;
 					case ROOMBA_REMOTE_CROSS_DOWN:
 						nextbase_state = NEXTBASE_DRIVE;
+						docked_in_menu = false;
 						break;
 					default:
 						break;
 				}
 			} else {
-				if (ir_action == ROOMBA_REMOTE_BACK || ir_action == ROOMBA_REMOTE_CROSS_OK) {
+				if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
 					docked_in_menu = false;
 				}
-				switch (drive_state) {
+				switch (current_approach) {
 					case ANGLE_APPROACH:
 						roomba_sevenseg_digits[3] = 'A';
 						roomba_sevenseg_digits[2] = 'N';
 						roomba_sevenseg_digits[1] = 'G';
 						roomba_sevenseg_digits[0] = 'L';
 						if (ir_action == ROOMBA_REMOTE_CROSS_UP)
-							drive_state = LINE_APPROACH;
+							current_approach = LINE_APPROACH;
 						else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
-							drive_state = FENCE_APPROACH;
+							current_approach = FENCE_APPROACH;
+						
 						break;
 					case LINE_APPROACH:
 						roomba_sevenseg_digits[3] = 'L';
@@ -769,9 +849,9 @@ enum programstate handleStateDocked() {
 						roomba_sevenseg_digits[1] = 'N';
 						roomba_sevenseg_digits[0] = 'E';
 						if (ir_action == ROOMBA_REMOTE_CROSS_UP)
-							drive_state = FENCE_APPROACH;
+							current_approach = FENCE_APPROACH;
 						else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
-							drive_state = ANGLE_APPROACH;
+							current_approach = ANGLE_APPROACH;
 						break;
 					case FENCE_APPROACH:
 						roomba_sevenseg_digits[3] = 'F';
@@ -779,9 +859,9 @@ enum programstate handleStateDocked() {
 						roomba_sevenseg_digits[1] = 'N';
 						roomba_sevenseg_digits[0] = 'C';
 						if (ir_action == ROOMBA_REMOTE_CROSS_UP)
-							drive_state = ANGLE_APPROACH;
+							current_approach = ANGLE_APPROACH;
 						else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
-							drive_state = LINE_APPROACH;
+							current_approach = LINE_APPROACH;
 						break;
 					default:
 						break;
@@ -807,7 +887,7 @@ enum programstate handleSubStateLeaveDock(){
 	reset_trips();
 	drive_a_bit_backward(DIFFERENCE_TO_BASE);
 
-	drive_state = display_whole_distance ? LINE_APPROACH : ANGLE_APPROACH;
+	drive_state = current_approach;
 	reset_trips();
 
 	return DRIVE;
@@ -826,8 +906,8 @@ enum programstate handleSubStateAngleApproach(){
 			
 			//start turning if necessary
 			if(!roombadata.is_moving){
-				int16_t direction = angle_to_drive < 0 ? -1 : 1;
-				drive(DEFAULT_VELOCITY, direction);
+				reset_trips();
+				drive(DEFAULT_VELOCITY, angle_to_drive < 0 ? RIGHT : LEFT);
 			}
 			
 			//check if defined angle is reached
@@ -886,6 +966,7 @@ enum programstate handleSubStateLineApproach(){
 		case LINE_TURN_FROM_BASE:
 			//start driving if necessary
 			if(!roombadata.is_moving){
+				reset_trips();
 				drive(DEFAULT_VELOCITY, 1);
 			}
 			else{

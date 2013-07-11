@@ -66,9 +66,7 @@ uint8_t check_discrete_base_id () {
 			}
 			
 			while (base_id_activation_times[i] == 0 || difference <= IR_RECOG_END_TIME) {
-				intToAscii(global_clock, roomba_sevenseg_digits);
 				base_id_activation_times[i] = global_clock;
-				write_sevenseg_digits();
 				base_recog_counter[i]++;
 				
 				if (base_recog_counter[i] > 10) {

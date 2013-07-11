@@ -270,6 +270,9 @@ void seekdock(){
 }
 
 void reset_trips() {
+	//consume sensor values
+	query_sensor(PACKET_ANGLE);
+	query_sensor(PACKET_DISTANCE);
 	roombadata.trip_angle = 0;
 	roombadata.trip_distance = 0;
 }
@@ -480,6 +483,7 @@ void play_song_collision(){
 }
 
 void play_song_done(){
+	//TODO use bool instead of defines
 	#ifndef _SONG_DONE
 	#define _SONG_DONE
 	uart_write_byte(0x8C);
