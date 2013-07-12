@@ -124,7 +124,8 @@ void init_roomba() {
 }
 
 void roomba_calibrate_angle() {
-
+	reset_trips();
+	
 	my_msleep(300);
 
 	uint8_t cliff_counter = 0;
@@ -167,7 +168,8 @@ void roomba_calibrate_angle() {
 }	
 
 void roomba_calibrate_distance(){
-
+	reset_trips();
+	
 	my_msleep(300);
 
 	uint8_t cliff_counter = 0;
