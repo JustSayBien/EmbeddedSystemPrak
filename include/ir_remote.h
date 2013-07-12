@@ -79,6 +79,8 @@ enum roomba_action_indices {
 
 extern millis_t roomba_remote_activation_times[NUM_ROOMBA_REMOTE_BUTTONS];
 
+extern uint8_t raw_ir_data;
+
 
 /******************************************************* Function prototypes */
 

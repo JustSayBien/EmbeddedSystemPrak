@@ -645,9 +645,9 @@ enum programstate handleStateDocked() {
 	// Reset boolean value for fence approach
 	lighthouse_has_turned = false;
 	
-	if(roombadata.current_base_id || !has_assigned_baseid){
+	if(/*roombadata.current_base_id || */!has_assigned_baseid) {
 		uint8_t old_current_base_id = roombadata.current_base_id;
-		roombadata.current_base_id = check_discrete_base_id();
+		roombadata.current_base_id = check_base_id();
 		if (roombadata.current_base_id != 0)
 			has_assigned_baseid = true;
 		if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
@@ -657,11 +657,11 @@ enum programstate handleStateDocked() {
 			roombadata.destination_base_id = 0;
 		}
 
-		roomba_sevenseg_digits[3] = 'A';
+		/*roomba_sevenseg_digits[3] = 'A';
 		roomba_sevenseg_digits[2] = 'T';
 		roomba_sevenseg_digits[1] = ' ';
 		roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
-		write_sevenseg_digits();
+		write_sevenseg_digits();*/
 	}
 
 	/*uint8_t old_current_base_id = roombadata.current_base_id;
@@ -687,6 +687,13 @@ enum programstate handleStateDocked() {
 			roomba_sevenseg_digits[2] = 'R';
 			roomba_sevenseg_digits[1] = 'I';
 			roomba_sevenseg_digits[0] = 'V';
+			
+			/*roomba_sevenseg_digits[3] = 'A';
+			roomba_sevenseg_digits[2] = 'T';
+			roomba_sevenseg_digits[1] = ' ';
+			roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
+			write_sevenseg_digits();*/
+			
 			switch (ir_action) {
 					case ROOMBA_REMOTE_CROSS_OK:
 						if(roombadata.current_base_id != 0 && roombadata.destination_base_id != 0){

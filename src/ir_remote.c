@@ -121,6 +121,8 @@ uint16_t roomba_remote_repeat_time_values[] = {
 
 uint8_t current_base = 0;
 
+uint8_t raw_ir_data = 0;
+
 
 int led = 0;
 int power = 0;
@@ -349,7 +351,9 @@ bool_t checkDiscreteRoombaButtonArray (int index) {
 }
 
 int getIRAction () {
-	int character = query_sensor(PACKET_INFRARED_CHARACTER_OMNI);
+	uint8_t character = query_sensor(PACKET_INFRARED_CHARACTER_OMNI);
+	raw_ir_data = character;
+	
 	int index = getIRActionIndex(character);
 	
 	int power = 0;
@@ -362,8 +366,8 @@ int getIRAction () {
 
 	uint32_t pressed = checkDiscreteRoombaButtonArray(index);
 	
-	if (index != -1 && pressed == 1)
-		return character;
+	if (/*index != -1 && */pressed == 1)
+		return (int)character;
 	return -1;
 }
 

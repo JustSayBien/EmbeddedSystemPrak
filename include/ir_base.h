@@ -31,6 +31,10 @@ Created: 28.06.2013
 
 /******************************************************* Function prototypes */
 
+uint8_t check_base_id ();
+
 uint8_t check_discrete_base_id ();
+
+
 
 #endif  // _IR_BASE_H
