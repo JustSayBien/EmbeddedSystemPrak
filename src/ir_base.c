@@ -108,7 +108,7 @@ uint8_t check_discrete_base_id () {
 			if (base_id_activation_times[i] == 0 || difference <= IR_RECOG_END_TIME) {
 				base_recog_counter[i]++;
 				
-				if (base_recog_counter[i] > 5) {
+				if (base_recog_counter[i] > 3) {
 					return (i+1);
 				}
 			}

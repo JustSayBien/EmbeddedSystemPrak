@@ -19,7 +19,7 @@ enum base_config_states { BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y,
 enum drivestate { ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK };
 enum angleapproachstate { DRIVE_ANGLE, DRIVE_DISTANCE };
 enum lineapproachstate { LINE_TURN_FROM_BASE, LINE_DRIVE };
-enum fenceapproachstate { STRAIGHT, CORRECTION };
+enum fenceapproachstate { FENCE_ANGLE, FENCE_STRAIGHT, FENCE_CORRECTION_STRAIGHT, FENCE_CORRECTION_ANGLE };
 enum collisionstate { COLLISION_TURN, COLLISION_DRIVE };
 enum calibratestate { CALIBRATE_DISTANCE, CALIBRATE_ANGLE, CALIBRATE_BASE, CALIBRATE_DONE };
 enum nextbasestate { NEXTBASE_DRIVE, NEXTBASE_NUM, NEXTBASE_APPROACH };
@@ -28,6 +28,7 @@ typedef unsigned long millis_t;
 
 typedef enum {
 	LEFT = 1,
+	STRAIGHT = 0,
 	RIGHT = -1
 } direction;
 

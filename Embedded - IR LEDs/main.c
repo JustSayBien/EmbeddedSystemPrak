@@ -73,7 +73,7 @@ uint8_t base_id_codes[MAX_COUNT_WORKBENCHES] = {
 	0x10
 };
 
-uint8_t base_id = 5;
+uint8_t base_id = 2;
 
 
 

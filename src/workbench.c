@@ -2,6 +2,8 @@
 #include "uart.h"
 #include "mymath.h"
 #include "workbench.h"
+#include "program.h"
+#include "roomba.h"
 
 
 workbench DEFAULT_WORKBENCH = {0, 0, 0, 0, {ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN}, {DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN}};
@@ -17,12 +19,28 @@ void workbenches_init(){
 	(&workbenches[1])->id = 2;
 	(&workbenches[1])->distance_to_base_x = -4;
 	(&workbenches[1])->distance_to_base_y = 3;
+	
+	//roombadata.current_base_id = 1;
+	//roombadata.destination_base_id = 2;
+	
+	/*roomba_sevenseg_digits[3] = (roombadata.current_base_id + 48);
+	roomba_sevenseg_digits[2] = 45;
+	roomba_sevenseg_digits[1] = 45;
+	roomba_sevenseg_digits[0] = (roombadata.destination_base_id + 48);
+	write_sevenseg_digits();*/
 
 }
 
 
 
 int16_t get_angle(uint8_t id_from, uint8_t id_to){
+	
+	/*roomba_sevenseg_digits[3] = (roombadata.current_base_id + 48);
+	roomba_sevenseg_digits[2] = 45;
+	roomba_sevenseg_digits[1] = 45;
+	roomba_sevenseg_digits[0] = (roombadata.destination_base_id + 48);
+	write_sevenseg_digits();
+	my_msleep(3000);*/
 
 	if(id_from == 0 || id_to == 0 || id_from - 1 >= MAX_COUNT_WORKBENCHES || id_to - 1 >= MAX_COUNT_WORKBENCHES){
 		//base not configured -> return;
@@ -107,14 +125,14 @@ int16_t get_distance(uint8_t id_from, uint8_t id_to){
 	}
 	
 	if(workbenches[id_from-1].distance_to_workbench[id_to-1] == DISTANCE_UNKNOWN){
-		int8_t distance_x = workbenches[id_to-1].distance_to_base_x - workbenches[id_from-1].distance_to_base_x;
-		if(distance_x < 0){
+		int8_t distance_x = myAbs(workbenches[id_to-1].distance_to_base_x - workbenches[id_from-1].distance_to_base_x);
+		/*if(distance_x < 0){
 			distance_x *= -1;
-		}
-		int8_t distance_y = workbenches[id_to-1].distance_to_base_y - workbenches[id_from-1].distance_to_base_y;
-		if(distance_y < 0){
+		}*/
+		int8_t distance_y = myAbs(workbenches[id_to-1].distance_to_base_y - workbenches[id_from-1].distance_to_base_y);
+		/*if(distance_y < 0){
 			distance_y *= -1;
-		}
+		}*/
 
 		float square_root = my_square_root(distance_y * distance_y + distance_x * distance_x);
 		int16_t square_root_int = (int16_t) (square_root * 1000);

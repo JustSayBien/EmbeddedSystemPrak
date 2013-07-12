@@ -37,9 +37,7 @@ enum calibratestate calibrate_state;
 /** current nextbase state */
 enum nextbasestate nextbase_state = NEXTBASE_NUM;
 
-
-int32_t roomba_default_evasive_angle = 0;
-int32_t roomba_current_evasive_angle = 0;
+enum fenceapproachstate fenceapproach_state = FENCE_ANGLE;
 
 
 
@@ -60,10 +58,12 @@ void program_run() {
 
 
 	//test
-	int16_t angle = get_angle(1,2);
+	//int16_t angle = get_angle(1,2);
+	
 	//int16_t distance_cm = get_distance(1,2);
-	intToAscii(angle, roomba_sevenseg_digits);
-	write_sevenseg_digits();
+	//intToAscii(angle, roomba_sevenseg_digits);
+	//my_msleep(2000);
+	//write_sevenseg_digits();
 
 	play_song_done();
 
@@ -259,7 +259,7 @@ enum programstate handleStateCalibrate(){
 			switch (ir_action) {
 				case ROOMBA_REMOTE_CROSS_OK:
 					roomba_calibrate_angle();
-					roomba_current_evasive_angle = roomba_default_evasive_angle = (roombadata.angle_360_degrees / 12);     //  30 degrees
+					//roomba_current_evasive_angle = roomba_default_evasive_angle = (roombadata.angle_360_degrees / 12);     //  30 degrees
 					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
 					calibrate_state = CALIBRATE_DISTANCE;
@@ -637,15 +637,12 @@ enum programstate handleStateSeekdock(){
 }
 
 bool_t docked_in_menu = false;
-bool_t lighthouse_has_turned = false;
 bool_t has_assigned_baseid = false;
+bool_t has_driven = false;
 
 
-enum programstate handleStateDocked() {
-	// Reset boolean value for fence approach
-	lighthouse_has_turned = false;
-	
-	if(/*roombadata.current_base_id || */!has_assigned_baseid) {
+enum programstate handleStateDocked() {	
+	/*if(!roombadata.current_base_id || !has_assigned_baseid) {
 		uint8_t old_current_base_id = roombadata.current_base_id;
 		roombadata.current_base_id = check_base_id();
 		if (roombadata.current_base_id != 0)
@@ -657,49 +654,48 @@ enum programstate handleStateDocked() {
 			roombadata.destination_base_id = 0;
 		}
 
-		/*roomba_sevenseg_digits[3] = 'A';
+		roomba_sevenseg_digits[3] = 'A';
 		roomba_sevenseg_digits[2] = 'T';
 		roomba_sevenseg_digits[1] = ' ';
 		roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
-		write_sevenseg_digits();*/
-	}
-
-	/*uint8_t old_current_base_id = roombadata.current_base_id;
-	roombadata.current_base_id = check_discrete_base_id();
-	
-	roomba_sevenseg_digits[3] = 'A';
-	roomba_sevenseg_digits[2] = 'T';
-	roomba_sevenseg_digits[1] = ' ';
-	roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
-	write_sevenseg_digits();
-	
-	
-	if (old_current_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
-		drive_state = LEAVE_DOCK;
-		return DRIVE;
-	} else {
-		roombadata.destination_base_id = 0;
+		write_sevenseg_digits();
 	}*/
+
+	uint8_t old_current_base_id = roombadata.current_base_id;
+	roombadata.current_base_id = check_base_id();
+	
+	if (old_current_base_id != 0 && roombadata.destination_base_id != 0 && !has_driven) {
+		if (roombadata.current_base_id != roombadata.destination_base_id) {
+			drive_state = LEAVE_DOCK;
+			return DRIVE;
+		} else {
+			roombadata.destination_base_id = 0;
+		}
+		
+	}
 	
 	switch (nextbase_state) {
 		case NEXTBASE_DRIVE:
-			roomba_sevenseg_digits[3] = 'D';
+			/*roomba_sevenseg_digits[3] = 'D';
 			roomba_sevenseg_digits[2] = 'R';
 			roomba_sevenseg_digits[1] = 'I';
-			roomba_sevenseg_digits[0] = 'V';
+			roomba_sevenseg_digits[0] = 'V';*/
 			
-			/*roomba_sevenseg_digits[3] = 'A';
+			roomba_sevenseg_digits[3] = 'A';
 			roomba_sevenseg_digits[2] = 'T';
 			roomba_sevenseg_digits[1] = ' ';
 			roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
-			write_sevenseg_digits();*/
+			//write_sevenseg_digits();
+			
+			setWeekdayLed(roombadata.destination_base_id + roombadata.current_base_id);
 			
 			switch (ir_action) {
 					case ROOMBA_REMOTE_CROSS_OK:
-						if(roombadata.current_base_id != 0 && roombadata.destination_base_id != 0){
-							docked_in_menu = false;
-							drive_state = LEAVE_DOCK;
+						if(roombadata.current_base_id != 0 && roombadata.destination_base_id != 0) {
 							has_assigned_baseid = false;
+							docked_in_menu = false;
+							has_driven = true;
+							drive_state = LEAVE_DOCK;
 							return DRIVE;
 						}
 						break;
@@ -717,99 +713,54 @@ enum programstate handleStateDocked() {
 			break;
 			
 		case NEXTBASE_NUM:
-			/*if (!docked_in_menu) {
+			roomba_sevenseg_digits[3] = 'B';
+			roomba_sevenseg_digits[2] = 'N';
+			roomba_sevenseg_digits[1] = 'U';
+			roomba_sevenseg_digits[0] = 'M';
+			switch (ir_action) {
+				case ROOMBA_REMOTE_CROSS_DOWN:
+					nextbase_state = NEXTBASE_APPROACH;
+					break;
+				case ROOMBA_REMOTE_CROSS_UP:
+					nextbase_state = NEXTBASE_DRIVE;
+					break;
+				case ROOMBA_REMOTE_NUM_1:
+					roombadata.destination_base_id = 1;
+					docked_in_menu = true;
+					break;
+				case ROOMBA_REMOTE_NUM_2:
+					roombadata.destination_base_id = 2;
+					docked_in_menu = true;
+					break;
+				case ROOMBA_REMOTE_NUM_3:
+					roombadata.destination_base_id = 3;
+					docked_in_menu = true;
+					break;
+				case ROOMBA_REMOTE_NUM_4:
+					roombadata.destination_base_id = 4;
+					docked_in_menu = true;
+					break;
+				case ROOMBA_REMOTE_NUM_5:
+					roombadata.destination_base_id = 5;
+					docked_in_menu = true;
+					break;
+				/*case ROOMBA_REMOTE_NUM_6:
+					roombadata.destination_base_id = 6;
+					my_msleep(2000);
+					break;*/
+				default:
+					break;
+			}
+		
+			if (roombadata.destination_base_id != 0 && docked_in_menu == true) {
 				roomba_sevenseg_digits[3] = 'B';
-				roomba_sevenseg_digits[2] = 'N';
-				roomba_sevenseg_digits[1] = 'U';
-				roomba_sevenseg_digits[0] = 'M';
-				switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_OK:
-						docked_in_menu = true;
-						break;
-					case ROOMBA_REMOTE_CROSS_DOWN:
-						nextbase_state = NEXTBASE_APPROACH;
-						docked_in_menu = false;
-						break;
-					case ROOMBA_REMOTE_CROSS_UP:
-						nextbase_state = NEXTBASE_DRIVE;
-						docked_in_menu = false;
-						break;
-					default:
-						break;
-				}
-			} else {
-				switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_OK:
-						docked_in_menu = false;
-						break;
-					case ROOMBA_REMOTE_NUM_1:
-						roombadata.destination_base_id = 1;
-						break;
-					case ROOMBA_REMOTE_NUM_2:
-						roombadata.destination_base_id = 2;
-						break;
-					case ROOMBA_REMOTE_NUM_3:
-						roombadata.destination_base_id = 3;
-						break;
-					case ROOMBA_REMOTE_NUM_4:
-						roombadata.destination_base_id = 4;
-						break;
-					case ROOMBA_REMOTE_NUM_5:
-						roombadata.destination_base_id = 5;
-						break;
-					case ROOMBA_REMOTE_NUM_6:
-						roombadata.destination_base_id = 6;
-						break;
-					default:
-						break;
-				}
-				if (roombadata.destination_base_id != 0) {
-					roomba_sevenseg_digits[3] = 'B';
-					roomba_sevenseg_digits[2] = 'A';
-					roomba_sevenseg_digits[1] = ' ';
-					roomba_sevenseg_digits[0] = (roombadata.destination_base_id + ASCII_NUMBER_START);
-				}
-			}*/
-				roomba_sevenseg_digits[3] = 'B';
-				roomba_sevenseg_digits[2] = 'N';
-				roomba_sevenseg_digits[1] = 'U';
-				roomba_sevenseg_digits[0] = 'M';
-				switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_DOWN:
-						nextbase_state = NEXTBASE_APPROACH;
-						break;
-					case ROOMBA_REMOTE_CROSS_UP:
-						nextbase_state = NEXTBASE_DRIVE;
-						break;
-					case ROOMBA_REMOTE_NUM_1:
-						roombadata.destination_base_id = 1;
-						break;
-					case ROOMBA_REMOTE_NUM_2:
-						roombadata.destination_base_id = 2;
-						break;
-					case ROOMBA_REMOTE_NUM_3:
-						roombadata.destination_base_id = 3;
-						break;
-					case ROOMBA_REMOTE_NUM_4:
-						roombadata.destination_base_id = 4;
-						break;
-					case ROOMBA_REMOTE_NUM_5:
-						roombadata.destination_base_id = 5;
-						break;
-					case ROOMBA_REMOTE_NUM_6:
-						roombadata.destination_base_id = 6;
-						break;
-					default:
-						break;
-				}
-			
-				if (roombadata.destination_base_id != 0) {
-					roomba_sevenseg_digits[3] = 'B';
-					roomba_sevenseg_digits[2] = 'A';
-					roomba_sevenseg_digits[1] = ' ';
-					roomba_sevenseg_digits[0] = (roombadata.destination_base_id + ASCII_NUMBER_START);
-				}
+				roomba_sevenseg_digits[2] = 'A';
+				roomba_sevenseg_digits[1] = ' ';
+				roomba_sevenseg_digits[0] = (roombadata.destination_base_id + ASCII_NUMBER_START);
+				write_sevenseg_digits();
 				docked_in_menu = false;
+				my_msleep(2000);
+			}
 			
 			break;
 			
@@ -1051,8 +1002,26 @@ direction current_direction = 0;
 int32_t recog_counter = 0;
 uint8_t turn_counter = 0;
 
+direction getOppositeDirection (direction dir) {
+	switch (dir) {
+		case LEFT:
+			return RIGHT;
+		case RIGHT:
+			return LEFT;
+		case STRAIGHT:
+		default:
+			return STRAIGHT;
+	}
+}
+
+#define LIGHTHOUSE_RECOGNITION_DISTANCE 15
+#define ROOMBA_FENCE_MAX_EVASIVE_ANGLE 60
+
+direction current_fence_direction = 0;
+bool_t fence_waiting_for_second = false;
+
 enum programstate handleSubStateFenceApproach() {
-	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
+	/*int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
 	
 	if (!lighthouse_has_turned) {
 		//start turning if necessary
@@ -1107,6 +1076,129 @@ enum programstate handleSubStateFenceApproach() {
 				roomba_current_evasive_angle = roomba_default_evasive_angle;
 			}
 		}
+	}
+	return DRIVE;*/
+	
+	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
+	
+	int32_t recognition_trip_distance = -1;
+	
+	//check if collisions are detected
+	int32_t bumper_state = query_sensor(PACKET_BUMPS_WHEELDROPS);
+	int32_t light_bumper_state = query_sensor(PACKET_LIGHT_BUMPER);
+	if(bumper_state != 0 || light_bumper_state != 0){
+		on_collision_detected(bumper_state, light_bumper_state);
+		return COLLISION;
+	}
+	
+	// if correct base is recognized drive to it and dock
+	if (check_discrete_base_id() == roombadata.destination_base_id) {
+		stop();
+		reset_trips();
+		seekdock();
+		return SEEKDOCK;
+	}
+		
+	
+	switch (fenceapproach_state) {
+		case FENCE_ANGLE:
+			setWeekdayLed(1);
+			//start turning if necessary
+			if(!roombadata.is_moving){
+				reset_trips();
+				drive(DEFAULT_VELOCITY, (angle_to_drive < 0 ? RIGHT : LEFT));
+			}
+		
+			//check if defined angle is reached
+			query_sensor(PACKET_ANGLE);
+			if(myAbs(roombadata.trip_angle) >= myAbs(angle_to_drive)) {
+				stop();
+				reset_trips();
+				fenceapproach_state = FENCE_STRAIGHT;
+			}
+			break;
+			
+		case FENCE_STRAIGHT:
+			setWeekdayLed(2);
+			// drive straight
+			if (!roombadata.is_moving) {
+				drive(DEFAULT_VELOCITY, STRAIGHT);
+			}
+			
+			// calculate distance driven since last seen virtual wall lighthouse
+			uint8_t trip_difference = 255;
+			if (recognition_trip_distance != -1)
+				trip_difference = myAbs(roombadata.trip_distance - recognition_trip_distance) / 10;
+			
+			// check if virtual wall lighthouse detected (only possible values: 0, 1)
+			if (query_sensor(PACKET_VIRTUAL_WALL) == 1) {
+				if (recognition_trip_distance == -1) {
+					recognition_trip_distance = roombadata.trip_distance;
+				} else if (trip_difference < LIGHTHOUSE_RECOGNITION_DISTANCE && fence_waiting_for_second) {
+					current_fence_direction = RIGHT;
+				}
+			}
+			
+			// if driven for set distance and not seen
+			if (recognition_trip_distance == -1 && trip_difference >= LIGHTHOUSE_RECOGNITION_DISTANCE)
+				current_fence_direction = LEFT;
+			
+			// if lighthouse direction successfully determined switch to correction mode
+			if (current_fence_direction != STRAIGHT) {
+				stop();
+				reset_trips();
+				fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
+			}
+			
+			// if lighthouse was on the right side (marked by two lighthouses side by side) correct for 
+			//if (current_wall_direction == LEFT) {
+			//	fenceapproach_state = FENCE_CORRECTION_ANGLE;
+			//} else if (current_wall_direction == RIGHT) {
+			//	fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
+			//}
+			break;
+			
+		case FENCE_CORRECTION_STRAIGHT:
+			setWeekdayLed(3);
+			recognition_trip_distance = -1;
+			
+			// drive backwards
+			if (!roombadata.is_moving) {
+				drive(-DEFAULT_VELOCITY, STRAIGHT);
+			}
+			
+			// if driven far enough backwards (average distance between two lighthouses on the right side)
+			if ((roombadata.trip_distance / 10) > LIGHTHOUSE_RECOGNITION_DISTANCE) {
+				stop();
+				reset_trips();
+				fenceapproach_state = FENCE_CORRECTION_ANGLE;
+			}
+			
+			break;
+			
+		case FENCE_CORRECTION_ANGLE:
+			setWeekdayLed(4);
+			// turn away from fence
+			if (!roombadata.is_moving) {
+				drive(DEFAULT_VELOCITY, getOppositeDirection(current_fence_direction));
+			}
+			
+			// if fence no longer recognized resume straight path
+			if (query_sensor(PACKET_VIRTUAL_WALL) == 0) {
+				stop();
+				reset_trips();
+				fenceapproach_state = FENCE_STRAIGHT;
+			}
+			
+			// if angle turned too large resume straight path
+			if (myAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
+				stop();
+				reset_trips();
+				fenceapproach_state = FENCE_STRAIGHT;
+			}
+			
+			break;
+			
 	}
 	return DRIVE;
 }

@@ -24,6 +24,7 @@ Modification history:
 
 #include <roomba.h>
 #include "tools.h"
+#include "mymath.h"
 
 
 
@@ -157,11 +158,11 @@ void roomba_calibrate_angle() {
 	stop();
 	int32_t angle = query_sensor(PACKET_ANGLE);
 	roombadata.angle_360_degrees = angle; //+ ((int32_t) (((float) angle) * 0.03f));
-	roomba_sevenseg_digits[0] = 'K';
+	/*roomba_sevenseg_digits[0] = 'K';
 	roomba_sevenseg_digits[1] = 'O';
 	roomba_sevenseg_digits[2] = ' ';
 	roomba_sevenseg_digits[3] = ' ';
-	write_sevenseg_digits();
+	write_sevenseg_digits();*/
 
 
 	play_song_done();
@@ -198,12 +199,12 @@ void roomba_calibrate_distance(){
 
 	stop();
 	int32_t distance = query_sensor(PACKET_DISTANCE);
-	roombadata.distance_1_meter = distance < 0 ? distance * -1 : 1;
-	roomba_sevenseg_digits[0] = 'K';
+	roombadata.distance_1_meter = myAbs(distance);
+	/*roomba_sevenseg_digits[0] = 'K';
 	roomba_sevenseg_digits[1] = 'O';
 	roomba_sevenseg_digits[2] = ' ';
 	roomba_sevenseg_digits[3] = ' ';
-	write_sevenseg_digits();
+	write_sevenseg_digits();*/
 	
 	play_song_done();
 
@@ -243,7 +244,7 @@ int32_t query_sensor(packet query_packet){
 
 
 	if(query_packet.id == PACKET_DISTANCE.id){
-		int32_t distance_value = result < 0 ? result * -1 : result;
+		int32_t distance_value = myAbs(result);
 		distance_value = as_calibrated_distance(distance_value);
 		roombadata.driven_distance += distance_value;
 		roombadata.trip_distance += distance_value;
