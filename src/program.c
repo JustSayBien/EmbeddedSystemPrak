@@ -15,13 +15,16 @@ enum programstate program_state;
 
 /** current drive state */
 enum drivestate drive_state = LEAVE_DOCK;
+/** current approach selection */
 enum drivestate current_approach = ANGLE_APPROACH;
-//enum drivestate drive_state = DOCKED;
 
+/** current angleapproach state */
 enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
 
+/** current line approach state */
 enum lineapproachstate line_approach_state = LINE_TURN_FROM_BASE;
 
+/** current collision state */
 enum collisionstate collision_state;
 
 /** current calibrate state */
@@ -30,8 +33,10 @@ enum calibratestate calibrate_state;
 /** current nextbase state */
 enum nextbasestate nextbase_state = NEXTBASE_NUM;
 
+/** current fenceapproach state */
 enum fenceapproachstate fenceapproach_state = FENCE_ANGLE;
 
+/** current fencedetect state */
 enum fencedetectstate fencedetect_state = FENCE_FIRST;
 
 bool_t docked_in_menu = false;
