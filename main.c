@@ -68,7 +68,7 @@ int main(int argc, char *argv[]) {
 
 	roombaInit();
 
-	program_run();
+	programRun();
 	/*while (true) {
 		intToAscii(query_sensor(PACKET_INFRARED_CHARACTER_OMNI), roomba_sevenseg_digits);
 		write_sevenseg_digits();

@@ -45,7 +45,7 @@ enum fenceapproachstate fenceapproach_state = FENCE_ANGLE;
 
 
 
-void program_run() {
+void programRun() {
 
 	//init sevenseg
 	roombaWriteSevensegDigits();	

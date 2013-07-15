@@ -12,15 +12,26 @@
 
 /******************************************************************* Defines */
 
+
+/******************************************************************* Type definitions */
+
+
+/** An enum for the main program state machine */
 enum programstate {
 	CALIBRATE, DRIVE, COLLISION, SEEKDOCK, DOCKED
 };
+
+/** An enum for the base configuration state machine */
 enum base_config_states {
 	BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y, BASE_ROTATION
 };
+
+/** An enum for the drive state machine */
 enum drivestate {
 	ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK
 };
+
+/** An enum for the sub state machine */
 enum angleapproachstate {
 	DRIVE_ANGLE, DRIVE_DISTANCE
 };
@@ -49,7 +60,9 @@ typedef enum {
 	LEFT = 1, STRAIGHT = 0, RIGHT = -1
 } direction;
 
-/******************************************************* Function prototypes */
+
+
+/********************************************************** Global variables */
 
 /** Global clock; incremented in every iteration of the main loop */
 extern millis_t global_clock;
@@ -60,7 +73,17 @@ extern uint8_t base_config_state;
 /** stores the queried ir button state */
 extern volatile int32_t ir_action;
 
-void program_run();
+
+
+
+/******************************************************* Function prototypes */
+
+/**
+ * \brief  Main program loop
+ *
+ *         The main program loop function
+ */
+void programRun(void);
 
 /**
  * \brief  Convert int to ascii
@@ -160,7 +183,7 @@ enum programstate handleSubStateFenceApproach();
 
 /************************************************************** Global const */
 
-/********************************************************** Global variables */
+
 
 /*************************************************************** Local const */
 
