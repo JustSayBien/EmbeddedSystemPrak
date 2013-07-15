@@ -34,7 +34,7 @@ roomba_data roombadata = {0, 0, 0, 0, 0, 0, 130, 1000};
 collision_data collisiondata = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // array of currently displayed digits on Roomba's seven segment display
-uint8_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
+int32_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
         ASCII_NUMBER_START,
         ASCII_NUMBER_START,
         ASCII_NUMBER_START,

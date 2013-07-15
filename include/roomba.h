@@ -142,7 +142,7 @@ typedef struct {
 	uint8_t has_sign;
 } packet;
 
-extern uint8_t roomba_sevenseg_digits[DIGIT_LENGTH];
+extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
 typedef struct {
 	uint8_t is_moving;

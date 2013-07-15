@@ -33,12 +33,10 @@ int base_id_codes[] = {
 	0xC,
 	0xE,
 	0x7,
-	0x3,
-	0x1
+	0x3
 };
 
 uint8_t base_recog_counter[MAX_COUNT_WORKBENCHES] = {
-	0,
 	0,
 	0,
 	0,
@@ -47,7 +45,6 @@ uint8_t base_recog_counter[MAX_COUNT_WORKBENCHES] = {
 };
 
 millis_t base_id_activation_times[MAX_COUNT_WORKBENCHES] = {
-	0,
 	0,
 	0,
 	0,

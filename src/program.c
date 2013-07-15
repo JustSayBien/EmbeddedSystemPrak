@@ -130,7 +130,7 @@ void program_run() {
 
 
 
-int8_t intToAscii(int32_t value, uint8_t out[]){
+int8_t intToAscii(int32_t value, int32_t out[]){
 
 	if(value < 0){
 		roombaSetWeekdayLed(1);
