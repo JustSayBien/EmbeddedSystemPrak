@@ -12,6 +12,9 @@
 
 /******************************************************************* Defines */
 
+#define ROOMBA_FENCE_MAX_EVASIVE_ANGLE 25
+#define FENCE_VALUE_COLLECTION_TIME 3000
+
 /******************************************************************* Type definitions */
 
 
@@ -190,6 +193,15 @@ enum programstate handleSubStateLeaveDock();
  * \return the main program state for the next iteration (can be CALIBRATE, DRIVE,COLLISION, SEEKDOCK, DOCKED)
  */
 enum programstate handleSubStateLineApproach();
+
+/**
+ * \brief	Get opposite direction
+ *
+ *         	this function returns the opposite direction to the given one
+ * \param	dir	the direction to get the opposite of
+ * \return the opposite direction or STRAIGHT for STRAIGHT input value (0)
+ */
+direction getOppositeDirection (direction dir);
 
 
 /**

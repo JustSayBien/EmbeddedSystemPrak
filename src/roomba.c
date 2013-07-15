@@ -24,6 +24,7 @@
 #include "uart.h"
 #include "mymath.h"
 #include "workbench.h"
+#include "program.h"
 
 /******************************************************************* Defines */
 
@@ -85,7 +86,7 @@ const packet PACKET_STASIS = { 58, 1, 0 };
 
 /********************************************************** Global variables */
 
-roomba_data roombadata = { 0, 0, 0, 0, 0, 0, 130, 1000 };
+roomba_data roombadata = { 0, 0, 0, 0, 0, 0, 120, 250 };
 collision_data collisiondata = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 // array of currently displayed digits on Roomba's seven segment display
@@ -157,6 +158,10 @@ void roombaCalibrateAngle() {
 	roombaStop();
 	int32_t angle = roombaQuerySensor(PACKET_ANGLE);
 	roombadata.angle_360_degrees = angle;
+	
+	intToAscii(angle, roomba_sevenseg_digits);
+	roombaWriteSevensegDigits();
+	my_msleep(3000);
 
 	roombaPlaySongDone();
 }
@@ -194,6 +199,10 @@ void roombaCalibrateDistance() {
 	roombaStop();
 	int32_t distance = roombaQuerySensor(PACKET_DISTANCE);
 	roombadata.distance_1_meter = mymathAbs(distance);
+
+	intToAscii(mymathAbs(distance), roomba_sevenseg_digits);
+	roombaWriteSevensegDigits();
+	my_msleep(3000);
 
 	roombaPlaySongDone();
 }

@@ -143,15 +143,16 @@ void resetWorkbenchCache (uint8_t workbenchId) {
 	for (i=0; i<MAX_COUNT_WORKBENCHES; i++) {
 		loop_workbench = (&workbenches[i]);
 		if (loop_workbench->angle_to_workbench[workbenchId-1] != ANGLE_UNKNOWN) {
-			loop_workbench->angle_to_workbench[workbenchId-1] = ANGLE_UNKNOWN;
+			loop_workbench->angle_to_workbench[workbenchId-1] = ((int16_t)ANGLE_UNKNOWN);
 		}
 		if (loop_workbench->distance_to_workbench[workbenchId-1] != DISTANCE_UNKNOWN) {
-			loop_workbench->distance_to_workbench[workbenchId-1] = DISTANCE_UNKNOWN;
+			loop_workbench->distance_to_workbench[workbenchId-1] = ((int16_t)DISTANCE_UNKNOWN);
 		}
 	}*/
 }
 
 enum programstate handleSubstateBaseSetup () {
+	// state machine for base configuration (see documentation)
 	switch (base_config_state) {
 		case BASE_SELECT:		
 			roomba_sevenseg_digits[3] = 'B';
@@ -177,9 +178,6 @@ enum programstate handleSubstateBaseSetup () {
 				case ROOMBA_REMOTE_NUM_5:
 					handleBaseSelect(5);
 					break;
-				/*case ROOMBA_REMOTE_NUM_6:
-					handleBaseSelect(6);
-					break;*/
 				default:
 					break;
 			}
@@ -349,13 +347,16 @@ int getIRActionIndex (int character) {
 bool_t checkDiscreteRoombaButtonArray (int index) {
 	int i;
 	for (i=0; i<NUM_ROOMBA_REMOTE_BUTTONS; i++) {
+		// check if this is the current button
 		if (i != index) {
 			roomba_remote_discrete_pressed[i] = 0;
 			roomba_remote_activation_times[i] = 0;
+			// reset to default repeat time for new presses
 			roomba_remote_repeat_times[i] = roomba_remote_default_repeat_times[i];
 		} else {
-			//led = 0;
+			// difference between last discrete press and current time
 			millis_t difference = global_clock - roomba_remote_activation_times[i];
+			// if hasn't ever been pressed or time is greater than specified time for repeating this IR command
 			if (roomba_remote_activation_times[i] == 0 || difference >= roomba_remote_repeat_time_values[roomba_remote_repeat_times[i]]) {
 				roomba_remote_discrete_pressed[i] = 1;
 				roomba_remote_activation_times[i] = global_clock;
@@ -363,6 +364,7 @@ bool_t checkDiscreteRoombaButtonArray (int index) {
 				led_set_blue(roomba_remote_repeat_counters[i]);
 				
 				led = 0;
+				// if IR command has been repeated 10 or more times siwtch to the next faster repeat time
 				if (roomba_remote_repeat_counters[i] >= 10 && roomba_remote_repeat_times[i] > 0) {
 					roomba_remote_repeat_times[i]--;
 					roomba_remote_repeat_counters[i] = 0;
@@ -422,14 +424,6 @@ void printRotation (workbench *toPrint) {
 void printCoordinate(int8_t coordinate_value) {
 	if (intToAscii2placesSigned(coordinate_value, roomba_sevenseg_digits))
 		roombaWriteSevensegDigits();
-}
-
-void printString (char string[]) {
-	int i;
-	for (i=0; i<4; i++) {
-		roomba_sevenseg_digits[i] = string[i];
-	}
-	roombaWriteSevensegDigits();
 }
 
 void handleBaseSelect (uint8_t base_num) {
