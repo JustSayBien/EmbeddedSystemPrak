@@ -106,7 +106,6 @@
 #define LED_SCHED_PM		0x02
 #define LED_SCHED_COLON		0x01
 
-
 #define BTN_PACKET_ID		0x12
 #define CMD_BUTTONS_STATE 	0x8E
 #define BTN_CLOCK		0x80
@@ -125,7 +124,6 @@
 #define SENSORS_BUTTONS_AND_INTERNAL	0x02
 #define SENSORS_POWER					0x03
 
-
 #define DRIVE_ON_CHARGER_FORCEFIELD 0xA1
 #define DRIVE_ON_CHARGER_GREENBUOY 0xA4
 #define DRIVE_ON_CHARGER_REDBUOY 0xA8
@@ -133,8 +131,6 @@
 
 #define CHARGING_SOURCE_HOMEBASE 0x2
 
-
-#define QUERY_LENGTH 5
 #define DIGIT_LENGTH 4
 #define ASCII_PLUS 43
 #define ASCII_MINUS 45
@@ -142,21 +138,15 @@
 
 #define DEFAULT_VELOCITY 200
 
-
-typedef struct{
+typedef struct {
 	uint8_t id;
 	uint8_t length;
 	uint8_t has_sign;
 } packet;
 
+extern uint8_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
-extern const packet * packet_queries[QUERY_LENGTH];
-extern volatile int32_t query_results[QUERY_LENGTH];
-extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
-
-
-
-typedef struct{
+typedef struct {
 	uint8_t is_moving;
 	uint8_t current_base_id;
 	uint8_t destination_base_id;
@@ -170,7 +160,7 @@ typedef struct{
 
 extern roomba_data roombadata;
 
-typedef struct{
+typedef struct {
 	int32_t angle_sum;
 	int32_t distance_sum;
 	int32_t driven_trip_distance;
@@ -184,169 +174,123 @@ typedef struct{
 
 extern collision_data collisiondata;
 
-
-
 /******************************************************* Function prototypes */
 /**
-  * \brief  init roomba function
-  *
-  *	This function initializes the roomba robot
-  *	to full mode
-  *         
-  */
+ * \brief  init roomba function
+ *
+ *	This function initializes the roomba robot
+ *	to full mode
+ *
+ */
 void init_roomba(void);
 
 /**
-  * \brief  calibrate angle function
-  *
-  *	This function can be used to calibrate a angle of 360 degrees
-  *         
-  */
-void roomba_calibrate_angle();
+ * \brief  calibrate angle function
+ *
+ *	This function can be used to calibrate a angle of 360 degrees
+ *
+ */
+void roomba_calibrate_angle(void);
 
 /**
-  * \brief  calibrate angle function
-  *
-  *	This function can be used to calibrate a distance of 1 meter
-  *         
-  */
-void roomba_calibrate_distance();
+ * \brief  calibrate angle function
+ *
+ *	This function can be used to calibrate a distance of 1 meter
+ *
+ */
+void roomba_calibrate_distance(void);
 
 /**
-  * \brief  query sensor function
-  *
-  *	This function queries the specified sensor
-  * \return the queried sensor value, converted to a 32-bit integer 
-  */
+ * \brief  query sensor function
+ *
+ *	This function queries the specified sensor
+ * \return the queried sensor value, converted to a 32-bit integer
+ */
 int32_t query_sensor(packet query_packet);
-
 
 int32_t as_calibrated_angle(int32_t angle_raw);
 int32_t as_calibrated_distance(int32_t distance_raw);
-void seekdock();
-void reset_trips();
+void seekdock(void);
+void reset_trips(void);
 
 void drive_a_bit_backward(int32_t backward_distance);
 void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state);
-void on_collision_cleared();
+void on_collision_cleared(void);
 
-void play_song_theme();
-void play_song_collision();
-void play_song_done();
-void play_song_beep();
-
-
-/**
-  * \brief  query sensor list function
-  *
-  *	Query a list of sensor values with this function
-  *
-  * \param	packets		an array of packets, specifying which sensors should be queried
-  * \param	count		the length of 'packets'
-  * \param	results		the out-array where the query results get stored. It should have at least a length of 'count'
-  *
-  */
-void query_list(const packet * packets[], uint8_t count, int32_t results[]);
-
+void play_song_theme(void);
+void play_song_collision(void);
+void play_song_done(void);
+void play_song_beep(void);
 
 /**
-  * \brief  write sensor list function
-  *
-  *	Write a list of sensor values to the roomba robot with this function
-  *
-  * \param	packets		an array of packets, specifying which sensor requests should be written to roomba
-  * \param	count		the length of 'packets'
-  *
-  */
-void write_query_list(const packet * packets[], uint8_t count);
-
+ * \brief  Write to roomba's weekday LEDs
+ *
+ *	This function controls the weekday LEDs of the roomba robot
+ *
+ * \param      led_mask	the bit mask to be transfered to roomba
+ *
+ */
+void setWeekdayLed(uint8_t led_mask);
 
 /**
-  * \brief  read sensor list function
-  *
-  *	This function should be called after write_query_list() to read the sensor values from roomba
-  *
-  * \param	packets		an array of packets, specifying which sensor requests have been written to roomba
-  * \param	count		the length of 'packets'
-  * \param	results		the out-array where the query results get stored. It should have at least a length of 'count'
-  *
-  */
-void read_query_list(const packet * packets[], uint8_t count, int32_t results[]);
-
-
-/**
-  * \brief  Write to roomba's weekday LEDs
-  *
-  *	This function controls the weekday LEDs of the roomba robot
-  *
-  * \param      led_mask	the bit mask to be transfered to roomba
-  *
-  */
-void setWeekdayLed (uint8_t led_mask);
-
-
-/**
-  * \brief  Write to roomba's LEDs
-  *
-  *	This function controls the LEDs of the roomba robot
-  *
-  * \param      led_mask	the bit mask to be transfered to roomba
-  * \param	color		the color value to be transfered to roomba
-  * \param	intensity	the intensity value to be transfered to roomba
-  *
-  */
+ * \brief  Write to roomba's LEDs
+ *
+ *	This function controls the LEDs of the roomba robot
+ *
+ * \param      led_mask	the bit mask to be transfered to roomba
+ * \param	color		the color value to be transfered to roomba
+ * \param	intensity	the intensity value to be transfered to roomba
+ *
+ */
 void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
-    
-/**
-  * \brief  Write the ascii digits
-  *
-  *	Write the global ascii digits array to roomba's seven seg display with this function
-  *
-  */ 
-void write_sevenseg_digits ();
-
 
 /**
-  * \brief  Drive function
-  *
-  *	Let the roomba drive with the specified 'velocity' by calling this function
-  *
-  * \param      velocity	the velocity to drive
-  *
-  */
+ * \brief  Write the ascii digits
+ *
+ *	Write the global ascii digits array to roomba's seven seg display with this function
+ *
+ */
+void write_sevenseg_digits(void);
+
+/**
+ * \brief  Drive function
+ *
+ *	Let the roomba drive with the specified 'velocity' by calling this function
+ *
+ * \param      velocity	the velocity to drive
+ *
+ */
 void drive(int16_t velocity, int16_t radius);
 
 /**
-  * \brief  Stop function
-  *
-  *	Stop the (driving) roomba with this function
-  *
-  */
-void stop();
+ * \brief  Stop function
+ *
+ *	Stop the (driving) roomba with this function
+ *
+ */
+void stop(void);
 
 /**
-  * \brief  Check the roomba buttons
-  *
-  *	Request the state of the roomba buttons with this function
-  *
-  * \return                 an unsigned 8-bit integer value which represents the current state of the roomba buttons
-  *
-  */
-uint8_t check_button();
-
+ * \brief  Check the roomba buttons
+ *
+ *	Request the state of the roomba buttons with this function
+ *
+ * \return                 an unsigned 8-bit integer value which represents the current state of the roomba buttons
+ *
+ */
+uint8_t check_button(void);
 
 /**
-  * \brief  Calculate the time to drive
-  *
-  *         Calculate the time to drive 'distance' centimeters with the specified 'velocity'
-  *
-  * \param      distance 	the distance to drive
-  * \param 	velocity	the velocity to drive
-  * \return                 	the calculated time, which is needed to drive 'distance' with 'velocity'
-  *
-  */
-int32_t calculateTimeToDrive (int32_t distance, int32_t velocity);
-
+ * \brief  Calculate the time to drive
+ *
+ *         Calculate the time to drive 'distance' centimeters with the specified 'velocity'
+ *
+ * \param      distance 	the distance to drive
+ * \param 	velocity	the velocity to drive
+ * \return                 	the calculated time, which is needed to drive 'distance' with 'velocity'
+ *
+ */
+int32_t calculateTimeToDrive(int32_t distance, int32_t velocity);
 
 /************************************************************** Global const */
 
@@ -401,12 +345,8 @@ extern const packet PACKET_MAIN_BRUSH_MOTOR_CURRENT;
 extern const packet PACKET_SIDE_BRUSH_MOTOR_CURRENT;
 extern const packet PACKET_STASIS;
 
-
 /********************************************************** Global variables */
-
 
 /** endif _ROOMBA_H **/
 #endif
-
-
 

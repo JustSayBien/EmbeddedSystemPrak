@@ -22,25 +22,22 @@ Modification history:
 
 /****************************************************************** Includes */
 
-#include <roomba.h>
+#include "roomba.h"
 #include "tools.h"
 #include "mymath.h"
 
 
 
 /******************************************************************* Defines */
-const packet * packet_queries[QUERY_LENGTH] = {&PACKET_BUMPS_WHEELDROPS, &PACKET_INFRARED_CHARACTER_OMNI, &PACKET_DISTANCE, &PACKET_ANGLE, &PACKET_TEMPERATURE};
-volatile int32_t query_results[QUERY_LENGTH];
-
 roomba_data roombadata = {0, 0, 0, 0, 0, 0, 130, 1000};
 collision_data collisiondata = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 // array of currently displayed digits on Roomba's seven segment display
-int32_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
-        48,
-        48,
-        48,
-        48
+uint8_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
+        ASCII_NUMBER_START,
+        ASCII_NUMBER_START,
+        ASCII_NUMBER_START,
+        ASCII_NUMBER_START
 };
 
 
@@ -281,51 +278,6 @@ void reset_trips() {
 }
 
 
-void query_list(const packet * packets[], uint8_t count, int32_t results[]){
-	write_query_list(packets, count);
-	read_query_list(packets, count, results);
-}
-
-void write_query_list(const packet * packets[], uint8_t count){
-	uart_write_byte(CMD_QUERY_LIST);
-	uart_write_byte(count);
-	int i;
-	for(i=0; i < count; i++){
-		uart_write_byte(packets[i]->id);	
-	}	
-}
-
-void read_query_list(const packet * packets[], uint8_t count, int32_t results[]){
-	int i;
-	for(i=0; i < count; i++){
-
-		uint8_t temp = uart_read_byte();
-		if(packets[i]->length == 1){
-			if(packets[i]->has_sign){
-				int8_t tempSigned = (int8_t) temp;
-				results[i] = (int32_t) tempSigned;	
-			}
-			else{
-				results[i] = (int32_t) temp;
-			}
-		}
-		else{
-			uint16_t tempConcat = temp << 8;
-			temp = uart_read_byte();
-			tempConcat |= temp;
-			
-			if(packets[i]->has_sign){
-				int16_t tempConcatSigned = (int16_t) tempConcat;
-				results[i] = (int32_t) tempConcatSigned;
-			}
-			else{
-				results[i] =  (int32_t) tempConcat;
-			}
-		}
-	}
-}
-
-	
 
 void write_sevenseg_digits () {
         uart_write_byte(CMD_7SEG_ASCII);

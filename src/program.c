@@ -130,16 +130,7 @@ void program_run() {
 
 
 
-int intToAscii(int32_t value, int32_t out[]){
-
-	/*if(value < 0){
-		setWeekdayLed(1);
-		value *= -1;
-	}
-	else{
-		setWeekdayLed(0);
-	}*/
-
+int8_t intToAscii(int32_t value, uint8_t out[]){
 	out[3] = (value % 10000) / 1000 + ASCII_NUMBER_START;
 	out[2] = (value % 1000) / 100 + ASCII_NUMBER_START;
 	out[1] = (value % 100) / 10 + ASCII_NUMBER_START;
@@ -359,8 +350,6 @@ void update_distance_sum(){
 		else{
 							
 		}
-
-		//TODO calc degToRad only one....
 
 		int32_t trip_distance_diff = (int32_t) (my_cos(degToRad((float)angle_sum_abs)) * roombadata.trip_distance);
 		collisiondata.driven_trip_distance += trip_distance_diff;
