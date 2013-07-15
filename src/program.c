@@ -4,9 +4,7 @@
 #include "ir_remote.h"
 #include "ir_base.h"
 
-
 volatile int32_t ir_action;
-
 
 millis_t global_clock = 1;
 
@@ -242,7 +240,6 @@ enum programstate handleStateDrive() {
 
 }
 
-
 enum programstate handleStateCollision() {
 
 	collisiondata.program_tick_counter++;
@@ -313,7 +310,8 @@ enum programstate handleStateCollision() {
 
 			int32_t light_signal = roombaQuerySensor(
 					PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
-			if (light_signal >= 30 && light_signal <= 400) {
+			if (light_signal >= LIGHT_BUMP_CLEAR
+					&& light_signal <= LIGHT_BUMP_NOT_CLEAR) {
 				roombaStop();
 				collisiondata.angle_sum += roombadata.trip_angle;
 				roombaResetTrips();
@@ -379,6 +377,8 @@ enum programstate handleStateCollision() {
 
 				//after 3 seconds in collision mode begin to check if collision is avoided
 				if (collisiondata.program_tick_counter >= 20) {
+
+					// check if we found back to the line (LINE_APPROACH)
 					if (drive_state == LINE_APPROACH) {
 						int32_t cliff_front_left_signal = roombaQuerySensor(
 								PACKET_CLIFF_FRONT_LEFT_SIGNAL);
@@ -420,10 +420,12 @@ enum programstate handleStateCollision() {
 						}
 					}
 				}
-
+				//check if we have driven 20 centimeters of our the real course while avoiding collision
 				if (collisiondata.driven_trip_distance >= 200) {
+					//in angle and fence approach check the calculated "away-from-course" distance value
 					if (drive_state == ANGLE_APPROACH
 							|| drive_state == FENCE_APPROACH) {
+						// if we are only 5 centimeters left or right away from our course, then stop collision avoidance turn 'angle_sum' back and return to normal drive mode
 						if (collisiondata.distance_sum < 50
 								&& collisiondata.distance_sum > -50) {
 							roombaStop();
@@ -442,7 +444,8 @@ enum programstate handleStateCollision() {
 									collisiondata.angle_sum < 0 ?
 											angle_to_turn : -angle_to_turn;
 
-							roombaDrive(DEFAULT_VELOCITY / 2, angle_to_turn < 0 ? RIGHT : LEFT);
+							roombaDrive(DEFAULT_VELOCITY / 2,
+									angle_to_turn < 0 ? RIGHT : LEFT);
 
 							while ((angle_to_turn > 0
 									&& roombadata.trip_angle < angle_to_turn)
@@ -787,7 +790,8 @@ enum programstate handleSubStateLineApproach() {
 		int32_t cliff_left_signal = roombaQuerySensor(PACKET_CLIFF_LEFT_SIGNAL);
 		int32_t cliff_right_signal = roombaQuerySensor(
 				PACKET_CLIFF_RIGHT_SIGNAL);
-		if (cliff_left_signal >= TAPE_SIGNAL && cliff_right_signal >= TAPE_SIGNAL) {
+		if (cliff_left_signal >= TAPE_SIGNAL
+				&& cliff_right_signal >= TAPE_SIGNAL) {
 			int32_t infrared_value = 0;
 			infrared_value = roombaQuerySensor(PACKET_INFRARED_CHARACTER_LEFT);
 			infrared_value =
