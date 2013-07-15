@@ -4,14 +4,7 @@
 #include "ir_remote.h"
 #include "ir_base.h"
 
-/** stores the queried button state */
-volatile uint8_t button_state;
-
 volatile int32_t ir_action;
-
-
-/** bool to switch between displaying trip or whole distance */
-uint8_t display_whole_distance = 0;
 
 millis_t global_clock = 1;
 
@@ -22,13 +15,16 @@ enum programstate program_state;
 
 /** current drive state */
 enum drivestate drive_state = LEAVE_DOCK;
+/** current approach selection */
 enum drivestate current_approach = ANGLE_APPROACH;
-//enum drivestate drive_state = DOCKED;
 
+/** current angleapproach state */
 enum angleapproachstate angle_approach_state = DRIVE_ANGLE;
 
+/** current line approach state */
 enum lineapproachstate line_approach_state = LINE_TURN_FROM_BASE;
 
+/** current collision state */
 enum collisionstate collision_state;
 
 /** current calibrate state */
@@ -37,9 +33,11 @@ enum calibratestate calibrate_state;
 /** current nextbase state */
 enum nextbasestate nextbase_state = NEXTBASE_NUM;
 
+/** current fenceapproach state */
 enum fenceapproachstate fenceapproach_state = FENCE_ANGLE;
 
-enum fencedetectstate fencedetect_state = FENCE_NONE;
+/** current fencedetect state */
+enum fencedetectstate fencedetect_state = FENCE_FIRST;
 
 bool_t docked_in_menu = false;
 bool_t has_driven = false;
@@ -53,60 +51,48 @@ int32_t fence_correct_straight_distance = 0;
 uint32_t drive_counter = 0;
 
 
-
-
-
 void programRun() {
 
 	//init sevenseg
-	roombaWriteSevensegDigits();	
+	roombaWriteSevensegDigits();
 
 	//set to init programm state
 	setProgramState(CALIBRATE);
 
-
 	workbenchInit();
 
+	my_msleep(2000);
 	roombaPlaySongDone();
 
 	//main loop
-	while(1){
-		button_state = 0;
-		
+	while (1) {
 		ir_action = getIRAction();
 
 		//switch block according to state chart
-		switch(program_state){
-			/*case INIT:
-				program_state = handleStateInit();
-				break;*/
-			case CALIBRATE:
-				program_state = handleStateCalibrate();
-				break;
-			case DRIVE:
-				program_state = handleStateDrive();
-				break;
-			case COLLISION:	
+		switch (program_state) {
+
+		case CALIBRATE:
+			program_state = handleStateCalibrate();
+			break;
+		case DRIVE:
+			program_state = handleStateDrive();
+			break;
+		case COLLISION:
+			//collision state uses smaller program tick rate
+			if (global_clock % 150 == 1) {
 				program_state = handleStateCollision();
-				break;
-			case SEEKDOCK:
-				program_state = handleStateSeekdock();
-				break;
-			case DOCKED:
-				program_state = handleStateDocked();
+			}
+			break;
+		case SEEKDOCK:
+			program_state = handleStateSeekdock();
+			break;
+		case DOCKED:
+			program_state = handleStateDocked();
 		}
-		
+
 		//global reset for all states
 		if(ir_action == ROOMBA_REMOTE_BACK) {
 			roombaStop();
-			int32_t distance_centimeter = display_whole_distance ? roombadata.driven_distance/10 : roombadata.trip_distance/10;
-			if(intToAscii(distance_centimeter, roomba_sevenseg_digits) != 1){
-				roombaSetWeekdayLed(distance_centimeter / 10000);	
-			}
-			else{
-				roombaSetWeekdayLed(0);
-			}
-
 			drive_state = LEAVE_DOCK;
 			angle_approach_state = DRIVE_ANGLE;
 			line_approach_state = LINE_TURN_FROM_BASE;
@@ -117,23 +103,19 @@ void programRun() {
 			roombaOnCollisionCleared();
 			roombaWriteSevensegDigits();
 			setProgramState(CALIBRATE);
-		}
-		else{
+		} else {
 			setProgramState(program_state);
 		}
 
-		button_state = 0;
 		ir_action = 0;
 		my_msleep(50);
 		global_clock += 50;
 	}
 }
 
+int8_t intToAscii(int32_t value, int32_t out[]) {
 
-
-int8_t intToAscii(int32_t value, int32_t out[]){
-
-	if(value < 0){
+	if (value < 0) {
 		roombaSetWeekdayLed(1);
 	}
 	value = mymathAbs(value);
@@ -143,431 +125,372 @@ int8_t intToAscii(int32_t value, int32_t out[]){
 	out[1] = (value % 100) / 10 + ASCII_NUMBER_START;
 	out[0] = value % 10 + ASCII_NUMBER_START;
 	// integer too large
-	if(value >= 10000)
+	if (value >= 10000)
 		return -1;
-	else 
+	else
 		return 1;
 }
 
-void setProgramState(enum programstate state){
-	switch(state) {
-		case CALIBRATE:
-			roombaSetLed(LED_DIRT_DETECT_BLUE, 0, 0);
-			break;
-		case DRIVE:
-			roombaSetLed(LED_SPOT_GREEN, 0, 0);
-			break;
-		case COLLISION:
-			roombaSetLed(LED_CHECK_ROBOT_RED, 0, 0);
-			break;
-		case SEEKDOCK:
-			//TODO use defines
-			roombaSetLed(0, 255, 255);
-			break;
-		case DOCKED:
-			roombaSetLed(0,100,100);
-			break;
+void setProgramState(enum programstate state) {
+	switch (state) {
+	case CALIBRATE:
+		roombaSetLed(LED_DIRT_DETECT_BLUE, 0, 0);
+		break;
+	case DRIVE:
+		roombaSetLed(LED_SPOT_GREEN, 0, 0);
+		break;
+	case COLLISION:
+		roombaSetLed(LED_CHECK_ROBOT_RED, 0, 0);
+		break;
+	case SEEKDOCK:
+		roombaSetLed(0, SEEKDOCK_LED_BITMASK, SEEKDOCK_LED_BITMASK);
+		break;
+	case DOCKED:
+		roombaSetLed(0, DOCKED_LED_BITMASK, DOCKED_LED_BITMASK);
+		break;
 	}
 	program_state = state;
 }
 
+enum programstate handleStateCalibrate() {
+	switch (calibrate_state) {
+	case CALIBRATE_DISTANCE:
+		base_config_state = BASE_SELECT;
+		roomba_sevenseg_digits[3] = 'C';
+		roomba_sevenseg_digits[2] = 'A';
+		roomba_sevenseg_digits[1] = 'L';
+		roomba_sevenseg_digits[0] = 'D';
+		roombaWriteSevensegDigits();
 
-enum programstate handleStateCalibrate(){		
-	switch(calibrate_state) {
-		case CALIBRATE_DISTANCE:
-			base_config_state = BASE_SELECT;
-			roomba_sevenseg_digits[3] = 'C';
-			roomba_sevenseg_digits[2] = 'A';
-			roomba_sevenseg_digits[1] = 'L';
-			roomba_sevenseg_digits[0] = 'D';
-			roombaWriteSevensegDigits();
-			
+		switch (ir_action) {
+		case ROOMBA_REMOTE_CROSS_OK:
+			roombaCalibrateDistance();
+			break;
+		case ROOMBA_REMOTE_CROSS_DOWN:
+			calibrate_state = CALIBRATE_DONE;
+			break;
+		case ROOMBA_REMOTE_CROSS_UP:
+			calibrate_state = CALIBRATE_ANGLE;
+			break;
+		}
+		break;
+
+	case CALIBRATE_ANGLE:
+		base_config_state = BASE_SELECT;
+		roomba_sevenseg_digits[3] = 'C';
+		roomba_sevenseg_digits[2] = 'A';
+		roomba_sevenseg_digits[1] = 'L';
+		roomba_sevenseg_digits[0] = 'A';
+		roombaWriteSevensegDigits();
+
+		switch (ir_action) {
+		case ROOMBA_REMOTE_CROSS_OK:
+			roombaCalibrateAngle();
+			break;
+		case ROOMBA_REMOTE_CROSS_DOWN:
+			calibrate_state = CALIBRATE_DISTANCE;
+			break;
+		case ROOMBA_REMOTE_CROSS_UP:
+			calibrate_state = CALIBRATE_BASE;
+			break;
+		}
+		break;
+
+	case CALIBRATE_BASE:
+		if (base_config_state == BASE_SELECT) {
 			switch (ir_action) {
-				case ROOMBA_REMOTE_CROSS_OK:
-					roombaCalibrateDistance();
-					break;
-				case ROOMBA_REMOTE_CROSS_DOWN:
-					calibrate_state = CALIBRATE_DONE;
-					break;
-				case ROOMBA_REMOTE_CROSS_UP:
-					calibrate_state = CALIBRATE_ANGLE;
-					break;
+			case ROOMBA_REMOTE_CROSS_DOWN:
+				calibrate_state = CALIBRATE_ANGLE;
+				break;
+			case ROOMBA_REMOTE_CROSS_UP:
+				calibrate_state = CALIBRATE_DONE;
+				break;
 			}
+		}
+
+		// base calibration starts when number key is pressed
+		handleSubstateBaseSetup();
+		break;
+
+	case CALIBRATE_DONE:
+		base_config_state = BASE_SELECT;
+		roomba_sevenseg_digits[3] = 'D';
+		roomba_sevenseg_digits[2] = 'O';
+		roomba_sevenseg_digits[1] = 'N';
+		roomba_sevenseg_digits[0] = 'E';
+		roombaWriteSevensegDigits();
+
+		switch (ir_action) {
+		case ROOMBA_REMOTE_CROSS_OK:
+			my_msleep(1000);
+			return DOCKED;
+		case ROOMBA_REMOTE_CROSS_DOWN:
+			calibrate_state = CALIBRATE_BASE;
 			break;
-			
-		case CALIBRATE_ANGLE:
-			base_config_state = BASE_SELECT;
-			roomba_sevenseg_digits[3] = 'C';
-			roomba_sevenseg_digits[2] = 'A';
-			roomba_sevenseg_digits[1] = 'L';
-			roomba_sevenseg_digits[0] = 'A';
-			roombaWriteSevensegDigits();
-			
-			switch (ir_action) {
-				case ROOMBA_REMOTE_CROSS_OK:
-					roombaCalibrateAngle();
-					break;
-				case ROOMBA_REMOTE_CROSS_DOWN:
-					calibrate_state = CALIBRATE_DISTANCE;
-					break;
-				case ROOMBA_REMOTE_CROSS_UP:
-					calibrate_state = CALIBRATE_BASE;
-					break;
-			}
+		case ROOMBA_REMOTE_CROSS_UP:
+			calibrate_state = CALIBRATE_DISTANCE;
 			break;
-			
-		case CALIBRATE_BASE:
-			if (base_config_state == BASE_SELECT) {
-				switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_DOWN:
-						calibrate_state = CALIBRATE_ANGLE;
-						break;
-					case ROOMBA_REMOTE_CROSS_UP:
-						calibrate_state = CALIBRATE_DONE;
-						break;
-				}
-			}
-			
-			// base calibration starts when number key is pressed
-			handleSubstateBaseSetup();
-			break;
-			
-		case CALIBRATE_DONE:
-			base_config_state = BASE_SELECT;
-			roomba_sevenseg_digits[3] = 'D';
-			roomba_sevenseg_digits[2] = 'O';
-			roomba_sevenseg_digits[1] = 'N';
-			roomba_sevenseg_digits[0] = 'E';
-			roombaWriteSevensegDigits();
-			
-			switch (ir_action) {
-				case ROOMBA_REMOTE_CROSS_OK:
-					my_msleep(1000);
-					return DOCKED;
-				case ROOMBA_REMOTE_CROSS_DOWN:
-					calibrate_state = CALIBRATE_BASE;
-					break;
-				case ROOMBA_REMOTE_CROSS_UP:
-					calibrate_state = CALIBRATE_DISTANCE;
-					break;
-			}
-			break;
-	
+		}
+		break;
+
 	}
 
 	return CALIBRATE;
 }
 
-
-enum programstate handleStateDrive(){
-
-	switch(drive_state){
-		case LEAVE_DOCK:
-			return handleSubStateLeaveDock();
-		case ANGLE_APPROACH:
-			return handleSubStateAngleApproach();
-		case LINE_APPROACH:
-			return handleSubStateLineApproach();
-		case FENCE_APPROACH:
-			return handleSubStateFenceApproach();
+enum programstate handleStateDrive() {
+	switch (drive_state) {
+	case LEAVE_DOCK:
+		return handleSubStateLeaveDock();
+	case ANGLE_APPROACH:
+		return handleSubStateAngleApproach();
+	case LINE_APPROACH:
+		return handleSubStateLineApproach();
+	case FENCE_APPROACH:
+		return handleSubStateFenceApproach();
 	}
 	return DRIVE;
-	
+
 }
 
-
-void update_distance_sum(){
-	int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
-	//check angle quadrant and if roomba drives left(+) or right(-) away
-	int8_t distance_neg_sign = (angle_sum_abs / 180) % 2;
-						
-	//roomba isnt away from or parallel to his course
-	if(angle_sum_abs % 180 == 0){
-		if(angle_sum_abs % 360 == 0){
-			collisiondata.driven_trip_distance += roombadata.trip_distance;
-		}
-		else{
-			collisiondata.driven_trip_distance -= roombadata.trip_distance;
-		}
-	}
-	else if(angle_sum_abs % 90 == 0){
-		int32_t distance_diff = distance_neg_sign ? -roombadata.trip_distance : roombadata.trip_distance;
-		if(collisiondata.angle_sum < 0){
-			distance_diff = -distance_diff;
-		}
-		collisiondata.distance_sum += distance_diff;
-	}
-	else{
-		angle_sum_abs %= 180;
-		if(angle_sum_abs > 90){
-			angle_sum_abs = 180 - angle_sum_abs;
-		}
-		else{
-							
-		}
-
-		int32_t trip_distance_diff = (int32_t) (mymathCos(mymathDegToRad((float)angle_sum_abs)) * roombadata.trip_distance);
-		collisiondata.driven_trip_distance += trip_distance_diff;
-
-		int32_t distance_diff = (int32_t) (mymathSin(mymathDegToRad((float)angle_sum_abs)) * roombadata.trip_distance);
-		if(distance_diff < 0){
-			distance_diff = -distance_diff;
-		}
-		distance_diff = distance_neg_sign ? -distance_diff : distance_diff;
-		if(collisiondata.angle_sum < 0){
-				distance_diff = -distance_diff;
-		}
-		collisiondata.distance_sum += distance_diff;
-	}
-}
-
-
-int32_t lost_counter = 0;
-
-
-
-
-enum programstate handleStateCollision(){
-
+enum programstate handleStateCollision() {
 
 	collisiondata.program_tick_counter++;
 	//after 30 seconds in collision mode stop driving and wait for user action
-	if(collisiondata.program_tick_counter >= 200){
+	if (collisiondata.program_tick_counter >= 200) {
 		roombaStop();
 		roombaPlaySongBeep();
-		if(button_state == BTN_DAY){
+		if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
 			roombaOnCollisionCleared();
 			return DRIVE;
-		}
-		else{
+		} else {
 			return COLLISION;
 		}
 	}
 
-	switch(collision_state){
-		case COLLISION_TURN:
-			if(!roombadata.is_moving){
+	switch (collision_state) {
+	case COLLISION_TURN:
+		if (!roombadata.is_moving) {
 
-				//check physical bumpers and wheeldrops before light bumps to ensure that they have priority
-				if(collisiondata.bumper_state != 0){
-					//any wheeldrop 
-					if(collisiondata.bumper_state >= 0x4){
-						//use Day button to return to drive mode
-						if(button_state == BTN_DAY){
-							roombaOnCollisionCleared();
-							return DRIVE;
-						}
-						else{
-							return COLLISION;
-						}
-					}
-
-					roombaDriveABitBackward(DIFFERENCE_TO_BASE/4);
-				}
-
-				roombaResetTrips();
-					
-
-				if(!collisiondata.played_acustic_feedback){
-					roombaPlaySongCollision();
-					my_msleep(10000);
-					//check if collision still exists
-					collisiondata.bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
-					collisiondata.light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
-					if(collisiondata.bumper_state == 0 && collisiondata.light_bumper_state == 0){
+			//check physical bumpers and wheeldrops before light bumps to ensure that they have priority
+			if (collisiondata.bumper_state != 0) {
+				//any wheeldrop
+				if (collisiondata.bumper_state >= 0x4) {
+					//use Day button to return to drive mode
+					if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
 						roombaOnCollisionCleared();
 						return DRIVE;
-					}
-					//any wheeldrop 
-					else if(collisiondata.bumper_state >= 0x4){
+					} else {
 						return COLLISION;
 					}
-					collisiondata.played_acustic_feedback = 1;
 				}
 
-				roombaDrive(DEFAULT_VELOCITY/2, 1);
+				roombaDriveABitBackward(DIFFERENCE_TO_BASE / 4);
 			}
-			else{
 
-				roombaQuerySensor(PACKET_ANGLE);
-				//didnt find any collision
-				if(roombadata.trip_angle >= 360){
-					roombaStop();
+			roombaResetTrips();
+
+			if (!collisiondata.played_acustic_feedback) {
+				roombaPlaySongCollision();
+				my_msleep(10000);
+				//check if collision still exists
+				collisiondata.bumper_state = roombaQuerySensor(
+						PACKET_BUMPS_WHEELDROPS);
+				collisiondata.light_bumper_state = roombaQuerySensor(
+						PACKET_LIGHT_BUMPER);
+				if (collisiondata.bumper_state == 0
+						&& collisiondata.light_bumper_state == 0) {
 					roombaOnCollisionCleared();
 					return DRIVE;
 				}
+				//any wheeldrop
+				else if (collisiondata.bumper_state >= 0x4) {
+					return COLLISION;
+				}
+				collisiondata.played_acustic_feedback = 1;
+			}
 
+			roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
+		} else {
 
-				int32_t light_signal = roombaQuerySensor(PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
-				if(light_signal >= 30 && light_signal <= 400){
+			roombaQuerySensor(PACKET_ANGLE);
+			//didnt find any collision
+			if (roombadata.trip_angle >= 360) {
+				roombaStop();
+				roombaOnCollisionCleared();
+				return DRIVE;
+			}
+
+			int32_t light_signal = roombaQuerySensor(
+					PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
+			if (light_signal >= LIGHT_BUMP_CLEAR
+					&& light_signal <= LIGHT_BUMP_NOT_CLEAR) {
+				roombaStop();
+				collisiondata.angle_sum += roombadata.trip_angle;
+				roombaResetTrips();
+				collision_state = COLLISION_DRIVE;
+			}
+		}
+		break;
+	case COLLISION_DRIVE:
+
+		if (!roombadata.is_moving) {
+			roombaDrive(DEFAULT_VELOCITY / 2, STRAIGHT);
+		} else {
+			roombaQuerySensor(PACKET_ANGLE);
+			roombaQuerySensor(PACKET_DISTANCE);
+
+			//while driving check if new collisions are detected
+			int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
+			int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
+			if (bumper_state != 0 || light_bumper_state != 0) {
+
+				collisiondata.angle_sum += roombadata.trip_angle;
+				roombaUpdateDistanceSum();
+				roombaStop();
+				roombaResetTrips();
+				collisiondata.bumper_state = bumper_state;
+				collisiondata.light_bumper_state = light_bumper_state;
+				collision_state = COLLISION_TURN;
+			} else {
+				int32_t light_signal = roombaQuerySensor(
+						PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
+				//lost right bumper
+				if (light_signal <= LIGHT_BUMP_CLEAR) {
+
+					int32_t distance_value = roombadata.trip_distance
+							+ DIFFERENCE_TO_BASE / 6;
+					roombaDrive(DEFAULT_VELOCITY / 2, STRAIGHT);
+					while (roombadata.trip_distance <= distance_value) {
+						my_msleep(50);
+						roombaQuerySensor(PACKET_DISTANCE);
+					}
 					roombaStop();
+
 					collisiondata.angle_sum += roombadata.trip_angle;
+					roombaUpdateDistanceSum();
 					roombaResetTrips();
-					collision_state = COLLISION_DRIVE;
-				}
-			}
-			break;
-		case COLLISION_DRIVE:
 
-			if(!roombadata.is_moving){
-				roombaDrive(DEFAULT_VELOCITY/2, 0);
-			}
-			else{
-				roombaQuerySensor(PACKET_ANGLE);
-				roombaQuerySensor(PACKET_DISTANCE);
-
-				//while driving check if new collisions are detected
-				int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
-				int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
-				if(bumper_state != 0 || light_bumper_state != 0){
-
+					roombaDrive(DEFAULT_VELOCITY / 2, RIGHT);
+				} else if (light_signal >= LIGHT_BUMP_NOT_CLEAR) {
+					collisiondata.angle_sum += roombadata.trip_angle;
+					roombaUpdateDistanceSum();
+					roombaResetTrips();
+					roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
+				} else {
+					if (roombadata.trip_distance > 0
+							&& roombadata.trip_distance >= 50) {
 						collisiondata.angle_sum += roombadata.trip_angle;
-						update_distance_sum();
-						roombaStop();
+						roombaUpdateDistanceSum();
 						roombaResetTrips();
-						collisiondata.bumper_state = bumper_state;
-						collisiondata.light_bumper_state = light_bumper_state;
-						collision_state = COLLISION_TURN;
-				}
-				else{
-					int32_t light_signal = roombaQuerySensor(PACKET_LIGHT_BUMP_RIGHT_SIGNAL);
-					//lost right bumper
-					if(light_signal <= 30){
-						
-						lost_counter++;
-						if(lost_counter == 5){
-							//TODO drive back to course
-						}
-						
-						int32_t distance_value = roombadata.trip_distance + DIFFERENCE_TO_BASE/6;
-						roombaDrive(DEFAULT_VELOCITY/2, (int16_t) 0);
-						while(roombadata.trip_distance <= distance_value){
-							my_msleep(50);
-							roombaQuerySensor(PACKET_DISTANCE);
-						}
-						roombaStop();
-
-						collisiondata.angle_sum += roombadata.trip_angle;
-						update_distance_sum();
-						roombaResetTrips();
-					
-
-						roombaDrive(DEFAULT_VELOCITY/2, -1);
 					}
-					else if(light_signal >= 400){
-						collisiondata.angle_sum += roombadata.trip_angle;
-						update_distance_sum();
-						roombaResetTrips();
-						lost_counter = 0;
-						roombaDrive(DEFAULT_VELOCITY/2, 1);
-					}
-					else{
-						lost_counter = 0;
-						if(roombadata.trip_distance > 0 && roombadata.trip_distance >= 50){
-							collisiondata.angle_sum += roombadata.trip_angle;
-							update_distance_sum();
+
+					roombaDrive(DEFAULT_VELOCITY / 2, STRAIGHT);
+				}
+
+				//after 3 seconds in collision mode begin to check if collision is avoided
+				if (collisiondata.program_tick_counter >= 20) {
+
+					// check if we found back to the line (LINE_APPROACH)
+					if (drive_state == LINE_APPROACH) {
+						int32_t cliff_front_left_signal = roombaQuerySensor(
+								PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+						int32_t cliff_front_right_signal = roombaQuerySensor(
+								PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
+						if (cliff_front_left_signal >= TAPE_SIGNAL
+								&& cliff_front_right_signal >= TAPE_SIGNAL) {
+							roombaStop();
 							roombaResetTrips();
-						}
+							int32_t angle_to_turn = 45;
+							roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
 
-						roombaDrive(DEFAULT_VELOCITY/2, 0);
-					}
-
-
-					//after 3 seconds in collision mode begin to check if collision is avoided
-					if(collisiondata.program_tick_counter >= 20){
-						if(drive_state == LINE_APPROACH){
-							int32_t cliff_front_left_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-							int32_t cliff_front_right_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
-							if(cliff_front_left_signal >= 1200 && cliff_front_right_signal >= 1200){
-								roombaStop();
-								roombaResetTrips();
-								int32_t angle_to_turn = 45;
-								roombaDrive(DEFAULT_VELOCITY/2, 1);
-								if(angle_to_turn < 0) {
-									angle_to_turn = -angle_to_turn;
-								}
-								while(roombadata.trip_angle <= angle_to_turn){
-									my_msleep(50);
-									roombaQuerySensor(PACKET_ANGLE);
-								}
-								roombaStop();
-								roombaOnCollisionCleared();
-								return DRIVE;
+							while (roombadata.trip_angle <= angle_to_turn) {
+								my_msleep(50);
+								roombaQuerySensor(PACKET_ANGLE);
 							}
-							else if(cliff_front_left_signal >= 1200){
-								roombaStop();
-								roombaResetTrips();
-								int32_t angle_to_turn = 75;
-								roombaDrive(DEFAULT_VELOCITY/2, 1);
-		
-								if(angle_to_turn < 0) {
-									angle_to_turn = -angle_to_turn;
-								}
-								while(roombadata.trip_angle <= angle_to_turn){
-									my_msleep(50);
-									roombaQuerySensor(PACKET_ANGLE);
-								}
-								roombaStop();
-								roombaOnCollisionCleared();
-								return DRIVE;
-							}
-							else if(cliff_front_right_signal >= 1200){
-								roombaStop();
-								roombaResetTrips();
-								roombaOnCollisionCleared();
-								return DRIVE;
+							roombaStop();
+							roombaOnCollisionCleared();
+							return DRIVE;
+						} else if (cliff_front_left_signal >= TAPE_SIGNAL) {
+							roombaStop();
+							roombaResetTrips();
+							int32_t angle_to_turn = 75;
+							roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
 
+							while (roombadata.trip_angle <= angle_to_turn) {
+								my_msleep(50);
+								roombaQuerySensor(PACKET_ANGLE);
 							}
+							roombaStop();
+							roombaOnCollisionCleared();
+							return DRIVE;
+						} else if (cliff_front_right_signal >= TAPE_SIGNAL) {
+							roombaStop();
+							roombaResetTrips();
+							roombaOnCollisionCleared();
+							return DRIVE;
+
 						}
 					}
-
-					if(collisiondata.driven_trip_distance >= 200){
-						if(drive_state == ANGLE_APPROACH  || drive_state == FENCE_APPROACH){
-							if(collisiondata.distance_sum < 40 && collisiondata.distance_sum > -40){
-								roombaStop();
-								roombaResetTrips();
-								int32_t angle_to_turn = 0;
-								int32_t angle_sum_abs = collisiondata.angle_sum < 0 ? -collisiondata.angle_sum : collisiondata.angle_sum;
-								angle_sum_abs %= 360;
-								angle_to_turn = angle_sum_abs > 180 ? -(360 - angle_sum_abs) : angle_sum_abs;
-								angle_to_turn = collisiondata.angle_sum < 0 ? angle_to_turn : -angle_to_turn;
-					
-								int8_t direction = angle_to_turn < 0 ? -1 : 1;
-								roombaDrive(DEFAULT_VELOCITY/2, direction);
-
-								while((angle_to_turn > 0 && roombadata.trip_angle < angle_to_turn) || (angle_to_turn < 0 && roombadata.trip_angle > angle_to_turn)){
-									my_msleep(50);
-									roombaQuerySensor(PACKET_ANGLE);
-								}
-								roombaStop();
-								roombaResetTrips();
-								
-								roombaOnCollisionCleared();
-		
-								return DRIVE;
-							}
-						}
-					}
-					
-
-
-
-
 				}
+				//check if we have driven 20 centimeters of our the real course while avoiding collision
+				if (collisiondata.driven_trip_distance >= 200) {
+					//in angle and fence approach check the calculated "away-from-course" distance value
+					if (drive_state == ANGLE_APPROACH
+							|| drive_state == FENCE_APPROACH) {
+						// if we are only 5 centimeters left or right away from our course, then stop collision avoidance turn 'angle_sum' back and return to normal drive mode
+						if (collisiondata.distance_sum < 50
+								&& collisiondata.distance_sum > -50) {
+							roombaStop();
+							roombaResetTrips();
+							int32_t angle_to_turn = 0;
+							int32_t angle_sum_abs =
+									collisiondata.angle_sum < 0 ?
+											-collisiondata.angle_sum :
+											collisiondata.angle_sum;
+							angle_sum_abs %= 360;
+							angle_to_turn =
+									angle_sum_abs > 180 ?
+											-(360 - angle_sum_abs) :
+											angle_sum_abs;
+							angle_to_turn =
+									collisiondata.angle_sum < 0 ?
+											angle_to_turn : -angle_to_turn;
+
+							roombaDrive(DEFAULT_VELOCITY / 2,
+									angle_to_turn < 0 ? RIGHT : LEFT);
+
+							while ((angle_to_turn > 0
+									&& roombadata.trip_angle < angle_to_turn)
+									|| (angle_to_turn < 0
+											&& roombadata.trip_angle
+													> angle_to_turn)) {
+								my_msleep(50);
+								roombaQuerySensor(PACKET_ANGLE);
+							}
+							roombaStop();
+							roombaResetTrips();
+
+							roombaOnCollisionCleared();
+
+							return DRIVE;
+						}
+					}
+				}
+
 			}
-			break;
+		}
+		break;
 
 	}
-
-	intToAscii(collisiondata.driven_trip_distance, roomba_sevenseg_digits);
-	roombaWriteSevensegDigits();
 
 	return COLLISION;
 }
 
 enum programstate handleStateSeekdock() {
 	//check if we reached the dock?
-	if(roombaQuerySensor(PACKET_CHARGING_SOURCES_AVAILABLE) == CHARGING_SOURCE_HOMEBASE){
+	if (roombaQuerySensor(
+			PACKET_CHARGING_SOURCES_AVAILABLE) == CHARGING_SOURCE_HOMEBASE) {
 		roombaInit();
 
 		//consume sensor values
@@ -576,10 +499,12 @@ enum programstate handleStateSeekdock() {
 
 		// reset values for docked state
 		roombadata.current_base_id = 0;
+		angle_approach_state = DRIVE_ANGLE;
+		line_approach_state = LINE_TURN_FROM_BASE;
+		fenceapproach_state = FENCE_ANGLE;
 
 		return DOCKED;
-	}
-	else{
+	} else {
 		return SEEKDOCK;
 	}
 }
@@ -588,7 +513,9 @@ enum programstate handleStateDocked() {
 	if (roombadata.current_base_id == 0) {
 		roombadata.current_base_id = check_base_id();
 		if (roombadata.current_base_id != 0) {
-			if (has_driven && roombadata.destination_base_id != 0 && roombadata.current_base_id != roombadata.destination_base_id) {
+			if (has_driven && roombadata.destination_base_id != 0
+					&& roombadata.current_base_id
+							!= roombadata.destination_base_id) {
 				drive_state = LEAVE_DOCK;
 				return DRIVE;
 			}
@@ -596,166 +523,162 @@ enum programstate handleStateDocked() {
 	} else if (roombadata.current_base_id == roombadata.destination_base_id) {
 		roombadata.destination_base_id = 0;
 	}
-	
+
 	switch (nextbase_state) {
-		case NEXTBASE_DRIVE:
-			/*roomba_sevenseg_digits[3] = 'D';
-			roomba_sevenseg_digits[2] = 'R';
-			roomba_sevenseg_digits[1] = 'I';
-			roomba_sevenseg_digits[0] = 'V';*/
-			
-			roomba_sevenseg_digits[3] = 'A';
-			roomba_sevenseg_digits[2] = 'T';
-			roomba_sevenseg_digits[1] = ' ';
-			roomba_sevenseg_digits[0] = (roombadata.current_base_id + ASCII_NUMBER_START);
-			
-			switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_OK:
-						if(roombadata.current_base_id != 0 && roombadata.destination_base_id != 0) {
-							docked_in_menu = false;
-							has_driven = true;
-							drive_state = LEAVE_DOCK;
-							return DRIVE;
-						}
-						break;
-					case ROOMBA_REMOTE_CROSS_DOWN:
-						nextbase_state = NEXTBASE_NUM;
-						docked_in_menu = false;
-						break;
-					case ROOMBA_REMOTE_CROSS_UP:
-						nextbase_state = NEXTBASE_APPROACH;
-						docked_in_menu = false;
-						break;
-					default:
-						break;
-				}
-			break;
-			
-		case NEXTBASE_NUM:
-			roomba_sevenseg_digits[3] = 'B';
-			roomba_sevenseg_digits[2] = 'N';
-			roomba_sevenseg_digits[1] = 'U';
-			roomba_sevenseg_digits[0] = 'M';
-			switch (ir_action) {
-				case ROOMBA_REMOTE_CROSS_DOWN:
-					nextbase_state = NEXTBASE_APPROACH;
-					break;
-				case ROOMBA_REMOTE_CROSS_UP:
-					nextbase_state = NEXTBASE_DRIVE;
-					break;
-				case ROOMBA_REMOTE_NUM_1:
-					roombadata.destination_base_id = 1;
-					docked_in_menu = true;
-					break;
-				case ROOMBA_REMOTE_NUM_2:
-					roombadata.destination_base_id = 2;
-					docked_in_menu = true;
-					break;
-				case ROOMBA_REMOTE_NUM_3:
-					roombadata.destination_base_id = 3;
-					docked_in_menu = true;
-					break;
-				case ROOMBA_REMOTE_NUM_4:
-					roombadata.destination_base_id = 4;
-					docked_in_menu = true;
-					break;
-				case ROOMBA_REMOTE_NUM_5:
-					roombadata.destination_base_id = 5;
-					docked_in_menu = true;
-					break;
-				default:
-					break;
-			}
-		
-			if (roombadata.destination_base_id != 0 && docked_in_menu == true) {
-				roomba_sevenseg_digits[3] = 'B';
-				roomba_sevenseg_digits[2] = 'A';
-				roomba_sevenseg_digits[1] = ' ';
-				roomba_sevenseg_digits[0] = (roombadata.destination_base_id + ASCII_NUMBER_START);
-				roombaWriteSevensegDigits();
+	case NEXTBASE_DRIVE:
+
+		roomba_sevenseg_digits[3] = 'A';
+		roomba_sevenseg_digits[2] = 'T';
+		roomba_sevenseg_digits[1] = ' ';
+		roomba_sevenseg_digits[0] = (roombadata.current_base_id
+				+ ASCII_NUMBER_START);
+
+		switch (ir_action) {
+		case ROOMBA_REMOTE_CROSS_OK:
+			if (roombadata.current_base_id != 0
+					&& roombadata.destination_base_id != 0) {
 				docked_in_menu = false;
-				my_msleep(2000);
+				has_driven = true;
+				drive_state = LEAVE_DOCK;
+				return DRIVE;
 			}
-			
 			break;
-			
-		case NEXTBASE_APPROACH:
-			if (!docked_in_menu) {
-				roomba_sevenseg_digits[3] = 'A';
-				roomba_sevenseg_digits[2] = 'P';
-				roomba_sevenseg_digits[1] = 'P';
-				roomba_sevenseg_digits[0] = 'R';
-				switch (ir_action) {
-					case ROOMBA_REMOTE_CROSS_OK:
-						docked_in_menu = true;
-						break;
-					case ROOMBA_REMOTE_CROSS_UP:
-						nextbase_state = NEXTBASE_NUM;
-						docked_in_menu = false;
-						break;
-					case ROOMBA_REMOTE_CROSS_DOWN:
-						nextbase_state = NEXTBASE_DRIVE;
-						docked_in_menu = false;
-						break;
-					default:
-						break;
-				}
-			} else {
-				if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
-					docked_in_menu = false;
-				}
-				switch (current_approach) {
-					case ANGLE_APPROACH:
-						roomba_sevenseg_digits[3] = 'A';
-						roomba_sevenseg_digits[2] = 'N';
-						roomba_sevenseg_digits[1] = 'G';
-						roomba_sevenseg_digits[0] = 'L';
-						if (ir_action == ROOMBA_REMOTE_CROSS_UP)
-							current_approach = LINE_APPROACH;
-						else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
-							current_approach = FENCE_APPROACH;
-						
-						break;
-					case LINE_APPROACH:
-						roomba_sevenseg_digits[3] = 'L';
-						roomba_sevenseg_digits[2] = 'I';
-						roomba_sevenseg_digits[1] = 'N';
-						roomba_sevenseg_digits[0] = 'E';
-						if (ir_action == ROOMBA_REMOTE_CROSS_UP)
-							current_approach = FENCE_APPROACH;
-						else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
-							current_approach = ANGLE_APPROACH;
-						break;
-					case FENCE_APPROACH:
-						roomba_sevenseg_digits[3] = 'F';
-						roomba_sevenseg_digits[2] = 'E';
-						roomba_sevenseg_digits[1] = 'N';
-						roomba_sevenseg_digits[0] = 'C';
-						if (ir_action == ROOMBA_REMOTE_CROSS_UP)
-							current_approach = ANGLE_APPROACH;
-						else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
-							current_approach = LINE_APPROACH;
-						break;
-					default:
-						break;
-				}
-			}
-			
+		case ROOMBA_REMOTE_CROSS_DOWN:
+			nextbase_state = NEXTBASE_NUM;
+			docked_in_menu = false;
 			break;
-			
+		case ROOMBA_REMOTE_CROSS_UP:
+			nextbase_state = NEXTBASE_APPROACH;
+			docked_in_menu = false;
+			break;
 		default:
 			break;
+		}
+		break;
+
+	case NEXTBASE_NUM:
+		roomba_sevenseg_digits[3] = 'B';
+		roomba_sevenseg_digits[2] = 'N';
+		roomba_sevenseg_digits[1] = 'U';
+		roomba_sevenseg_digits[0] = 'M';
+		switch (ir_action) {
+		case ROOMBA_REMOTE_CROSS_DOWN:
+			nextbase_state = NEXTBASE_APPROACH;
+			break;
+		case ROOMBA_REMOTE_CROSS_UP:
+			nextbase_state = NEXTBASE_DRIVE;
+			break;
+		case ROOMBA_REMOTE_NUM_1:
+			roombadata.destination_base_id = 1;
+			docked_in_menu = true;
+			break;
+		case ROOMBA_REMOTE_NUM_2:
+			roombadata.destination_base_id = 2;
+			docked_in_menu = true;
+			break;
+		case ROOMBA_REMOTE_NUM_3:
+			roombadata.destination_base_id = 3;
+			docked_in_menu = true;
+			break;
+		case ROOMBA_REMOTE_NUM_4:
+			roombadata.destination_base_id = 4;
+			docked_in_menu = true;
+			break;
+		case ROOMBA_REMOTE_NUM_5:
+			roombadata.destination_base_id = 5;
+			docked_in_menu = true;
+			break;
+		default:
+			break;
+		}
+
+		if (roombadata.destination_base_id != 0 && docked_in_menu == true) {
+			roomba_sevenseg_digits[3] = 'B';
+			roomba_sevenseg_digits[2] = 'A';
+			roomba_sevenseg_digits[1] = ' ';
+			roomba_sevenseg_digits[0] = (roombadata.destination_base_id
+					+ ASCII_NUMBER_START);
+			roombaWriteSevensegDigits();
+			docked_in_menu = false;
+			my_msleep(2000);
+		}
+
+		break;
+
+	case NEXTBASE_APPROACH:
+		if (!docked_in_menu) {
+			roomba_sevenseg_digits[3] = 'A';
+			roomba_sevenseg_digits[2] = 'P';
+			roomba_sevenseg_digits[1] = 'P';
+			roomba_sevenseg_digits[0] = 'R';
+			switch (ir_action) {
+			case ROOMBA_REMOTE_CROSS_OK:
+				docked_in_menu = true;
+				break;
+			case ROOMBA_REMOTE_CROSS_UP:
+				nextbase_state = NEXTBASE_NUM;
+				docked_in_menu = false;
+				break;
+			case ROOMBA_REMOTE_CROSS_DOWN:
+				nextbase_state = NEXTBASE_DRIVE;
+				docked_in_menu = false;
+				break;
+			default:
+				break;
+			}
+		} else {
+			if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
+				docked_in_menu = false;
+			}
+			switch (current_approach) {
+			case ANGLE_APPROACH:
+				roomba_sevenseg_digits[3] = 'A';
+				roomba_sevenseg_digits[2] = 'N';
+				roomba_sevenseg_digits[1] = 'G';
+				roomba_sevenseg_digits[0] = 'L';
+				if (ir_action == ROOMBA_REMOTE_CROSS_UP)
+					current_approach = LINE_APPROACH;
+				else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
+					current_approach = FENCE_APPROACH;
+
+				break;
+			case LINE_APPROACH:
+				roomba_sevenseg_digits[3] = 'L';
+				roomba_sevenseg_digits[2] = 'I';
+				roomba_sevenseg_digits[1] = 'N';
+				roomba_sevenseg_digits[0] = 'E';
+				if (ir_action == ROOMBA_REMOTE_CROSS_UP)
+					current_approach = FENCE_APPROACH;
+				else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
+					current_approach = ANGLE_APPROACH;
+				break;
+			case FENCE_APPROACH:
+				roomba_sevenseg_digits[3] = 'F';
+				roomba_sevenseg_digits[2] = 'E';
+				roomba_sevenseg_digits[1] = 'N';
+				roomba_sevenseg_digits[0] = 'C';
+				if (ir_action == ROOMBA_REMOTE_CROSS_UP)
+					current_approach = ANGLE_APPROACH;
+				else if (ir_action == ROOMBA_REMOTE_CROSS_DOWN)
+					current_approach = LINE_APPROACH;
+				break;
+			default:
+				break;
+			}
+		}
+
+		break;
+
+	default:
+		break;
 	}
-	
+
 	roombaWriteSevensegDigits();
-	
+
 	return DOCKED;
 }
 
-
-
-
-enum programstate handleSubStateLeaveDock(){
+enum programstate handleSubStateLeaveDock() {
 
 	roombaResetTrips();
 	roombaDriveABitBackward(DIFFERENCE_TO_BASE);
@@ -766,146 +689,164 @@ enum programstate handleSubStateLeaveDock(){
 	return DRIVE;
 }
 
+enum programstate handleSubStateAngleApproach() {
 
+	volatile int16_t angle_to_drive = workbenchGetAngle(
+			roombadata.current_base_id, roombadata.destination_base_id);
+	volatile int16_t distance_to_drive = workbenchGetDistance(
+			roombadata.current_base_id, roombadata.destination_base_id);
 
-
-enum programstate handleSubStateAngleApproach(){
-
-	volatile int16_t angle_to_drive = workbenchGetAngle(roombadata.current_base_id, roombadata.destination_base_id);
-	volatile int16_t distance_to_drive = workbenchGetDistance(roombadata.current_base_id, roombadata.destination_base_id);
-
-	switch(angle_approach_state){
-		case DRIVE_ANGLE:
-			
-			//start turning if necessary
-			if(!roombadata.is_moving){
-				roombaResetTrips();
-				roombaDrive(DEFAULT_VELOCITY, angle_to_drive < 0 ? RIGHT : LEFT);
-			}
-			
+	switch (angle_approach_state) {
+	case DRIVE_ANGLE:
+		//start turning if necessary
+		if (!roombadata.is_moving) {
+			roombaResetTrips();
+			roombaDrive(DEFAULT_VELOCITY, angle_to_drive < 0 ? RIGHT : LEFT);
+		} else {
 			//check if defined angle is reached
 			roombaQuerySensor(PACKET_ANGLE);
-			if((angle_to_drive < 0 && roombadata.trip_angle <= angle_to_drive) || (angle_to_drive > 0 && roombadata.trip_angle >= angle_to_drive)){
+			if ((angle_to_drive < 0 && roombadata.trip_angle <= angle_to_drive)
+					|| (angle_to_drive > 0
+							&& roombadata.trip_angle >= angle_to_drive)) {
 				roombaStop();
 				roombaResetTrips();
 				angle_approach_state = DRIVE_DISTANCE;
 			}
-				
-			break;
-		case DRIVE_DISTANCE:
-			{
-			//check if collisions are detected
-			int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
-			int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
-			if(bumper_state != 0 || light_bumper_state != 0){
-				roombaOnCollisionDetected(bumper_state, light_bumper_state);
-				return COLLISION;
-			}
+		}
+		break;
+	case DRIVE_DISTANCE: {
+		//check if collisions are detected
+		int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
+		int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
+		if (bumper_state != 0 || light_bumper_state != 0) {
+			roombaOnCollisionDetected(bumper_state, light_bumper_state);
+			return COLLISION;
+		}
 
-			//start driving if necessary
-			if(!roombadata.is_moving){
-				roombaDrive(DEFAULT_VELOCITY, 0);
-			}
-			
+		//start driving if necessary
+		if (!roombadata.is_moving) {
+			roombaDrive(DEFAULT_VELOCITY, STRAIGHT);
+		} else {
 			roombaQuerySensor(PACKET_DISTANCE);
 			int32_t infrared_value = 0;
-			
-			// 2 meter before whole distance is reached we check infrared sensors
-			if(roombadata.trip_distance >= distance_to_drive - SEEKDOCK_TRIGGER_DISTANCE){
-				infrared_value = roombaQuerySensor(PACKET_INFRARED_CHARACTER_LEFT);
-				infrared_value = infrared_value <= 160 ? roombaQuerySensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
-				infrared_value = infrared_value <= 160 ? roombaQuerySensor(PACKET_INFRARED_CHARACTER_OMNI) : infrared_value;
+
+			// 1,5 meter before whole distance is reached we check infrared sensors
+			if (roombadata.trip_distance
+					>= distance_to_drive - SEEKDOCK_TRIGGER_DISTANCE) {
+				infrared_value = roombaQuerySensor(
+						PACKET_INFRARED_CHARACTER_LEFT);
+				infrared_value =
+						infrared_value <= INFRARED_VALUE_DOCK_TRIGGER ?
+								roombaQuerySensor(
+										PACKET_INFRARED_CHARACTER_RIGHT) :
+								infrared_value;
+				infrared_value =
+						infrared_value <= INFRARED_VALUE_DOCK_TRIGGER ?
+								roombaQuerySensor(
+										PACKET_INFRARED_CHARACTER_OMNI) :
+								infrared_value;
 			}
 
 			// found infrared sensor or reached whole distance
-			if(infrared_value > 160 || roombadata.trip_distance >= distance_to_drive){
+			if (infrared_value > INFRARED_VALUE_DOCK_TRIGGER
+					|| roombadata.trip_distance >= distance_to_drive) {
 				roombaStop();
 				roombaResetTrips();
 				roombaSeekdock();
 				return SEEKDOCK;
 			}
 
-			break;
-			}
-	
+		}
+		break;
+	}
+
 	}
 
 	return DRIVE;
 }
 
-enum programstate handleSubStateLineApproach(){
+enum programstate handleSubStateLineApproach() {
 
-	switch(line_approach_state){
-		case LINE_TURN_FROM_BASE:
-			//start driving if necessary
-			if(!roombadata.is_moving){
+	switch (line_approach_state) {
+	case LINE_TURN_FROM_BASE:
+		//start driving if necessary
+		if (!roombadata.is_moving) {
+			roombaResetTrips();
+			roombaDrive(DEFAULT_VELOCITY, LEFT);
+		} else {
+			//update trip angle value
+			roombaQuerySensor(PACKET_ANGLE);
+			//if turned 180 degrees switch to LINE_DRIVE
+			if (roombadata.trip_angle >= 180) {
+				roombaStop();
 				roombaResetTrips();
-				roombaDrive(DEFAULT_VELOCITY, 1);
+				line_approach_state = LINE_DRIVE;
 			}
-			else{
-				//update trip angle value
-				roombaQuerySensor(PACKET_ANGLE);
-				if(roombadata.trip_angle >= 180){
-					roombaStop();
-					roombaResetTrips();
-					line_approach_state = LINE_DRIVE;
-				}
-			}
-			break;
-		case LINE_DRIVE:
-			//start driving if necessary
-			if(!roombadata.is_moving){
-				roombaDrive(DEFAULT_VELOCITY, 0);
-			}
-	
+		}
+		break;
+	case LINE_DRIVE:
+		//start driving if necessary
+		if (!roombadata.is_moving) {
+			roombaDrive(DEFAULT_VELOCITY, STRAIGHT);
+		}
 
-			//check if collisions are detected
-			int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
-			int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
-			if(bumper_state != 0 || light_bumper_state != 0){
-				roombaOnCollisionDetected(bumper_state, light_bumper_state);
-				return COLLISION;
-			}
-	
+		//check if collisions are detected
+		int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
+		int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
+		if (bumper_state != 0 || light_bumper_state != 0) {
+			roombaOnCollisionDetected(bumper_state, light_bumper_state);
+			return COLLISION;
+		}
 
-			int32_t cliff_left_signal = roombaQuerySensor(PACKET_CLIFF_LEFT_SIGNAL);
-			int32_t cliff_right_signal = roombaQuerySensor(PACKET_CLIFF_RIGHT_SIGNAL);
-			if(cliff_left_signal >= 1200 && cliff_right_signal >= 1200){
-				int32_t infrared_value = 0;
-				infrared_value = roombaQuerySensor(PACKET_INFRARED_CHARACTER_LEFT);
-				infrared_value = infrared_value <= 160 ? roombaQuerySensor(PACKET_INFRARED_CHARACTER_RIGHT) : infrared_value;
-				infrared_value = infrared_value <= 160 ? roombaQuerySensor(PACKET_INFRARED_CHARACTER_OMNI) : infrared_value;
-				if(infrared_value > 160){
-					roombaStop();
-					roombaResetTrips();
-					roombaSeekdock();
-					return SEEKDOCK;
-				}
-				else{
-					roombaDrive(DEFAULT_VELOCITY, 0);
-				}
+		//check if we reached base marker (left and right cliff signal)
+		int32_t cliff_left_signal = roombaQuerySensor(PACKET_CLIFF_LEFT_SIGNAL);
+		int32_t cliff_right_signal = roombaQuerySensor(
+				PACKET_CLIFF_RIGHT_SIGNAL);
+		if (cliff_left_signal >= TAPE_SIGNAL
+				&& cliff_right_signal >= TAPE_SIGNAL) {
+			int32_t infrared_value = 0;
+			infrared_value = roombaQuerySensor(PACKET_INFRARED_CHARACTER_LEFT);
+			infrared_value =
+					infrared_value <= INFRARED_VALUE_DOCK_TRIGGER ?
+							roombaQuerySensor(PACKET_INFRARED_CHARACTER_RIGHT) :
+							infrared_value;
+			infrared_value =
+					infrared_value <= INFRARED_VALUE_DOCK_TRIGGER ?
+							roombaQuerySensor(PACKET_INFRARED_CHARACTER_OMNI) :
+							infrared_value;
+			if (infrared_value > INFRARED_VALUE_DOCK_TRIGGER) {
+				roombaStop();
+				roombaResetTrips();
+				roombaSeekdock();
+				return SEEKDOCK;
+			} else {
+				roombaDrive(DEFAULT_VELOCITY, STRAIGHT);
 			}
-			else{
-				int32_t cliff_front_left_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-				int32_t cliff_front_right_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
-		
-				// just drive on
-				if(cliff_front_left_signal < 1200 && cliff_front_right_signal < 1200){
-					roombaDrive(DEFAULT_VELOCITY, 0);
-				}	
-				// turn left
-				else if(cliff_front_left_signal >= 1200 && cliff_front_right_signal < 1200){
-					roombaDrive(DEFAULT_VELOCITY/2, 150);
-				}
-				//turn right
-				else if(cliff_front_right_signal >= 1200 && cliff_front_left_signal < 1200){		
-					roombaDrive(DEFAULT_VELOCITY/2, -150);
-				}
-				else{
-					roombaDrive(DEFAULT_VELOCITY/2, 50);
-				}	
+		} else {
+			int32_t cliff_front_left_signal = roombaQuerySensor(
+					PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+			int32_t cliff_front_right_signal = roombaQuerySensor(
+					PACKET_CLIFF_FRONT_RIGHT_SIGNAL);
+
+			// just drive on
+			if (cliff_front_left_signal < TAPE_SIGNAL
+					&& cliff_front_right_signal < TAPE_SIGNAL) {
+				roombaDrive(DEFAULT_VELOCITY, STRAIGHT);
 			}
-			break;
+			// turn left
+			else if (cliff_front_left_signal >= TAPE_SIGNAL
+					&& cliff_front_right_signal < TAPE_SIGNAL) {
+				roombaDrive(DEFAULT_VELOCITY / 2, 150);
+			}
+			//turn right
+			else if (cliff_front_right_signal >= TAPE_SIGNAL
+					&& cliff_front_left_signal < TAPE_SIGNAL) {
+				roombaDrive(DEFAULT_VELOCITY / 2, -150);
+			} else {
+				roombaDrive(DEFAULT_VELOCITY / 2, 50);
+			}
+		}
+		break;
 	}
 
 	return DRIVE;
@@ -913,28 +854,27 @@ enum programstate handleSubStateLineApproach(){
 
 direction getOppositeDirection (direction dir) {
 	switch (dir) {
-		case LEFT:
-			return RIGHT;
-		case RIGHT:
-			return LEFT;
-		case STRAIGHT:
-		default:
-			return STRAIGHT;
+	case LEFT:
+		return RIGHT;
+	case RIGHT:
+		return LEFT;
+	case STRAIGHT:
+	default:
+		return STRAIGHT;
 	}
 }
 
-
 enum programstate handleSubStateFenceApproach() {
 	int16_t angle_to_drive = workbenchGetAngle(roombadata.current_base_id, roombadata.destination_base_id);
-	
+
 	//check if collisions are detected
 	int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
 	int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
-	if(bumper_state != 0 || light_bumper_state != 0){
+	if (bumper_state != 0 || light_bumper_state != 0) {
 		roombaOnCollisionDetected(bumper_state, light_bumper_state);
 		return COLLISION;
 	}
-	
+
 	// if correct base is recognized drive to it and dock
 	if (check_discrete_base_id() == roombadata.destination_base_id) {
 		roombaStop();
@@ -942,8 +882,7 @@ enum programstate handleSubStateFenceApproach() {
 		roombaSeekdock();
 		return SEEKDOCK;
 	}
-	
-	
+
 	switch (fenceapproach_state) {
 		case FENCE_ANGLE:
 			//start turning if necessary
@@ -1085,17 +1024,18 @@ enum programstate handleSubStateFenceApproach() {
 			}
 			
 			break;
-		
+
 		case FENCE_CORRECTION_ANGLE:
 			// turn away from fence
 			if (!roombadata.is_moving) {
-				roombaDrive(DEFAULT_VELOCITY, getOppositeDirection(current_fence_direction));
+				roombaDrive(DEFAULT_VELOCITY,
+						getOppositeDirection(current_fence_direction));
 			} else {
 				roombaQuerySensor(PACKET_ANGLE);
 			}
-			
+
 			// if fence no longer recognized or angle turned too large resume straight path
-			if (roombaQuerySensor(PACKET_VIRTUAL_WALL) == 0 || mymathAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
+			if (roombaQuerySensor(PACKET_VIRTUAL_WALL) == 0|| mymathAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
 				roombaStop();
 				roombaResetTrips();
 				current_fence_direction = STRAIGHT;
@@ -1103,10 +1043,11 @@ enum programstate handleSubStateFenceApproach() {
 				roombaPlaySongDone();
 				my_msleep(3000);
 			}
-			
+
 			break;
-		
+
 	}
+
 	return DRIVE;
 }
 

@@ -129,12 +129,21 @@
 
 #define CHARGING_SOURCE_HOMEBASE 0x2
 
-#define DIGIT_LENGTH 4
-#define ASCII_PLUS 43
-#define ASCII_MINUS 45
-#define ASCII_NUMBER_START 48
+#define DIGIT_LENGTH 0x4
+#define ASCII_PLUS 0x2B
+#define ASCII_MINUS 0x2D
+#define ASCII_NUMBER_START 0x30
 
-#define DEFAULT_VELOCITY 200
+#define DEFAULT_VELOCITY 0xC8
+
+#define TAPE_SIGNAL 0x4B0
+
+#define INFRARED_VALUE_DOCK_TRIGGER 0xA0
+#define SEEKDOCK_LED_BITMASK 0xFF
+#define DOCKED_LED_BITMASK 0x64
+
+#define LIGHT_BUMP_CLEAR 0x1E
+#define LIGHT_BUMP_NOT_CLEAR 0x190
 
 
 /******************************************************************* Structures */
@@ -153,7 +162,7 @@ extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 /**
  * A structure which holds important data of the roomba robot
  */
-typedef struct {
+typedef volatile struct {
 	uint8_t is_moving; /**< flag to specify if the roomba is moving(e.g. drive, turn) or not */
 	uint8_t current_base_id; /**< the id of the base at which the roomba is docked */
 	uint8_t destination_base_id; /**< the id of the base to which the roomba should drive */
@@ -168,7 +177,7 @@ typedef struct {
 /**
  * A structure which holds all data to handle a collision
  */
-typedef struct {
+typedef volatile struct {
 	int32_t angle_sum; /**< the sum of turned angles since collision detection (in degrees) */
 	int32_t distance_sum; /**< the sum of driven distances since collision detection (in millimeters) */
 	int32_t driven_trip_distance; /**< calculated distance value needed to evade collision object */
@@ -276,6 +285,16 @@ void roombaOnCollisionDetected(int32_t bumper_state,
  *
  */
 void roombaOnCollisionCleared(void);
+
+/**
+ * \brief  Update the distance sum
+ *
+ *	This function updates the distance sum value in the collision state
+ *
+ */
+void roombaUpdateDistanceSum(void);
+
+
 /**
  * \brief  play song theme function
  *
