@@ -80,11 +80,11 @@ uint8_t base_id = 2;
 
 
 int main(int argc, char *argv[]) {
-	led_set_blue(ledb_vals[0] | ledb_vals[1]);
+	//led_set_blue(ledb_vals[0] | ledb_vals[1]);
 
 	//button_wait(0);
 	
-	//led_set_blue(ledb_vals[2] | ledb_vals[3]);
+	led_set_blue(ledb_vals[2] | ledb_vals[3]);
 	
 	//ir_sender_setup();
 	//ir_sender_set((ROOMBA_ID&0x03)<<4 | IR_SENDER_ID | IR_LED_LEFT, (ROOMBA_ID&0x03)<<4 | IR_SENDER_ID | IR_LED_CENTER, (ROOMBA_ID&0x03)<<4 | IR_SENDER_ID | IR_LED_RIGHT, (ROOMBA_ID&0x03)<<4 | ir_next_base_id | IR_LED_NEAR);

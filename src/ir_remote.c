@@ -137,6 +137,20 @@ int intensity = 0;
 
 workbench* current_workbench;
 
+void resetWorkbenchCache (uint8_t workbenchId) {
+	/*int i;
+	workbench* loop_workbench;
+	for (i=0; i<MAX_COUNT_WORKBENCHES; i++) {
+		loop_workbench = (&workbenches[i]);
+		if (loop_workbench->angle_to_workbench[workbenchId-1] != ANGLE_UNKNOWN) {
+			loop_workbench->angle_to_workbench[workbenchId-1] = ANGLE_UNKNOWN;
+		}
+		if (loop_workbench->distance_to_workbench[workbenchId-1] != DISTANCE_UNKNOWN) {
+			loop_workbench->distance_to_workbench[workbenchId-1] = DISTANCE_UNKNOWN;
+		}
+	}*/
+}
+
 enum programstate handleSubstateBaseSetup () {
 	switch (base_config_state) {
 		case BASE_SELECT:		
@@ -180,12 +194,16 @@ enum programstate handleSubstateBaseSetup () {
 					base_config_state = BASE_COORDINATE_Y;
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
-					if (current_workbench->distance_to_base_x < 99)
+					if (current_workbench->distance_to_base_x < 99) {
 						current_workbench->distance_to_base_x++;
+						resetWorkbenchCache(current_workbench->id);
+					}
 					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
-					if (current_workbench->distance_to_base_x > -99)
+					if (current_workbench->distance_to_base_x > -99) {
 						current_workbench->distance_to_base_x--;
+						resetWorkbenchCache(current_workbench->id);
+					}
 					break;
 				default:
 					break;
@@ -203,12 +221,16 @@ enum programstate handleSubstateBaseSetup () {
 					base_config_state = BASE_ROTATION;
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
-					if (current_workbench->distance_to_base_y < 99)
+					if (current_workbench->distance_to_base_y < 99) {
 						current_workbench->distance_to_base_y++;
+						resetWorkbenchCache(current_workbench->id);
+					}
 					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
-					if (current_workbench->distance_to_base_y > -99)
+					if (current_workbench->distance_to_base_y > -99) {
 						current_workbench->distance_to_base_y--;
+						resetWorkbenchCache(current_workbench->id);
+					}
 					break;
 				default:
 					break;
@@ -230,12 +252,16 @@ enum programstate handleSubstateBaseSetup () {
 					base_config_state = BASE_SELECT;
 					break;
 				case ROOMBA_REMOTE_CROSS_UP:
-					if (current_workbench->dock_angle_multiplier < 7)
+					if (current_workbench->dock_angle_multiplier < 7) {
 						current_workbench->dock_angle_multiplier++;
+						resetWorkbenchCache(current_workbench->id);
+					}
 					break;
 				case ROOMBA_REMOTE_CROSS_DOWN:
-					if (current_workbench->dock_angle_multiplier > 0)
+					if (current_workbench->dock_angle_multiplier > 0) {
 						current_workbench->dock_angle_multiplier--;
+						resetWorkbenchCache(current_workbench->id);
+					}
 					break;
 				default:
 					break;

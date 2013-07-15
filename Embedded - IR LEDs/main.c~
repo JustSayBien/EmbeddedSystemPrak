@@ -34,10 +34,13 @@ Modification history:
 
 /****************************************************************** Includes */
 
-#include "program.h"
-#include "roomba.h"
-#include "workbench.h"
 #include "button.h"
+#include "led.h"
+#include "board.h"
+#include "tools.h"
+
+
+#define MAX_COUNT_WORKBENCHES 0x5
 
 #ifdef HAVE_IR
 	#include <asm/io.h>
@@ -65,24 +68,23 @@ Modification history:
 
 
 uint8_t base_id_codes[MAX_COUNT_WORKBENCHES] = {
-	0x80,
+	0xB0,
 	0xC0,
 	0xE0,
 	0x70,
-	0x30,
-	0x10
+	0x30
 };
 
-uint8_t base_id = 6;
+uint8_t base_id = 2;
 
 
 
 int main(int argc, char *argv[]) {
-	led_set_blue(ledb_vals[0] | ledb_vals[1]);
+	//led_set_blue(ledb_vals[0] | ledb_vals[1]);
 
 	//button_wait(0);
 	
-	//led_set_blue(ledb_vals[2] | ledb_vals[3]);
+	led_set_blue(ledb_vals[2] | ledb_vals[3]);
 	
 	//ir_sender_setup();
 	//ir_sender_set((ROOMBA_ID&0x03)<<4 | IR_SENDER_ID | IR_LED_LEFT, (ROOMBA_ID&0x03)<<4 | IR_SENDER_ID | IR_LED_CENTER, (ROOMBA_ID&0x03)<<4 | IR_SENDER_ID | IR_LED_RIGHT, (ROOMBA_ID&0x03)<<4 | ir_next_base_id | IR_LED_NEAR);
@@ -92,7 +94,10 @@ int main(int argc, char *argv[]) {
 	//ir_sender_set(0x80 | IR_LED_RIGHT, 0x80 | IR_LED_CENTER, 0x80 | IR_LED_LEFT, 0x80 | IR_LED_NEAR);
 	ir_sender_on();
 	while(true) {
-		my_msleep(100);
+		ir_sender_off();
+		my_msleep(500);
+		ir_sender_on();
+		my_msleep(50);
 	}
 	
   	return 0;

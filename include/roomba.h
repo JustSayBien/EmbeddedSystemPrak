@@ -144,7 +144,7 @@ typedef struct {
 
 extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
-typedef struct {
+typedef volatile struct {
 	uint8_t is_moving;
 	uint8_t current_base_id;
 	uint8_t destination_base_id;
@@ -158,7 +158,7 @@ typedef struct {
 
 extern roomba_data roombadata;
 
-typedef struct {
+typedef volatile struct {
 	int32_t angle_sum;
 	int32_t distance_sum;
 	int32_t driven_trip_distance;
