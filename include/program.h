@@ -26,36 +26,48 @@ enum base_config_states {
 	BASE_SELECT = 1, BASE_COORDINATE_X, BASE_COORDINATE_Y, BASE_ROTATION
 };
 
-/** An enum for the drive state machine */
+/** An enum for the DRIVE state machine */
 enum drivestate {
 	ANGLE_APPROACH, LINE_APPROACH, FENCE_APPROACH, LEAVE_DOCK
 };
 
-/** An enum for the sub state machine */
+/** An enum for the sub state ANGLE_APPROACH  */
 enum angleapproachstate {
 	DRIVE_ANGLE, DRIVE_DISTANCE
 };
+
+/** An enum for the sub state LINE_APPROACH  */
 enum lineapproachstate {
 	LINE_TURN_FROM_BASE, LINE_DRIVE
 };
+
+/** An enum for the sub state FENCE_APPROACH  */
 enum fenceapproachstate {
 	FENCE_ANGLE,
 	FENCE_STRAIGHT,
 	FENCE_CORRECTION_STRAIGHT,
 	FENCE_CORRECTION_ANGLE
 };
+
+/** An enum for the collision state machine  */
 enum collisionstate {
 	COLLISION_TURN, COLLISION_DRIVE
 };
+
+/** An enum for the calibrate state machine  */
 enum calibratestate {
 	CALIBRATE_DISTANCE, CALIBRATE_ANGLE, CALIBRATE_BASE, CALIBRATE_DONE
 };
+
+/** An enum for the sub state next base  */
 enum nextbasestate {
 	NEXTBASE_DRIVE, NEXTBASE_NUM, NEXTBASE_APPROACH
 };
 
+/** milliseconds definition  */
 typedef unsigned long millis_t;
 
+/** An enum for direction  */
 typedef enum {
 	LEFT = 1, STRAIGHT = 0, RIGHT = -1
 } direction;
