@@ -88,7 +88,7 @@
 #define LED_CHECK_ROBOT_RED			0x08
 #define LED_DOCK_GREEN				0x04
 #define LED_SPOT_GREEN				0x02
-#define LED_DIRT_DETECT_BLUE			0x01
+#define LED_DIRT_DETECT_BLUE		0x01
 
 #define LED_SCHED_WDAY_SAT	0x40
 #define LED_SCHED_WDAY_FRI	0x20
@@ -136,41 +136,49 @@
 
 #define DEFAULT_VELOCITY 200
 
+
+/******************************************************************* Structures */
+
+/**
+ * A structure for roomba serial communication packets
+ */
 typedef struct {
-	uint8_t id;
-	uint8_t length;
-	uint8_t has_sign;
+	uint8_t id; /**< The packet id */
+	uint8_t length; /**< the length of the returned value (in bytes) */
+	uint8_t has_sign; /**< flag to specify if the returned sensor value is sigend */
 } packet;
 
 extern int32_t roomba_sevenseg_digits[DIGIT_LENGTH];
 
-typedef volatile struct {
-	uint8_t is_moving;
-	uint8_t current_base_id;
-	uint8_t destination_base_id;
-	int16_t current_velocity;
-	int32_t driven_distance;
-	int32_t trip_distance;
-	int32_t trip_angle;
-	int32_t angle_360_degrees;
-	int32_t distance_1_meter;
+/**
+ * A structure which holds important data of the roomba robot
+ */
+typedef struct {
+	uint8_t is_moving; /**< flag to specify if the roomba is moving(e.g. drive, turn) or not */
+	uint8_t current_base_id; /**< the id of the base at which the roomba is docked */
+	uint8_t destination_base_id; /**< the id of the base to which the roomba should drive */
+	int16_t current_velocity; /**< the current velocity of the roomba (0 if not moving) */
+	int32_t driven_distance; /**< the whole driven distance since the program was started */
+	int32_t trip_distance; /**< the driven distance since trip meters were reset */
+	int32_t trip_angle; /**< the driven angle since trip meters were reset */
+	int32_t angle_360_degrees; /**< the calibrated angle value which corresponds 360 degrees */
+	int32_t distance_1_meter; /**< the calibrated distance value which corresponds 1000 millimeters (1 meter) */
 } roomba_data;
 
-extern roomba_data roombadata;
-
-typedef volatile struct {
-	int32_t angle_sum;
-	int32_t distance_sum;
-	int32_t driven_trip_distance;
-	int32_t bumper_state;
-	int32_t light_bumper_state;
-	int32_t program_tick_counter;
-	int8_t played_acustic_feedback;
-	int32_t trip_distance_at_collision;
-	int32_t trip_angle_at_collision;
+/**
+ * A structure which holds all data to handle a collision
+ */
+typedef struct {
+	int32_t angle_sum; /**< the sum of turned angles since collision detection (in degrees) */
+	int32_t distance_sum; /**< the sum of driven distances since collision detection (in millimeters) */
+	int32_t driven_trip_distance; /**< calculated distance value needed to evade collision object */
+	int32_t bumper_state; /**< the last known state of the physical bumpers */
+	int32_t light_bumper_state; /**< the last known state of the light bumpers */
+	int32_t program_tick_counter; /**< counts the program iterations in collision mode  */
+	int8_t played_acustic_feedback; /**< flag to specify if a acoustic feedback was played for entering collision mode */
+	int32_t trip_distance_at_collision; /**< backup of the roomba's trip distance value at the moment of collision detection  */
+	int32_t trip_angle_at_collision; /**< backup of the roomba's trip angle value at the moment of collision detection  */
 } collision_data;
-
-extern collision_data collisiondata;
 
 /******************************************************* Function prototypes */
 /**
@@ -191,7 +199,7 @@ void roombaInit(void);
 void roombaCalibrateAngle(void);
 
 /**
- * \brief  calibrate angle function
+ * \brief  calibrate distance function
  *
  *	This function can be used to calibrate a distance of 1 meter
  *
@@ -202,22 +210,99 @@ void roombaCalibrateDistance(void);
  * \brief  query sensor function
  *
  *	This function queries the specified sensor
+ * \param	query_packet the packet which represents the sensor to query
  * \return the queried sensor value, converted to a 32-bit integer
  */
 int32_t roombaQuerySensor(packet query_packet);
 
+/**
+ * \brief  angle convert function
+ *
+ *	This function converts a raw angle value to the corresponding calibrated value
+ *
+ * \param	angle_raw	the raw angle value as queried from roomba's sensor
+ * \return the converted angle value
+ */
 int32_t roombaAsCalibratedAngle(int32_t angle_raw);
+
+/**
+ * \brief  distance convert function
+ *
+ *	This function converts a raw distance value to the corresponding calibrated value
+ * \param	distance_raw	the raw distance value as queried from roomba's sensor
+ * \return the converted distance value
+ */
 int32_t roombaAsCalibratedDistance(int32_t distance_raw);
+
+/**
+ * \brief  seekdock function
+ *
+ *	This function executes roomba's built-in seekdock algorithm
+ *
+ */
 void roombaSeekdock(void);
+
+/**
+ * \brief  reset roomba's trip meters
+ *
+ *	This function consumes the angle and distance sensor values and resets angle and distance trip meters
+ *
+ */
 void roombaResetTrips(void);
 
+/**
+ * \brief drive backward function
+ *
+ *	This function can be used to drive a bit backward
+ * \param	backward_distance	the distance to drive backward (in milimeters)
+ *
+ */
 void roombaDriveABitBackward(int32_t backward_distance);
-void roombaOnCollisionDetected(int32_t bumper_state, int32_t light_bumper_state);
-void roombaOnCollisionCleared(void);
 
+/**
+ * \brief collision detected function
+ *
+ *	This function should be called when a collision is detected either by light bumps or physical bumps
+ * \param	light_bumper_state	the state of the light_bumpers at the moment of collision
+ * \param	bumper_state	the state of the physical bumpers at the moment of collision
+ *
+ */
+void roombaOnCollisionDetected(int32_t bumper_state,
+		int32_t light_bumper_state);
+/**
+ * \brief  collision cleared function
+ *
+ *	This function should be called if a previously detected collision has been cleared
+ *
+ */
+void roombaOnCollisionCleared(void);
+/**
+ * \brief  play song theme function
+ *
+ *	This function plays the zelda theme
+ *
+ */
 void roombaPlaySongTheme(void);
+/**
+ * \brief  play song collision function
+ *
+ *	This function plays a warning sound, which is used when a collision is detected
+ *
+ */
 void roombaPlaySongCollision(void);
+/**
+ * \brief  play song done function
+ *
+ *	This function plays a positive acoustic feedback, which can be used for any type of success
+ *
+ */
 void roombaPlaySongDone(void);
+/**
+ * \brief  play song beep function
+ *
+ *	This function plays a neutral beep sound
+ *
+ */
 void roombaPlaySongBeep(void);
 
 /**
@@ -279,19 +364,19 @@ void roombaStop(void);
 uint8_t roombaCheckButton(void);
 
 /**
- * \brief  Calculate the time to drive
+ * \brief  Calculate the time to drive function
  *
- *         Calculate the time to drive 'distance' centimeters with the specified 'velocity'
+ *         Use this function to calculate the time to drive 'distance' centimeters with the specified 'velocity'
  *
- * \param      distance 	the distance to drive
+ * \param   distance 	the distance to drive
  * \param 	velocity	the velocity to drive
- * \return                 	the calculated time, which is needed to drive 'distance' with 'velocity'
+ * \return the calculated time, which is needed to drive 'distance' with 'velocity'
  *
  */
 int32_t roombaCalculateTimeToDrive(int32_t distance, int32_t velocity);
 
 /************************************************************** Global const */
-
+//packet struct variables for all sensors
 extern const packet PACKET_BUMPS_WHEELDROPS;
 extern const packet PACKET_WALL;
 extern const packet PACKET_CLIFF_LEFT;
@@ -342,6 +427,12 @@ extern const packet PACKET_RIGHT_MOTOR_CURRENT;
 extern const packet PACKET_MAIN_BRUSH_MOTOR_CURRENT;
 extern const packet PACKET_SIDE_BRUSH_MOTOR_CURRENT;
 extern const packet PACKET_STASIS;
+
+//roomba_data struct variable
+extern roomba_data roombadata;
+
+//collision_data struct variable
+extern collision_data collisiondata;
 
 /********************************************************** Global variables */
 

@@ -48,7 +48,7 @@ bool_t has_driven = false;
 
 
 
-void program_run() {
+void programRun() {
 
 	//init sevenseg
 	roombaWriteSevensegDigits();	
