@@ -23,8 +23,9 @@ Modification history:
 /****************************************************************** Includes */
 
 #include "roomba.h"
-#include "tools.h"
+#include "uart.h"
 #include "mymath.h"
+#include "workbench.h"
 
 
 
@@ -40,6 +41,10 @@ uint8_t roomba_sevenseg_digits[DIGIT_LENGTH] = {
         ASCII_NUMBER_START
 };
 
+bool_t defined_song_done = false;
+bool_t defined_song_theme = false;
+bool_t defined_song_collision = false;
+bool_t defined_song_beep = false;
 
 
 /******************************************************* Function prototypes */
@@ -110,7 +115,7 @@ const packet PACKET_STASIS                    = {58, 1, 0};
 /********************************************************** Global functions */
 
 
-void init_roomba() {
+void roombaInit() {
 	uart_write_byte(CMD_START);
 	uart_write_byte(CMD_FULL);
 
@@ -121,30 +126,30 @@ void init_roomba() {
 	//uart_write_byte(4);
 }
 
-void roomba_calibrate_angle() {
-	reset_trips();
+void roombaCalibrateAngle() {
+	roombaResetTrips();
 	
 	my_msleep(300);
 
 	uint8_t cliff_counter = 0;
 	int32_t cliff_signal;
 
-	drive(DEFAULT_VELOCITY, 1);
+	roombaDrive(DEFAULT_VELOCITY, 1);
 	
-	query_sensor(PACKET_ANGLE);
+	roombaQuerySensor(PACKET_ANGLE);
 
 	while(1){
-		cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+		cliff_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
 		if(cliff_signal >= 1200){
 			do{
 				my_msleep(50);
-				cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+				cliff_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
 			}while(cliff_signal >= 1200);
 
 			cliff_counter++;
 			if(cliff_counter == 1) {
 				//reset angle value
-				query_sensor(PACKET_ANGLE);
+				roombaQuerySensor(PACKET_ANGLE);
 			}
 			if(cliff_counter == 5){
 				break;
@@ -152,40 +157,34 @@ void roomba_calibrate_angle() {
 		}
 		my_msleep(50);
 	}
-	stop();
-	int32_t angle = query_sensor(PACKET_ANGLE);
-	roombadata.angle_360_degrees = angle; //+ ((int32_t) (((float) angle) * 0.03f));
-	/*roomba_sevenseg_digits[0] = 'K';
-	roomba_sevenseg_digits[1] = 'O';
-	roomba_sevenseg_digits[2] = ' ';
-	roomba_sevenseg_digits[3] = ' ';
-	write_sevenseg_digits();*/
+	roombaStop();
+	int32_t angle = roombaQuerySensor(PACKET_ANGLE);
+	roombadata.angle_360_degrees = angle;
 
-
-	play_song_done();
+	roombaPlaySongDone();
 }	
 
-void roomba_calibrate_distance(){
-	reset_trips();
+void roombaCalibrateDistance(){
+	roombaResetTrips();
 	
 	my_msleep(300);
 
 	uint8_t cliff_counter = 0;
 	int32_t cliff_signal;
 
-	drive(DEFAULT_VELOCITY, (int16_t) 0);
+	roombaDrive(DEFAULT_VELOCITY, (int16_t) 0);
 	while(1){
-		cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+		cliff_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
 		if(cliff_signal >= 1200){
 			do{
 				my_msleep(50);
-				cliff_signal = query_sensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
+				cliff_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
 			}while(cliff_signal >= 1200);
 
 			cliff_counter++;
 			if(cliff_counter == 1) {
 				//reset distance value
-				query_sensor(PACKET_DISTANCE);
+				roombaQuerySensor(PACKET_DISTANCE);
 			}
 			if(cliff_counter == 2){
 				break;
@@ -194,23 +193,16 @@ void roomba_calibrate_distance(){
 		my_msleep(50);
 	}
 
-	stop();
-	int32_t distance = query_sensor(PACKET_DISTANCE);
+	roombaStop();
+	int32_t distance = roombaQuerySensor(PACKET_DISTANCE);
 	roombadata.distance_1_meter = myAbs(distance);
-	/*roomba_sevenseg_digits[0] = 'K';
-	roomba_sevenseg_digits[1] = 'O';
-	roomba_sevenseg_digits[2] = ' ';
-	roomba_sevenseg_digits[3] = ' ';
-	write_sevenseg_digits();*/
-	
-	play_song_done();
 
-
+	roombaPlaySongDone();
 }
 
 
 
-int32_t query_sensor(packet query_packet){
+int32_t roombaQuerySensor(packet query_packet){
 	uart_write_byte(CMD_QUERY_SENSOR);
 	uart_write_byte(query_packet.id);
 
@@ -242,13 +234,13 @@ int32_t query_sensor(packet query_packet){
 
 	if(query_packet.id == PACKET_DISTANCE.id){
 		int32_t distance_value = myAbs(result);
-		distance_value = as_calibrated_distance(distance_value);
+		distance_value = roombaAsCalibratedDistance(distance_value);
 		roombadata.driven_distance += distance_value;
 		roombadata.trip_distance += distance_value;
 	}
 
 	if(query_packet.id == PACKET_ANGLE.id){
-		roombadata.trip_angle += as_calibrated_angle(result);
+		roombadata.trip_angle += roombaAsCalibratedAngle(result);
 	}
 
 	return result;
@@ -256,30 +248,30 @@ int32_t query_sensor(packet query_packet){
 
 
 
-int32_t as_calibrated_angle(int32_t angle_raw){
+int32_t roombaAsCalibratedAngle(int32_t angle_raw){
 	return (int32_t) (angle_raw * (360.0f / roombadata.angle_360_degrees));
 }
 
-int32_t as_calibrated_distance(int32_t distance_raw){
+int32_t roombaAsCalibratedDistance(int32_t distance_raw){
 	return (int32_t) (distance_raw * (1000.0f/roombadata.distance_1_meter));
 }
 
 
-void seekdock(){
+void roombaSeekdock(){
 	uart_write_byte(CMD_DOCK);
 }
 
-void reset_trips() {
+void roombaResetTrips() {
 	//consume sensor values
-	query_sensor(PACKET_ANGLE);
-	query_sensor(PACKET_DISTANCE);
+	roombaQuerySensor(PACKET_ANGLE);
+	roombaQuerySensor(PACKET_DISTANCE);
 	roombadata.trip_angle = 0;
 	roombadata.trip_distance = 0;
 }
 
 
 
-void write_sevenseg_digits () {
+void roombaWriteSevensegDigits () {
         uart_write_byte(CMD_7SEG_ASCII);
 	int i;
 	for(i=3; i >= 0; i--){
@@ -287,14 +279,14 @@ void write_sevenseg_digits () {
 	}
 }
  
-void setWeekdayLed (uint8_t led_mask){
+void roombaSetWeekdayLed (uint8_t led_mask){
         uart_write_byte(CMD_SCHEDULE_LED);
         uart_write_byte(led_mask);
         uart_write_byte((uint8_t)0);
 	uart_write_byte((uint8_t)0);
 }
 
-void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity) {
+void roombaSetLed(uint8_t led_mask, uint8_t color, uint8_t intensity) {
         uart_write_byte(CMD_LEDS);
         uart_write_byte(led_mask);
         uart_write_byte(color);
@@ -302,7 +294,7 @@ void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity) {
 }
  
 
-void drive(int16_t velocity, int16_t radius) {
+void roombaDrive(int16_t velocity, int16_t radius) {
 	uart_write_byte(CMD_DRIVE);
 	uart_write_byte((uint8_t) (velocity >> 8));
 	uart_write_byte((uint8_t) (velocity & 0xFF));
@@ -314,49 +306,49 @@ void drive(int16_t velocity, int16_t radius) {
 
 
 
-void stop(){
-	drive(0, 0);
+void roombaStop(){
+	roombaDrive(0, 0);
 	roombadata.is_moving = 0;
 	roombadata.current_velocity = 0;
 }
 
-uint8_t check_button(){
+uint8_t roombaCheckButton(){
 	uart_write_byte(CMD_BUTTONS_STATE);
 	uart_write_byte(BTN_PACKET_ID);
 	return uart_read_byte();
 }
 
 
-int32_t calculateTimeToDrive (int32_t distance, int32_t velocity){
+int32_t roombaCalculateTimeToDrive (int32_t distance, int32_t velocity){
 	return ((int32_t)(distance/velocity))*1000;
 }
 
-void drive_a_bit_backward(int32_t backward_distance){
+void roombaDriveABitBackward(int32_t backward_distance){
 	int32_t trip_distance_backup = roombadata.trip_distance;
 	int32_t trip_angle_backup = roombadata.trip_angle;
-	reset_trips();
-	drive(-DEFAULT_VELOCITY/2, (int16_t) 0);
+	roombaResetTrips();
+	roombaDrive(-DEFAULT_VELOCITY/2, (int16_t) 0);
 	while(roombadata.trip_distance <= backward_distance){
 		my_msleep(200);
-		query_sensor(PACKET_DISTANCE);
+		roombaQuerySensor(PACKET_DISTANCE);
 	}
-	stop();
+	roombaStop();
 	roombadata.trip_distance = trip_distance_backup;
 	roombadata.trip_angle = trip_angle_backup;
 }
 
-void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state){
+void roombaOnCollisionDetected(int32_t bumper_state, int32_t light_bumper_state){
 
-	stop();
+	roombaStop();
 	collisiondata.light_bumper_state = light_bumper_state;
 	collisiondata.bumper_state = bumper_state;
 	collisiondata.trip_distance_at_collision = roombadata.trip_distance;
 	collisiondata.trip_angle_at_collision = roombadata.trip_angle;
 	collisiondata.program_tick_counter = 0;
-	reset_trips();
+	roombaResetTrips();
 }
 
-void on_collision_cleared(){
+void roombaOnCollisionCleared(){
 
 	collisiondata.angle_sum = 0;
 	collisiondata.distance_sum = 0;
@@ -372,7 +364,7 @@ void on_collision_cleared(){
 	
 }
 
-void play_song_theme(){
+void roombaPlaySongTheme(){
 	#ifndef _SONG_THEME
 	#define _SONG_THEME
 	uart_write_byte(0x8C);
@@ -419,7 +411,7 @@ void play_song_theme(){
 	uart_write_byte(0x01);
 }
 
-void play_song_collision(){
+void roombaPlaySongCollision(){
 	#ifndef _SONG_COLLISION
 	#define _SONG_COLLISION
 	uart_write_byte(0x8C);
@@ -437,7 +429,7 @@ void play_song_collision(){
 	uart_write_byte(0x02);	
 }
 
-void play_song_done(){
+void roombaPlaySongDone(){
 	//TODO use bool instead of defines
 	#ifndef _SONG_DONE
 	#define _SONG_DONE
@@ -464,7 +456,7 @@ void play_song_done(){
 	uart_write_byte(0x03);	
 }
 
-void play_song_beep(){
+void roombaPlaySongBeep(){
 	#ifndef _SONG_BEEP
 	#define _SONG_BEEP
 	uart_write_byte(0x8C);

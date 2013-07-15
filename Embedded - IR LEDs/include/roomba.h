@@ -165,7 +165,7 @@ extern roomba_data roombadata;
   *	to full mode
   *         
   */
-void init_roomba(void);
+void roombaInit(void);
 
 /**
   * \brief  calibrate angle function
@@ -173,7 +173,7 @@ void init_roomba(void);
   *	This function can be used to calibrate a angle of 360 degrees
   *         
   */
-void roomba_calibrate_angle();
+void roombaCalibrateAngle();
 
 /**
   * \brief  calibrate angle function
@@ -181,7 +181,7 @@ void roomba_calibrate_angle();
   *	This function can be used to calibrate a distance of 1 meter
   *         
   */
-void roomba_calibrate_distance();
+void roombaCalibrateDistance();
 
 /**
   * \brief  query sensor function
@@ -189,7 +189,7 @@ void roomba_calibrate_distance();
   *	This function queries the specified sensor
   * \return the queried sensor value, converted to a 32-bit integer 
   */
-int32_t query_sensor(packet query_packet);
+int32_t roombaQuerySensor(packet query_packet);
 
 
 /**
@@ -238,7 +238,7 @@ void read_query_list(const packet * packets[], uint8_t count, int32_t results[])
   * \param      led_mask	the bit mask to be transfered to roomba
   *
   */
-void setWeekdayLed (uint8_t led_mask);
+void roombaSetWeekdayLed (uint8_t led_mask);
 
 
 /**
@@ -251,7 +251,7 @@ void setWeekdayLed (uint8_t led_mask);
   * \param	intensity	the intensity value to be transfered to roomba
   *
   */
-void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
+void roombaSetLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
     
 /**
   * \brief  Write the ascii digits
@@ -259,7 +259,7 @@ void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
   *	Write the global ascii digits array to roomba's seven seg display with this function
   *
   */ 
-void write_sevenseg_digits ();
+void roombaWriteSevensegDigits ();
 
 
 /**
@@ -270,7 +270,7 @@ void write_sevenseg_digits ();
   * \param      velocity	the velocity to drive
   *
   */
-void drive(int16_t velocity, int16_t radius);
+void roombaDrive(int16_t velocity, int16_t radius);
 
 /**
   * \brief  Stop function
@@ -278,7 +278,7 @@ void drive(int16_t velocity, int16_t radius);
   *	Stop the (driving) roomba with this function
   *
   */
-void stop();
+void roombaStop();
 
 /**
   * \brief  Check the roomba buttons
@@ -288,7 +288,7 @@ void stop();
   * \return                 an unsigned 8-bit integer value which represents the current state of the roomba buttons
   *
   */
-uint8_t check_button();
+uint8_t roombaCheckButton();
 
 
 /**
@@ -301,7 +301,7 @@ uint8_t check_button();
   * \return                 	the calculated time, which is needed to drive 'distance' with 'velocity'
   *
   */
-int32_t calculateTimeToDrive (int32_t distance, int32_t velocity);
+int32_t roombaCalculateTimeToDrive (int32_t distance, int32_t velocity);
 
 
 /************************************************************** Global const */

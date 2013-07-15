@@ -144,7 +144,7 @@ enum programstate handleSubstateBaseSetup () {
 			roomba_sevenseg_digits[2] = 'A';
 			roomba_sevenseg_digits[1] = 'S';
 			roomba_sevenseg_digits[0] = 'E';
-			write_sevenseg_digits();
+			roombaWriteSevensegDigits();
 			
 			switch (ir_action) {
 				/*case ROOMBA_REMOTE_CROSS_OK:
@@ -351,7 +351,7 @@ bool_t checkDiscreteRoombaButtonArray (int index) {
 }
 
 int getIRAction () {
-	uint8_t character = query_sensor(PACKET_INFRARED_CHARACTER_OMNI);
+	uint8_t character = roombaQuerySensor(PACKET_INFRARED_CHARACTER_OMNI);
 	raw_ir_data = character;
 	
 	int index = getIRActionIndex(character);
@@ -390,12 +390,12 @@ void printYcoordinate (workbench *toPrint) {
 void printRotation (workbench *toPrint) {
 	roomba_sevenseg_digits[3] = (char) 94;
 	if (intToAscii3placesUnsigned(toPrint->dock_angle_multiplier * 45, roomba_sevenseg_digits))
-		write_sevenseg_digits();
+		roombaWriteSevensegDigits();
 }
 
 void printCoordinate(int8_t coordinate_value) {
 	if (intToAscii2placesSigned(coordinate_value, roomba_sevenseg_digits))
-		write_sevenseg_digits();
+		roombaWriteSevensegDigits();
 }
 
 void printString (char string[]) {
@@ -403,7 +403,7 @@ void printString (char string[]) {
 	for (i=0; i<4; i++) {
 		roomba_sevenseg_digits[i] = string[i];
 	}
-	write_sevenseg_digits();
+	roombaWriteSevensegDigits();
 }
 
 void handleBaseSelect (uint8_t base_num) {
@@ -417,7 +417,7 @@ void handleBaseSelect (uint8_t base_num) {
 	roomba_sevenseg_digits[1] = ' ';
 	roomba_sevenseg_digits[0] = (base_num + ASCII_NUMBER_START);
 	
-	write_sevenseg_digits();
+	roombaWriteSevensegDigits();
 	
 	my_msleep(2000);
 }

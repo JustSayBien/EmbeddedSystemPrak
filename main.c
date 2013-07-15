@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
 
 	button_wait(0);
 
-	init_roomba();
+	roombaInit();
 
 	program_run();
 	/*while (true) {

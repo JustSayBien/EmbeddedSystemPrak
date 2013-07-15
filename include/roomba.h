@@ -3,8 +3,6 @@
 
 /****************************************************************** Includes */
 #include <stdint.h>
-#include "uart.h"
-#include "workbench.h"
 
 /******************************************************************* Defines */
 
@@ -182,7 +180,7 @@ extern collision_data collisiondata;
  *	to full mode
  *
  */
-void init_roomba(void);
+void roombaInit(void);
 
 /**
  * \brief  calibrate angle function
@@ -190,7 +188,7 @@ void init_roomba(void);
  *	This function can be used to calibrate a angle of 360 degrees
  *
  */
-void roomba_calibrate_angle(void);
+void roombaCalibrateAngle(void);
 
 /**
  * \brief  calibrate angle function
@@ -198,7 +196,7 @@ void roomba_calibrate_angle(void);
  *	This function can be used to calibrate a distance of 1 meter
  *
  */
-void roomba_calibrate_distance(void);
+void roombaCalibrateDistance(void);
 
 /**
  * \brief  query sensor function
@@ -206,21 +204,21 @@ void roomba_calibrate_distance(void);
  *	This function queries the specified sensor
  * \return the queried sensor value, converted to a 32-bit integer
  */
-int32_t query_sensor(packet query_packet);
+int32_t roombaQuerySensor(packet query_packet);
 
-int32_t as_calibrated_angle(int32_t angle_raw);
-int32_t as_calibrated_distance(int32_t distance_raw);
-void seekdock(void);
-void reset_trips(void);
+int32_t roombaAsCalibratedAngle(int32_t angle_raw);
+int32_t roombaAsCalibratedDistance(int32_t distance_raw);
+void roombaSeekdock(void);
+void roombaResetTrips(void);
 
-void drive_a_bit_backward(int32_t backward_distance);
-void on_collision_detected(int32_t bumper_state, int32_t light_bumper_state);
-void on_collision_cleared(void);
+void roombaDriveABitBackward(int32_t backward_distance);
+void roombaOnCollisionDetected(int32_t bumper_state, int32_t light_bumper_state);
+void roombaOnCollisionCleared(void);
 
-void play_song_theme(void);
-void play_song_collision(void);
-void play_song_done(void);
-void play_song_beep(void);
+void roombaPlaySongTheme(void);
+void roombaPlaySongCollision(void);
+void roombaPlaySongDone(void);
+void roombaPlaySongBeep(void);
 
 /**
  * \brief  Write to roomba's weekday LEDs
@@ -230,7 +228,7 @@ void play_song_beep(void);
  * \param      led_mask	the bit mask to be transfered to roomba
  *
  */
-void setWeekdayLed(uint8_t led_mask);
+void roombaSetWeekdayLed(uint8_t led_mask);
 
 /**
  * \brief  Write to roomba's LEDs
@@ -242,7 +240,7 @@ void setWeekdayLed(uint8_t led_mask);
  * \param	intensity	the intensity value to be transfered to roomba
  *
  */
-void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
+void roombaSetLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
 
 /**
  * \brief  Write the ascii digits
@@ -250,7 +248,7 @@ void setLed(uint8_t led_mask, uint8_t color, uint8_t intensity);
  *	Write the global ascii digits array to roomba's seven seg display with this function
  *
  */
-void write_sevenseg_digits(void);
+void roombaWriteSevensegDigits(void);
 
 /**
  * \brief  Drive function
@@ -260,7 +258,7 @@ void write_sevenseg_digits(void);
  * \param      velocity	the velocity to drive
  *
  */
-void drive(int16_t velocity, int16_t radius);
+void roombaDrive(int16_t velocity, int16_t radius);
 
 /**
  * \brief  Stop function
@@ -268,7 +266,7 @@ void drive(int16_t velocity, int16_t radius);
  *	Stop the (driving) roomba with this function
  *
  */
-void stop(void);
+void roombaStop(void);
 
 /**
  * \brief  Check the roomba buttons
@@ -278,7 +276,7 @@ void stop(void);
  * \return                 an unsigned 8-bit integer value which represents the current state of the roomba buttons
  *
  */
-uint8_t check_button(void);
+uint8_t roombaCheckButton(void);
 
 /**
  * \brief  Calculate the time to drive
@@ -290,7 +288,7 @@ uint8_t check_button(void);
  * \return                 	the calculated time, which is needed to drive 'distance' with 'velocity'
  *
  */
-int32_t calculateTimeToDrive(int32_t distance, int32_t velocity);
+int32_t roombaCalculateTimeToDrive(int32_t distance, int32_t velocity);
 
 /************************************************************** Global const */
 

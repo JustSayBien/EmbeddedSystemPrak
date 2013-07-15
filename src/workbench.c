@@ -67,10 +67,6 @@ int16_t get_angle(uint8_t id_from, uint8_t id_to){
 	
 		}
 
-
-		//TODO use DIFFERENCE_TO_BASE
-
-
 		int16_t dock_angle = workbenches[id_from-1].dock_angle_multiplier * DOCK_ANGLE_INCREMENT;
 
 		angle = 360 - dock_angle + angle;
