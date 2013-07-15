@@ -130,16 +130,7 @@ void program_run() {
 
 
 
-int intToAscii(int32_t value, int32_t out[]){
-
-	/*if(value < 0){
-		setWeekdayLed(1);
-		value *= -1;
-	}
-	else{
-		setWeekdayLed(0);
-	}*/
-
+int intToAscii(int32_t value, uint8_t out[]){
 	out[3] = (value % 10000) / 1000 + ASCII_NUMBER_START;
 	out[2] = (value % 1000) / 100 + ASCII_NUMBER_START;
 	out[1] = (value % 100) / 10 + ASCII_NUMBER_START;
@@ -1021,7 +1012,9 @@ direction current_fence_direction = 0;
 bool_t fence_waiting_for_second = false;
 
 enum programstate handleSubStateFenceApproach() {
-	/*int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
+	/*
+	OLD LIGHTHOUSE CODE
+	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
 	
 	if (!lighthouse_has_turned) {
 		//start turning if necessary
@@ -1107,10 +1100,11 @@ enum programstate handleSubStateFenceApproach() {
 			if(!roombadata.is_moving){
 				reset_trips();
 				drive(DEFAULT_VELOCITY, (angle_to_drive < 0 ? RIGHT : LEFT));
+			} else {
+				//check if defined angle is reached
+				query_sensor(PACKET_ANGLE);
 			}
-		
-			//check if defined angle is reached
-			query_sensor(PACKET_ANGLE);
+			
 			if(myAbs(roombadata.trip_angle) >= myAbs(angle_to_drive)) {
 				stop();
 				reset_trips();
@@ -1123,6 +1117,8 @@ enum programstate handleSubStateFenceApproach() {
 			// drive straight
 			if (!roombadata.is_moving) {
 				drive(DEFAULT_VELOCITY, STRAIGHT);
+			} else {
+				query_sensor(PACKET_DISTANCE);
 			}
 			
 			// calculate distance driven since last seen virtual wall lighthouse
@@ -1150,12 +1146,6 @@ enum programstate handleSubStateFenceApproach() {
 				fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
 			}
 			
-			// if lighthouse was on the right side (marked by two lighthouses side by side) correct for 
-			//if (current_wall_direction == LEFT) {
-			//	fenceapproach_state = FENCE_CORRECTION_ANGLE;
-			//} else if (current_wall_direction == RIGHT) {
-			//	fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
-			//}
 			break;
 			
 		case FENCE_CORRECTION_STRAIGHT:
@@ -1165,6 +1155,8 @@ enum programstate handleSubStateFenceApproach() {
 			// drive backwards
 			if (!roombadata.is_moving) {
 				drive(-DEFAULT_VELOCITY, STRAIGHT);
+			} else {
+				query_sensor(PACKET_DISTANCE);
 			}
 			
 			// if driven far enough backwards (average distance between two lighthouses on the right side)
@@ -1181,6 +1173,8 @@ enum programstate handleSubStateFenceApproach() {
 			// turn away from fence
 			if (!roombadata.is_moving) {
 				drive(DEFAULT_VELOCITY, getOppositeDirection(current_fence_direction));
+			} else {
+				query_sensor(PACKET_ANGLE);
 			}
 			
 			// if fence no longer recognized resume straight path

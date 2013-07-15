@@ -59,7 +59,7 @@ void program_run();
   * \param 	out		the result array, containing the ascii roomba_sevenseg_digits
   * \return	1 if the integer value is smaller than 10000, -1 otherwise
   */
-int intToAscii(int32_t value, int32_t out[]);
+int intToAscii(int32_t value, uint8_t out[]);
 
 
 /**
