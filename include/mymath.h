@@ -84,18 +84,120 @@ struct f64 {
 
 /******************************************************* Function prototypes */
 
-
+/**
+ * \brief  Arcus tangens function
+ *
+ *         This function calculates the principal value of the arcus tangent of x (in radians)
+ *
+ * \param   x	the value whose arcus tangent is computed.
+ * \return the principal value of the arcus tangent of 'x' (in the interval [-pi/2,+pi/2] radians)
+ *
+ */
 float mymathAtan(float x);
+/**
+ * \brief  Arcus tangens 2 function
+ *
+ *         This function calculates the principal value of the arcus tangent of y/x (in radians)
+ *
+ * \param   y 	the value which represents the proportion of the y-coordinate.
+ * \param 	x	the value which represents the proportion of the x-coordinate.
+ * \return the principal value of the arcus tangent of 'y/x' (in the interval [-pi/2,+pi/2] radians)
+ *
+ */
 float mymathAtan2(float y, float x);
+/**
+ * \brief  Sinus/Cosinus function
+ *
+ *         This function computes the sinus or cosinus value of 'x'
+ *
+ * \param   x 	Represents an angle expressed in radians
+ * \param 	cos_flag	flat to determine if sinus or cosinus of 'x' should be computed
+ * \return sinus or cosinus of x (in radians)
+ *
+ */
 float mymathSinus(float x, int8_t cos_flag);
+/**
+ * \brief  Sinus function
+ *
+ *         This function computes the sinus value of 'x'
+ *
+ * \param   x 	Represents an angle expressed in radians
+ * \return sinus of x (in radians)
+ *
+ */
 float mymathSin(float x);
+/**
+ * \brief  Cosinus function
+ *
+ *         This function computes the cosinus value of 'x'
+ *
+ * \param   x 	Represents an angle expressed in radians
+ * \return cosinus of x (in radians)
+ *
+ */
 float mymathCos(float x);
+/**
+ * \brief  Get the angle between two workbenches
+ *
+ *         This function breaks 'value' into an integral and a fractional part.
+ *
+ * \param   value 	the float value to 'break'
+ * \param 	iptr	a pointer to store the integral part
+ * \return The fractional part of 'value'
+ *
+ */
 float mymathModf(float value, float *iptr);
-
+/**
+ * \brief  Radians to degrees function
+ *
+ *         This function converts a radian angle value to a degree value
+ *
+ * \param   value	the radian value which should be converted to degrees
+ *
+ * \return 'value' expressed in degrees
+ *
+ */
 float mymathRadToDeg(float value);
+/**
+ * \brief  Degrees to radians function
+ *
+ *         This function converts a degree angle value to a radian value
+ *
+ * \param   value	the degree value which should be converted to radians
+ *
+ * \return 'value' expressed in radians
+ *
+ */
 float mymathDegToRad(float value);
+/**
+ * \brief  Square root function
+ *
+ *         This function returns the square root of the given value
+ *
+ * \param   value  	the alue whose square root is calculated
+ * \return the square root of 'value'
+ *
+ */
 float mymathSquareRoot(float value);
+/**
+ * \brief  Absolute value function
+ *
+ *         This function computes the absolute value of the given parameter
+ *
+ * \param   value	the value whose absolute value should be calculated
+ * \return the absolute value of 'value'
+ *
+ */
 int mymathAbs(int value);
+/**
+ * \brief  Sign function
+ *
+ *         This function checks if the specified value is signed
+ *
+ * \param   value	the value whose sign is checked
+ * \return true if value is negative, false otherwise
+ *
+ */
 bool_t mymathSign(int value);
 
 #endif
