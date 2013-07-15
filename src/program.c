@@ -54,7 +54,7 @@ void program_run() {
 	setProgramState(CALIBRATE);
 
 
-	workbenches_init();
+	workbenchInit();
 
 
 	//test
@@ -135,7 +135,7 @@ int8_t intToAscii(int32_t value, uint8_t out[]){
 	if(value < 0){
 		roombaSetWeekdayLed(1);
 	}
-	value = myAbs(value);
+	value = mymathAbs(value);
 
 	out[3] = (value % 10000) / 1000 + ASCII_NUMBER_START;
 	out[2] = (value % 1000) / 100 + ASCII_NUMBER_START;
@@ -309,10 +309,10 @@ void update_distance_sum(){
 							
 		}
 
-		int32_t trip_distance_diff = (int32_t) (my_cos(degToRad((float)angle_sum_abs)) * roombadata.trip_distance);
+		int32_t trip_distance_diff = (int32_t) (mymathCos(mymathDegToRad((float)angle_sum_abs)) * roombadata.trip_distance);
 		collisiondata.driven_trip_distance += trip_distance_diff;
 
-		int32_t distance_diff = (int32_t) (my_sin(degToRad((float)angle_sum_abs)) * roombadata.trip_distance);
+		int32_t distance_diff = (int32_t) (mymathSin(mymathDegToRad((float)angle_sum_abs)) * roombadata.trip_distance);
 		if(distance_diff < 0){
 			distance_diff = -distance_diff;
 		}
@@ -803,8 +803,8 @@ enum programstate handleSubStateLeaveDock(){
 
 enum programstate handleSubStateAngleApproach(){
 
-	volatile int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
-	volatile int16_t distance_to_drive = get_distance(roombadata.current_base_id, roombadata.destination_base_id);
+	volatile int16_t angle_to_drive = workbenchGetAngle(roombadata.current_base_id, roombadata.destination_base_id);
+	volatile int16_t distance_to_drive = workbenchGetDistance(roombadata.current_base_id, roombadata.destination_base_id);
 
 	switch(angle_approach_state){
 		case DRIVE_ANGLE:
@@ -1028,7 +1028,7 @@ enum programstate handleSubStateFenceApproach() {
 	}
 	return DRIVE;*/
 	
-	int16_t angle_to_drive = get_angle(roombadata.current_base_id, roombadata.destination_base_id);
+	int16_t angle_to_drive = workbenchGetAngle(roombadata.current_base_id, roombadata.destination_base_id);
 	
 	int32_t recognition_trip_distance = -1;
 	
@@ -1061,7 +1061,7 @@ enum programstate handleSubStateFenceApproach() {
 				roombaQuerySensor(PACKET_ANGLE);
 			}
 			
-			if(myAbs(roombadata.trip_angle) >= myAbs(angle_to_drive)) {
+			if(mymathAbs(roombadata.trip_angle) >= mymathAbs(angle_to_drive)) {
 				roombaStop();
 				roombaResetTrips();
 				fenceapproach_state = FENCE_STRAIGHT;
@@ -1080,7 +1080,7 @@ enum programstate handleSubStateFenceApproach() {
 			// calculate distance driven since last seen virtual wall lighthouse
 			uint8_t trip_difference = 255;
 			if (recognition_trip_distance != -1)
-				trip_difference = myAbs(roombadata.trip_distance - recognition_trip_distance) / 10;
+				trip_difference = mymathAbs(roombadata.trip_distance - recognition_trip_distance) / 10;
 			
 			// check if virtual wall lighthouse detected (only possible values: 0, 1)
 			if (roombaQuerySensor(PACKET_VIRTUAL_WALL) == 1) {
@@ -1141,7 +1141,7 @@ enum programstate handleSubStateFenceApproach() {
 			}
 			
 			// if angle turned too large resume straight path
-			if (myAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
+			if (mymathAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
 				roombaStop();
 				roombaResetTrips();
 				fenceapproach_state = FENCE_STRAIGHT;

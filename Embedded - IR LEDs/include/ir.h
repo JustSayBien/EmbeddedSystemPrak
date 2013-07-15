@@ -111,23 +111,6 @@ extern uint8_t ir_remote_command;
 
 /************************************************ Global function prototypes */
 
-/// receive IR data sent by another roomba or by roomba remote
-/*
- *  all of roomba's IR sensors are checked if a byte is received that has been
- *  sent from another roomba or from the roomba remote.  The raw data is stored
- *  in ir_roomba_leds if the data is sent from a roomba or in ir_remote_command
- *  if it's sent from a remote.  In case the data is received from a roomba, its
- *  ID is stored in ir_roomba_id, otherwise it is set to 0.
- *
- *  To access the received data, use the macros ir_get_roomba and ir_sensor_has
- *  (see below for description).
- *
- *  Note: Don't forget to call ir_timers_increment() every 1ms for correct
- *        timeout detection!
- *        The received data has to be read before the next call to this method,
- *        because the data will be overwritten.
- */
-void ir_receive();
 
 /*************************************************** Global inline functions */
 

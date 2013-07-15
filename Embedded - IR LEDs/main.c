@@ -34,10 +34,13 @@ Modification history:
 
 /****************************************************************** Includes */
 
-#include "program.h"
-#include "roomba.h"
-#include "workbench.h"
 #include "button.h"
+#include "led.h"
+#include "board.h"
+#include "tools.h"
+
+
+#define MAX_COUNT_WORKBENCHES 0x5
 
 #ifdef HAVE_IR
 	#include <asm/io.h>
@@ -69,8 +72,7 @@ uint8_t base_id_codes[MAX_COUNT_WORKBENCHES] = {
 	0xC0,
 	0xE0,
 	0x70,
-	0x30,
-	0x10
+	0x30
 };
 
 uint8_t base_id = 2;

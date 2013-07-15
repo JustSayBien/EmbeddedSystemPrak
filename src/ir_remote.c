@@ -251,8 +251,8 @@ enum programstate handleSubstateBaseSetup () {
 }
 
 bool_t intToAscii2placesSigned(int32_t value, int32_t out[]) {
-	bool_t sign = mySign(value);
-	value = myAbs(value);
+	bool_t sign = mymathSign(value);
+	value = mymathAbs(value);
 	uint8_t hundreds = (value % 100) / 10;
 	uint8_t sign_place = 2;
 	if (hundreds > 0) {
@@ -273,7 +273,7 @@ bool_t intToAscii2placesSigned(int32_t value, int32_t out[]) {
 }
 
 bool_t intToAscii3placesUnsigned(uint32_t value, int32_t out[]) {
-	value = myAbs(value);
+	value = mymathAbs(value);
 	out[2] = (value % 1000) / 100 + ASCII_NUMBER_START;
 	out[1] = (value % 100) / 10 + ASCII_NUMBER_START;
 	out[0] = value % 10 + ASCII_NUMBER_START;

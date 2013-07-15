@@ -22,9 +22,8 @@ typedef volatile struct {
 extern workbench DEFAULT_WORKBENCH;
 workbench workbenches[MAX_COUNT_WORKBENCHES];
 
-void workbenches_init(void);
-
-int16_t get_angle(uint8_t id_from, uint8_t id_to);
-int16_t get_distance(uint8_t id_from, uint8_t id_to);
+void workbenchInit(void);
+int16_t workbenchGetAngle(uint8_t id_from, uint8_t id_to);
+int16_t workbenchGetDistance(uint8_t id_from, uint8_t id_to);
 
 #endif

@@ -195,7 +195,7 @@ void roombaCalibrateDistance(){
 
 	roombaStop();
 	int32_t distance = roombaQuerySensor(PACKET_DISTANCE);
-	roombadata.distance_1_meter = myAbs(distance);
+	roombadata.distance_1_meter = mymathAbs(distance);
 
 	roombaPlaySongDone();
 }
@@ -233,7 +233,7 @@ int32_t roombaQuerySensor(packet query_packet){
 
 
 	if(query_packet.id == PACKET_DISTANCE.id){
-		int32_t distance_value = myAbs(result);
+		int32_t distance_value = mymathAbs(result);
 		distance_value = roombaAsCalibratedDistance(distance_value);
 		roombadata.driven_distance += distance_value;
 		roombadata.trip_distance += distance_value;

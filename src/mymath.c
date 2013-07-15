@@ -1,7 +1,7 @@
 #include "mymath.h"
 
 
-float my_atan(float x)
+float mymathAtan(float x)
 {
      
          static float p[] = {
@@ -52,7 +52,7 @@ float my_atan(float x)
 
 
 
-float my_atan2(float y, float x)
+float mymathAtan2(float y, float x)
 {
          float absx, absy, val;
  
@@ -69,7 +69,7 @@ float my_atan2(float y, float x)
                  /* y negligible compared to x */
                  val = 0.0;
          }
-         else    val = my_atan(y/x);
+         else    val = mymathAtan(y/x);
          if (x > 0) {
                  /* first or fourth quadrant; already correct */
                  return val;
@@ -84,7 +84,7 @@ float my_atan2(float y, float x)
 
 
 
-float my_sinus(float x, int8_t cos_flag)
+float mymathSinus(float x, int8_t cos_flag)
 {
         /*      Algorithm and coefficients from:
                         "Software manual for the elementary functions"
@@ -132,10 +132,10 @@ float my_sinus(float x, int8_t cos_flag)
         {
                  float x1, x2;
  
-                 my_modf(y, &y);
-                 if (my_modf(0.5*y, &x1)) neg = -neg;
+                 mymathModf(y, &y);
+                 if (mymathModf(0.5*y, &x1)) neg = -neg;
                  if (cos_flag) y -= 0.5;
-                 x2 = my_modf(x, &x1);
+                 x2 = mymathModf(x, &x1);
                  x = x1 - y * A1;
                  x += x2;
                  x -= y * A2;
@@ -155,19 +155,19 @@ float my_sinus(float x, int8_t cos_flag)
          return neg==-1 ? -x : x;
 }
  
-float my_sin(float x)
+float mymathSin(float x)
 {
-        return my_sinus(x, 0);
+        return mymathSinus(x, 0);
 }
 
-float my_cos(float x)
+float mymathCos(float x)
 {
          if (x < 0) x = -x;
-         return my_sinus(x, 1);
+         return mymathSinus(x, 1);
 }
 
 
-float my_modf(float value,float *iptr)
+float mymathModf(float value,float *iptr)
 {
          struct f64 *f64p;
          float tmp;
@@ -211,24 +211,24 @@ float my_modf(float value,float *iptr)
 
 
 
-float radToDeg(float value){
+float mymathRadToDeg(float value){
 	return value * 180.0f / MATH_PI;
 }
 
-float degToRad(float value){
+float mymathDegToRad(float value){
 	return MATH_PI * value / 180.0f;
 }
 
-int myAbs (int value) {
+int mymathAbs (int value) {
 	return (value < 0) ? -value : value;
 }
 
-bool_t mySign (int value) {
+bool_t mymathSign (int value) {
 	return (value < 0);
 }
 
 
-float my_square_root(float value){
+float mymathSquareRoot(float value){
 	float n = value / 2.0f;
  	float lstX = 0.0f; 
  	while(n != lstX)  

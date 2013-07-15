@@ -5,7 +5,7 @@
 
 workbench DEFAULT_WORKBENCH = {0, 0, 0, 0, {ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN, ANGLE_UNKNOWN}, {DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN, DISTANCE_UNKNOWN}};
 
-void workbenches_init(){
+void workbenchInit(){
 	int i;
 	for(i=0; i < MAX_COUNT_WORKBENCHES; i++){
 		workbenches[i] = DEFAULT_WORKBENCH;
@@ -20,7 +20,7 @@ void workbenches_init(){
 
 
 
-int16_t get_angle(uint8_t id_from, uint8_t id_to){
+int16_t workbenchGetAngle(uint8_t id_from, uint8_t id_to){
 	
 	if(id_from == 0 || id_to == 0 || id_from - 1 >= MAX_COUNT_WORKBENCHES || id_to - 1 >= MAX_COUNT_WORKBENCHES){
 		//base not configured -> return;
@@ -46,8 +46,8 @@ int16_t get_angle(uint8_t id_from, uint8_t id_to){
 		}
 
 
-		float angle_rad = my_atan2(distance_y, distance_x);
-		float angle_deg = radToDeg(angle_rad);
+		float angle_rad = mymathAtan2(distance_y, distance_x);
+		float angle_deg = mymathRadToDeg(angle_rad);
 		int16_t angle = (int16_t) angle_deg;
 
 
@@ -93,18 +93,18 @@ int16_t get_angle(uint8_t id_from, uint8_t id_to){
 }
 
 
-int16_t get_distance(uint8_t id_from, uint8_t id_to){
+int16_t workbenchGetDistance(uint8_t id_from, uint8_t id_to){
 	if(id_from == 0 || id_to == 0 || id_from - 1 >= MAX_COUNT_WORKBENCHES || id_to - 1 >= MAX_COUNT_WORKBENCHES){
 		//base not configured -> return;
 		return DISTANCE_UNKNOWN;
 	}
 	
 	if(workbenches[id_from-1].distance_to_workbench[id_to-1] == DISTANCE_UNKNOWN){
-		int8_t distance_x = myAbs(workbenches[id_to-1].distance_to_base_x - workbenches[id_from-1].distance_to_base_x);
-		int8_t distance_y = myAbs(workbenches[id_to-1].distance_to_base_y - workbenches[id_from-1].distance_to_base_y);
+		int8_t distance_x = mymathAbs(workbenches[id_to-1].distance_to_base_x - workbenches[id_from-1].distance_to_base_x);
+		int8_t distance_y = mymathAbs(workbenches[id_to-1].distance_to_base_y - workbenches[id_from-1].distance_to_base_y);
 
 
-		float square_root = my_square_root(distance_y * distance_y + distance_x * distance_x);
+		float square_root = mymathSquareRoot(distance_y * distance_y + distance_x * distance_x);
 		int16_t square_root_int = (int16_t) (square_root * 1000);
 		
 		workbench* pointer = (workbench*) &workbenches[id_from-1];

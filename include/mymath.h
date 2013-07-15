@@ -72,20 +72,17 @@ struct f64
 
 /******************************************************* Function prototypes */
 
-float my_atan(float x);
-float my_atan2(float y, float x);
-float my_sinus(float x, int8_t cos_flag);
-float my_sin(float x);
-float my_cos(float x);
-float my_modf(float value, float *iptr);
-
-
-float radToDeg(float value);
-float degToRad(float value);
-float my_square_root(float value);
-
-int myAbs (int value);
-bool_t mySign (int value);
+float mymathAtan(float x);
+float mymathAtan2(float y, float x);
+float mymathSinus(float x, int8_t cos_flag);
+float mymathSin(float x);
+float mymathCos(float x);
+float mymathModf(float value, float *iptr);
+float mymathRadToDeg(float value);
+float mymathDegToRad(float value);
+float mymathSquareRoot(float value);
+int mymathAbs (int value);
+bool_t mymathSign (int value);
 
 
 #endif
