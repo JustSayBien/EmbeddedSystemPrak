@@ -52,10 +52,9 @@ int16_t workbenchGetAngle(uint8_t id_from, uint8_t id_to){
 
 		float angle_rad = mymathAtan2(distance_y, distance_x);
 		float angle_deg = mymathRadToDeg(angle_rad);
-		//get the integer angle value (precision loose is acceptable)
+		//get the int angle value
 		int16_t angle = (int16_t) angle_deg;
 
-		//include the quadrant in the calculation
 		switch(quadrant){
 			case 1:
 				angle = 90 - angle;

@@ -85,7 +85,7 @@ const packet PACKET_STASIS = { 58, 1, 0 };
 
 /********************************************************** Global variables */
 
-roomba_data roombadata = { 0, 0, 0, 0, 0, 0, 130, 1000 };
+roomba_data roombadata = { 0, 0, 0, 0, 0, 0, 120, 124 };
 collision_data collisiondata = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 // array of currently displayed digits on Roomba's seven segment display
@@ -136,12 +136,12 @@ void roombaCalibrateAngle() {
 
 	while (1) {
 		cliff_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-		if (cliff_signal >= 1200) {
+		if (cliff_signal >= TAPE_SIGNAL) {
 			do {
 				my_msleep(50);
 				cliff_signal = roombaQuerySensor(
 						PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-			} while (cliff_signal >= 1200);
+			} while (cliff_signal >= TAPE_SIGNAL);
 
 			cliff_counter++;
 			if (cliff_counter == 1) {
@@ -172,12 +172,12 @@ void roombaCalibrateDistance() {
 	roombaDrive(DEFAULT_VELOCITY, (int16_t) 0);
 	while (1) {
 		cliff_signal = roombaQuerySensor(PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-		if (cliff_signal >= 1200) {
+		if (cliff_signal >= TAPE_SIGNAL) {
 			do {
 				my_msleep(50);
 				cliff_signal = roombaQuerySensor(
 						PACKET_CLIFF_FRONT_LEFT_SIGNAL);
-			} while (cliff_signal >= 1200);
+			} while (cliff_signal >= TAPE_SIGNAL);
 
 			cliff_counter++;
 			if (cliff_counter == 1) {
@@ -347,6 +347,56 @@ void roombaOnCollisionCleared() {
 			+ collisiondata.driven_trip_distance;
 	roombadata.trip_angle = 0;
 
+}
+
+
+void roombaUpdateDistanceSum() {
+	int32_t angle_sum_abs =
+			collisiondata.angle_sum < 0 ?
+					-collisiondata.angle_sum : collisiondata.angle_sum;
+	//check angle quadrant and if roomba drives left(+) or right(-) away
+	int8_t distance_neg_sign = (angle_sum_abs / 180) % 2;
+
+	//roomba isnt away from or parallel to his course
+	if (angle_sum_abs % 180 == 0) {
+		if (angle_sum_abs % 360 == 0) {
+			collisiondata.driven_trip_distance += roombadata.trip_distance;
+		} else {
+			collisiondata.driven_trip_distance -= roombadata.trip_distance;
+		}
+	} else if (angle_sum_abs % 90 == 0) {
+		int32_t distance_diff =
+				distance_neg_sign ?
+						-roombadata.trip_distance : roombadata.trip_distance;
+		if (collisiondata.angle_sum < 0) {
+			distance_diff = -distance_diff;
+		}
+		collisiondata.distance_sum += distance_diff;
+	} else {
+		angle_sum_abs %= 180;
+		if (angle_sum_abs > 90) {
+			angle_sum_abs = 180 - angle_sum_abs;
+		} else {
+
+		}
+
+		int32_t trip_distance_diff = (int32_t) (mymathCos(
+				mymathDegToRad((float) angle_sum_abs))
+				* roombadata.trip_distance);
+		collisiondata.driven_trip_distance += trip_distance_diff;
+
+		int32_t distance_diff = (int32_t) (mymathSin(
+				mymathDegToRad((float) angle_sum_abs))
+				* roombadata.trip_distance);
+		if (distance_diff < 0) {
+			distance_diff = -distance_diff;
+		}
+		distance_diff = distance_neg_sign ? -distance_diff : distance_diff;
+		if (collisiondata.angle_sum < 0) {
+			distance_diff = -distance_diff;
+		}
+		collisiondata.distance_sum += distance_diff;
+	}
 }
 
 void roombaPlaySongTheme() {
