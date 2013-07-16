@@ -6,6 +6,7 @@ var searchData=
   ['ignbrk',['IGNBRK',['../termios_8h.html#a2fa5de0b1c54040022ec2edbafe68db7',1,'termios.h']]],
   ['igncr',['IGNCR',['../termios_8h.html#ab114b7d41f2ff7562a85ec83b62544b0',1,'termios.h']]],
   ['ignpar',['IGNPAR',['../termios_8h.html#a4fed5823391b245f7024acc621e4131f',1,'termios.h']]],
+  ['infrared_5fvalue_5fdock_5ftrigger',['INFRARED_VALUE_DOCK_TRIGGER',['../roomba_8h.html#a4a1baddf3ca8562961f139056f63434c',1,'roomba.h']]],
   ['inlcr',['INLCR',['../termios_8h.html#acc6dc46be5104b67ffde1df93549472a',1,'termios.h']]],
   ['inpck',['INPCK',['../termios_8h.html#abd0c2389a768405ef39c86fe8cf5c7ec',1,'termios.h']]],
   ['iord16',['IORD16',['../io_8h.html#a62ab57e41975602651d305f351ba7e38',1,'io.h']]],

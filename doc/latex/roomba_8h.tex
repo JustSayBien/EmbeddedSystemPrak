@@ -2,13 +2,14 @@
 \label{roomba_8h}\index{include/roomba.\-h@{include/roomba.\-h}}
 }
 {\ttfamily \#include $<$stdint.\-h$>$}\*
-{\ttfamily \#include \char`\"{}uart.\-h\char`\"{}}\*
 \subsection*{\-Data \-Structures}
 \begin{DoxyCompactItemize}
 \item 
 struct \hyperlink{structpacket}{packet}
 \item 
 struct \hyperlink{structroomba__data}{roomba\-\_\-data}
+\item 
+struct \hyperlink{structcollision__data}{collision\-\_\-data}
 \end{DoxyCompactItemize}
 \subsection*{\-Defines}
 \begin{DoxyCompactItemize}
@@ -135,59 +136,93 @@ struct \hyperlink{structroomba__data}{roomba\-\_\-data}
 \item 
 \#define \hyperlink{roomba_8h_a15af80bc0e237a7c74aa34787cc231ef}{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R}~0x03
 \item 
-\#define \hyperlink{roomba_8h_a4592825487c8f673a12811927628d9a9}{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}~5
+\#define \hyperlink{roomba_8h_ac2728d38a59a0747167e0031e85e5c43}{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D}~0x\-A1
 \item 
-\#define \hyperlink{roomba_8h_a49a7c7da2e05a1ec1914021a41f7d11d}{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}~4
+\#define \hyperlink{roomba_8h_a2724991aa6cf2254bf3cf41a9f7e95b1}{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y}~0x\-A4
 \item 
-\#define \hyperlink{roomba_8h_a6088ce708e8f4ff3fcd563ef7ae36927}{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}~43
+\#define \hyperlink{roomba_8h_a2a9a8dbe24653040c5c53f205c3080eb}{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y}~0x\-A8
 \item 
-\#define \hyperlink{roomba_8h_ae43d7eb20c15c3452e4d558596950db3}{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}~45
+\#define \hyperlink{roomba_8h_ada488d033e7ffddd9b73f51081183310}{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L}~0x\-A\-D
 \item 
-\#define \hyperlink{roomba_8h_ab0d013f71d12e26ec46c2a5edfda8c18}{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}~48
+\#define \hyperlink{roomba_8h_a5fdfdcbfd0f764e23e833fe60a7cfae7}{\-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E}~0x2
 \item 
-\#define \hyperlink{roomba_8h_a9d9e0b1d566c33afab82708e1ea6a8be}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}~200
+\#define \hyperlink{roomba_8h_a49a7c7da2e05a1ec1914021a41f7d11d}{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}~0x4
+\item 
+\#define \hyperlink{roomba_8h_a6088ce708e8f4ff3fcd563ef7ae36927}{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}~0x2\-B
+\item 
+\#define \hyperlink{roomba_8h_ae43d7eb20c15c3452e4d558596950db3}{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}~0x2\-D
+\item 
+\#define \hyperlink{roomba_8h_ab0d013f71d12e26ec46c2a5edfda8c18}{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}~0x30
+\item 
+\#define \hyperlink{roomba_8h_a9d9e0b1d566c33afab82708e1ea6a8be}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}~0x\-C8
+\item 
+\#define \hyperlink{roomba_8h_abe48441640a0144da0dd7ce9ccc6f68b}{\-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L}~0x4\-B0
+\item 
+\#define \hyperlink{roomba_8h_a4a1baddf3ca8562961f139056f63434c}{\-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R}~0x\-A0
+\item 
+\#define \hyperlink{roomba_8h_ae1ee0cd6205cf0b901148ea8224db603}{\-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}~0x\-F\-F
+\item 
+\#define \hyperlink{roomba_8h_a52eae75f70c780600d4bd77f8427e420}{\-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}~0x64
+\item 
+\#define \hyperlink{roomba_8h_a48e60dc0e87bff81a12545f681a51d2d}{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R}~0x1\-E
+\item 
+\#define \hyperlink{roomba_8h_a9b1046435af32b5dae762ee45c46946d}{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R}~0x190
 \end{DoxyCompactItemize}
 \subsection*{\-Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{roomba_8h_aee9fbf5a8cf760ab38dc3509f8953f43}{init\-\_\-roomba} (void)
+void \hyperlink{roomba_8h_a7a94e608ea756db96d06c917ba7bb1b5}{roomba\-Init} (void)
 \begin{DoxyCompactList}\small\item\em init roomba function \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_adfba988f90e19a381a4f505b61546097}{roomba\-\_\-calibrate\-\_\-angle} ()
+void \hyperlink{roomba_8h_a6c950d1452f0b850f75fe4d18052badb}{roomba\-Calibrate\-Angle} (void)
 \begin{DoxyCompactList}\small\item\em calibrate angle function \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a035293124dd6f95b2d8897997ce22829}{roomba\-\_\-calibrate\-\_\-distance} ()
-\begin{DoxyCompactList}\small\item\em calibrate angle function \end{DoxyCompactList}\item 
-int32\-\_\-t \hyperlink{roomba_8h_a57774583ce5e1c1d2e30d31221e0fb0a}{query\-\_\-sensor} (\hyperlink{structpacket}{packet} query\-\_\-packet)
+void \hyperlink{roomba_8h_adbbc7b5dd3febaa22cb2a4e6637b541a}{roomba\-Calibrate\-Distance} (void)
+\begin{DoxyCompactList}\small\item\em calibrate distance function \end{DoxyCompactList}\item 
+int32\-\_\-t \hyperlink{roomba_8h_a9d35768b2da08d9ff6306333252d99e3}{roomba\-Query\-Sensor} (\hyperlink{structpacket}{packet} query\-\_\-packet)
 \begin{DoxyCompactList}\small\item\em query sensor function \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_ac32ee66206bdeea9213de8c3d23b8819}{query\-\_\-list} (const \hyperlink{structpacket}{packet} $\ast$packets\mbox{[}$\,$\mbox{]}, uint8\-\_\-t count, int32\-\_\-t results\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em query sensor list function \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a261cc5ae02d8506d2bdbe0433c9f7a74}{write\-\_\-query\-\_\-list} (const \hyperlink{structpacket}{packet} $\ast$packets\mbox{[}$\,$\mbox{]}, uint8\-\_\-t count)
-\begin{DoxyCompactList}\small\item\em write sensor list function \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a295a6a56865fe08949e2027bc9dbb4a5}{read\-\_\-query\-\_\-list} (const \hyperlink{structpacket}{packet} $\ast$packets\mbox{[}$\,$\mbox{]}, uint8\-\_\-t count, int32\-\_\-t results\mbox{[}$\,$\mbox{]})
-\begin{DoxyCompactList}\small\item\em read sensor list function \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a3a315a67275f91ca4dbe86576cf7b00f}{set\-Weekday\-Led} (uint8\-\_\-t led\-\_\-mask)
+int32\-\_\-t \hyperlink{roomba_8h_a97138bf877904e4570420a07e5f26ea3}{roomba\-As\-Calibrated\-Angle} (int32\-\_\-t angle\-\_\-raw)
+\begin{DoxyCompactList}\small\item\em angle convert function \end{DoxyCompactList}\item 
+int32\-\_\-t \hyperlink{roomba_8h_aca02dca009d257987bf5cf7691e6d9a2}{roomba\-As\-Calibrated\-Distance} (int32\-\_\-t distance\-\_\-raw)
+\begin{DoxyCompactList}\small\item\em distance convert function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a5e8ad6dd3d747a90fbf38aed8b2aaa5b}{roomba\-Seekdock} (void)
+\begin{DoxyCompactList}\small\item\em seekdock function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a5f09f9dca7e6d957a032047ec11573e7}{roomba\-Reset\-Trips} (void)
+\begin{DoxyCompactList}\small\item\em reset roomba's trip meters \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a7c0642bbb3c74ca89e22ecd78ede0525}{roomba\-Reset\-Trips\-Without\-Consuming\-Sensors} ()
+\begin{DoxyCompactList}\small\item\em reset roomba's trip meters without consuming sensor values \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a291f2d17fb58f59edd4dcc3e04e5301a}{roomba\-Drive\-A\-Bit\-Backward} (int32\-\_\-t backward\-\_\-distance)
+\begin{DoxyCompactList}\small\item\em drive backward function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a46e311aa25d488f8a53437a87847d069}{roomba\-On\-Collision\-Detected} (int32\-\_\-t bumper\-\_\-state, int32\-\_\-t light\-\_\-bumper\-\_\-state)
+\begin{DoxyCompactList}\small\item\em collision detected function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a40f569e5fff1f5376702aa7d147c7cb1}{roomba\-On\-Collision\-Cleared} (void)
+\begin{DoxyCompactList}\small\item\em collision cleared function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a47cabc0903bc4a1075b51125b994a751}{roomba\-Update\-Distance\-Sum} (void)
+\begin{DoxyCompactList}\small\item\em \-Update the distance sum. \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a3e9d18fc95c4e4c5e8db4b604eaa415a}{roomba\-Play\-Song\-Theme} (void)
+\begin{DoxyCompactList}\small\item\em play song theme function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a8164c3abeeb769be6f662c67848fe1ab}{roomba\-Play\-Song\-Collision} (void)
+\begin{DoxyCompactList}\small\item\em play song collision function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_ae09806d66fbeb8f69598ea9143513ff1}{roomba\-Play\-Song\-Done} (void)
+\begin{DoxyCompactList}\small\item\em play song done function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a6cd1e4e80ad46ab7dad1a571ebede647}{roomba\-Play\-Song\-Beep} (void)
+\begin{DoxyCompactList}\small\item\em play song beep function \end{DoxyCompactList}\item 
+void \hyperlink{roomba_8h_a11a37d8efad1e63b44608c66b21d6230}{roomba\-Set\-Weekday\-Led} (uint8\-\_\-t led\-\_\-mask)
 \begin{DoxyCompactList}\small\item\em \-Write to roomba's weekday \-L\-E\-Ds. \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a5e81b58095a2f79cd4dd3c112650730d}{set\-Led} (uint8\-\_\-t led\-\_\-mask, uint8\-\_\-t color, uint8\-\_\-t intensity)
+void \hyperlink{roomba_8h_a91c51ca8879c22f407a8d3b5024c1d3c}{roomba\-Set\-Led} (uint8\-\_\-t led\-\_\-mask, uint8\-\_\-t color, uint8\-\_\-t intensity)
 \begin{DoxyCompactList}\small\item\em \-Write to roomba's \-L\-E\-Ds. \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a827f6c823bc26c1f07205d6227da485c}{write\-\_\-sevenseg\-\_\-digits} ()
+void \hyperlink{roomba_8h_ad4c5a3a31ac972bdbf699ddb70171610}{roomba\-Write\-Sevenseg\-Digits} (void)
 \begin{DoxyCompactList}\small\item\em \-Write the ascii digits. \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_adbe775d0f9e78cc4be310cfd077aab75}{drive} (int16\-\_\-t velocity, int16\-\_\-t radius)
+void \hyperlink{roomba_8h_a87b26aec548e6af2616d5b5aca488f04}{roomba\-Drive} (int16\-\_\-t velocity, int16\-\_\-t radius)
 \begin{DoxyCompactList}\small\item\em \-Drive function. \end{DoxyCompactList}\item 
-void \hyperlink{roomba_8h_a8c528baf37154d347366083f0f816846}{stop} ()
+void \hyperlink{roomba_8h_a0884ea9eea8a4f9efddd0a392b984da9}{roomba\-Stop} (void)
 \begin{DoxyCompactList}\small\item\em \-Stop function. \end{DoxyCompactList}\item 
-uint8\-\_\-t \hyperlink{roomba_8h_a61d980cd654b5b28e4e48a7f4092c3f9}{check\-\_\-button} ()
+uint8\-\_\-t \hyperlink{roomba_8h_a360a93d84f6eda39b2f99311c0ac7246}{roomba\-Check\-Button} (void)
 \begin{DoxyCompactList}\small\item\em \-Check the roomba buttons. \end{DoxyCompactList}\item 
-int32\-\_\-t \hyperlink{roomba_8h_a003330edfbf4d75a09dbaeb415bed728}{calculate\-Time\-To\-Drive} (int32\-\_\-t distance, int32\-\_\-t velocity)
-\begin{DoxyCompactList}\small\item\em \-Calculate the time to drive. \end{DoxyCompactList}\end{DoxyCompactItemize}
+int32\-\_\-t \hyperlink{roomba_8h_aed1b5b78f07c5770b873d296c9416849}{roomba\-Calculate\-Time\-To\-Drive} (int32\-\_\-t distance, int32\-\_\-t velocity)
+\begin{DoxyCompactList}\small\item\em \-Calculate the time to drive function. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Variables}
 \begin{DoxyCompactItemize}
 \item 
-const \hyperlink{structpacket}{packet} $\ast$ \hyperlink{roomba_8h_a9fad066b7b58012f6a37377327ff6c70}{packet\-\_\-queries} \mbox{[}\hyperlink{roomba_8h_a4592825487c8f673a12811927628d9a9}{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}\mbox{]}
-\item 
-volatile int32\-\_\-t \hyperlink{roomba_8h_acf4670bd8261f765433573c60c0c9957}{query\-\_\-results} \mbox{[}\hyperlink{roomba_8h_a4592825487c8f673a12811927628d9a9}{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}\mbox{]}
-\item 
 int32\-\_\-t \hyperlink{roomba_8h_a62ed77ced8e2e97e8580f41c9ecce0d4}{roomba\-\_\-sevenseg\-\_\-digits} \mbox{[}\hyperlink{roomba_8h_a49a7c7da2e05a1ec1914021a41f7d11d}{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}\mbox{]}
-\item 
-\hyperlink{structroomba__data}{roomba\-\_\-data} \hyperlink{roomba_8h_a032ea8a9c2e01cdc2b0445ac573459bc}{roombadata}
 \item 
 const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_a97eca45fe8764ff2b4ea54b740578bad}{\-P\-A\-C\-K\-E\-T\-\_\-\-B\-U\-M\-P\-S\-\_\-\-W\-H\-E\-E\-L\-D\-R\-O\-P\-S}
 \item 
@@ -288,19 +323,23 @@ const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_a256d4f4f8eb0acdd3d0
 const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_a06c54dba26e71caf615c3265c721ba6c}{\-P\-A\-C\-K\-E\-T\-\_\-\-S\-I\-D\-E\-\_\-\-B\-R\-U\-S\-H\-\_\-\-M\-O\-T\-O\-R\-\_\-\-C\-U\-R\-R\-E\-N\-T}
 \item 
 const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_ac7f2e6c28e7d740cd390c5d1849957e2}{\-P\-A\-C\-K\-E\-T\-\_\-\-S\-T\-A\-S\-I\-S}
+\item 
+\hyperlink{structroomba__data}{roomba\-\_\-data} \hyperlink{roomba_8h_a032ea8a9c2e01cdc2b0445ac573459bc}{roombadata}
+\item 
+\hyperlink{structcollision__data}{collision\-\_\-data} \hyperlink{roomba_8h_a39aab70914328afc9176856a17c1812b}{collisiondata}
 \end{DoxyCompactItemize}
 
 
 \subsection{\-Define \-Documentation}
 \hypertarget{roomba_8h_ae43d7eb20c15c3452e4d558596950db3}{\index{roomba.\-h@{roomba.\-h}!\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S@{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}}
 \index{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S@{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}!roomba.h@{roomba.\-h}}
-\subsubsection[{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}~45}}\label{roomba_8h_ae43d7eb20c15c3452e4d558596950db3}
+\subsubsection[{\-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-S\-C\-I\-I\-\_\-\-M\-I\-N\-U\-S}~0x2\-D}}\label{roomba_8h_ae43d7eb20c15c3452e4d558596950db3}
 \hypertarget{roomba_8h_ab0d013f71d12e26ec46c2a5edfda8c18}{\index{roomba.\-h@{roomba.\-h}!\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T@{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}}
 \index{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T@{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}!roomba.h@{roomba.\-h}}
-\subsubsection[{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}~48}}\label{roomba_8h_ab0d013f71d12e26ec46c2a5edfda8c18}
+\subsubsection[{\-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-S\-C\-I\-I\-\_\-\-N\-U\-M\-B\-E\-R\-\_\-\-S\-T\-A\-R\-T}~0x30}}\label{roomba_8h_ab0d013f71d12e26ec46c2a5edfda8c18}
 \hypertarget{roomba_8h_a6088ce708e8f4ff3fcd563ef7ae36927}{\index{roomba.\-h@{roomba.\-h}!\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S@{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}}
 \index{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S@{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}!roomba.h@{roomba.\-h}}
-\subsubsection[{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}~43}}\label{roomba_8h_a6088ce708e8f4ff3fcd563ef7ae36927}
+\subsubsection[{\-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-A\-S\-C\-I\-I\-\_\-\-P\-L\-U\-S}~0x2\-B}}\label{roomba_8h_a6088ce708e8f4ff3fcd563ef7ae36927}
 \hypertarget{roomba_8h_ade6fa723afa55e24edf154222a7e8ee5}{\index{roomba.\-h@{roomba.\-h}!\-B\-T\-N\-\_\-\-C\-L\-E\-A\-N@{\-B\-T\-N\-\_\-\-C\-L\-E\-A\-N}}
 \index{\-B\-T\-N\-\_\-\-C\-L\-E\-A\-N@{\-B\-T\-N\-\_\-\-C\-L\-E\-A\-N}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-B\-T\-N\-\_\-\-C\-L\-E\-A\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-B\-T\-N\-\_\-\-C\-L\-E\-A\-N}~0x01}}\label{roomba_8h_ade6fa723afa55e24edf154222a7e8ee5}
@@ -328,6 +367,9 @@ const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_ac7f2e6c28e7d740cd39
 \hypertarget{roomba_8h_ae4b348997669056348b58747fe7af172}{\index{roomba.\-h@{roomba.\-h}!\-B\-T\-N\-\_\-\-S\-P\-O\-T@{\-B\-T\-N\-\_\-\-S\-P\-O\-T}}
 \index{\-B\-T\-N\-\_\-\-S\-P\-O\-T@{\-B\-T\-N\-\_\-\-S\-P\-O\-T}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-B\-T\-N\-\_\-\-S\-P\-O\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-B\-T\-N\-\_\-\-S\-P\-O\-T}~0x02}}\label{roomba_8h_ae4b348997669056348b58747fe7af172}
+\hypertarget{roomba_8h_a5fdfdcbfd0f764e23e833fe60a7cfae7}{\index{roomba.\-h@{roomba.\-h}!\-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E@{\-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E}}
+\index{\-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E@{\-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-H\-A\-R\-G\-I\-N\-G\-\_\-\-S\-O\-U\-R\-C\-E\-\_\-\-H\-O\-M\-E\-B\-A\-S\-E}~0x2}}\label{roomba_8h_a5fdfdcbfd0f764e23e833fe60a7cfae7}
 \hypertarget{roomba_8h_ac796d81e0cafc588b07242ddbb3ac646}{\index{roomba.\-h@{roomba.\-h}!\-C\-M\-D\-\_\-7\-S\-E\-G\-\_\-\-A\-S\-C\-I\-I@{\-C\-M\-D\-\_\-7\-S\-E\-G\-\_\-\-A\-S\-C\-I\-I}}
 \index{\-C\-M\-D\-\_\-7\-S\-E\-G\-\_\-\-A\-S\-C\-I\-I@{\-C\-M\-D\-\_\-7\-S\-E\-G\-\_\-\-A\-S\-C\-I\-I}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-C\-M\-D\-\_\-7\-S\-E\-G\-\_\-\-A\-S\-C\-I\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D\-\_\-7\-S\-E\-G\-\_\-\-A\-S\-C\-I\-I}~0x\-A4}}\label{roomba_8h_ac796d81e0cafc588b07242ddbb3ac646}
@@ -423,10 +465,28 @@ const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_ac7f2e6c28e7d740cd39
 \subsubsection[{\-C\-M\-D\-\_\-\-S\-T\-R\-E\-A\-M}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-C\-M\-D\-\_\-\-S\-T\-R\-E\-A\-M}~0x94}}\label{roomba_8h_a4cea6319ddbc62debdc8315eb4549df5}
 \hypertarget{roomba_8h_a9d9e0b1d566c33afab82708e1ea6a8be}{\index{roomba.\-h@{roomba.\-h}!\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}}
 \index{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}!roomba.h@{roomba.\-h}}
-\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}~200}}\label{roomba_8h_a9d9e0b1d566c33afab82708e1ea6a8be}
+\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}~0x\-C8}}\label{roomba_8h_a9d9e0b1d566c33afab82708e1ea6a8be}
 \hypertarget{roomba_8h_a49a7c7da2e05a1ec1914021a41f7d11d}{\index{roomba.\-h@{roomba.\-h}!\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H@{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}}
 \index{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H@{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}!roomba.h@{roomba.\-h}}
-\subsubsection[{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}~4}}\label{roomba_8h_a49a7c7da2e05a1ec1914021a41f7d11d}
+\subsubsection[{\-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-I\-G\-I\-T\-\_\-\-L\-E\-N\-G\-T\-H}~0x4}}\label{roomba_8h_a49a7c7da2e05a1ec1914021a41f7d11d}
+\hypertarget{roomba_8h_a52eae75f70c780600d4bd77f8427e420}{\index{roomba.\-h@{roomba.\-h}!\-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K@{\-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}}
+\index{\-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K@{\-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-O\-C\-K\-E\-D\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}~0x64}}\label{roomba_8h_a52eae75f70c780600d4bd77f8427e420}
+\hypertarget{roomba_8h_ada488d033e7ffddd9b73f51081183310}{\index{roomba.\-h@{roomba.\-h}!\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L}}
+\index{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-A\-L\-L}~0x\-A\-D}}\label{roomba_8h_ada488d033e7ffddd9b73f51081183310}
+\hypertarget{roomba_8h_ac2728d38a59a0747167e0031e85e5c43}{\index{roomba.\-h@{roomba.\-h}!\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D}}
+\index{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-F\-O\-R\-C\-E\-F\-I\-E\-L\-D}~0x\-A1}}\label{roomba_8h_ac2728d38a59a0747167e0031e85e5c43}
+\hypertarget{roomba_8h_a2724991aa6cf2254bf3cf41a9f7e95b1}{\index{roomba.\-h@{roomba.\-h}!\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y}}
+\index{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-G\-R\-E\-E\-N\-B\-U\-O\-Y}~0x\-A4}}\label{roomba_8h_a2724991aa6cf2254bf3cf41a9f7e95b1}
+\hypertarget{roomba_8h_a2a9a8dbe24653040c5c53f205c3080eb}{\index{roomba.\-h@{roomba.\-h}!\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y}}
+\index{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y@{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-R\-I\-V\-E\-\_\-\-O\-N\-\_\-\-C\-H\-A\-R\-G\-E\-R\-\_\-\-R\-E\-D\-B\-U\-O\-Y}~0x\-A8}}\label{roomba_8h_a2a9a8dbe24653040c5c53f205c3080eb}
+\hypertarget{roomba_8h_a4a1baddf3ca8562961f139056f63434c}{\index{roomba.\-h@{roomba.\-h}!\-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R@{\-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R}}
+\index{\-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R@{\-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-I\-N\-F\-R\-A\-R\-E\-D\-\_\-\-V\-A\-L\-U\-E\-\_\-\-D\-O\-C\-K\-\_\-\-T\-R\-I\-G\-G\-E\-R}~0x\-A0}}\label{roomba_8h_a4a1baddf3ca8562961f139056f63434c}
 \hypertarget{roomba_8h_a18a6f29e2d4a60d18362e9ee88079985}{\index{roomba.\-h@{roomba.\-h}!\-L\-E\-D\-\_\-\-C\-H\-E\-C\-K\-\_\-\-R\-O\-B\-O\-T\-\_\-\-R\-E\-D@{\-L\-E\-D\-\_\-\-C\-H\-E\-C\-K\-\_\-\-R\-O\-B\-O\-T\-\_\-\-R\-E\-D}}
 \index{\-L\-E\-D\-\_\-\-C\-H\-E\-C\-K\-\_\-\-R\-O\-B\-O\-T\-\_\-\-R\-E\-D@{\-L\-E\-D\-\_\-\-C\-H\-E\-C\-K\-\_\-\-R\-O\-B\-O\-T\-\_\-\-R\-E\-D}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-L\-E\-D\-\_\-\-C\-H\-E\-C\-K\-\_\-\-R\-O\-B\-O\-T\-\_\-\-R\-E\-D}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-L\-E\-D\-\_\-\-C\-H\-E\-C\-K\-\_\-\-R\-O\-B\-O\-T\-\_\-\-R\-E\-D}~0x08}}\label{roomba_8h_a18a6f29e2d4a60d18362e9ee88079985}
@@ -475,12 +535,18 @@ const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_ac7f2e6c28e7d740cd39
 \hypertarget{roomba_8h_a7bad0b6090b9574104346e2273f64ef5}{\index{roomba.\-h@{roomba.\-h}!\-L\-E\-D\-\_\-\-S\-P\-O\-T\-\_\-\-G\-R\-E\-E\-N@{\-L\-E\-D\-\_\-\-S\-P\-O\-T\-\_\-\-G\-R\-E\-E\-N}}
 \index{\-L\-E\-D\-\_\-\-S\-P\-O\-T\-\_\-\-G\-R\-E\-E\-N@{\-L\-E\-D\-\_\-\-S\-P\-O\-T\-\_\-\-G\-R\-E\-E\-N}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-L\-E\-D\-\_\-\-S\-P\-O\-T\-\_\-\-G\-R\-E\-E\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-L\-E\-D\-\_\-\-S\-P\-O\-T\-\_\-\-G\-R\-E\-E\-N}~0x02}}\label{roomba_8h_a7bad0b6090b9574104346e2273f64ef5}
-\hypertarget{roomba_8h_a4592825487c8f673a12811927628d9a9}{\index{roomba.\-h@{roomba.\-h}!\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H@{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}}
-\index{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H@{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}!roomba.h@{roomba.\-h}}
-\subsubsection[{\-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}~5}}\label{roomba_8h_a4592825487c8f673a12811927628d9a9}
+\hypertarget{roomba_8h_a48e60dc0e87bff81a12545f681a51d2d}{\index{roomba.\-h@{roomba.\-h}!\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R@{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R}}
+\index{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R@{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-C\-L\-E\-A\-R}~0x1\-E}}\label{roomba_8h_a48e60dc0e87bff81a12545f681a51d2d}
+\hypertarget{roomba_8h_a9b1046435af32b5dae762ee45c46946d}{\index{roomba.\-h@{roomba.\-h}!\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R@{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R}}
+\index{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R@{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-L\-I\-G\-H\-T\-\_\-\-B\-U\-M\-P\-\_\-\-N\-O\-T\-\_\-\-C\-L\-E\-A\-R}~0x190}}\label{roomba_8h_a9b1046435af32b5dae762ee45c46946d}
 \hypertarget{roomba_8h_a60e92353eb5662d3e2abf6ef862538ff}{\index{roomba.\-h@{roomba.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-D\-E\-L\-A\-Y\-\_\-\-M\-O\-D\-E\-C\-H\-A\-N\-G\-E\-\_\-\-M\-S@{\-R\-O\-O\-M\-B\-A\-\_\-\-D\-E\-L\-A\-Y\-\_\-\-M\-O\-D\-E\-C\-H\-A\-N\-G\-E\-\_\-\-M\-S}}
 \index{\-R\-O\-O\-M\-B\-A\-\_\-\-D\-E\-L\-A\-Y\-\_\-\-M\-O\-D\-E\-C\-H\-A\-N\-G\-E\-\_\-\-M\-S@{\-R\-O\-O\-M\-B\-A\-\_\-\-D\-E\-L\-A\-Y\-\_\-\-M\-O\-D\-E\-C\-H\-A\-N\-G\-E\-\_\-\-M\-S}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-D\-E\-L\-A\-Y\-\_\-\-M\-O\-D\-E\-C\-H\-A\-N\-G\-E\-\_\-\-M\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-D\-E\-L\-A\-Y\-\_\-\-M\-O\-D\-E\-C\-H\-A\-N\-G\-E\-\_\-\-M\-S}~20}}\label{roomba_8h_a60e92353eb5662d3e2abf6ef862538ff}
+\hypertarget{roomba_8h_ae1ee0cd6205cf0b901148ea8224db603}{\index{roomba.\-h@{roomba.\-h}!\-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K@{\-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}}
+\index{\-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K@{\-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-E\-E\-K\-D\-O\-C\-K\-\_\-\-L\-E\-D\-\_\-\-B\-I\-T\-M\-A\-S\-K}~0x\-F\-F}}\label{roomba_8h_ae1ee0cd6205cf0b901148ea8224db603}
 \hypertarget{roomba_8h_ad0f0780de717745ccc5ca09a78890b24}{\index{roomba.\-h@{roomba.\-h}!\-S\-E\-N\-S\-O\-R\-S\-\_\-\-A\-L\-L@{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-A\-L\-L}}
 \index{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-A\-L\-L@{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-A\-L\-L}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-A\-L\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-E\-N\-S\-O\-R\-S\-\_\-\-A\-L\-L}~0x00}}\label{roomba_8h_ad0f0780de717745ccc5ca09a78890b24}
@@ -493,22 +559,65 @@ const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_ac7f2e6c28e7d740cd39
 \hypertarget{roomba_8h_a15af80bc0e237a7c74aa34787cc231ef}{\index{roomba.\-h@{roomba.\-h}!\-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R@{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R}}
 \index{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R@{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-S\-E\-N\-S\-O\-R\-S\-\_\-\-P\-O\-W\-E\-R}~0x03}}\label{roomba_8h_a15af80bc0e237a7c74aa34787cc231ef}
+\hypertarget{roomba_8h_abe48441640a0144da0dd7ce9ccc6f68b}{\index{roomba.\-h@{roomba.\-h}!\-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L@{\-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L}}
+\index{\-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L@{\-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L}!roomba.h@{roomba.\-h}}
+\subsubsection[{\-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-T\-A\-P\-E\-\_\-\-S\-I\-G\-N\-A\-L}~0x4\-B0}}\label{roomba_8h_abe48441640a0144da0dd7ce9ccc6f68b}
 
 
 \subsection{\-Function \-Documentation}
-\hypertarget{roomba_8h_a003330edfbf4d75a09dbaeb415bed728}{\index{roomba.\-h@{roomba.\-h}!calculate\-Time\-To\-Drive@{calculate\-Time\-To\-Drive}}
-\index{calculate\-Time\-To\-Drive@{calculate\-Time\-To\-Drive}!roomba.h@{roomba.\-h}}
-\subsubsection[{calculate\-Time\-To\-Drive}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf calculate\-Time\-To\-Drive} (
+\hypertarget{roomba_8h_a97138bf877904e4570420a07e5f26ea3}{\index{roomba.\-h@{roomba.\-h}!roomba\-As\-Calibrated\-Angle@{roomba\-As\-Calibrated\-Angle}}
+\index{roomba\-As\-Calibrated\-Angle@{roomba\-As\-Calibrated\-Angle}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-As\-Calibrated\-Angle}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf roomba\-As\-Calibrated\-Angle} (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{angle\-\_\-raw}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a97138bf877904e4570420a07e5f26ea3}
+
+
+angle convert function 
+
+\-This function converts a raw angle value to the corresponding calibrated value
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em angle\-\_\-raw} & the raw angle value as queried from roomba's sensor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the converted angle value 
+\end{DoxyReturn}
+\hypertarget{roomba_8h_aca02dca009d257987bf5cf7691e6d9a2}{\index{roomba.\-h@{roomba.\-h}!roomba\-As\-Calibrated\-Distance@{roomba\-As\-Calibrated\-Distance}}
+\index{roomba\-As\-Calibrated\-Distance@{roomba\-As\-Calibrated\-Distance}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-As\-Calibrated\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf roomba\-As\-Calibrated\-Distance} (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{distance\-\_\-raw}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_aca02dca009d257987bf5cf7691e6d9a2}
+
+
+distance convert function 
+
+\-This function converts a raw distance value to the corresponding calibrated value 
+\begin{DoxyParams}{\-Parameters}
+{\em distance\-\_\-raw} & the raw distance value as queried from roomba's sensor \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the converted distance value 
+\end{DoxyReturn}
+\hypertarget{roomba_8h_aed1b5b78f07c5770b873d296c9416849}{\index{roomba.\-h@{roomba.\-h}!roomba\-Calculate\-Time\-To\-Drive@{roomba\-Calculate\-Time\-To\-Drive}}
+\index{roomba\-Calculate\-Time\-To\-Drive@{roomba\-Calculate\-Time\-To\-Drive}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Calculate\-Time\-To\-Drive}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf roomba\-Calculate\-Time\-To\-Drive} (
 \begin{DoxyParamCaption}
 \item[{int32\-\_\-t}]{distance, }
 \item[{int32\-\_\-t}]{velocity}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a003330edfbf4d75a09dbaeb415bed728}
+)}}\label{roomba_8h_aed1b5b78f07c5770b873d296c9416849}
 
 
-\-Calculate the time to drive. 
+\-Calculate the time to drive function. 
 
-\-Calculate the time to drive 'distance' centimeters with the specified 'velocity'
+\-Use this function to calculate the time to drive 'distance' centimeters with the specified 'velocity'
 
 
 \begin{DoxyParams}{\-Parameters}
@@ -520,13 +629,35 @@ const \hyperlink{structpacket}{packet} \hyperlink{roomba_8h_ac7f2e6c28e7d740cd39
 \begin{DoxyReturn}{\-Returns}
 the calculated time, which is needed to drive 'distance' with 'velocity' 
 \end{DoxyReturn}
-\hypertarget{roomba_8h_a61d980cd654b5b28e4e48a7f4092c3f9}{\index{roomba.\-h@{roomba.\-h}!check\-\_\-button@{check\-\_\-button}}
-\index{check\-\_\-button@{check\-\_\-button}!roomba.h@{roomba.\-h}}
-\subsubsection[{check\-\_\-button}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf check\-\_\-button} (
+\hypertarget{roomba_8h_a6c950d1452f0b850f75fe4d18052badb}{\index{roomba.\-h@{roomba.\-h}!roomba\-Calibrate\-Angle@{roomba\-Calibrate\-Angle}}
+\index{roomba\-Calibrate\-Angle@{roomba\-Calibrate\-Angle}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Calibrate\-Angle}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Calibrate\-Angle} (
 \begin{DoxyParamCaption}
-{}
+\item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a61d980cd654b5b28e4e48a7f4092c3f9}
+)}}\label{roomba_8h_a6c950d1452f0b850f75fe4d18052badb}
+
+
+calibrate angle function 
+
+\-This function can be used to calibrate a angle of 360 degrees \hypertarget{roomba_8h_adbbc7b5dd3febaa22cb2a4e6637b541a}{\index{roomba.\-h@{roomba.\-h}!roomba\-Calibrate\-Distance@{roomba\-Calibrate\-Distance}}
+\index{roomba\-Calibrate\-Distance@{roomba\-Calibrate\-Distance}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Calibrate\-Distance}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Calibrate\-Distance} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_adbbc7b5dd3febaa22cb2a4e6637b541a}
+
+
+calibrate distance function 
+
+\-This function can be used to calibrate a distance of 1 meter \hypertarget{roomba_8h_a360a93d84f6eda39b2f99311c0ac7246}{\index{roomba.\-h@{roomba.\-h}!roomba\-Check\-Button@{roomba\-Check\-Button}}
+\index{roomba\-Check\-Button@{roomba\-Check\-Button}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Check\-Button}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf roomba\-Check\-Button} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a360a93d84f6eda39b2f99311c0ac7246}
 
 
 \-Check the roomba buttons. 
@@ -536,14 +667,14 @@ the calculated time, which is needed to drive 'distance' with 'velocity'
 \begin{DoxyReturn}{\-Returns}
 an unsigned 8-\/bit integer value which represents the current state of the roomba buttons 
 \end{DoxyReturn}
-\hypertarget{roomba_8h_adbe775d0f9e78cc4be310cfd077aab75}{\index{roomba.\-h@{roomba.\-h}!drive@{drive}}
-\index{drive@{drive}!roomba.h@{roomba.\-h}}
-\subsubsection[{drive}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf drive} (
+\hypertarget{roomba_8h_a87b26aec548e6af2616d5b5aca488f04}{\index{roomba.\-h@{roomba.\-h}!roomba\-Drive@{roomba\-Drive}}
+\index{roomba\-Drive@{roomba\-Drive}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Drive}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Drive} (
 \begin{DoxyParamCaption}
 \item[{int16\-\_\-t}]{velocity, }
 \item[{int16\-\_\-t}]{radius}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_adbe775d0f9e78cc4be310cfd077aab75}
+)}}\label{roomba_8h_a87b26aec548e6af2616d5b5aca488f04}
 
 
 \-Drive function. 
@@ -555,110 +686,168 @@ an unsigned 8-\/bit integer value which represents the current state of the room
 {\em velocity} & the velocity to drive \\
 \hline
 \end{DoxyParams}
-\hypertarget{roomba_8h_aee9fbf5a8cf760ab38dc3509f8953f43}{\index{roomba.\-h@{roomba.\-h}!init\-\_\-roomba@{init\-\_\-roomba}}
-\index{init\-\_\-roomba@{init\-\_\-roomba}!roomba.h@{roomba.\-h}}
-\subsubsection[{init\-\_\-roomba}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf init\-\_\-roomba} (
+\hypertarget{roomba_8h_a291f2d17fb58f59edd4dcc3e04e5301a}{\index{roomba.\-h@{roomba.\-h}!roomba\-Drive\-A\-Bit\-Backward@{roomba\-Drive\-A\-Bit\-Backward}}
+\index{roomba\-Drive\-A\-Bit\-Backward@{roomba\-Drive\-A\-Bit\-Backward}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Drive\-A\-Bit\-Backward}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Drive\-A\-Bit\-Backward} (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{backward\-\_\-distance}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a291f2d17fb58f59edd4dcc3e04e5301a}
+
+
+drive backward function 
+
+\-This function can be used to drive a bit backward 
+\begin{DoxyParams}{\-Parameters}
+{\em backward\-\_\-distance} & the distance to drive backward (in milimeters) \\
+\hline
+\end{DoxyParams}
+\hypertarget{roomba_8h_a7a94e608ea756db96d06c917ba7bb1b5}{\index{roomba.\-h@{roomba.\-h}!roomba\-Init@{roomba\-Init}}
+\index{roomba\-Init@{roomba\-Init}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Init}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Init} (
 \begin{DoxyParamCaption}
 \item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_aee9fbf5a8cf760ab38dc3509f8953f43}
+)}}\label{roomba_8h_a7a94e608ea756db96d06c917ba7bb1b5}
 
 
 init roomba function 
 
-\-This function initializes the roomba robot to full mode \hypertarget{roomba_8h_ac32ee66206bdeea9213de8c3d23b8819}{\index{roomba.\-h@{roomba.\-h}!query\-\_\-list@{query\-\_\-list}}
-\index{query\-\_\-list@{query\-\_\-list}!roomba.h@{roomba.\-h}}
-\subsubsection[{query\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf query\-\_\-list} (
+\-This function initializes the roomba robot to full mode \hypertarget{roomba_8h_a40f569e5fff1f5376702aa7d147c7cb1}{\index{roomba.\-h@{roomba.\-h}!roomba\-On\-Collision\-Cleared@{roomba\-On\-Collision\-Cleared}}
+\index{roomba\-On\-Collision\-Cleared@{roomba\-On\-Collision\-Cleared}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-On\-Collision\-Cleared}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-On\-Collision\-Cleared} (
 \begin{DoxyParamCaption}
-\item[{const {\bf packet} $\ast$}]{packets\mbox{[}$\,$\mbox{]}, }
-\item[{uint8\-\_\-t}]{count, }
-\item[{int32\-\_\-t}]{results\mbox{[}$\,$\mbox{]}}
+\item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_ac32ee66206bdeea9213de8c3d23b8819}
+)}}\label{roomba_8h_a40f569e5fff1f5376702aa7d147c7cb1}
 
 
-query sensor list function 
+collision cleared function 
 
-\-Query a list of sensor values with this function
+\-This function should be called if a previously detected collision has been cleared \hypertarget{roomba_8h_a46e311aa25d488f8a53437a87847d069}{\index{roomba.\-h@{roomba.\-h}!roomba\-On\-Collision\-Detected@{roomba\-On\-Collision\-Detected}}
+\index{roomba\-On\-Collision\-Detected@{roomba\-On\-Collision\-Detected}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-On\-Collision\-Detected}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-On\-Collision\-Detected} (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{bumper\-\_\-state, }
+\item[{int32\-\_\-t}]{light\-\_\-bumper\-\_\-state}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a46e311aa25d488f8a53437a87847d069}
 
 
+collision detected function 
+
+\-This function should be called when a collision is detected either by light bumps or physical bumps 
 \begin{DoxyParams}{\-Parameters}
-{\em packets} & an array of packets, specifying which sensors should be queried \\
+{\em light\-\_\-bumper\-\_\-state} & the state of the light\-\_\-bumpers at the moment of collision \\
 \hline
-{\em count} & the length of 'packets' \\
-\hline
-{\em results} & the out-\/array where the query results get stored. \-It should have at least a length of 'count' \\
+{\em bumper\-\_\-state} & the state of the physical bumpers at the moment of collision \\
 \hline
 \end{DoxyParams}
-\hypertarget{roomba_8h_a57774583ce5e1c1d2e30d31221e0fb0a}{\index{roomba.\-h@{roomba.\-h}!query\-\_\-sensor@{query\-\_\-sensor}}
-\index{query\-\_\-sensor@{query\-\_\-sensor}!roomba.h@{roomba.\-h}}
-\subsubsection[{query\-\_\-sensor}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf query\-\_\-sensor} (
+\hypertarget{roomba_8h_a6cd1e4e80ad46ab7dad1a571ebede647}{\index{roomba.\-h@{roomba.\-h}!roomba\-Play\-Song\-Beep@{roomba\-Play\-Song\-Beep}}
+\index{roomba\-Play\-Song\-Beep@{roomba\-Play\-Song\-Beep}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Play\-Song\-Beep}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Play\-Song\-Beep} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a6cd1e4e80ad46ab7dad1a571ebede647}
+
+
+play song beep function 
+
+\-This function plays a neutral beep sound \hypertarget{roomba_8h_a8164c3abeeb769be6f662c67848fe1ab}{\index{roomba.\-h@{roomba.\-h}!roomba\-Play\-Song\-Collision@{roomba\-Play\-Song\-Collision}}
+\index{roomba\-Play\-Song\-Collision@{roomba\-Play\-Song\-Collision}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Play\-Song\-Collision}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Play\-Song\-Collision} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a8164c3abeeb769be6f662c67848fe1ab}
+
+
+play song collision function 
+
+\-This function plays a warning sound, which is used when a collision is detected \hypertarget{roomba_8h_ae09806d66fbeb8f69598ea9143513ff1}{\index{roomba.\-h@{roomba.\-h}!roomba\-Play\-Song\-Done@{roomba\-Play\-Song\-Done}}
+\index{roomba\-Play\-Song\-Done@{roomba\-Play\-Song\-Done}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Play\-Song\-Done}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Play\-Song\-Done} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_ae09806d66fbeb8f69598ea9143513ff1}
+
+
+play song done function 
+
+\-This function plays a positive acoustic feedback, which can be used for any type of success \hypertarget{roomba_8h_a3e9d18fc95c4e4c5e8db4b604eaa415a}{\index{roomba.\-h@{roomba.\-h}!roomba\-Play\-Song\-Theme@{roomba\-Play\-Song\-Theme}}
+\index{roomba\-Play\-Song\-Theme@{roomba\-Play\-Song\-Theme}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Play\-Song\-Theme}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Play\-Song\-Theme} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a3e9d18fc95c4e4c5e8db4b604eaa415a}
+
+
+play song theme function 
+
+\-This function plays the zelda theme \hypertarget{roomba_8h_a9d35768b2da08d9ff6306333252d99e3}{\index{roomba.\-h@{roomba.\-h}!roomba\-Query\-Sensor@{roomba\-Query\-Sensor}}
+\index{roomba\-Query\-Sensor@{roomba\-Query\-Sensor}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Query\-Sensor}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf roomba\-Query\-Sensor} (
 \begin{DoxyParamCaption}
 \item[{{\bf packet}}]{query\-\_\-packet}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a57774583ce5e1c1d2e30d31221e0fb0a}
+)}}\label{roomba_8h_a9d35768b2da08d9ff6306333252d99e3}
 
 
 query sensor function 
 
-\-This function queries the specified sensor \begin{DoxyReturn}{\-Returns}
-the queried sensor value, converted to a 32-\/bit integer 
-\end{DoxyReturn}
-\hypertarget{roomba_8h_a295a6a56865fe08949e2027bc9dbb4a5}{\index{roomba.\-h@{roomba.\-h}!read\-\_\-query\-\_\-list@{read\-\_\-query\-\_\-list}}
-\index{read\-\_\-query\-\_\-list@{read\-\_\-query\-\_\-list}!roomba.h@{roomba.\-h}}
-\subsubsection[{read\-\_\-query\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf read\-\_\-query\-\_\-list} (
-\begin{DoxyParamCaption}
-\item[{const {\bf packet} $\ast$}]{packets\mbox{[}$\,$\mbox{]}, }
-\item[{uint8\-\_\-t}]{count, }
-\item[{int32\-\_\-t}]{results\mbox{[}$\,$\mbox{]}}
-\end{DoxyParamCaption}
-)}}\label{roomba_8h_a295a6a56865fe08949e2027bc9dbb4a5}
-
-
-read sensor list function 
-
-\-This function should be called after \hyperlink{roomba_8h_a261cc5ae02d8506d2bdbe0433c9f7a74}{write\-\_\-query\-\_\-list()} to read the sensor values from roomba
-
-
+\-This function queries the specified sensor 
 \begin{DoxyParams}{\-Parameters}
-{\em packets} & an array of packets, specifying which sensor requests have been written to roomba \\
-\hline
-{\em count} & the length of 'packets' \\
-\hline
-{\em results} & the out-\/array where the query results get stored. \-It should have at least a length of 'count' \\
+{\em query\-\_\-packet} & the packet which represents the sensor to query \\
 \hline
 \end{DoxyParams}
-\hypertarget{roomba_8h_adfba988f90e19a381a4f505b61546097}{\index{roomba.\-h@{roomba.\-h}!roomba\-\_\-calibrate\-\_\-angle@{roomba\-\_\-calibrate\-\_\-angle}}
-\index{roomba\-\_\-calibrate\-\_\-angle@{roomba\-\_\-calibrate\-\_\-angle}!roomba.h@{roomba.\-h}}
-\subsubsection[{roomba\-\_\-calibrate\-\_\-angle}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-\_\-calibrate\-\_\-angle} (
+\begin{DoxyReturn}{\-Returns}
+the queried sensor value, converted to a 32-\/bit integer 
+\end{DoxyReturn}
+\hypertarget{roomba_8h_a5f09f9dca7e6d957a032047ec11573e7}{\index{roomba.\-h@{roomba.\-h}!roomba\-Reset\-Trips@{roomba\-Reset\-Trips}}
+\index{roomba\-Reset\-Trips@{roomba\-Reset\-Trips}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Reset\-Trips}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Reset\-Trips} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{roomba_8h_a5f09f9dca7e6d957a032047ec11573e7}
+
+
+reset roomba's trip meters 
+
+\-This function consumes the angle and distance sensor values and resets angle and distance trip meters \hypertarget{roomba_8h_a7c0642bbb3c74ca89e22ecd78ede0525}{\index{roomba.\-h@{roomba.\-h}!roomba\-Reset\-Trips\-Without\-Consuming\-Sensors@{roomba\-Reset\-Trips\-Without\-Consuming\-Sensors}}
+\index{roomba\-Reset\-Trips\-Without\-Consuming\-Sensors@{roomba\-Reset\-Trips\-Without\-Consuming\-Sensors}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Reset\-Trips\-Without\-Consuming\-Sensors}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Reset\-Trips\-Without\-Consuming\-Sensors} (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_adfba988f90e19a381a4f505b61546097}
+)}}\label{roomba_8h_a7c0642bbb3c74ca89e22ecd78ede0525}
 
 
-calibrate angle function 
+reset roomba's trip meters without consuming sensor values 
 
-\-This function can be used to calibrate a angle of 360 degrees \hypertarget{roomba_8h_a035293124dd6f95b2d8897997ce22829}{\index{roomba.\-h@{roomba.\-h}!roomba\-\_\-calibrate\-\_\-distance@{roomba\-\_\-calibrate\-\_\-distance}}
-\index{roomba\-\_\-calibrate\-\_\-distance@{roomba\-\_\-calibrate\-\_\-distance}!roomba.h@{roomba.\-h}}
-\subsubsection[{roomba\-\_\-calibrate\-\_\-distance}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-\_\-calibrate\-\_\-distance} (
+\-This function just resets angle and distance trip meters without clearing the sensor 'cache' \hypertarget{roomba_8h_a5e8ad6dd3d747a90fbf38aed8b2aaa5b}{\index{roomba.\-h@{roomba.\-h}!roomba\-Seekdock@{roomba\-Seekdock}}
+\index{roomba\-Seekdock@{roomba\-Seekdock}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Seekdock}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Seekdock} (
 \begin{DoxyParamCaption}
-{}
+\item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a035293124dd6f95b2d8897997ce22829}
+)}}\label{roomba_8h_a5e8ad6dd3d747a90fbf38aed8b2aaa5b}
 
 
-calibrate angle function 
+seekdock function 
 
-\-This function can be used to calibrate a distance of 1 meter \hypertarget{roomba_8h_a5e81b58095a2f79cd4dd3c112650730d}{\index{roomba.\-h@{roomba.\-h}!set\-Led@{set\-Led}}
-\index{set\-Led@{set\-Led}!roomba.h@{roomba.\-h}}
-\subsubsection[{set\-Led}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf set\-Led} (
+\-This function executes roomba's built-\/in seekdock algorithm \hypertarget{roomba_8h_a91c51ca8879c22f407a8d3b5024c1d3c}{\index{roomba.\-h@{roomba.\-h}!roomba\-Set\-Led@{roomba\-Set\-Led}}
+\index{roomba\-Set\-Led@{roomba\-Set\-Led}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Set\-Led}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Set\-Led} (
 \begin{DoxyParamCaption}
 \item[{uint8\-\_\-t}]{led\-\_\-mask, }
 \item[{uint8\-\_\-t}]{color, }
 \item[{uint8\-\_\-t}]{intensity}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a5e81b58095a2f79cd4dd3c112650730d}
+)}}\label{roomba_8h_a91c51ca8879c22f407a8d3b5024c1d3c}
 
 
 \-Write to roomba's \-L\-E\-Ds. 
@@ -674,13 +863,13 @@ calibrate angle function
 {\em intensity} & the intensity value to be transfered to roomba \\
 \hline
 \end{DoxyParams}
-\hypertarget{roomba_8h_a3a315a67275f91ca4dbe86576cf7b00f}{\index{roomba.\-h@{roomba.\-h}!set\-Weekday\-Led@{set\-Weekday\-Led}}
-\index{set\-Weekday\-Led@{set\-Weekday\-Led}!roomba.h@{roomba.\-h}}
-\subsubsection[{set\-Weekday\-Led}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf set\-Weekday\-Led} (
+\hypertarget{roomba_8h_a11a37d8efad1e63b44608c66b21d6230}{\index{roomba.\-h@{roomba.\-h}!roomba\-Set\-Weekday\-Led@{roomba\-Set\-Weekday\-Led}}
+\index{roomba\-Set\-Weekday\-Led@{roomba\-Set\-Weekday\-Led}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Set\-Weekday\-Led}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Set\-Weekday\-Led} (
 \begin{DoxyParamCaption}
 \item[{uint8\-\_\-t}]{led\-\_\-mask}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a3a315a67275f91ca4dbe86576cf7b00f}
+)}}\label{roomba_8h_a11a37d8efad1e63b44608c66b21d6230}
 
 
 \-Write to roomba's weekday \-L\-E\-Ds. 
@@ -692,45 +881,35 @@ calibrate angle function
 {\em led\-\_\-mask} & the bit mask to be transfered to roomba \\
 \hline
 \end{DoxyParams}
-\hypertarget{roomba_8h_a8c528baf37154d347366083f0f816846}{\index{roomba.\-h@{roomba.\-h}!stop@{stop}}
-\index{stop@{stop}!roomba.h@{roomba.\-h}}
-\subsubsection[{stop}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf stop} (
+\hypertarget{roomba_8h_a0884ea9eea8a4f9efddd0a392b984da9}{\index{roomba.\-h@{roomba.\-h}!roomba\-Stop@{roomba\-Stop}}
+\index{roomba\-Stop@{roomba\-Stop}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Stop}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Stop} (
 \begin{DoxyParamCaption}
-{}
+\item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a8c528baf37154d347366083f0f816846}
+)}}\label{roomba_8h_a0884ea9eea8a4f9efddd0a392b984da9}
 
 
 \-Stop function. 
 
-\-Stop the (driving) roomba with this function \hypertarget{roomba_8h_a261cc5ae02d8506d2bdbe0433c9f7a74}{\index{roomba.\-h@{roomba.\-h}!write\-\_\-query\-\_\-list@{write\-\_\-query\-\_\-list}}
-\index{write\-\_\-query\-\_\-list@{write\-\_\-query\-\_\-list}!roomba.h@{roomba.\-h}}
-\subsubsection[{write\-\_\-query\-\_\-list}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf write\-\_\-query\-\_\-list} (
+\-Stop the (driving) roomba with this function \hypertarget{roomba_8h_a47cabc0903bc4a1075b51125b994a751}{\index{roomba.\-h@{roomba.\-h}!roomba\-Update\-Distance\-Sum@{roomba\-Update\-Distance\-Sum}}
+\index{roomba\-Update\-Distance\-Sum@{roomba\-Update\-Distance\-Sum}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Update\-Distance\-Sum}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Update\-Distance\-Sum} (
 \begin{DoxyParamCaption}
-\item[{const {\bf packet} $\ast$}]{packets\mbox{[}$\,$\mbox{]}, }
-\item[{uint8\-\_\-t}]{count}
+\item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a261cc5ae02d8506d2bdbe0433c9f7a74}
+)}}\label{roomba_8h_a47cabc0903bc4a1075b51125b994a751}
 
 
-write sensor list function 
+\-Update the distance sum. 
 
-\-Write a list of sensor values to the roomba robot with this function
-
-
-\begin{DoxyParams}{\-Parameters}
-{\em packets} & an array of packets, specifying which sensor requests should be written to roomba \\
-\hline
-{\em count} & the length of 'packets' \\
-\hline
-\end{DoxyParams}
-\hypertarget{roomba_8h_a827f6c823bc26c1f07205d6227da485c}{\index{roomba.\-h@{roomba.\-h}!write\-\_\-sevenseg\-\_\-digits@{write\-\_\-sevenseg\-\_\-digits}}
-\index{write\-\_\-sevenseg\-\_\-digits@{write\-\_\-sevenseg\-\_\-digits}!roomba.h@{roomba.\-h}}
-\subsubsection[{write\-\_\-sevenseg\-\_\-digits}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf write\-\_\-sevenseg\-\_\-digits} (
+\-This function updates the distance sum value in the collision state \hypertarget{roomba_8h_ad4c5a3a31ac972bdbf699ddb70171610}{\index{roomba.\-h@{roomba.\-h}!roomba\-Write\-Sevenseg\-Digits@{roomba\-Write\-Sevenseg\-Digits}}
+\index{roomba\-Write\-Sevenseg\-Digits@{roomba\-Write\-Sevenseg\-Digits}!roomba.h@{roomba.\-h}}
+\subsubsection[{roomba\-Write\-Sevenseg\-Digits}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf roomba\-Write\-Sevenseg\-Digits} (
 \begin{DoxyParamCaption}
-{}
+\item[{void}]{}
 \end{DoxyParamCaption}
-)}}\label{roomba_8h_a827f6c823bc26c1f07205d6227da485c}
+)}}\label{roomba_8h_ad4c5a3a31ac972bdbf699ddb70171610}
 
 
 \-Write the ascii digits. 
@@ -738,6 +917,9 @@ write sensor list function
 \-Write the global ascii digits array to roomba's seven seg display with this function 
 
 \subsection{\-Variable \-Documentation}
+\hypertarget{roomba_8h_a39aab70914328afc9176856a17c1812b}{\index{roomba.\-h@{roomba.\-h}!collisiondata@{collisiondata}}
+\index{collisiondata@{collisiondata}!roomba.h@{roomba.\-h}}
+\subsubsection[{collisiondata}]{\setlength{\rightskip}{0pt plus 5cm}{\bf collision\-\_\-data} {\bf collisiondata}}}\label{roomba_8h_a39aab70914328afc9176856a17c1812b}
 \hypertarget{roomba_8h_a97e5e57731786bf00c614dd433106ee5}{\index{roomba.\-h@{roomba.\-h}!\-P\-A\-C\-K\-E\-T\-\_\-\-A\-N\-G\-L\-E@{\-P\-A\-C\-K\-E\-T\-\_\-\-A\-N\-G\-L\-E}}
 \index{\-P\-A\-C\-K\-E\-T\-\_\-\-A\-N\-G\-L\-E@{\-P\-A\-C\-K\-E\-T\-\_\-\-A\-N\-G\-L\-E}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-P\-A\-C\-K\-E\-T\-\_\-\-A\-N\-G\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf packet} {\bf \-P\-A\-C\-K\-E\-T\-\_\-\-A\-N\-G\-L\-E}}}\label{roomba_8h_a97e5e57731786bf00c614dd433106ee5}
@@ -837,9 +1019,6 @@ write sensor list function
 \hypertarget{roomba_8h_ad259d5d545527c60f48f8ada81d1c149}{\index{roomba.\-h@{roomba.\-h}!\-P\-A\-C\-K\-E\-T\-\_\-\-O\-I\-\_\-\-M\-O\-D\-E@{\-P\-A\-C\-K\-E\-T\-\_\-\-O\-I\-\_\-\-M\-O\-D\-E}}
 \index{\-P\-A\-C\-K\-E\-T\-\_\-\-O\-I\-\_\-\-M\-O\-D\-E@{\-P\-A\-C\-K\-E\-T\-\_\-\-O\-I\-\_\-\-M\-O\-D\-E}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-P\-A\-C\-K\-E\-T\-\_\-\-O\-I\-\_\-\-M\-O\-D\-E}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf packet} {\bf \-P\-A\-C\-K\-E\-T\-\_\-\-O\-I\-\_\-\-M\-O\-D\-E}}}\label{roomba_8h_ad259d5d545527c60f48f8ada81d1c149}
-\hypertarget{roomba_8h_a9fad066b7b58012f6a37377327ff6c70}{\index{roomba.\-h@{roomba.\-h}!packet\-\_\-queries@{packet\-\_\-queries}}
-\index{packet\-\_\-queries@{packet\-\_\-queries}!roomba.h@{roomba.\-h}}
-\subsubsection[{packet\-\_\-queries}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf packet}$\ast$ {\bf packet\-\_\-queries}\mbox{[}{\bf \-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}\mbox{]}}}\label{roomba_8h_a9fad066b7b58012f6a37377327ff6c70}
 \hypertarget{roomba_8h_a11b5f572f83a75cb7a440628edd65dce}{\index{roomba.\-h@{roomba.\-h}!\-P\-A\-C\-K\-E\-T\-\_\-\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-L\-E\-F\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y@{\-P\-A\-C\-K\-E\-T\-\_\-\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-L\-E\-F\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}}
 \index{\-P\-A\-C\-K\-E\-T\-\_\-\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-L\-E\-F\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y@{\-P\-A\-C\-K\-E\-T\-\_\-\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-L\-E\-F\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-P\-A\-C\-K\-E\-T\-\_\-\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-L\-E\-F\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf packet} {\bf \-P\-A\-C\-K\-E\-T\-\_\-\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-L\-E\-F\-T\-\_\-\-V\-E\-L\-O\-C\-I\-T\-Y}}}\label{roomba_8h_a11b5f572f83a75cb7a440628edd65dce}
@@ -888,9 +1067,6 @@ write sensor list function
 \hypertarget{roomba_8h_a181108258860aae615cd34476e4e753b}{\index{roomba.\-h@{roomba.\-h}!\-P\-A\-C\-K\-E\-T\-\_\-\-W\-H\-E\-E\-L\-\_\-\-O\-V\-E\-R\-C\-U\-R\-R\-E\-N\-T\-S@{\-P\-A\-C\-K\-E\-T\-\_\-\-W\-H\-E\-E\-L\-\_\-\-O\-V\-E\-R\-C\-U\-R\-R\-E\-N\-T\-S}}
 \index{\-P\-A\-C\-K\-E\-T\-\_\-\-W\-H\-E\-E\-L\-\_\-\-O\-V\-E\-R\-C\-U\-R\-R\-E\-N\-T\-S@{\-P\-A\-C\-K\-E\-T\-\_\-\-W\-H\-E\-E\-L\-\_\-\-O\-V\-E\-R\-C\-U\-R\-R\-E\-N\-T\-S}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-P\-A\-C\-K\-E\-T\-\_\-\-W\-H\-E\-E\-L\-\_\-\-O\-V\-E\-R\-C\-U\-R\-R\-E\-N\-T\-S}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf packet} {\bf \-P\-A\-C\-K\-E\-T\-\_\-\-W\-H\-E\-E\-L\-\_\-\-O\-V\-E\-R\-C\-U\-R\-R\-E\-N\-T\-S}}}\label{roomba_8h_a181108258860aae615cd34476e4e753b}
-\hypertarget{roomba_8h_acf4670bd8261f765433573c60c0c9957}{\index{roomba.\-h@{roomba.\-h}!query\-\_\-results@{query\-\_\-results}}
-\index{query\-\_\-results@{query\-\_\-results}!roomba.h@{roomba.\-h}}
-\subsubsection[{query\-\_\-results}]{\setlength{\rightskip}{0pt plus 5cm}volatile int32\-\_\-t {\bf query\-\_\-results}\mbox{[}{\bf \-Q\-U\-E\-R\-Y\-\_\-\-L\-E\-N\-G\-T\-H}\mbox{]}}}\label{roomba_8h_acf4670bd8261f765433573c60c0c9957}
 \hypertarget{roomba_8h_a2f6e4e7b6d8d581b63c51e06a723b1e9}{\index{roomba.\-h@{roomba.\-h}!\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-R\-A\-D\-I\-U\-S@{\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-R\-A\-D\-I\-U\-S}}
 \index{\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-R\-A\-D\-I\-U\-S@{\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-R\-A\-D\-I\-U\-S}!roomba.h@{roomba.\-h}}
 \subsubsection[{\-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-R\-A\-D\-I\-U\-S}]{\setlength{\rightskip}{0pt plus 5cm}const {\bf packet} {\bf \-R\-E\-Q\-U\-E\-S\-T\-E\-D\-\_\-\-R\-A\-D\-I\-U\-S}}}\label{roomba_8h_a2f6e4e7b6d8d581b63c51e06a723b1e9}

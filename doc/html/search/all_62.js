@@ -18,6 +18,12 @@ var searchData=
   ['b600',['B600',['../termios_8h.html#a4a0fb8730fc62c93222bdcfead0685e7',1,'termios.h']]],
   ['b75',['B75',['../termios_8h.html#a6c7fd334abc19a56421e4cabaeb9fe0f',1,'termios.h']]],
   ['b9600',['B9600',['../termios_8h.html#ad0539916b8412eb7ddfb9ae02aff0853',1,'termios.h']]],
+  ['base_5fconfig_5fstate',['base_config_state',['../program_8h.html#ae013e8828a04f2f56d6a8e7d7dc6bb67',1,'program.h']]],
+  ['base_5fconfig_5fstates',['base_config_states',['../program_8h.html#a575f89e6feefc8f185224a24e80c9bfd',1,'program.h']]],
+  ['base_5fcoordinate_5fx',['BASE_COORDINATE_X',['../program_8h.html#a575f89e6feefc8f185224a24e80c9bfdafd47420cec869ac8328784a518705fa6',1,'program.h']]],
+  ['base_5fcoordinate_5fy',['BASE_COORDINATE_Y',['../program_8h.html#a575f89e6feefc8f185224a24e80c9bfdae11d690f21b9997b17b58d50d9989d79',1,'program.h']]],
+  ['base_5frotation',['BASE_ROTATION',['../program_8h.html#a575f89e6feefc8f185224a24e80c9bfdaff42ce4c042a21d067087dc80a03ba9a',1,'program.h']]],
+  ['base_5fselect',['BASE_SELECT',['../program_8h.html#a575f89e6feefc8f185224a24e80c9bfda5f41f269257345e51b54b39a7a52771e',1,'program.h']]],
   ['board_2eh',['board.h',['../board_8h.html',1,'']]],
   ['board_5finclude',['BOARD_INCLUDE',['../board_8h.html#a3ed886b930d006c55f682b2397c1f184',1,'board.h']]],
   ['bool_5ft',['bool_t',['../tools_8h.html#a04dd5074964518403bf944f2b240a5f8',1,'tools.h']]],
@@ -31,5 +37,6 @@ var searchData=
   ['btn_5fpacket_5fid',['BTN_PACKET_ID',['../roomba_8h.html#a7bc5bcaca4dceb3832c18e03f17e353c',1,'roomba.h']]],
   ['btn_5fschedule',['BTN_SCHEDULE',['../roomba_8h.html#afbc773ae174dba60025fa19725f88614',1,'roomba.h']]],
   ['btn_5fspot',['BTN_SPOT',['../roomba_8h.html#ae4b348997669056348b58747fe7af172',1,'roomba.h']]],
+  ['bumper_5fstate',['bumper_state',['../structcollision__data.html#a2d865c62fc673dffe7dd64d7c49c2d95',1,'collision_data']]],
   ['button_2eh',['button.h',['../button_8h.html',1,'']]]
 ];

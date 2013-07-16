@@ -33,7 +33,6 @@ var searchData=
   ['packet_5fmain_5fbrush_5fmotor_5fcurrent',['PACKET_MAIN_BRUSH_MOTOR_CURRENT',['../roomba_8h.html#a256d4f4f8eb0acdd3d00149fe747afc7',1,'roomba.h']]],
   ['packet_5fnumber_5fof_5fstream_5fpackets',['PACKET_NUMBER_OF_STREAM_PACKETS',['../roomba_8h.html#a571cb02844fb18616a409d1c255f528b',1,'roomba.h']]],
   ['packet_5foi_5fmode',['PACKET_OI_MODE',['../roomba_8h.html#ad259d5d545527c60f48f8ada81d1c149',1,'roomba.h']]],
-  ['packet_5fqueries',['packet_queries',['../roomba_8h.html#a9fad066b7b58012f6a37377327ff6c70',1,'roomba.h']]],
   ['packet_5frequested_5fleft_5fvelocity',['PACKET_REQUESTED_LEFT_VELOCITY',['../roomba_8h.html#a11b5f572f83a75cb7a440628edd65dce',1,'roomba.h']]],
   ['packet_5frequested_5fright_5fvelocity',['PACKET_REQUESTED_RIGHT_VELOCITY',['../roomba_8h.html#aff81dbe081ccc6c95f8d7419fa8d54e4',1,'roomba.h']]],
   ['packet_5frequested_5fvelocity',['PACKET_REQUESTED_VELOCITY',['../roomba_8h.html#a06005f3200801bd319e5fb907b28df3a',1,'roomba.h']]],
@@ -51,7 +50,9 @@ var searchData=
   ['packet_5fwall_5fsignal',['PACKET_WALL_SIGNAL',['../roomba_8h.html#a091877f56f3dce3a0ce602515173f00a',1,'roomba.h']]],
   ['packet_5fwheel_5fovercurrents',['PACKET_WHEEL_OVERCURRENTS',['../roomba_8h.html#a181108258860aae615cd34476e4e753b',1,'roomba.h']]],
   ['pc',['pc',['../structsc__stackframe__t.html#afaa20335217fae16f0e22b466017dae1',1,'sc_stackframe_t']]],
+  ['played_5facustic_5ffeedback',['played_acustic_feedback',['../structcollision__data.html#abc8ff00f84162de37e15e431872b7d3b',1,'collision_data']]],
   ['prepare',['prepare',['../structalt__dma__rxchan__dev__s.html#af9a5563e6c9cf1e1d2f37c0db9fe4130',1,'alt_dma_rxchan_dev_s']]],
   ['previous',['previous',['../structalt__llist__s.html#aba192396f3a9aee3c2007fe98da9729a',1,'alt_llist_s']]],
-  ['priv',['priv',['../structalt__fd__s.html#a37387541e7ee40c8f582c4a0a0a6a549',1,'alt_fd_s']]]
+  ['priv',['priv',['../structalt__fd__s.html#a37387541e7ee40c8f582c4a0a0a6a549',1,'alt_fd_s']]],
+  ['program_5ftick_5fcounter',['program_tick_counter',['../structcollision__data.html#ae863069398d3aad944262da21ddf2870',1,'collision_data']]]
 ];

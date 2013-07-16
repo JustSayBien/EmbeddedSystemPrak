@@ -84,258 +84,295 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <a name="l00003"></a>00003 <span class="preprocessor"></span>
 <a name="l00004"></a>00004 <span class="comment">/****************************************************************** Includes */</span>
 <a name="l00005"></a>00005 <span class="preprocessor">#include &lt;stdint.h&gt;</span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &quot;<a class="code" href="uart_8h.html">uart.h</a>&quot;</span>
-<a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="comment">/******************************************************************* Defines */</span>
-<a name="l00009"></a>00009 
-<a name="l00010"></a><a class="code" href="roomba_8h.html#a60e92353eb5662d3e2abf6ef862538ff">00010</a> <span class="preprocessor">#define ROOMBA_DELAY_MODECHANGE_MS      20</span>
-<a name="l00011"></a>00011 <span class="preprocessor"></span>
-<a name="l00012"></a><a class="code" href="roomba_8h.html#a55ad5f0011b3bd15dca8d20377ad0196">00012</a> <span class="preprocessor">#define CMD_SOFT_RESET                  0x07    //supposedly does a soft reset</span>
-<a name="l00013"></a><a class="code" href="roomba_8h.html#ab905e6aff2332984df0552c6b50203f2">00013</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_START                               0x80    //start the ROI; roomba is in passive mode afterwards; use multiple times to reset</span>
-<a name="l00014"></a><a class="code" href="roomba_8h.html#af089191bf60e137642f87c68e5233ff4">00014</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_BAUD                                0x81    //1 data byte; set baud rate in bits per second; data byte is the baud code (0-11)</span>
-<a name="l00015"></a>00015 <span class="preprocessor"></span>                                                                                <span class="comment">//use a code of 11 as a good default (115200bps)</span>
-<a name="l00016"></a><a class="code" href="roomba_8h.html#a7d74683c370cb7ec4743f52a66ef3557">00016</a> <span class="preprocessor">#define CMD_CONTROL                             0x82    //enables control of the roomba; send after start; sets roomba to &quot;safe&quot; mode</span>
-<a name="l00017"></a><a class="code" href="roomba_8h.html#ad0a6589ad8012008965755c5ed300046">00017</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SAFE                                0x83    //return roomba to &quot;safe&quot; mode</span>
-<a name="l00018"></a><a class="code" href="roomba_8h.html#aac35c95795c43d8309197a48227dc68a">00018</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_FULL                                0x84    //put roomba in &quot;full&quot; mode</span>
-<a name="l00019"></a><a class="code" href="roomba_8h.html#a7a95f35442a981b4e43bd3b500cbbaf1">00019</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_POWER                               0x85    //virtual &quot;power&quot; button press; puts roomba in &quot;sleep&quot; mode</span>
-<a name="l00020"></a><a class="code" href="roomba_8h.html#a8d7e863a2cc15a6257ac3a53406012b1">00020</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SPOT                                0x86    //virtual &quot;spot&quot; button press; starts the &quot;spot&quot; cleaning algorithm</span>
-<a name="l00021"></a><a class="code" href="roomba_8h.html#a906b01794b2b11cc1ebbc546f536cc1b">00021</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_CLEAN                               0x87    //virtual &quot;clean&quot; button press; starts &quot;clean&quot; cleaning algorithm</span>
-<a name="l00022"></a><a class="code" href="roomba_8h.html#aab1a0d6f90722c03ed6c8a9460d6e792">00022</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_MAX                                 0x88    //virtual &quot;max&quot; button press; starts &quot;max&quot; cleaning algorithm</span>
-<a name="l00023"></a><a class="code" href="roomba_8h.html#acc5049af02f442e2aadaeb8a20133599">00023</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_DRIVE                               0x89    //4 data bytes; controls the drive wheels two bytes for velocity and two for direction;</span>
-<a name="l00024"></a>00024 <span class="preprocessor"></span>                                                                                <span class="comment">//each represents a 16-bit signed value using two&#39;s complement</span>
-<a name="l00025"></a>00025                                                                                 <span class="comment">//velocity is the speed to use from -500 to 500 (0xFE0C to 0x01F4)</span>
-<a name="l00026"></a>00026                                                                                 <span class="comment">//direction is either the turn radius (-2000 to 2000mm) (0xF830 to 0x07D0) or a special value:</span>
-<a name="l00027"></a>00027                                                                                 <span class="comment">//      straight: 32768 (0x8000) or 32767 (0x7FFF)</span>
-<a name="l00028"></a>00028                                                                                 <span class="comment">//      Spin counter-clockwise: 1 (0x0001)</span>
-<a name="l00029"></a>00029                                                                                 <span class="comment">//      Spin clockwise: -1 (0xFFFF)</span>
-<a name="l00030"></a>00030                                                                                 <span class="comment">//when going forward a positive radius turns to the right and a negative to the left</span>
-<a name="l00031"></a><a class="code" href="roomba_8h.html#a73faa37a912de7171982a445127d3d77">00031</a> <span class="preprocessor">#define CMD_MOTORS                              0x8A    //1 data byte; turn clean motors on/off;</span>
-<a name="l00032"></a>00032 <span class="preprocessor"></span>                                                                                <span class="comment">//bitfield: main brush=bit 2(0x04), vacuum=bit 1(0x02), side brush=bit 0(0x01)</span>
-<a name="l00033"></a>00033                                                                                 <span class="comment">//bits 3(0x08) and 4(0x10) control side brush and main brush direction;</span>
-<a name="l00034"></a>00034                                                                                 <span class="comment">//0=default direction;1=other direction</span>
-<a name="l00035"></a><a class="code" href="roomba_8h.html#aaab2503f2a19d6342e06bab13704d96e">00035</a> <span class="preprocessor">#define CMD_LEDS                                0x8B    //3 data bytes;</span>
-<a name="l00036"></a>00036 <span class="preprocessor"></span>                                                                                <span class="comment">//first is a bitfield: status(green)=bit 5(0x20), status(red)=bit 4(0x10),</span>
-<a name="l00037"></a>00037                                                                                 <span class="comment">//spot(green)=bit 3(0x08), clean(green)=bit 2(0x04), max(green)=bit 1(0x02),</span>
-<a name="l00038"></a>00038                                                                                 <span class="comment">//dirt detect(blue)=bit 0(0x01)</span>
-<a name="l00039"></a>00039                                                                                 <span class="comment">//second is the color of the power led: 0=green, 255=red; values inbetween mix the colors</span>
-<a name="l00040"></a>00040                                                                                 <span class="comment">//third is the intensity of the power led: 0=off, 255=full on;</span>
-<a name="l00041"></a>00041                                                                                 <span class="comment">//values inbetween are intermediate intensities</span>
-<a name="l00042"></a><a class="code" href="roomba_8h.html#aeff163d20c474b0655eb81fbdf0acdaa">00042</a> <span class="preprocessor">#define CMD_SONG                                0x8C    //2+2N data bytes; first byte defines number of song to specify (0-4);</span>
-<a name="l00043"></a>00043 <span class="preprocessor"></span>                                                                                <span class="comment">//the second byte defines the length of the song(1-16); number of specified notes follow</span>
-<a name="l00044"></a>00044                                                                                 <span class="comment">//a note consists of two bytes: note number(0x1F-0x7F)(G0-G8)</span>
-<a name="l00045"></a>00045                                                                                 <span class="comment">//and note duration in units of 1/64th of a second</span>
-<a name="l00046"></a><a class="code" href="roomba_8h.html#a1e3e315033eb239b202087322055e365">00046</a> <span class="preprocessor">#define CMD_PLAY                                0x8D    //1 data byte; play a song in the slot defined by data byte 1; song does not repeat</span>
-<a name="l00047"></a><a class="code" href="roomba_8h.html#a17edae3815ea82cd7ec413a2bc9995fd">00047</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SENSORS                             0x8E    //1 data byte; requests sensor data; data byte specifies the requested packet ID;</span>
-<a name="l00048"></a>00048 <span class="preprocessor"></span>                                                                                <span class="comment">//see OI Specification for sensor packet IDs;</span>
-<a name="l00049"></a>00049                                                                                 <span class="comment">//a value of 100 specifies to retrieve all sensor data</span>
-<a name="l00050"></a>00050                                                                                 <span class="comment">//values from 0 to 6 and from 101 to 107 specify groups of sensor data</span>
-<a name="l00051"></a><a class="code" href="roomba_8h.html#ab1043779010707163144240073008a13">00051</a> <span class="preprocessor">#define CMD_DOCK                                0x8F    //turns on &quot;force seeking dock&quot; algorithm</span>
-<a name="l00052"></a><a class="code" href="roomba_8h.html#afe5ab2a657daf0b6cd129451aac07c76">00052</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_PWM_MOTORS                  0x90    //3 data bytes;control speed of brushes: [main brush pwm][side brush pwm][vacuum pwm];</span>
-<a name="l00053"></a>00053 <span class="preprocessor"></span>                                                                                <span class="comment">//brushes take values from -127-127; vacuum 0-127</span>
-<a name="l00054"></a><a class="code" href="roomba_8h.html#ac7b37ff466fd7062e59696cea316d42c">00054</a> <span class="preprocessor">#define CMD_DRIVE_DIRECT                0x91    //4 data bytes;first two bytes control the right wheel velocity;</span>
-<a name="l00055"></a>00055 <span class="preprocessor"></span>                                                                                <span class="comment">//the last two bytes the left wheel velocity (mm/s)</span>
-<a name="l00056"></a>00056                                                                                 <span class="comment">//the first byte of each velocity is the high byte,</span>
-<a name="l00057"></a>00057                                                                                 <span class="comment">//and the second is the low byte of a 16-bit signed value (twos-complement); see CMD_DRIVE</span>
-<a name="l00058"></a>00058                                                                                 <span class="comment">//velocity is -500 - 500</span>
-<a name="l00059"></a><a class="code" href="roomba_8h.html#ae245fae9dcb7e8a127f0069b9f486bbc">00059</a> <span class="preprocessor">#define CMD_DRIVE_PWM                   0x92    //4 data bytes;first two bytes control the right wheel PWM;</span>
-<a name="l00060"></a>00060 <span class="preprocessor"></span>                                                                                <span class="comment">//the last two bytes the left wheel PWM</span>
-<a name="l00061"></a>00061                                                                                 <span class="comment">//the first byte of each PWM is the high byte,</span>
-<a name="l00062"></a>00062                                                                                 <span class="comment">//and the second is the low byte of a 16-bit signed value</span>
-<a name="l00063"></a>00063                                                                                 <span class="comment">//PWM is -255 - 255</span>
-<a name="l00064"></a><a class="code" href="roomba_8h.html#a4cea6319ddbc62debdc8315eb4549df5">00064</a> <span class="preprocessor">#define CMD_STREAM                              0x94    //N+1 data bytes; starts a stream of data packets; the data is sent every 15ms</span>
-<a name="l00065"></a>00065 <span class="preprocessor"></span>                                                                                <span class="comment">//first data byte is the number of requested packets</span>
-<a name="l00066"></a>00066                                                                                 <span class="comment">//each following data byte is an ID of a requested packet</span>
-<a name="l00067"></a>00067                                                                                 <span class="comment">//return format is: [0x13] [Length] [Packet 1 ID][Packet 1 Data]</span>
-<a name="l00068"></a>00068                                                                                 <span class="comment">//[Packet 2 ID][Packet 2 Data] ... [Checksum]</span>
-<a name="l00069"></a>00069                                                                                 <span class="comment">//length is the number of following bytes (not including checksum)</span>
-<a name="l00070"></a>00070                                                                                 <span class="comment">//the checksum is 1 byte: the 8-bit complement of all bytes between header and checksum</span>
-<a name="l00071"></a>00071                                                                                 <span class="comment">//if more data is requested than can be sent in the timeslot the results get corrupted</span>
-<a name="l00072"></a><a class="code" href="roomba_8h.html#a013b76e67fb4f4a00e02e9d122903db2">00072</a> <span class="preprocessor">#define CMD_QUERY_LIST                  0x95    //N+1 data bytes; first data byte is the number of requested packets</span>
-<a name="l00073"></a>00073 <span class="preprocessor"></span>                                                                                <span class="comment">//each following data byte is an ID of a requested packet</span>
-<a name="l00074"></a>00074                                                                                 <span class="comment">//the packets are returned in the specified order</span>
-<a name="l00075"></a><a class="code" href="roomba_8h.html#a7e2604cec71810629b2d5b5c3793a362">00075</a> <span class="preprocessor">#define CMD_PAUSE_RESUME_STREAM 0x96    //1 data byte; data of 0 stops a running stream without clearing the list of requested packets</span>
-<a name="l00076"></a>00076 <span class="preprocessor"></span>                                                                                <span class="comment">//data of 1 starts the stream using the last used packet list</span>
-<a name="l00077"></a><a class="code" href="roomba_8h.html#a5fcbeb9f7b7b77922c2264fefa34e9ed">00077</a> <span class="preprocessor">#define CMD_SCHEDULE_LED                0xA2    //2 data bytes; scheduling leds;first byte for the weekday leds;</span>
-<a name="l00078"></a>00078 <span class="preprocessor"></span>                                                                                <span class="comment">//second byte for the scheduling leds; both bitfields</span>
-<a name="l00079"></a><a class="code" href="roomba_8h.html#a18838b5f20645a2cbe0dda4904e38d33">00079</a> <span class="preprocessor">#define CMD_7SEG_RAW                    0xA3    //4 data bytes;[digit 3][digit 2][digit 1][digit 0];see roomba oi spec p. 13</span>
-<a name="l00080"></a><a class="code" href="roomba_8h.html#ac796d81e0cafc588b07242ddbb3ac646">00080</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_7SEG_ASCII                  0xA4    //4 data bytes;[digit 3][digit 2][digit 1][digit 0];ascii codes from 32-126 are supported</span>
-<a name="l00081"></a><a class="code" href="roomba_8h.html#a181735c0f19f847f2e8c6d3ea87837c8">00081</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_BUTTONS                             0xA5    //1 data byte;simulates button push with autorelease; bitfield</span>
-<a name="l00082"></a><a class="code" href="roomba_8h.html#a29c17dae37dd5d7d7432b096ac35daad">00082</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SCHEDULE                    0xA7    //15 data bytes; sends a new schedule;24 hour time format</span>
-<a name="l00083"></a>00083 <span class="preprocessor"></span>                                                                                <span class="comment">//[days] [sun_hour] [sun_minute] [mon_hour] [mon_minute] [tue_hour] [tue_minute]</span>
-<a name="l00084"></a>00084                                                                                 <span class="comment">//[wed_hour] [wed_minute] [thu_hour] [thu_minute] [fri_hour] [fri_minute]</span>
-<a name="l00085"></a>00085                                                                                 <span class="comment">//[sat_hour] [sat_minute]</span>
-<a name="l00086"></a><a class="code" href="roomba_8h.html#a8e7b3451ecd43754170b54825a40228a">00086</a> <span class="preprocessor">#define CMD_SET_DATE                    0xA8    //3 data bytes; [day][hour][minute]; 24 hour time format;</span>
-<a name="l00087"></a>00087 <span class="preprocessor"></span>                                                                                <span class="comment">//day codes from 0(sunday) to 6(saturday)</span>
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="roomba_8h.html#a18a6f29e2d4a60d18362e9ee88079985">00089</a> <span class="preprocessor">#define LED_CHECK_ROBOT_RED                     0x08</span>
-<a name="l00090"></a><a class="code" href="roomba_8h.html#a56ab039cbb337a2d8e816c9a9838af22">00090</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_DOCK_GREEN                          0x04</span>
-<a name="l00091"></a><a class="code" href="roomba_8h.html#a7bad0b6090b9574104346e2273f64ef5">00091</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SPOT_GREEN                          0x02</span>
-<a name="l00092"></a><a class="code" href="roomba_8h.html#a62951b8a0a121fd297117552693478bd">00092</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_DIRT_DETECT_BLUE                    0x01</span>
-<a name="l00093"></a>00093 <span class="preprocessor"></span>
-<a name="l00094"></a><a class="code" href="roomba_8h.html#aaa71e076ab6cbe298a376da151bbbbb7">00094</a> <span class="preprocessor">#define LED_SCHED_WDAY_SAT      0x40</span>
-<a name="l00095"></a><a class="code" href="roomba_8h.html#a4d2f03920ae60e7bf25c70f81fc8399b">00095</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_FRI      0x20</span>
-<a name="l00096"></a><a class="code" href="roomba_8h.html#afd772753dba97f16496df0b7e16193a5">00096</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_THU      0x10</span>
-<a name="l00097"></a><a class="code" href="roomba_8h.html#aee81e461f3f87645f021c79aef4d882b">00097</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_WED      0x08</span>
-<a name="l00098"></a><a class="code" href="roomba_8h.html#a44b288199450e5f6f64c5ca00ea78fcc">00098</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_TUE      0x04</span>
-<a name="l00099"></a><a class="code" href="roomba_8h.html#ab47330dad31d073a4c551cfaa799ef63">00099</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_MON      0x02</span>
-<a name="l00100"></a><a class="code" href="roomba_8h.html#a3567c674d9e17533307b816ccbc3f8ce">00100</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_SUN      0x01</span>
-<a name="l00101"></a>00101 <span class="preprocessor"></span>
-<a name="l00102"></a><a class="code" href="roomba_8h.html#a408882f1276e417da0a56fac10896d9b">00102</a> <span class="preprocessor">#define LED_SCHED_SCHEDULE      0x10</span>
-<a name="l00103"></a><a class="code" href="roomba_8h.html#ae4ef9eecbb1aa2c425ebc66b9ba20556">00103</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_CLOCK         0x08</span>
-<a name="l00104"></a><a class="code" href="roomba_8h.html#aab5a5da0f0b9b59ef88c00f48fba4919">00104</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_AM            0x04</span>
-<a name="l00105"></a><a class="code" href="roomba_8h.html#abae50fd8c64ad4ae9f2062837109466c">00105</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_PM            0x02</span>
-<a name="l00106"></a><a class="code" href="roomba_8h.html#a39b3f63655aeb947fdd98ac0f2c09d93">00106</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_COLON         0x01</span>
-<a name="l00107"></a>00107 <span class="preprocessor"></span>
-<a name="l00108"></a>00108 
-<a name="l00109"></a><a class="code" href="roomba_8h.html#a7bc5bcaca4dceb3832c18e03f17e353c">00109</a> <span class="preprocessor">#define BTN_PACKET_ID           0x12</span>
-<a name="l00110"></a><a class="code" href="roomba_8h.html#a82719b8190515ad77df1a7f3123f0567">00110</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_BUTTONS_STATE       0x8E</span>
-<a name="l00111"></a><a class="code" href="roomba_8h.html#a3525b28fa131f2def4a28d8d39a0a4a6">00111</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_CLOCK               0x80</span>
-<a name="l00112"></a><a class="code" href="roomba_8h.html#afbc773ae174dba60025fa19725f88614">00112</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_SCHEDULE            0x40</span>
-<a name="l00113"></a><a class="code" href="roomba_8h.html#aa6570111b0fd6924c573312468927d3c">00113</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_DAY                 0x20</span>
-<a name="l00114"></a><a class="code" href="roomba_8h.html#ad0abca247c41a2d12e3ccfac3335f9cd">00114</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_HOUR                0x10</span>
-<a name="l00115"></a><a class="code" href="roomba_8h.html#a0b5fe32833b3f7669427f8f1a961ee33">00115</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_MINUTE              0x08</span>
-<a name="l00116"></a><a class="code" href="roomba_8h.html#aa3cc02b3c407595038ce1841386d1477">00116</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_DOCK                0x04</span>
-<a name="l00117"></a><a class="code" href="roomba_8h.html#ae4b348997669056348b58747fe7af172">00117</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_SPOT                0x02</span>
-<a name="l00118"></a><a class="code" href="roomba_8h.html#ade6fa723afa55e24edf154222a7e8ee5">00118</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_CLEAN               0x01</span>
+<a name="l00006"></a>00006 
+<a name="l00007"></a>00007 <span class="comment">/******************************************************************* Defines */</span>
+<a name="l00008"></a>00008 
+<a name="l00009"></a><a class="code" href="roomba_8h.html#a60e92353eb5662d3e2abf6ef862538ff">00009</a> <span class="preprocessor">#define ROOMBA_DELAY_MODECHANGE_MS      20</span>
+<a name="l00010"></a>00010 <span class="preprocessor"></span>
+<a name="l00011"></a><a class="code" href="roomba_8h.html#a55ad5f0011b3bd15dca8d20377ad0196">00011</a> <span class="preprocessor">#define CMD_SOFT_RESET                  0x07    //supposedly does a soft reset</span>
+<a name="l00012"></a><a class="code" href="roomba_8h.html#ab905e6aff2332984df0552c6b50203f2">00012</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_START                               0x80    //start the ROI; roomba is in passive mode afterwards; use multiple times to reset</span>
+<a name="l00013"></a><a class="code" href="roomba_8h.html#af089191bf60e137642f87c68e5233ff4">00013</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_BAUD                                0x81    //1 data byte; set baud rate in bits per second; data byte is the baud code (0-11)</span>
+<a name="l00014"></a>00014 <span class="preprocessor"></span>                                                                                <span class="comment">//use a code of 11 as a good default (115200bps)</span>
+<a name="l00015"></a><a class="code" href="roomba_8h.html#a7d74683c370cb7ec4743f52a66ef3557">00015</a> <span class="preprocessor">#define CMD_CONTROL                             0x82    //enables control of the roomba; send after start; sets roomba to &quot;safe&quot; mode</span>
+<a name="l00016"></a><a class="code" href="roomba_8h.html#ad0a6589ad8012008965755c5ed300046">00016</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SAFE                                0x83    //return roomba to &quot;safe&quot; mode</span>
+<a name="l00017"></a><a class="code" href="roomba_8h.html#aac35c95795c43d8309197a48227dc68a">00017</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_FULL                                0x84    //put roomba in &quot;full&quot; mode</span>
+<a name="l00018"></a><a class="code" href="roomba_8h.html#a7a95f35442a981b4e43bd3b500cbbaf1">00018</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_POWER                               0x85    //virtual &quot;power&quot; button press; puts roomba in &quot;sleep&quot; mode</span>
+<a name="l00019"></a><a class="code" href="roomba_8h.html#a8d7e863a2cc15a6257ac3a53406012b1">00019</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SPOT                                0x86    //virtual &quot;spot&quot; button press; starts the &quot;spot&quot; cleaning algorithm</span>
+<a name="l00020"></a><a class="code" href="roomba_8h.html#a906b01794b2b11cc1ebbc546f536cc1b">00020</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_CLEAN                               0x87    //virtual &quot;clean&quot; button press; starts &quot;clean&quot; cleaning algorithm</span>
+<a name="l00021"></a><a class="code" href="roomba_8h.html#aab1a0d6f90722c03ed6c8a9460d6e792">00021</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_MAX                                 0x88    //virtual &quot;max&quot; button press; starts &quot;max&quot; cleaning algorithm</span>
+<a name="l00022"></a><a class="code" href="roomba_8h.html#acc5049af02f442e2aadaeb8a20133599">00022</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_DRIVE                               0x89    //4 data bytes; controls the drive wheels two bytes for velocity and two for direction;</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span>                                                                                <span class="comment">//each represents a 16-bit signed value using two&#39;s complement</span>
+<a name="l00024"></a>00024                                                                                 <span class="comment">//velocity is the speed to use from -500 to 500 (0xFE0C to 0x01F4)</span>
+<a name="l00025"></a>00025                                                                                 <span class="comment">//direction is either the turn radius (-2000 to 2000mm) (0xF830 to 0x07D0) or a special value:</span>
+<a name="l00026"></a>00026                                                                                 <span class="comment">//      straight: 32768 (0x8000) or 32767 (0x7FFF)</span>
+<a name="l00027"></a>00027                                                                                 <span class="comment">//      Spin counter-clockwise: 1 (0x0001)</span>
+<a name="l00028"></a>00028                                                                                 <span class="comment">//      Spin clockwise: -1 (0xFFFF)</span>
+<a name="l00029"></a>00029                                                                                 <span class="comment">//when going forward a positive radius turns to the right and a negative to the left</span>
+<a name="l00030"></a><a class="code" href="roomba_8h.html#a73faa37a912de7171982a445127d3d77">00030</a> <span class="preprocessor">#define CMD_MOTORS                              0x8A    //1 data byte; turn clean motors on/off;</span>
+<a name="l00031"></a>00031 <span class="preprocessor"></span>                                                                                <span class="comment">//bitfield: main brush=bit 2(0x04), vacuum=bit 1(0x02), side brush=bit 0(0x01)</span>
+<a name="l00032"></a>00032                                                                                 <span class="comment">//bits 3(0x08) and 4(0x10) control side brush and main brush direction;</span>
+<a name="l00033"></a>00033                                                                                 <span class="comment">//0=default direction;1=other direction</span>
+<a name="l00034"></a><a class="code" href="roomba_8h.html#aaab2503f2a19d6342e06bab13704d96e">00034</a> <span class="preprocessor">#define CMD_LEDS                                0x8B    //3 data bytes;</span>
+<a name="l00035"></a>00035 <span class="preprocessor"></span>                                                                                <span class="comment">//first is a bitfield: status(green)=bit 5(0x20), status(red)=bit 4(0x10),</span>
+<a name="l00036"></a>00036                                                                                 <span class="comment">//spot(green)=bit 3(0x08), clean(green)=bit 2(0x04), max(green)=bit 1(0x02),</span>
+<a name="l00037"></a>00037                                                                                 <span class="comment">//dirt detect(blue)=bit 0(0x01)</span>
+<a name="l00038"></a>00038                                                                                 <span class="comment">//second is the color of the power led: 0=green, 255=red; values inbetween mix the colors</span>
+<a name="l00039"></a>00039                                                                                 <span class="comment">//third is the intensity of the power led: 0=off, 255=full on;</span>
+<a name="l00040"></a>00040                                                                                 <span class="comment">//values inbetween are intermediate intensities</span>
+<a name="l00041"></a><a class="code" href="roomba_8h.html#aeff163d20c474b0655eb81fbdf0acdaa">00041</a> <span class="preprocessor">#define CMD_SONG                                0x8C    //2+2N data bytes; first byte defines number of song to specify (0-4);</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>                                                                                <span class="comment">//the second byte defines the length of the song(1-16); number of specified notes follow</span>
+<a name="l00043"></a>00043                                                                                 <span class="comment">//a note consists of two bytes: note number(0x1F-0x7F)(G0-G8)</span>
+<a name="l00044"></a>00044                                                                                 <span class="comment">//and note duration in units of 1/64th of a second</span>
+<a name="l00045"></a><a class="code" href="roomba_8h.html#a1e3e315033eb239b202087322055e365">00045</a> <span class="preprocessor">#define CMD_PLAY                                0x8D    //1 data byte; play a song in the slot defined by data byte 1; song does not repeat</span>
+<a name="l00046"></a><a class="code" href="roomba_8h.html#a17edae3815ea82cd7ec413a2bc9995fd">00046</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SENSORS                             0x8E    //1 data byte; requests sensor data; data byte specifies the requested packet ID;</span>
+<a name="l00047"></a>00047 <span class="preprocessor"></span>                                                                                <span class="comment">//see OI Specification for sensor packet IDs;</span>
+<a name="l00048"></a>00048                                                                                 <span class="comment">//a value of 100 specifies to retrieve all sensor data</span>
+<a name="l00049"></a>00049                                                                                 <span class="comment">//values from 0 to 6 and from 101 to 107 specify groups of sensor data</span>
+<a name="l00050"></a><a class="code" href="roomba_8h.html#ab1043779010707163144240073008a13">00050</a> <span class="preprocessor">#define CMD_DOCK                                0x8F    //turns on &quot;force seeking dock&quot; algorithm</span>
+<a name="l00051"></a><a class="code" href="roomba_8h.html#afe5ab2a657daf0b6cd129451aac07c76">00051</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_PWM_MOTORS                  0x90    //3 data bytes;control speed of brushes: [main brush pwm][side brush pwm][vacuum pwm];</span>
+<a name="l00052"></a>00052 <span class="preprocessor"></span>                                                                                <span class="comment">//brushes take values from -127-127; vacuum 0-127</span>
+<a name="l00053"></a><a class="code" href="roomba_8h.html#ac7b37ff466fd7062e59696cea316d42c">00053</a> <span class="preprocessor">#define CMD_DRIVE_DIRECT                0x91    //4 data bytes;first two bytes control the right wheel velocity;</span>
+<a name="l00054"></a>00054 <span class="preprocessor"></span>                                                                                <span class="comment">//the last two bytes the left wheel velocity (mm/s)</span>
+<a name="l00055"></a>00055                                                                                 <span class="comment">//the first byte of each velocity is the high byte,</span>
+<a name="l00056"></a>00056                                                                                 <span class="comment">//and the second is the low byte of a 16-bit signed value (twos-complement); see CMD_DRIVE</span>
+<a name="l00057"></a>00057                                                                                 <span class="comment">//velocity is -500 - 500</span>
+<a name="l00058"></a><a class="code" href="roomba_8h.html#ae245fae9dcb7e8a127f0069b9f486bbc">00058</a> <span class="preprocessor">#define CMD_DRIVE_PWM                   0x92    //4 data bytes;first two bytes control the right wheel PWM;</span>
+<a name="l00059"></a>00059 <span class="preprocessor"></span>                                                                                <span class="comment">//the last two bytes the left wheel PWM</span>
+<a name="l00060"></a>00060                                                                                 <span class="comment">//the first byte of each PWM is the high byte,</span>
+<a name="l00061"></a>00061                                                                                 <span class="comment">//and the second is the low byte of a 16-bit signed value</span>
+<a name="l00062"></a>00062                                                                                 <span class="comment">//PWM is -255 - 255</span>
+<a name="l00063"></a><a class="code" href="roomba_8h.html#a4cea6319ddbc62debdc8315eb4549df5">00063</a> <span class="preprocessor">#define CMD_STREAM                              0x94    //N+1 data bytes; starts a stream of data packets; the data is sent every 15ms</span>
+<a name="l00064"></a>00064 <span class="preprocessor"></span>                                                                                <span class="comment">//first data byte is the number of requested packets</span>
+<a name="l00065"></a>00065                                                                                 <span class="comment">//each following data byte is an ID of a requested packet</span>
+<a name="l00066"></a>00066                                                                                 <span class="comment">//return format is: [0x13] [Length] [Packet 1 ID][Packet 1 Data]</span>
+<a name="l00067"></a>00067                                                                                 <span class="comment">//[Packet 2 ID][Packet 2 Data] ... [Checksum]</span>
+<a name="l00068"></a>00068                                                                                 <span class="comment">//length is the number of following bytes (not including checksum)</span>
+<a name="l00069"></a>00069                                                                                 <span class="comment">//the checksum is 1 byte: the 8-bit complement of all bytes between header and checksum</span>
+<a name="l00070"></a>00070                                                                                 <span class="comment">//if more data is requested than can be sent in the timeslot the results get corrupted</span>
+<a name="l00071"></a><a class="code" href="roomba_8h.html#a013b76e67fb4f4a00e02e9d122903db2">00071</a> <span class="preprocessor">#define CMD_QUERY_LIST                  0x95    //N+1 data bytes; first data byte is the number of requested packets</span>
+<a name="l00072"></a>00072 <span class="preprocessor"></span>                                                                                <span class="comment">//each following data byte is an ID of a requested packet</span>
+<a name="l00073"></a>00073                                                                                 <span class="comment">//the packets are returned in the specified order</span>
+<a name="l00074"></a><a class="code" href="roomba_8h.html#a7e2604cec71810629b2d5b5c3793a362">00074</a> <span class="preprocessor">#define CMD_PAUSE_RESUME_STREAM 0x96    //1 data byte; data of 0 stops a running stream without clearing the list of requested packets</span>
+<a name="l00075"></a>00075 <span class="preprocessor"></span>                                                                                <span class="comment">//data of 1 starts the stream using the last used packet list</span>
+<a name="l00076"></a><a class="code" href="roomba_8h.html#a5fcbeb9f7b7b77922c2264fefa34e9ed">00076</a> <span class="preprocessor">#define CMD_SCHEDULE_LED                0xA2    //2 data bytes; scheduling leds;first byte for the weekday leds;</span>
+<a name="l00077"></a>00077 <span class="preprocessor"></span>                                                                                <span class="comment">//second byte for the scheduling leds; both bitfields</span>
+<a name="l00078"></a><a class="code" href="roomba_8h.html#a18838b5f20645a2cbe0dda4904e38d33">00078</a> <span class="preprocessor">#define CMD_7SEG_RAW                    0xA3    //4 data bytes;[digit 3][digit 2][digit 1][digit 0];see roomba oi spec p. 13</span>
+<a name="l00079"></a><a class="code" href="roomba_8h.html#ac796d81e0cafc588b07242ddbb3ac646">00079</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_7SEG_ASCII                  0xA4    //4 data bytes;[digit 3][digit 2][digit 1][digit 0];ascii codes from 32-126 are supported</span>
+<a name="l00080"></a><a class="code" href="roomba_8h.html#a181735c0f19f847f2e8c6d3ea87837c8">00080</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_BUTTONS                             0xA5    //1 data byte;simulates button push with autorelease; bitfield</span>
+<a name="l00081"></a><a class="code" href="roomba_8h.html#a29c17dae37dd5d7d7432b096ac35daad">00081</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_SCHEDULE                    0xA7    //15 data bytes; sends a new schedule;24 hour time format</span>
+<a name="l00082"></a>00082 <span class="preprocessor"></span>                                                                                <span class="comment">//[days] [sun_hour] [sun_minute] [mon_hour] [mon_minute] [tue_hour] [tue_minute]</span>
+<a name="l00083"></a>00083                                                                                 <span class="comment">//[wed_hour] [wed_minute] [thu_hour] [thu_minute] [fri_hour] [fri_minute]</span>
+<a name="l00084"></a>00084                                                                                 <span class="comment">//[sat_hour] [sat_minute]</span>
+<a name="l00085"></a><a class="code" href="roomba_8h.html#a8e7b3451ecd43754170b54825a40228a">00085</a> <span class="preprocessor">#define CMD_SET_DATE                    0xA8    //3 data bytes; [day][hour][minute]; 24 hour time format;</span>
+<a name="l00086"></a>00086 <span class="preprocessor"></span>                                                                                <span class="comment">//day codes from 0(sunday) to 6(saturday)</span>
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="roomba_8h.html#a18a6f29e2d4a60d18362e9ee88079985">00088</a> <span class="preprocessor">#define LED_CHECK_ROBOT_RED                     0x08</span>
+<a name="l00089"></a><a class="code" href="roomba_8h.html#a56ab039cbb337a2d8e816c9a9838af22">00089</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_DOCK_GREEN                          0x04</span>
+<a name="l00090"></a><a class="code" href="roomba_8h.html#a7bad0b6090b9574104346e2273f64ef5">00090</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SPOT_GREEN                          0x02</span>
+<a name="l00091"></a><a class="code" href="roomba_8h.html#a62951b8a0a121fd297117552693478bd">00091</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_DIRT_DETECT_BLUE            0x01</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span>
+<a name="l00093"></a><a class="code" href="roomba_8h.html#aaa71e076ab6cbe298a376da151bbbbb7">00093</a> <span class="preprocessor">#define LED_SCHED_WDAY_SAT      0x40</span>
+<a name="l00094"></a><a class="code" href="roomba_8h.html#a4d2f03920ae60e7bf25c70f81fc8399b">00094</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_FRI      0x20</span>
+<a name="l00095"></a><a class="code" href="roomba_8h.html#afd772753dba97f16496df0b7e16193a5">00095</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_THU      0x10</span>
+<a name="l00096"></a><a class="code" href="roomba_8h.html#aee81e461f3f87645f021c79aef4d882b">00096</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_WED      0x08</span>
+<a name="l00097"></a><a class="code" href="roomba_8h.html#a44b288199450e5f6f64c5ca00ea78fcc">00097</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_TUE      0x04</span>
+<a name="l00098"></a><a class="code" href="roomba_8h.html#ab47330dad31d073a4c551cfaa799ef63">00098</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_MON      0x02</span>
+<a name="l00099"></a><a class="code" href="roomba_8h.html#a3567c674d9e17533307b816ccbc3f8ce">00099</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_WDAY_SUN      0x01</span>
+<a name="l00100"></a>00100 <span class="preprocessor"></span>
+<a name="l00101"></a><a class="code" href="roomba_8h.html#a408882f1276e417da0a56fac10896d9b">00101</a> <span class="preprocessor">#define LED_SCHED_SCHEDULE      0x10</span>
+<a name="l00102"></a><a class="code" href="roomba_8h.html#ae4ef9eecbb1aa2c425ebc66b9ba20556">00102</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_CLOCK         0x08</span>
+<a name="l00103"></a><a class="code" href="roomba_8h.html#aab5a5da0f0b9b59ef88c00f48fba4919">00103</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_AM            0x04</span>
+<a name="l00104"></a><a class="code" href="roomba_8h.html#abae50fd8c64ad4ae9f2062837109466c">00104</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_PM            0x02</span>
+<a name="l00105"></a><a class="code" href="roomba_8h.html#a39b3f63655aeb947fdd98ac0f2c09d93">00105</a> <span class="preprocessor"></span><span class="preprocessor">#define LED_SCHED_COLON         0x01</span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>
+<a name="l00107"></a><a class="code" href="roomba_8h.html#a7bc5bcaca4dceb3832c18e03f17e353c">00107</a> <span class="preprocessor">#define BTN_PACKET_ID           0x12</span>
+<a name="l00108"></a><a class="code" href="roomba_8h.html#a82719b8190515ad77df1a7f3123f0567">00108</a> <span class="preprocessor"></span><span class="preprocessor">#define CMD_BUTTONS_STATE       0x8E</span>
+<a name="l00109"></a><a class="code" href="roomba_8h.html#a3525b28fa131f2def4a28d8d39a0a4a6">00109</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_CLOCK               0x80</span>
+<a name="l00110"></a><a class="code" href="roomba_8h.html#afbc773ae174dba60025fa19725f88614">00110</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_SCHEDULE            0x40</span>
+<a name="l00111"></a><a class="code" href="roomba_8h.html#aa6570111b0fd6924c573312468927d3c">00111</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_DAY                 0x20</span>
+<a name="l00112"></a><a class="code" href="roomba_8h.html#ad0abca247c41a2d12e3ccfac3335f9cd">00112</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_HOUR                0x10</span>
+<a name="l00113"></a><a class="code" href="roomba_8h.html#a0b5fe32833b3f7669427f8f1a961ee33">00113</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_MINUTE              0x08</span>
+<a name="l00114"></a><a class="code" href="roomba_8h.html#aa3cc02b3c407595038ce1841386d1477">00114</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_DOCK                0x04</span>
+<a name="l00115"></a><a class="code" href="roomba_8h.html#ae4b348997669056348b58747fe7af172">00115</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_SPOT                0x02</span>
+<a name="l00116"></a><a class="code" href="roomba_8h.html#ade6fa723afa55e24edf154222a7e8ee5">00116</a> <span class="preprocessor"></span><span class="preprocessor">#define BTN_CLEAN               0x01</span>
+<a name="l00117"></a>00117 <span class="preprocessor"></span>
+<a name="l00118"></a><a class="code" href="roomba_8h.html#a134c37801e80732c69b3a2e5171491b2">00118</a> <span class="preprocessor">#define CMD_QUERY_SENSOR        0x8E</span>
 <a name="l00119"></a>00119 <span class="preprocessor"></span>
-<a name="l00120"></a><a class="code" href="roomba_8h.html#a134c37801e80732c69b3a2e5171491b2">00120</a> <span class="preprocessor">#define CMD_QUERY_SENSOR        0x8E</span>
-<a name="l00121"></a>00121 <span class="preprocessor"></span>
-<a name="l00122"></a><a class="code" href="roomba_8h.html#ad0f0780de717745ccc5ca09a78890b24">00122</a> <span class="preprocessor">#define SENSORS_ALL                                             0x00</span>
-<a name="l00123"></a><a class="code" href="roomba_8h.html#a3e52aac8f9eb45fb4546e4bac0758948">00123</a> <span class="preprocessor"></span><span class="preprocessor">#define SENSORS_PHYSICAL                                0x01</span>
-<a name="l00124"></a><a class="code" href="roomba_8h.html#a72f7b326a033e02e3f0a66c12a0bb62d">00124</a> <span class="preprocessor"></span><span class="preprocessor">#define SENSORS_BUTTONS_AND_INTERNAL    0x02</span>
-<a name="l00125"></a><a class="code" href="roomba_8h.html#a15af80bc0e237a7c74aa34787cc231ef">00125</a> <span class="preprocessor"></span><span class="preprocessor">#define SENSORS_POWER                                   0x03</span>
-<a name="l00126"></a>00126 <span class="preprocessor"></span>
-<a name="l00127"></a>00127 
-<a name="l00128"></a><a class="code" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">00128</a> <span class="preprocessor">#define QUERY_LENGTH 5</span>
-<a name="l00129"></a><a class="code" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">00129</a> <span class="preprocessor"></span><span class="preprocessor">#define DIGIT_LENGTH 4</span>
-<a name="l00130"></a><a class="code" href="roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927">00130</a> <span class="preprocessor"></span><span class="preprocessor">#define ASCII_PLUS 43</span>
-<a name="l00131"></a><a class="code" href="roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3">00131</a> <span class="preprocessor"></span><span class="preprocessor">#define ASCII_MINUS 45</span>
-<a name="l00132"></a><a class="code" href="roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18">00132</a> <span class="preprocessor"></span><span class="preprocessor">#define ASCII_NUMBER_START 48</span>
-<a name="l00133"></a>00133 <span class="preprocessor"></span>
-<a name="l00134"></a><a class="code" href="roomba_8h.html#a9d9e0b1d566c33afab82708e1ea6a8be">00134</a> <span class="preprocessor">#define DEFAULT_VELOCITY 200</span>
-<a name="l00135"></a>00135 <span class="preprocessor"></span>
-<a name="l00136"></a>00136 
-<a name="l00137"></a><a class="code" href="structpacket.html">00137</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>{
-<a name="l00138"></a><a class="code" href="structpacket.html#a1e6927fa1486224044e568f9c370519b">00138</a>         uint8_t <a class="code" href="structpacket.html#a1e6927fa1486224044e568f9c370519b">id</a>;
-<a name="l00139"></a><a class="code" href="structpacket.html#ab2b3adeb2a67e656ff030b56727fd0ac">00139</a>         uint8_t <a class="code" href="structpacket.html#ab2b3adeb2a67e656ff030b56727fd0ac">length</a>;
-<a name="l00140"></a><a class="code" href="structpacket.html#a0511f5c7ac752193798ceb3787081337">00140</a>         uint8_t <a class="code" href="structpacket.html#a0511f5c7ac752193798ceb3787081337">has_sign</a>;
-<a name="l00141"></a>00141 } <a class="code" href="structpacket.html">packet</a>;
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> * <a class="code" href="roomba_8h.html#a9fad066b7b58012f6a37377327ff6c70">packet_queries</a>[<a class="code" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>];
-<a name="l00145"></a>00145 <span class="keyword">extern</span> <span class="keyword">volatile</span> int32_t <a class="code" href="roomba_8h.html#acf4670bd8261f765433573c60c0c9957">query_results</a>[<a class="code" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>];
-<a name="l00146"></a>00146 <span class="keyword">extern</span> int32_t <a class="code" href="roomba_8h.html#a62ed77ced8e2e97e8580f41c9ecce0d4">roomba_sevenseg_digits</a>[<a class="code" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>];
-<a name="l00147"></a>00147 
+<a name="l00120"></a><a class="code" href="roomba_8h.html#ad0f0780de717745ccc5ca09a78890b24">00120</a> <span class="preprocessor">#define SENSORS_ALL                                             0x00</span>
+<a name="l00121"></a><a class="code" href="roomba_8h.html#a3e52aac8f9eb45fb4546e4bac0758948">00121</a> <span class="preprocessor"></span><span class="preprocessor">#define SENSORS_PHYSICAL                                0x01</span>
+<a name="l00122"></a><a class="code" href="roomba_8h.html#a72f7b326a033e02e3f0a66c12a0bb62d">00122</a> <span class="preprocessor"></span><span class="preprocessor">#define SENSORS_BUTTONS_AND_INTERNAL    0x02</span>
+<a name="l00123"></a><a class="code" href="roomba_8h.html#a15af80bc0e237a7c74aa34787cc231ef">00123</a> <span class="preprocessor"></span><span class="preprocessor">#define SENSORS_POWER                                   0x03</span>
+<a name="l00124"></a>00124 <span class="preprocessor"></span>
+<a name="l00125"></a><a class="code" href="roomba_8h.html#ac2728d38a59a0747167e0031e85e5c43">00125</a> <span class="preprocessor">#define DRIVE_ON_CHARGER_FORCEFIELD 0xA1</span>
+<a name="l00126"></a><a class="code" href="roomba_8h.html#a2724991aa6cf2254bf3cf41a9f7e95b1">00126</a> <span class="preprocessor"></span><span class="preprocessor">#define DRIVE_ON_CHARGER_GREENBUOY 0xA4</span>
+<a name="l00127"></a><a class="code" href="roomba_8h.html#a2a9a8dbe24653040c5c53f205c3080eb">00127</a> <span class="preprocessor"></span><span class="preprocessor">#define DRIVE_ON_CHARGER_REDBUOY 0xA8</span>
+<a name="l00128"></a><a class="code" href="roomba_8h.html#ada488d033e7ffddd9b73f51081183310">00128</a> <span class="preprocessor"></span><span class="preprocessor">#define DRIVE_ON_CHARGER_ALL 0xAD</span>
+<a name="l00129"></a>00129 <span class="preprocessor"></span>
+<a name="l00130"></a><a class="code" href="roomba_8h.html#a5fdfdcbfd0f764e23e833fe60a7cfae7">00130</a> <span class="preprocessor">#define CHARGING_SOURCE_HOMEBASE 0x2</span>
+<a name="l00131"></a>00131 <span class="preprocessor"></span>
+<a name="l00132"></a><a class="code" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">00132</a> <span class="preprocessor">#define DIGIT_LENGTH 0x4</span>
+<a name="l00133"></a><a class="code" href="roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927">00133</a> <span class="preprocessor"></span><span class="preprocessor">#define ASCII_PLUS 0x2B</span>
+<a name="l00134"></a><a class="code" href="roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3">00134</a> <span class="preprocessor"></span><span class="preprocessor">#define ASCII_MINUS 0x2D</span>
+<a name="l00135"></a><a class="code" href="roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18">00135</a> <span class="preprocessor"></span><span class="preprocessor">#define ASCII_NUMBER_START 0x30</span>
+<a name="l00136"></a>00136 <span class="preprocessor"></span>
+<a name="l00137"></a><a class="code" href="roomba_8h.html#a9d9e0b1d566c33afab82708e1ea6a8be">00137</a> <span class="preprocessor">#define DEFAULT_VELOCITY 0xC8</span>
+<a name="l00138"></a>00138 <span class="preprocessor"></span>
+<a name="l00139"></a><a class="code" href="roomba_8h.html#abe48441640a0144da0dd7ce9ccc6f68b">00139</a> <span class="preprocessor">#define TAPE_SIGNAL 0x4B0</span>
+<a name="l00140"></a>00140 <span class="preprocessor"></span>
+<a name="l00141"></a><a class="code" href="roomba_8h.html#a4a1baddf3ca8562961f139056f63434c">00141</a> <span class="preprocessor">#define INFRARED_VALUE_DOCK_TRIGGER 0xA0</span>
+<a name="l00142"></a><a class="code" href="roomba_8h.html#ae1ee0cd6205cf0b901148ea8224db603">00142</a> <span class="preprocessor"></span><span class="preprocessor">#define SEEKDOCK_LED_BITMASK 0xFF</span>
+<a name="l00143"></a><a class="code" href="roomba_8h.html#a52eae75f70c780600d4bd77f8427e420">00143</a> <span class="preprocessor"></span><span class="preprocessor">#define DOCKED_LED_BITMASK 0x64</span>
+<a name="l00144"></a>00144 <span class="preprocessor"></span>
+<a name="l00145"></a><a class="code" href="roomba_8h.html#a48e60dc0e87bff81a12545f681a51d2d">00145</a> <span class="preprocessor">#define LIGHT_BUMP_CLEAR 0x1E</span>
+<a name="l00146"></a><a class="code" href="roomba_8h.html#a9b1046435af32b5dae762ee45c46946d">00146</a> <span class="preprocessor"></span><span class="preprocessor">#define LIGHT_BUMP_NOT_CLEAR 0x190</span>
+<a name="l00147"></a>00147 <span class="preprocessor"></span>
 <a name="l00148"></a>00148 
-<a name="l00149"></a><a class="code" href="structroomba__data.html">00149</a> <span class="keyword">typedef</span> <span class="keyword">struct</span>{
-<a name="l00150"></a><a class="code" href="structroomba__data.html#a27949ed7575f6665baf658b206ba9cff">00150</a>         uint8_t <a class="code" href="structroomba__data.html#a27949ed7575f6665baf658b206ba9cff">is_moving</a>;
-<a name="l00151"></a><a class="code" href="structroomba__data.html#a7f174749fed904af98a79cb40f2e9b2c">00151</a>         int16_t <a class="code" href="structroomba__data.html#a7f174749fed904af98a79cb40f2e9b2c">current_velocity</a>;
-<a name="l00152"></a><a class="code" href="structroomba__data.html#a9874cc3ce685901b1a022c32751fff3e">00152</a>         int32_t <a class="code" href="structroomba__data.html#a9874cc3ce685901b1a022c32751fff3e">driven_distance</a>;
-<a name="l00153"></a><a class="code" href="structroomba__data.html#a00d5dafaa40740d43325df48a57e3bad">00153</a>         int32_t <a class="code" href="structroomba__data.html#a00d5dafaa40740d43325df48a57e3bad">trip_meter</a>;
-<a name="l00154"></a><a class="code" href="structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75">00154</a>         int32_t <a class="code" href="structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75">angle_360_degrees</a>;
-<a name="l00155"></a><a class="code" href="structroomba__data.html#aa2702f293fb9d49b8c1d60303ca5ba63">00155</a>         int32_t <a class="code" href="structroomba__data.html#aa2702f293fb9d49b8c1d60303ca5ba63">distance_1_meter</a>;
-<a name="l00156"></a>00156 } <a class="code" href="structroomba__data.html">roomba_data</a>;
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 <span class="keyword">extern</span> <a class="code" href="structroomba__data.html">roomba_data</a> <a class="code" href="roomba_8h.html#a032ea8a9c2e01cdc2b0445ac573459bc">roombadata</a>;
+<a name="l00149"></a>00149 <span class="comment">/******************************************************************* Structures */</span>
+<a name="l00150"></a>00150 
+<a name="l00154"></a><a class="code" href="structpacket.html">00154</a> <span class="keyword">typedef</span> <span class="keyword">struct </span>{
+<a name="l00155"></a><a class="code" href="structpacket.html#a1e6927fa1486224044e568f9c370519b">00155</a>         uint8_t <a class="code" href="structpacket.html#a1e6927fa1486224044e568f9c370519b">id</a>; 
+<a name="l00156"></a><a class="code" href="structpacket.html#ab2b3adeb2a67e656ff030b56727fd0ac">00156</a>         uint8_t <a class="code" href="structpacket.html#ab2b3adeb2a67e656ff030b56727fd0ac">length</a>; 
+<a name="l00157"></a><a class="code" href="structpacket.html#a0511f5c7ac752193798ceb3787081337">00157</a>         uint8_t <a class="code" href="structpacket.html#a0511f5c7ac752193798ceb3787081337">has_sign</a>; 
+<a name="l00158"></a>00158 } <a class="code" href="structpacket.html">packet</a>;
 <a name="l00159"></a>00159 
-<a name="l00160"></a>00160 <span class="comment">/******************************************************* Function prototypes */</span>
-<a name="l00168"></a>00168 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#aee9fbf5a8cf760ab38dc3509f8953f43" title="init roomba function">init_roomba</a>(<span class="keywordtype">void</span>);
-<a name="l00169"></a>00169 
-<a name="l00176"></a>00176 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#adfba988f90e19a381a4f505b61546097" title="calibrate angle function">roomba_calibrate_angle</a>();
-<a name="l00177"></a>00177 
-<a name="l00184"></a>00184 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a035293124dd6f95b2d8897997ce22829" title="calibrate angle function">roomba_calibrate_distance</a>();
-<a name="l00185"></a>00185 
-<a name="l00192"></a>00192 int32_t <a class="code" href="roomba_8h.html#a57774583ce5e1c1d2e30d31221e0fb0a" title="query sensor function">query_sensor</a>(<a class="code" href="structpacket.html">packet</a> query_packet);
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194 
-<a name="l00205"></a>00205 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#ac32ee66206bdeea9213de8c3d23b8819" title="query sensor list function">query_list</a>(<span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> * packets[], uint8_t count, int32_t results[]);
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207 
-<a name="l00217"></a>00217 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a261cc5ae02d8506d2bdbe0433c9f7a74" title="write sensor list function">write_query_list</a>(<span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> * packets[], uint8_t count);
-<a name="l00218"></a>00218 
-<a name="l00219"></a>00219 
-<a name="l00230"></a>00230 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a295a6a56865fe08949e2027bc9dbb4a5" title="read sensor list function">read_query_list</a>(<span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> * packets[], uint8_t count, int32_t results[]);
-<a name="l00231"></a>00231 
-<a name="l00232"></a>00232 
-<a name="l00241"></a>00241 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a3a315a67275f91ca4dbe86576cf7b00f" title="Write to roomba&#39;s weekday LEDs.">setWeekdayLed</a> (uint8_t led_mask);
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243 
-<a name="l00254"></a>00254 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a5e81b58095a2f79cd4dd3c112650730d" title="Write to roomba&#39;s LEDs.">setLed</a>(uint8_t led_mask, uint8_t color, uint8_t intensity);
-<a name="l00255"></a>00255     
-<a name="l00262"></a>00262 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a827f6c823bc26c1f07205d6227da485c" title="Write the ascii digits.">write_sevenseg_digits</a> ();
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264 
-<a name="l00273"></a>00273 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#adbe775d0f9e78cc4be310cfd077aab75" title="Drive function.">drive</a>(int16_t velocity, int16_t radius);
-<a name="l00274"></a>00274 
-<a name="l00281"></a>00281 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a8c528baf37154d347366083f0f816846" title="Stop function.">stop</a>();
-<a name="l00282"></a>00282 
-<a name="l00291"></a>00291 uint8_t <a class="code" href="roomba_8h.html#a61d980cd654b5b28e4e48a7f4092c3f9" title="Check the roomba buttons.">check_button</a>();
-<a name="l00292"></a>00292 
-<a name="l00293"></a>00293 
-<a name="l00304"></a>00304 int32_t <a class="code" href="roomba_8h.html#a003330edfbf4d75a09dbaeb415bed728" title="Calculate the time to drive.">calculateTimeToDrive</a> (int32_t distance, int32_t velocity);
-<a name="l00305"></a>00305 
+<a name="l00160"></a>00160 <span class="keyword">extern</span> int32_t <a class="code" href="roomba_8h.html#a62ed77ced8e2e97e8580f41c9ecce0d4">roomba_sevenseg_digits</a>[<a class="code" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>];
+<a name="l00161"></a>00161 
+<a name="l00165"></a><a class="code" href="structroomba__data.html">00165</a> <span class="keyword">typedef</span> <span class="keyword">volatile</span> <span class="keyword">struct </span>{
+<a name="l00166"></a><a class="code" href="structroomba__data.html#a27949ed7575f6665baf658b206ba9cff">00166</a>         uint8_t <a class="code" href="structroomba__data.html#a27949ed7575f6665baf658b206ba9cff">is_moving</a>; 
+<a name="l00167"></a><a class="code" href="structroomba__data.html#a29ec4a96bc0931db96257857fd300de5">00167</a>         uint8_t <a class="code" href="structroomba__data.html#a29ec4a96bc0931db96257857fd300de5">current_base_id</a>; 
+<a name="l00168"></a><a class="code" href="structroomba__data.html#acda989cdf9bced3a9a1598c2328b266b">00168</a>         uint8_t <a class="code" href="structroomba__data.html#acda989cdf9bced3a9a1598c2328b266b">destination_base_id</a>; 
+<a name="l00169"></a><a class="code" href="structroomba__data.html#a7f174749fed904af98a79cb40f2e9b2c">00169</a>         int16_t <a class="code" href="structroomba__data.html#a7f174749fed904af98a79cb40f2e9b2c">current_velocity</a>; 
+<a name="l00170"></a><a class="code" href="structroomba__data.html#a9874cc3ce685901b1a022c32751fff3e">00170</a>         int32_t <a class="code" href="structroomba__data.html#a9874cc3ce685901b1a022c32751fff3e">driven_distance</a>; 
+<a name="l00171"></a><a class="code" href="structroomba__data.html#a22f88fbf731f115d1c35906dd65a9293">00171</a>         int32_t <a class="code" href="structroomba__data.html#a22f88fbf731f115d1c35906dd65a9293">trip_distance</a>; 
+<a name="l00172"></a><a class="code" href="structroomba__data.html#aaa13920a13096418bc196e4b464df213">00172</a>         int32_t <a class="code" href="structroomba__data.html#aaa13920a13096418bc196e4b464df213">trip_angle</a>; 
+<a name="l00173"></a><a class="code" href="structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75">00173</a>         int32_t <a class="code" href="structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75">angle_360_degrees</a>; 
+<a name="l00174"></a><a class="code" href="structroomba__data.html#aa2702f293fb9d49b8c1d60303ca5ba63">00174</a>         int32_t <a class="code" href="structroomba__data.html#aa2702f293fb9d49b8c1d60303ca5ba63">distance_1_meter</a>; 
+<a name="l00175"></a>00175 } <a class="code" href="structroomba__data.html">roomba_data</a>;
+<a name="l00176"></a>00176 
+<a name="l00180"></a><a class="code" href="structcollision__data.html">00180</a> <span class="keyword">typedef</span> <span class="keyword">volatile</span> <span class="keyword">struct </span>{
+<a name="l00181"></a><a class="code" href="structcollision__data.html#a7b6969b715149f30de60681a139e467f">00181</a>         int32_t <a class="code" href="structcollision__data.html#a7b6969b715149f30de60681a139e467f">angle_sum</a>; 
+<a name="l00182"></a><a class="code" href="structcollision__data.html#a5d82d80b71d7c0371fbc631ae4944b86">00182</a>         int32_t <a class="code" href="structcollision__data.html#a5d82d80b71d7c0371fbc631ae4944b86">distance_sum</a>; 
+<a name="l00183"></a><a class="code" href="structcollision__data.html#a3dce872c749367a7762bdde1f33f639c">00183</a>         int32_t <a class="code" href="structcollision__data.html#a3dce872c749367a7762bdde1f33f639c">driven_trip_distance</a>; 
+<a name="l00184"></a><a class="code" href="structcollision__data.html#a2d865c62fc673dffe7dd64d7c49c2d95">00184</a>         int32_t <a class="code" href="structcollision__data.html#a2d865c62fc673dffe7dd64d7c49c2d95">bumper_state</a>; 
+<a name="l00185"></a><a class="code" href="structcollision__data.html#ad40117dfe4921b4f52a9fcb49e76c3fa">00185</a>         int32_t <a class="code" href="structcollision__data.html#ad40117dfe4921b4f52a9fcb49e76c3fa">light_bumper_state</a>; 
+<a name="l00186"></a><a class="code" href="structcollision__data.html#ae863069398d3aad944262da21ddf2870">00186</a>         int32_t <a class="code" href="structcollision__data.html#ae863069398d3aad944262da21ddf2870">program_tick_counter</a>; 
+<a name="l00187"></a><a class="code" href="structcollision__data.html#abc8ff00f84162de37e15e431872b7d3b">00187</a>         int8_t <a class="code" href="structcollision__data.html#abc8ff00f84162de37e15e431872b7d3b">played_acustic_feedback</a>; 
+<a name="l00188"></a><a class="code" href="structcollision__data.html#ab029fc46a5f17b2301b1afa7baba9b66">00188</a>         int32_t <a class="code" href="structcollision__data.html#ab029fc46a5f17b2301b1afa7baba9b66">trip_distance_at_collision</a>; 
+<a name="l00189"></a><a class="code" href="structcollision__data.html#a9bf88bb25b13b5a18e0fdc887e3cf81c">00189</a>         int32_t <a class="code" href="structcollision__data.html#a9bf88bb25b13b5a18e0fdc887e3cf81c">trip_angle_at_collision</a>; 
+<a name="l00190"></a>00190 } <a class="code" href="structcollision__data.html">collision_data</a>;
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192 <span class="comment">/******************************************************* Function prototypes */</span>
+<a name="l00200"></a>00200 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a7a94e608ea756db96d06c917ba7bb1b5" title="init roomba function">roombaInit</a>(<span class="keywordtype">void</span>);
+<a name="l00201"></a>00201 
+<a name="l00208"></a>00208 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a6c950d1452f0b850f75fe4d18052badb" title="calibrate angle function">roombaCalibrateAngle</a>(<span class="keywordtype">void</span>);
+<a name="l00209"></a>00209 
+<a name="l00216"></a>00216 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#adbbc7b5dd3febaa22cb2a4e6637b541a" title="calibrate distance function">roombaCalibrateDistance</a>(<span class="keywordtype">void</span>);
+<a name="l00217"></a>00217 
+<a name="l00225"></a>00225 int32_t <a class="code" href="roomba_8h.html#a9d35768b2da08d9ff6306333252d99e3" title="query sensor function">roombaQuerySensor</a>(<a class="code" href="structpacket.html">packet</a> query_packet);
+<a name="l00226"></a>00226 
+<a name="l00235"></a>00235 int32_t <a class="code" href="roomba_8h.html#a97138bf877904e4570420a07e5f26ea3" title="angle convert function">roombaAsCalibratedAngle</a>(int32_t angle_raw);
+<a name="l00236"></a>00236 
+<a name="l00244"></a>00244 int32_t <a class="code" href="roomba_8h.html#aca02dca009d257987bf5cf7691e6d9a2" title="distance convert function">roombaAsCalibratedDistance</a>(int32_t distance_raw);
+<a name="l00245"></a>00245 
+<a name="l00252"></a>00252 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a5e8ad6dd3d747a90fbf38aed8b2aaa5b" title="seekdock function">roombaSeekdock</a>(<span class="keywordtype">void</span>);
+<a name="l00253"></a>00253 
+<a name="l00260"></a>00260 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a5f09f9dca7e6d957a032047ec11573e7" title="reset roomba&#39;s trip meters">roombaResetTrips</a>(<span class="keywordtype">void</span>);
+<a name="l00261"></a>00261 
+<a name="l00262"></a>00262 
+<a name="l00269"></a>00269 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a7c0642bbb3c74ca89e22ecd78ede0525" title="reset roomba&#39;s trip meters without consuming sensor values">roombaResetTripsWithoutConsumingSensors</a>();
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271 
+<a name="l00279"></a>00279 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a291f2d17fb58f59edd4dcc3e04e5301a" title="drive backward function">roombaDriveABitBackward</a>(int32_t backward_distance);
+<a name="l00280"></a>00280 
+<a name="l00289"></a>00289 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a46e311aa25d488f8a53437a87847d069" title="collision detected function">roombaOnCollisionDetected</a>(int32_t bumper_state,
+<a name="l00290"></a>00290                 int32_t light_bumper_state);
+<a name="l00297"></a>00297 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a40f569e5fff1f5376702aa7d147c7cb1" title="collision cleared function">roombaOnCollisionCleared</a>(<span class="keywordtype">void</span>);
+<a name="l00298"></a>00298 
+<a name="l00305"></a>00305 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a47cabc0903bc4a1075b51125b994a751" title="Update the distance sum.">roombaUpdateDistanceSum</a>(<span class="keywordtype">void</span>);
 <a name="l00306"></a>00306 
-<a name="l00307"></a>00307 <span class="comment">/************************************************************** Global const */</span>
-<a name="l00308"></a>00308 
-<a name="l00309"></a>00309 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a97eca45fe8764ff2b4ea54b740578bad">PACKET_BUMPS_WHEELDROPS</a>;
-<a name="l00310"></a>00310 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a55988d9b6699be75d95d9268b6c02670">PACKET_WALL</a>;
-<a name="l00311"></a>00311 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4a22caa5f0bda4603a8915adbca7497f">PACKET_CLIFF_LEFT</a>;
-<a name="l00312"></a>00312 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a712c90c41722e40c0271cc810a542d41">PACKET_CLIFF_FRONT_LEFT</a>;
-<a name="l00313"></a>00313 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5fc7604e5f4a0c40f810eed511605694">PACKET_CLIFF_FRONT_RIGHT</a>;
-<a name="l00314"></a>00314 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a87c716d0f9ff41caa910b8c233c64266">PACKET_CLIFF_RIGHT</a>;
-<a name="l00315"></a>00315 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aaec0760675b6b5b89a255c7cb2c1d6db">PACKET_VIRTUAL_WALL</a>;
-<a name="l00316"></a>00316 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a181108258860aae615cd34476e4e753b">PACKET_WHEEL_OVERCURRENTS</a>;
-<a name="l00317"></a>00317 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a51dd67b0e8e2797af5d35ca653aebf91">PACKET_DIRT_DETECT</a>;
-<a name="l00318"></a>00318 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ac5485d0f7e22cca16974f90e0f25ff68">PACKET_UNUSED_BYTE</a>;
-<a name="l00319"></a>00319 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aa5d8837213ce9201f7fb8f926f275827">PACKET_INFRARED_CHARACTER_OMNI</a>;
-<a name="l00320"></a>00320 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a1a6ef2fa387bad8c4bc26f495ed83e11">PACKET_BUTTONS</a>;
-<a name="l00321"></a>00321 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a0e58491be326a78f27468bb794e4e012">PACKET_DISTANCE</a>;
-<a name="l00322"></a>00322 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a97e5e57731786bf00c614dd433106ee5">PACKET_ANGLE</a>;
-<a name="l00323"></a>00323 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a80c1a3fa8e941fc5f5a56a1823215ad6">PACKET_CHARGING_STATE</a>;
-<a name="l00324"></a>00324 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af6590eacc4d8178b599d0d62f173e426">PACKET_VOLTAGE</a>;
-<a name="l00325"></a>00325 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ac8f89ea5e7abbec8b3ff73fbd9b3e551">PACKET_CURRENT</a>;
-<a name="l00326"></a>00326 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5daac04af7d00b50181e02a197f4826f">PACKET_TEMPERATURE</a>;
-<a name="l00327"></a>00327 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a8e21b709384d4a17ac4dd742551fc209">PACKET_BATTERY_CHARGE</a>;
-<a name="l00328"></a>00328 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af96cea8e8188dac798556ca7dea3224e">PACKET_BATTERY_CAPICITY</a>;
-<a name="l00329"></a>00329 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a091877f56f3dce3a0ce602515173f00a">PACKET_WALL_SIGNAL</a>;
-<a name="l00330"></a>00330 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#adc4ff3bb1d50f7c54994f7adaccb7169">PACKET_CLIFF_LEFT_SIGNAL</a>;
-<a name="l00331"></a>00331 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4356581b6c0a9b457be03e53153c221f">PACKET_CLIFF_FRONT_LEFT_SIGNAL</a>;
-<a name="l00332"></a>00332 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aa79d771cf3f32a62df18a60967de6ada">PACKET_CLIFF_FRONT_RIGHT_SIGNAL</a>;
-<a name="l00333"></a>00333 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4fce465de8bb7d3bf826bc4bce2628c3">PACKET_CLIFF_RIGHT_SIGNAL</a>;
-<a name="l00334"></a>00334 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5b2c0fb8dd0150d6cb3afa94b900b0ae">PACKET_CHARGING_SOURCES_AVAILABLE</a>;
-<a name="l00335"></a>00335 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ad259d5d545527c60f48f8ada81d1c149">PACKET_OI_MODE</a>;
-<a name="l00336"></a>00336 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5fb66294be81d5ae6af6e2e44995f44d">PACKET_SONG_NUMBER</a>;
-<a name="l00337"></a>00337 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a15c612d1b70430452c41a96685dffa94">PACKET_SONG_PLAYING</a>;
-<a name="l00338"></a>00338 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a571cb02844fb18616a409d1c255f528b">PACKET_NUMBER_OF_STREAM_PACKETS</a>;
-<a name="l00339"></a>00339 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a06005f3200801bd319e5fb907b28df3a">PACKET_REQUESTED_VELOCITY</a>;
-<a name="l00340"></a>00340 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a2f6e4e7b6d8d581b63c51e06a723b1e9">REQUESTED_RADIUS</a>;
-<a name="l00341"></a>00341 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aff81dbe081ccc6c95f8d7419fa8d54e4">PACKET_REQUESTED_RIGHT_VELOCITY</a>;
-<a name="l00342"></a>00342 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a11b5f572f83a75cb7a440628edd65dce">PACKET_REQUESTED_LEFT_VELOCITY</a>;
-<a name="l00343"></a>00343 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a88085e9bd50a14fdb43ef93cedaf1dd1">PACKET_RIGHT_ENCODER_COUNTS</a>;
-<a name="l00344"></a>00344 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a88ea41a69878c547349a5ddc45371f82">PACKET_LEFT_ENCODER_COUNTS</a>;
-<a name="l00345"></a>00345 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a2fd1e3aaf5185f6f40c9f1db98c09cb6">PACKET_LIGHT_BUMPER</a>;
-<a name="l00346"></a>00346 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af7c9d7512a42d8ed7ba032e7e66088f6">PACKET_LIGHT_BUMP_LEFT_SIGNAL</a>;
-<a name="l00347"></a>00347 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af6dd157ffa60597266a379dcb3a52257">PACKET_LIGHT_BUMP_FRONT_LEFT_SIGNAL</a>;
-<a name="l00348"></a>00348 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4b30ff737f912f0c703632c13ed61ec2">PACKET_LIGHT_BUMP_CENTER_LEFT_SIGNAL</a>;
-<a name="l00349"></a>00349 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ade0a85c8103a662dddc95297507054f0">PACKET_LIGHT_BUMP_CENTER_RIGHT_SIGNAL</a>;
-<a name="l00350"></a>00350 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#afb4d024dcddb9b56084d6dc4cb032f24">PACKET_LIGHT_BUMP_FRONT_RIGHT_SIGNAL</a>;
-<a name="l00351"></a>00351 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af5eec8f134ee3a50ef11db5fbffa2d35">PACKET_LIGHT_BUMP_RIGHT_SIGNAL</a>;
-<a name="l00352"></a>00352 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a23ec810f497aa164737dac82b66eb0aa">PACKET_INFRARED_CHARACTER_LEFT</a>;
-<a name="l00353"></a>00353 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a6e50321a280e7ed17973ede67e1baa6e">PACKET_INFRARED_CHARACTER_RIGHT</a>;
-<a name="l00354"></a>00354 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aab94cb9c10fb2201211d7d8f5f5eb58d">PACKET_LEFT_MOTOR_CURRENT</a>;
-<a name="l00355"></a>00355 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a7e2ff1c106d23547cc8022c96ac441a7">PACKET_RIGHT_MOTOR_CURRENT</a>;
-<a name="l00356"></a>00356 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a256d4f4f8eb0acdd3d00149fe747afc7">PACKET_MAIN_BRUSH_MOTOR_CURRENT</a>;
-<a name="l00357"></a>00357 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a06c54dba26e71caf615c3265c721ba6c">PACKET_SIDE_BRUSH_MOTOR_CURRENT</a>;
-<a name="l00358"></a>00358 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ac7f2e6c28e7d740cd390c5d1849957e2">PACKET_STASIS</a>;
-<a name="l00359"></a>00359 
-<a name="l00360"></a>00360 
-<a name="l00361"></a>00361 <span class="comment">/********************************************************** Global variables */</span>
-<a name="l00362"></a>00362 
-<a name="l00363"></a>00363 
-<a name="l00365"></a>00365 <span class="preprocessor">#endif</span>
-<a name="l00366"></a>00366 <span class="preprocessor"></span>
-<a name="l00367"></a>00367 
-<a name="l00368"></a>00368 
+<a name="l00307"></a>00307 
+<a name="l00314"></a>00314 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a3e9d18fc95c4e4c5e8db4b604eaa415a" title="play song theme function">roombaPlaySongTheme</a>(<span class="keywordtype">void</span>);
+<a name="l00321"></a>00321 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a8164c3abeeb769be6f662c67848fe1ab" title="play song collision function">roombaPlaySongCollision</a>(<span class="keywordtype">void</span>);
+<a name="l00328"></a>00328 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#ae09806d66fbeb8f69598ea9143513ff1" title="play song done function">roombaPlaySongDone</a>(<span class="keywordtype">void</span>);
+<a name="l00335"></a>00335 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a6cd1e4e80ad46ab7dad1a571ebede647" title="play song beep function">roombaPlaySongBeep</a>(<span class="keywordtype">void</span>);
+<a name="l00336"></a>00336 
+<a name="l00345"></a>00345 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a11a37d8efad1e63b44608c66b21d6230" title="Write to roomba&#39;s weekday LEDs.">roombaSetWeekdayLed</a>(uint8_t led_mask);
+<a name="l00346"></a>00346 
+<a name="l00357"></a>00357 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a91c51ca8879c22f407a8d3b5024c1d3c" title="Write to roomba&#39;s LEDs.">roombaSetLed</a>(uint8_t led_mask, uint8_t color, uint8_t intensity);
+<a name="l00358"></a>00358 
+<a name="l00365"></a>00365 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#ad4c5a3a31ac972bdbf699ddb70171610" title="Write the ascii digits.">roombaWriteSevensegDigits</a>(<span class="keywordtype">void</span>);
+<a name="l00366"></a>00366 
+<a name="l00375"></a>00375 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a87b26aec548e6af2616d5b5aca488f04" title="Drive function.">roombaDrive</a>(int16_t velocity, int16_t radius);
+<a name="l00376"></a>00376 
+<a name="l00383"></a>00383 <span class="keywordtype">void</span> <a class="code" href="roomba_8h.html#a0884ea9eea8a4f9efddd0a392b984da9" title="Stop function.">roombaStop</a>(<span class="keywordtype">void</span>);
+<a name="l00384"></a>00384 
+<a name="l00393"></a>00393 uint8_t <a class="code" href="roomba_8h.html#a360a93d84f6eda39b2f99311c0ac7246" title="Check the roomba buttons.">roombaCheckButton</a>(<span class="keywordtype">void</span>);
+<a name="l00394"></a>00394 
+<a name="l00405"></a>00405 int32_t <a class="code" href="roomba_8h.html#aed1b5b78f07c5770b873d296c9416849" title="Calculate the time to drive function.">roombaCalculateTimeToDrive</a>(int32_t distance, int32_t velocity);
+<a name="l00406"></a>00406 
+<a name="l00407"></a>00407 <span class="comment">/************************************************************** Global const */</span>
+<a name="l00408"></a>00408 <span class="comment">//packet struct variables for all sensors</span>
+<a name="l00409"></a>00409 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a97eca45fe8764ff2b4ea54b740578bad">PACKET_BUMPS_WHEELDROPS</a>;
+<a name="l00410"></a>00410 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a55988d9b6699be75d95d9268b6c02670">PACKET_WALL</a>;
+<a name="l00411"></a>00411 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4a22caa5f0bda4603a8915adbca7497f">PACKET_CLIFF_LEFT</a>;
+<a name="l00412"></a>00412 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a712c90c41722e40c0271cc810a542d41">PACKET_CLIFF_FRONT_LEFT</a>;
+<a name="l00413"></a>00413 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5fc7604e5f4a0c40f810eed511605694">PACKET_CLIFF_FRONT_RIGHT</a>;
+<a name="l00414"></a>00414 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a87c716d0f9ff41caa910b8c233c64266">PACKET_CLIFF_RIGHT</a>;
+<a name="l00415"></a>00415 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aaec0760675b6b5b89a255c7cb2c1d6db">PACKET_VIRTUAL_WALL</a>;
+<a name="l00416"></a>00416 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a181108258860aae615cd34476e4e753b">PACKET_WHEEL_OVERCURRENTS</a>;
+<a name="l00417"></a>00417 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a51dd67b0e8e2797af5d35ca653aebf91">PACKET_DIRT_DETECT</a>;
+<a name="l00418"></a>00418 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ac5485d0f7e22cca16974f90e0f25ff68">PACKET_UNUSED_BYTE</a>;
+<a name="l00419"></a>00419 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aa5d8837213ce9201f7fb8f926f275827">PACKET_INFRARED_CHARACTER_OMNI</a>;
+<a name="l00420"></a>00420 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a1a6ef2fa387bad8c4bc26f495ed83e11">PACKET_BUTTONS</a>;
+<a name="l00421"></a>00421 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a0e58491be326a78f27468bb794e4e012">PACKET_DISTANCE</a>;
+<a name="l00422"></a>00422 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a97e5e57731786bf00c614dd433106ee5">PACKET_ANGLE</a>;
+<a name="l00423"></a>00423 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a80c1a3fa8e941fc5f5a56a1823215ad6">PACKET_CHARGING_STATE</a>;
+<a name="l00424"></a>00424 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af6590eacc4d8178b599d0d62f173e426">PACKET_VOLTAGE</a>;
+<a name="l00425"></a>00425 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ac8f89ea5e7abbec8b3ff73fbd9b3e551">PACKET_CURRENT</a>;
+<a name="l00426"></a>00426 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5daac04af7d00b50181e02a197f4826f">PACKET_TEMPERATURE</a>;
+<a name="l00427"></a>00427 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a8e21b709384d4a17ac4dd742551fc209">PACKET_BATTERY_CHARGE</a>;
+<a name="l00428"></a>00428 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af96cea8e8188dac798556ca7dea3224e">PACKET_BATTERY_CAPICITY</a>;
+<a name="l00429"></a>00429 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a091877f56f3dce3a0ce602515173f00a">PACKET_WALL_SIGNAL</a>;
+<a name="l00430"></a>00430 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#adc4ff3bb1d50f7c54994f7adaccb7169">PACKET_CLIFF_LEFT_SIGNAL</a>;
+<a name="l00431"></a>00431 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4356581b6c0a9b457be03e53153c221f">PACKET_CLIFF_FRONT_LEFT_SIGNAL</a>;
+<a name="l00432"></a>00432 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aa79d771cf3f32a62df18a60967de6ada">PACKET_CLIFF_FRONT_RIGHT_SIGNAL</a>;
+<a name="l00433"></a>00433 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4fce465de8bb7d3bf826bc4bce2628c3">PACKET_CLIFF_RIGHT_SIGNAL</a>;
+<a name="l00434"></a>00434 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5b2c0fb8dd0150d6cb3afa94b900b0ae">PACKET_CHARGING_SOURCES_AVAILABLE</a>;
+<a name="l00435"></a>00435 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ad259d5d545527c60f48f8ada81d1c149">PACKET_OI_MODE</a>;
+<a name="l00436"></a>00436 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a5fb66294be81d5ae6af6e2e44995f44d">PACKET_SONG_NUMBER</a>;
+<a name="l00437"></a>00437 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a15c612d1b70430452c41a96685dffa94">PACKET_SONG_PLAYING</a>;
+<a name="l00438"></a>00438 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a571cb02844fb18616a409d1c255f528b">PACKET_NUMBER_OF_STREAM_PACKETS</a>;
+<a name="l00439"></a>00439 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a06005f3200801bd319e5fb907b28df3a">PACKET_REQUESTED_VELOCITY</a>;
+<a name="l00440"></a>00440 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a2f6e4e7b6d8d581b63c51e06a723b1e9">REQUESTED_RADIUS</a>;
+<a name="l00441"></a>00441 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aff81dbe081ccc6c95f8d7419fa8d54e4">PACKET_REQUESTED_RIGHT_VELOCITY</a>;
+<a name="l00442"></a>00442 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a11b5f572f83a75cb7a440628edd65dce">PACKET_REQUESTED_LEFT_VELOCITY</a>;
+<a name="l00443"></a>00443 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a88085e9bd50a14fdb43ef93cedaf1dd1">PACKET_RIGHT_ENCODER_COUNTS</a>;
+<a name="l00444"></a>00444 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a88ea41a69878c547349a5ddc45371f82">PACKET_LEFT_ENCODER_COUNTS</a>;
+<a name="l00445"></a>00445 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a2fd1e3aaf5185f6f40c9f1db98c09cb6">PACKET_LIGHT_BUMPER</a>;
+<a name="l00446"></a>00446 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af7c9d7512a42d8ed7ba032e7e66088f6">PACKET_LIGHT_BUMP_LEFT_SIGNAL</a>;
+<a name="l00447"></a>00447 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af6dd157ffa60597266a379dcb3a52257">PACKET_LIGHT_BUMP_FRONT_LEFT_SIGNAL</a>;
+<a name="l00448"></a>00448 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a4b30ff737f912f0c703632c13ed61ec2">PACKET_LIGHT_BUMP_CENTER_LEFT_SIGNAL</a>;
+<a name="l00449"></a>00449 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ade0a85c8103a662dddc95297507054f0">PACKET_LIGHT_BUMP_CENTER_RIGHT_SIGNAL</a>;
+<a name="l00450"></a>00450 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#afb4d024dcddb9b56084d6dc4cb032f24">PACKET_LIGHT_BUMP_FRONT_RIGHT_SIGNAL</a>;
+<a name="l00451"></a>00451 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#af5eec8f134ee3a50ef11db5fbffa2d35">PACKET_LIGHT_BUMP_RIGHT_SIGNAL</a>;
+<a name="l00452"></a>00452 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a23ec810f497aa164737dac82b66eb0aa">PACKET_INFRARED_CHARACTER_LEFT</a>;
+<a name="l00453"></a>00453 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a6e50321a280e7ed17973ede67e1baa6e">PACKET_INFRARED_CHARACTER_RIGHT</a>;
+<a name="l00454"></a>00454 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#aab94cb9c10fb2201211d7d8f5f5eb58d">PACKET_LEFT_MOTOR_CURRENT</a>;
+<a name="l00455"></a>00455 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a7e2ff1c106d23547cc8022c96ac441a7">PACKET_RIGHT_MOTOR_CURRENT</a>;
+<a name="l00456"></a>00456 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a256d4f4f8eb0acdd3d00149fe747afc7">PACKET_MAIN_BRUSH_MOTOR_CURRENT</a>;
+<a name="l00457"></a>00457 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#a06c54dba26e71caf615c3265c721ba6c">PACKET_SIDE_BRUSH_MOTOR_CURRENT</a>;
+<a name="l00458"></a>00458 <span class="keyword">extern</span> <span class="keyword">const</span> <a class="code" href="structpacket.html">packet</a> <a class="code" href="roomba_8h.html#ac7f2e6c28e7d740cd390c5d1849957e2">PACKET_STASIS</a>;
+<a name="l00459"></a>00459 
+<a name="l00460"></a>00460 <span class="comment">//roomba_data struct variable</span>
+<a name="l00461"></a>00461 <span class="keyword">extern</span> <a class="code" href="structroomba__data.html">roomba_data</a> <a class="code" href="roomba_8h.html#a032ea8a9c2e01cdc2b0445ac573459bc">roombadata</a>;
+<a name="l00462"></a>00462 
+<a name="l00463"></a>00463 <span class="comment">//collision_data struct variable</span>
+<a name="l00464"></a>00464 <span class="keyword">extern</span> <a class="code" href="structcollision__data.html">collision_data</a> <a class="code" href="roomba_8h.html#a39aab70914328afc9176856a17c1812b">collisiondata</a>;
+<a name="l00465"></a>00465 
+<a name="l00466"></a>00466 <span class="comment">/********************************************************** Global variables */</span>
+<a name="l00467"></a>00467 
+<a name="l00469"></a>00469 <span class="preprocessor">#endif</span>
+<a name="l00470"></a>00470 <span class="preprocessor"></span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -354,7 +391,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 28 2013 10:55:21 for Roomba Embedded Systems Training by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 16 2013 03:15:44 for Roomba Embedded Systems Training by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

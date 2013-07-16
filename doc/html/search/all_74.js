@@ -1,6 +1,7 @@
 var searchData=
 [
   ['tab3',['TAB3',['../termios_8h.html#a7548fc84dd9f9a97eb068b321ce20da0',1,'termios.h']]],
+  ['tape_5fsignal',['TAPE_SIGNAL',['../roomba_8h.html#abe48441640a0144da0dd7ce9ccc6f68b',1,'roomba.h']]],
   ['tcdrain',['tcdrain',['../termios_8h.html#a070edd0170dac6d386e3e1cf8af57f44',1,'termios.h']]],
   ['tcflag_5ft',['tcflag_t',['../termios_8h.html#a12046b4322de1f4b85ed29267aa8173a',1,'termios.h']]],
   ['tciflush',['TCIFLUSH',['../termios_8h.html#a058d97bfe9b14f76cf512b97504d7223',1,'termios.h']]],
@@ -27,7 +28,10 @@ var searchData=
   ['tiocstimeout',['TIOCSTIMEOUT',['../ioctl_8h.html#a374bc27643abef0c599893db498446de',1,'ioctl.h']]],
   ['tools_2eh',['tools.h',['../tools_8h.html',1,'']]],
   ['tostop',['TOSTOP',['../termios_8h.html#a79c826e2e8762135eda0b51352241bc6',1,'termios.h']]],
-  ['trip_5fmeter',['trip_meter',['../structroomba__data.html#a00d5dafaa40740d43325df48a57e3bad',1,'roomba_data']]],
+  ['trip_5fangle',['trip_angle',['../structroomba__data.html#aaa13920a13096418bc196e4b464df213',1,'roomba_data']]],
+  ['trip_5fangle_5fat_5fcollision',['trip_angle_at_collision',['../structcollision__data.html#a9bf88bb25b13b5a18e0fdc887e3cf81c',1,'collision_data']]],
+  ['trip_5fdistance',['trip_distance',['../structroomba__data.html#a22f88fbf731f115d1c35906dd65a9293',1,'roomba_data']]],
+  ['trip_5fdistance_5fat_5fcollision',['trip_distance_at_collision',['../structcollision__data.html#ab029fc46a5f17b2301b1afa7baba9b66',1,'collision_data']]],
   ['true',['true',['../tools_8h.html#a04dd5074964518403bf944f2b240a5f8a08f175a5505a10b9ed657defeb050e4b',1,'tools.h']]],
   ['tty_5fprintf',['tty_printf',['../output_8h.html#add7350c5d89ddc5350f1e371f5002c53',1,'output.h']]]
 ];

@@ -1,6 +1,7 @@
 var searchData=
 [
   ['tab3',['TAB3',['../termios_8h.html#a7548fc84dd9f9a97eb068b321ce20da0',1,'termios.h']]],
+  ['tape_5fsignal',['TAPE_SIGNAL',['../roomba_8h.html#abe48441640a0144da0dd7ce9ccc6f68b',1,'roomba.h']]],
   ['tcdrain',['tcdrain',['../termios_8h.html#a070edd0170dac6d386e3e1cf8af57f44',1,'termios.h']]],
   ['tciflush',['TCIFLUSH',['../termios_8h.html#a058d97bfe9b14f76cf512b97504d7223',1,'termios.h']]],
   ['tcioff',['TCIOFF',['../termios_8h.html#a227fea9e0767c2a418967e87f2fc222d',1,'termios.h']]],

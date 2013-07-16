@@ -269,6 +269,11 @@ void roombaResetTrips() {
 	roombadata.trip_distance = 0;
 }
 
+void roombaResetTripsWithoutConsumingSensors() {
+	roombadata.trip_angle = 0;
+	roombadata.trip_distance = 0;
+}
+
 void roombaWriteSevensegDigits() {
 	uart_write_byte(CMD_7SEG_ASCII);
 	int i;

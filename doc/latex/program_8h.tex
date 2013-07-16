@@ -1,0 +1,528 @@
+\hypertarget{program_8h}{\section{include/program.h \-File \-Reference}
+\label{program_8h}\index{include/program.\-h@{include/program.\-h}}
+}
+{\ttfamily \#include \char`\"{}board.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}led.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}pio.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}roomba.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}tools.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}uart.\-h\char`\"{}}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{program_8h_ad225fc9526f695a342c465c2f6feba04}{\-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}~25
+\item 
+\#define \hyperlink{program_8h_a899cc4f5861306e0765949a816ed4e7a}{\-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E}~3000
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef unsigned long \hyperlink{program_8h_ab14fc3b0e7b9535ec25836108ce96a45}{millis\-\_\-t}
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \{ \*
+\hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edaaab5a2bcea860b4f52557e01cb37c66f}{\-C\-A\-L\-I\-B\-R\-A\-T\-E}, 
+\hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edaf7b6d6d8e5e14633d388ef9cc7a941b7}{\-D\-R\-I\-V\-E}, 
+\hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edad5384d1822c72da119100438c5051831}{\-C\-O\-L\-L\-I\-S\-I\-O\-N}, 
+\hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17eda523fd3390bbfe0fd8acb526cb6d8dece}{\-S\-E\-E\-K\-D\-O\-C\-K}, 
+\*
+\hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17eda00ddb6ac2f6beae3b9c42f8991e5809d}{\-D\-O\-C\-K\-E\-D}
+ \}
+\item 
+enum \hyperlink{program_8h_a575f89e6feefc8f185224a24e80c9bfd}{base\-\_\-config\-\_\-states} \{ \hyperlink{program_8h_a575f89e6feefc8f185224a24e80c9bfda5f41f269257345e51b54b39a7a52771e}{\-B\-A\-S\-E\-\_\-\-S\-E\-L\-E\-C\-T} =  1, 
+\hyperlink{program_8h_a575f89e6feefc8f185224a24e80c9bfdafd47420cec869ac8328784a518705fa6}{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-X}, 
+\hyperlink{program_8h_a575f89e6feefc8f185224a24e80c9bfdae11d690f21b9997b17b58d50d9989d79}{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-Y}, 
+\hyperlink{program_8h_a575f89e6feefc8f185224a24e80c9bfdaff42ce4c042a21d067087dc80a03ba9a}{\-B\-A\-S\-E\-\_\-\-R\-O\-T\-A\-T\-I\-O\-N}
+ \}
+\item 
+enum \hyperlink{program_8h_ad2baada0c169e2158f13d255dffcf9c5}{drivestate} \{ \hyperlink{program_8h_ad2baada0c169e2158f13d255dffcf9c5a5f0b93f6a018077e7b8760f4273ff27c}{\-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}, 
+\hyperlink{program_8h_ad2baada0c169e2158f13d255dffcf9c5a32d79dca81bffba2848610ab1165ce14}{\-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}, 
+\hyperlink{program_8h_ad2baada0c169e2158f13d255dffcf9c5a8d2487ae56860ab983a105650ec7ce28}{\-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}, 
+\hyperlink{program_8h_ad2baada0c169e2158f13d255dffcf9c5a580e1fa813ad6d477e53e689ffe1f505}{\-L\-E\-A\-V\-E\-\_\-\-D\-O\-C\-K}
+ \}
+\item 
+enum \hyperlink{program_8h_a56e36e20639f49f8b5e8aa7f9715b020}{angleapproachstate} \{ \hyperlink{program_8h_a56e36e20639f49f8b5e8aa7f9715b020a7be31ad5e37745707e92c69cd14e0cd4}{\-D\-R\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}, 
+\hyperlink{program_8h_a56e36e20639f49f8b5e8aa7f9715b020a7021af1a324c0f7122d43ac5e7b5f03e}{\-D\-R\-I\-V\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}
+ \}
+\item 
+enum \hyperlink{program_8h_ac39dc3eea5cbe93d8820470419ab3f36}{lineapproachstate} \{ \hyperlink{program_8h_ac39dc3eea5cbe93d8820470419ab3f36a7ff8f6acc8169f26d9008205d46f8fa7}{\-L\-I\-N\-E\-\_\-\-T\-U\-R\-N\-\_\-\-F\-R\-O\-M\-\_\-\-B\-A\-S\-E}, 
+\hyperlink{program_8h_ac39dc3eea5cbe93d8820470419ab3f36a17676ddea121aab34fdcc7fdb4de9be7}{\-L\-I\-N\-E\-\_\-\-D\-R\-I\-V\-E}
+ \}
+\item 
+enum \hyperlink{program_8h_ac54833d00ce3cc941c94146ab60b37a4}{fenceapproachstate} \{ \hyperlink{program_8h_ac54833d00ce3cc941c94146ab60b37a4a6a00a89e8ad3ee7e96b6b1c783a4f48a}{\-F\-E\-N\-C\-E\-\_\-\-A\-N\-G\-L\-E}, 
+\hyperlink{program_8h_ac54833d00ce3cc941c94146ab60b37a4a5760bf0863991bd5781194b9812a251d}{\-F\-E\-N\-C\-E\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}, 
+\hyperlink{program_8h_ac54833d00ce3cc941c94146ab60b37a4ae4370a7d5c71d18b1ce2b64427307c6a}{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}, 
+\hyperlink{program_8h_ac54833d00ce3cc941c94146ab60b37a4a8fe9673a3b8cf51a47cd5b671627b0bb}{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-A\-N\-G\-L\-E}
+ \}
+\item 
+enum \hyperlink{program_8h_a87877f4854863e17de660c413f9b2ff4}{fencedetectstate} \{ \hyperlink{program_8h_a87877f4854863e17de660c413f9b2ff4a3c905d1dac255ef7354437af9e04bce3}{\-F\-E\-N\-C\-E\-\_\-\-N\-O\-N\-E}, 
+\hyperlink{program_8h_a87877f4854863e17de660c413f9b2ff4ad1a2d641f683f7cda002654ccc05dce6}{\-F\-E\-N\-C\-E\-\_\-\-F\-I\-R\-S\-T}, 
+\hyperlink{program_8h_a87877f4854863e17de660c413f9b2ff4a516323f13dec9cf43d2be1d75e07790e}{\-F\-E\-N\-C\-E\-\_\-\-V\-O\-I\-D}, 
+\hyperlink{program_8h_a87877f4854863e17de660c413f9b2ff4a9decac323fe4c0850c325ae2723119dc}{\-F\-E\-N\-C\-E\-\_\-\-S\-E\-C\-O\-N\-D}
+ \}
+\item 
+enum \hyperlink{program_8h_a32b2252f29ed26883a8557eac35b3029}{collisionstate} \{ \hyperlink{program_8h_a32b2252f29ed26883a8557eac35b3029a44893a04c1dacbad651f73bb4a2c8b61}{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-T\-U\-R\-N}, 
+\hyperlink{program_8h_a32b2252f29ed26883a8557eac35b3029a5ef701352358823fcba71ea983282be7}{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-D\-R\-I\-V\-E}
+ \}
+\item 
+enum \hyperlink{program_8h_a989339f5f16c4ba7d4c34d06cf8188cb}{calibratestate} \{ \hyperlink{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbaab25b89f96452e6faf47e801657d15b9}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}, 
+\hyperlink{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbac8af194838c0345a59bf6aac7bf886b6}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-A\-N\-G\-L\-E}, 
+\hyperlink{program_8h_a989339f5f16c4ba7d4c34d06cf8188cba04c88f1a9e5f4fdf9c5409ee0403dfd9}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-B\-A\-S\-E}, 
+\hyperlink{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbac5996238f2068da03fe63626d9a793e9}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-O\-N\-E}
+ \}
+\item 
+enum \hyperlink{program_8h_a3405b806bf4c924d6c4afba63def29e6}{nextbasestate} \{ \hyperlink{program_8h_a3405b806bf4c924d6c4afba63def29e6a61749b5bab0f56390e4cb2a7d50765fd}{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-D\-R\-I\-V\-E}, 
+\hyperlink{program_8h_a3405b806bf4c924d6c4afba63def29e6a7dfd258f20cee13e09128c4f85d71c32}{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-N\-U\-M}, 
+\hyperlink{program_8h_a3405b806bf4c924d6c4afba63def29e6a6cd5c57967aa0c7e5b07b3905f3e9c92}{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}
+ \}
+\item 
+enum \hyperlink{program_8h_a99f26e6ee9fcd62f75203b5402df8098}{direction} \{ \hyperlink{program_8h_a99f26e6ee9fcd62f75203b5402df8098adb45120aafd37a973140edee24708065}{\-L\-E\-F\-T} =  1, 
+\hyperlink{program_8h_a99f26e6ee9fcd62f75203b5402df8098a08707fd429345dc72f3d7b0cc867ef05}{\-S\-T\-R\-A\-I\-G\-H\-T} =  0, 
+\hyperlink{program_8h_a99f26e6ee9fcd62f75203b5402df8098aec8379af7490bb9eaaf579cf17876f38}{\-R\-I\-G\-H\-T} =  -\/1
+ \}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{program_8h_ad6a19aead26fbdc1d2334564f3c9b0f2}{program\-Run} (void)
+\begin{DoxyCompactList}\small\item\em \-Main program loop. \end{DoxyCompactList}\item 
+int8\-\_\-t \hyperlink{program_8h_aedb273b64fb0ee8f1a9333a435faee0b}{int\-To\-Ascii} (int32\-\_\-t value, int32\-\_\-t out\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em \-Convert int to ascii. \end{DoxyCompactList}\item 
+void \hyperlink{program_8h_acae4abb376e677915fa71863956c3f6f}{set\-Program\-State} (enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} state)
+\begin{DoxyCompactList}\small\item\em \-Set program state function. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_a55443443436d11f5a72b1590a587254b}{handle\-State\-Drive} ()
+\begin{DoxyCompactList}\small\item\em \-Handle \-D\-R\-I\-V\-E state. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_aa163d8cdbf5c0a8619ac2078b5ff7194}{handle\-State\-Collision} ()
+\begin{DoxyCompactList}\small\item\em \-Handle \-C\-O\-L\-L\-I\-S\-I\-O\-N state. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_a0f5be7e3ba08881af87089ce4098f455}{handle\-State\-Calibrate} ()
+\begin{DoxyCompactList}\small\item\em \-Handle \-C\-A\-L\-I\-B\-R\-A\-T\-E state. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_ade6534fcc6d9172101799c3b52141a1b}{handle\-State\-Seekdock} ()
+\begin{DoxyCompactList}\small\item\em \-Handle \-S\-E\-E\-K\-D\-O\-C\-K state. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_ac3fc814975a378c8ab3a5a2725dad4b6}{handle\-State\-Docked} ()
+\begin{DoxyCompactList}\small\item\em \-Handle \-D\-O\-C\-K\-E\-D state. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_accdd6ae24fd80fc2a0158306cc97a4b9}{handle\-Sub\-State\-Angle\-Approach} ()
+\begin{DoxyCompactList}\small\item\em \-Handle sub-\/state \-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_a0c42b76ed2d673af808038847f97cb9c}{handle\-Sub\-State\-Leave\-Dock} ()
+\begin{DoxyCompactList}\small\item\em \-Handle sub-\/state \-L\-E\-A\-V\-E\-D\-O\-C\-K. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_acddffc960aad5bf5343017a78eca8e1d}{handle\-Sub\-State\-Line\-Approach} ()
+\begin{DoxyCompactList}\small\item\em \-Handle sub-\/state \-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H. \end{DoxyCompactList}\item 
+\hyperlink{program_8h_a99f26e6ee9fcd62f75203b5402df8098}{direction} \hyperlink{program_8h_a951e83dd1b0ba3d8f8d20833a5186d20}{get\-Opposite\-Direction} (\hyperlink{program_8h_a99f26e6ee9fcd62f75203b5402df8098}{direction} dir)
+\begin{DoxyCompactList}\small\item\em \-Get opposite direction. \end{DoxyCompactList}\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{program_8h_a503c3367909ea680743780fce317e4fc}{handle\-Sub\-State\-Fence\-Approach} ()
+\begin{DoxyCompactList}\small\item\em \-Handle sub-\/state \-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{program_8h_ab14fc3b0e7b9535ec25836108ce96a45}{millis\-\_\-t} \hyperlink{program_8h_a210d7e23bcd2277ddae750ae786dd728}{global\-\_\-clock}
+\item 
+uint8\-\_\-t \hyperlink{program_8h_ae013e8828a04f2f56d6a8e7d7dc6bb67}{base\-\_\-config\-\_\-state}
+\item 
+volatile int32\-\_\-t \hyperlink{program_8h_a0e1e6ffbb33fa2aa30f0ea074cd71ed1}{ir\-\_\-action}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{program_8h_a899cc4f5861306e0765949a816ed4e7a}{\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E@{\-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E}}
+\index{\-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E@{\-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E}!program.h@{program.\-h}}
+\subsubsection[{\-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-F\-E\-N\-C\-E\-\_\-\-V\-A\-L\-U\-E\-\_\-\-C\-O\-L\-L\-E\-C\-T\-I\-O\-N\-\_\-\-T\-I\-M\-E}~3000}}\label{program_8h_a899cc4f5861306e0765949a816ed4e7a}
+\hypertarget{program_8h_ad225fc9526f695a342c465c2f6feba04}{\index{program.\-h@{program.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E@{\-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E@{\-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}!program.h@{program.\-h}}
+\subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-F\-E\-N\-C\-E\-\_\-\-M\-A\-X\-\_\-\-E\-V\-A\-S\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}~25}}\label{program_8h_ad225fc9526f695a342c465c2f6feba04}
+
+
+\subsection{\-Typedef \-Documentation}
+\hypertarget{program_8h_ab14fc3b0e7b9535ec25836108ce96a45}{\index{program.\-h@{program.\-h}!millis\-\_\-t@{millis\-\_\-t}}
+\index{millis\-\_\-t@{millis\-\_\-t}!program.h@{program.\-h}}
+\subsubsection[{millis\-\_\-t}]{\setlength{\rightskip}{0pt plus 5cm}typedef unsigned long {\bf millis\-\_\-t}}}\label{program_8h_ab14fc3b0e7b9535ec25836108ce96a45}
+milliseconds definition 
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{program_8h_a56e36e20639f49f8b5e8aa7f9715b020}{\index{program.\-h@{program.\-h}!angleapproachstate@{angleapproachstate}}
+\index{angleapproachstate@{angleapproachstate}!program.h@{program.\-h}}
+\subsubsection[{angleapproachstate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf angleapproachstate}}}\label{program_8h_a56e36e20639f49f8b5e8aa7f9715b020}
+\-An enum for the sub state \-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-D\-R\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E@{\-D\-R\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-D\-R\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E@{\-D\-R\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}}\item[{\em 
+\hypertarget{program_8h_a56e36e20639f49f8b5e8aa7f9715b020a7be31ad5e37745707e92c69cd14e0cd4}{\-D\-R\-I\-V\-E\-\_\-\-A\-N\-G\-L\-E}\label{program_8h_a56e36e20639f49f8b5e8aa7f9715b020a7be31ad5e37745707e92c69cd14e0cd4}
+}]\index{\-D\-R\-I\-V\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E@{\-D\-R\-I\-V\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-D\-R\-I\-V\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E@{\-D\-R\-I\-V\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}}\item[{\em 
+\hypertarget{program_8h_a56e36e20639f49f8b5e8aa7f9715b020a7021af1a324c0f7122d43ac5e7b5f03e}{\-D\-R\-I\-V\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}\label{program_8h_a56e36e20639f49f8b5e8aa7f9715b020a7021af1a324c0f7122d43ac5e7b5f03e}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a575f89e6feefc8f185224a24e80c9bfd}{\index{program.\-h@{program.\-h}!base\-\_\-config\-\_\-states@{base\-\_\-config\-\_\-states}}
+\index{base\-\_\-config\-\_\-states@{base\-\_\-config\-\_\-states}!program.h@{program.\-h}}
+\subsubsection[{base\-\_\-config\-\_\-states}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf base\-\_\-config\-\_\-states}}}\label{program_8h_a575f89e6feefc8f185224a24e80c9bfd}
+\-An enum for the base configuration state machine \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-B\-A\-S\-E\-\_\-\-S\-E\-L\-E\-C\-T@{\-B\-A\-S\-E\-\_\-\-S\-E\-L\-E\-C\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-B\-A\-S\-E\-\_\-\-S\-E\-L\-E\-C\-T@{\-B\-A\-S\-E\-\_\-\-S\-E\-L\-E\-C\-T}}\item[{\em 
+\hypertarget{program_8h_a575f89e6feefc8f185224a24e80c9bfda5f41f269257345e51b54b39a7a52771e}{\-B\-A\-S\-E\-\_\-\-S\-E\-L\-E\-C\-T}\label{program_8h_a575f89e6feefc8f185224a24e80c9bfda5f41f269257345e51b54b39a7a52771e}
+}]\index{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-X@{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-X}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-X@{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-X}}\item[{\em 
+\hypertarget{program_8h_a575f89e6feefc8f185224a24e80c9bfdafd47420cec869ac8328784a518705fa6}{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-X}\label{program_8h_a575f89e6feefc8f185224a24e80c9bfdafd47420cec869ac8328784a518705fa6}
+}]\index{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-Y@{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-Y}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-Y@{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-Y}}\item[{\em 
+\hypertarget{program_8h_a575f89e6feefc8f185224a24e80c9bfdae11d690f21b9997b17b58d50d9989d79}{\-B\-A\-S\-E\-\_\-\-C\-O\-O\-R\-D\-I\-N\-A\-T\-E\-\_\-\-Y}\label{program_8h_a575f89e6feefc8f185224a24e80c9bfdae11d690f21b9997b17b58d50d9989d79}
+}]\index{\-B\-A\-S\-E\-\_\-\-R\-O\-T\-A\-T\-I\-O\-N@{\-B\-A\-S\-E\-\_\-\-R\-O\-T\-A\-T\-I\-O\-N}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-B\-A\-S\-E\-\_\-\-R\-O\-T\-A\-T\-I\-O\-N@{\-B\-A\-S\-E\-\_\-\-R\-O\-T\-A\-T\-I\-O\-N}}\item[{\em 
+\hypertarget{program_8h_a575f89e6feefc8f185224a24e80c9bfdaff42ce4c042a21d067087dc80a03ba9a}{\-B\-A\-S\-E\-\_\-\-R\-O\-T\-A\-T\-I\-O\-N}\label{program_8h_a575f89e6feefc8f185224a24e80c9bfdaff42ce4c042a21d067087dc80a03ba9a}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a989339f5f16c4ba7d4c34d06cf8188cb}{\index{program.\-h@{program.\-h}!calibratestate@{calibratestate}}
+\index{calibratestate@{calibratestate}!program.h@{program.\-h}}
+\subsubsection[{calibratestate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf calibratestate}}}\label{program_8h_a989339f5f16c4ba7d4c34d06cf8188cb}
+\-An enum for the calibrate state machine \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}}\item[{\em 
+\hypertarget{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbaab25b89f96452e6faf47e801657d15b9}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-I\-S\-T\-A\-N\-C\-E}\label{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbaab25b89f96452e6faf47e801657d15b9}
+}]\index{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-A\-N\-G\-L\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-A\-N\-G\-L\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-A\-N\-G\-L\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-A\-N\-G\-L\-E}}\item[{\em 
+\hypertarget{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbac8af194838c0345a59bf6aac7bf886b6}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-A\-N\-G\-L\-E}\label{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbac8af194838c0345a59bf6aac7bf886b6}
+}]\index{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-B\-A\-S\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-B\-A\-S\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-B\-A\-S\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-B\-A\-S\-E}}\item[{\em 
+\hypertarget{program_8h_a989339f5f16c4ba7d4c34d06cf8188cba04c88f1a9e5f4fdf9c5409ee0403dfd9}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-B\-A\-S\-E}\label{program_8h_a989339f5f16c4ba7d4c34d06cf8188cba04c88f1a9e5f4fdf9c5409ee0403dfd9}
+}]\index{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-O\-N\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-O\-N\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-O\-N\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-O\-N\-E}}\item[{\em 
+\hypertarget{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbac5996238f2068da03fe63626d9a793e9}{\-C\-A\-L\-I\-B\-R\-A\-T\-E\-\_\-\-D\-O\-N\-E}\label{program_8h_a989339f5f16c4ba7d4c34d06cf8188cbac5996238f2068da03fe63626d9a793e9}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a32b2252f29ed26883a8557eac35b3029}{\index{program.\-h@{program.\-h}!collisionstate@{collisionstate}}
+\index{collisionstate@{collisionstate}!program.h@{program.\-h}}
+\subsubsection[{collisionstate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf collisionstate}}}\label{program_8h_a32b2252f29ed26883a8557eac35b3029}
+\-An enum for the collision state machine \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-T\-U\-R\-N@{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-T\-U\-R\-N}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-T\-U\-R\-N@{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-T\-U\-R\-N}}\item[{\em 
+\hypertarget{program_8h_a32b2252f29ed26883a8557eac35b3029a44893a04c1dacbad651f73bb4a2c8b61}{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-T\-U\-R\-N}\label{program_8h_a32b2252f29ed26883a8557eac35b3029a44893a04c1dacbad651f73bb4a2c8b61}
+}]\index{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-D\-R\-I\-V\-E@{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-D\-R\-I\-V\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-D\-R\-I\-V\-E@{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-D\-R\-I\-V\-E}}\item[{\em 
+\hypertarget{program_8h_a32b2252f29ed26883a8557eac35b3029a5ef701352358823fcba71ea983282be7}{\-C\-O\-L\-L\-I\-S\-I\-O\-N\-\_\-\-D\-R\-I\-V\-E}\label{program_8h_a32b2252f29ed26883a8557eac35b3029a5ef701352358823fcba71ea983282be7}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a99f26e6ee9fcd62f75203b5402df8098}{\index{program.\-h@{program.\-h}!direction@{direction}}
+\index{direction@{direction}!program.h@{program.\-h}}
+\subsubsection[{direction}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf direction}}}\label{program_8h_a99f26e6ee9fcd62f75203b5402df8098}
+\-An enum for direction \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-L\-E\-F\-T@{\-L\-E\-F\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-L\-E\-F\-T@{\-L\-E\-F\-T}}\item[{\em 
+\hypertarget{program_8h_a99f26e6ee9fcd62f75203b5402df8098adb45120aafd37a973140edee24708065}{\-L\-E\-F\-T}\label{program_8h_a99f26e6ee9fcd62f75203b5402df8098adb45120aafd37a973140edee24708065}
+}]\index{\-S\-T\-R\-A\-I\-G\-H\-T@{\-S\-T\-R\-A\-I\-G\-H\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-S\-T\-R\-A\-I\-G\-H\-T@{\-S\-T\-R\-A\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{program_8h_a99f26e6ee9fcd62f75203b5402df8098a08707fd429345dc72f3d7b0cc867ef05}{\-S\-T\-R\-A\-I\-G\-H\-T}\label{program_8h_a99f26e6ee9fcd62f75203b5402df8098a08707fd429345dc72f3d7b0cc867ef05}
+}]\index{\-R\-I\-G\-H\-T@{\-R\-I\-G\-H\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-R\-I\-G\-H\-T@{\-R\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{program_8h_a99f26e6ee9fcd62f75203b5402df8098aec8379af7490bb9eaaf579cf17876f38}{\-R\-I\-G\-H\-T}\label{program_8h_a99f26e6ee9fcd62f75203b5402df8098aec8379af7490bb9eaaf579cf17876f38}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_ad2baada0c169e2158f13d255dffcf9c5}{\index{program.\-h@{program.\-h}!drivestate@{drivestate}}
+\index{drivestate@{drivestate}!program.h@{program.\-h}}
+\subsubsection[{drivestate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf drivestate}}}\label{program_8h_ad2baada0c169e2158f13d255dffcf9c5}
+\-An enum for the \-D\-R\-I\-V\-E state machine \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}}\item[{\em 
+\hypertarget{program_8h_ad2baada0c169e2158f13d255dffcf9c5a5f0b93f6a018077e7b8760f4273ff27c}{\-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}\label{program_8h_ad2baada0c169e2158f13d255dffcf9c5a5f0b93f6a018077e7b8760f4273ff27c}
+}]\index{\-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}}\item[{\em 
+\hypertarget{program_8h_ad2baada0c169e2158f13d255dffcf9c5a32d79dca81bffba2848610ab1165ce14}{\-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}\label{program_8h_ad2baada0c169e2158f13d255dffcf9c5a32d79dca81bffba2848610ab1165ce14}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}}\item[{\em 
+\hypertarget{program_8h_ad2baada0c169e2158f13d255dffcf9c5a8d2487ae56860ab983a105650ec7ce28}{\-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}\label{program_8h_ad2baada0c169e2158f13d255dffcf9c5a8d2487ae56860ab983a105650ec7ce28}
+}]\index{\-L\-E\-A\-V\-E\-\_\-\-D\-O\-C\-K@{\-L\-E\-A\-V\-E\-\_\-\-D\-O\-C\-K}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-L\-E\-A\-V\-E\-\_\-\-D\-O\-C\-K@{\-L\-E\-A\-V\-E\-\_\-\-D\-O\-C\-K}}\item[{\em 
+\hypertarget{program_8h_ad2baada0c169e2158f13d255dffcf9c5a580e1fa813ad6d477e53e689ffe1f505}{\-L\-E\-A\-V\-E\-\_\-\-D\-O\-C\-K}\label{program_8h_ad2baada0c169e2158f13d255dffcf9c5a580e1fa813ad6d477e53e689ffe1f505}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_ac54833d00ce3cc941c94146ab60b37a4}{\index{program.\-h@{program.\-h}!fenceapproachstate@{fenceapproachstate}}
+\index{fenceapproachstate@{fenceapproachstate}!program.h@{program.\-h}}
+\subsubsection[{fenceapproachstate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf fenceapproachstate}}}\label{program_8h_ac54833d00ce3cc941c94146ab60b37a4}
+\-An enum for the sub state \-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-F\-E\-N\-C\-E\-\_\-\-A\-N\-G\-L\-E@{\-F\-E\-N\-C\-E\-\_\-\-A\-N\-G\-L\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-A\-N\-G\-L\-E@{\-F\-E\-N\-C\-E\-\_\-\-A\-N\-G\-L\-E}}\item[{\em 
+\hypertarget{program_8h_ac54833d00ce3cc941c94146ab60b37a4a6a00a89e8ad3ee7e96b6b1c783a4f48a}{\-F\-E\-N\-C\-E\-\_\-\-A\-N\-G\-L\-E}\label{program_8h_ac54833d00ce3cc941c94146ab60b37a4a6a00a89e8ad3ee7e96b6b1c783a4f48a}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T@{\-F\-E\-N\-C\-E\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T@{\-F\-E\-N\-C\-E\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{program_8h_ac54833d00ce3cc941c94146ab60b37a4a5760bf0863991bd5781194b9812a251d}{\-F\-E\-N\-C\-E\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}\label{program_8h_ac54833d00ce3cc941c94146ab60b37a4a5760bf0863991bd5781194b9812a251d}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T@{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T@{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{program_8h_ac54833d00ce3cc941c94146ab60b37a4ae4370a7d5c71d18b1ce2b64427307c6a}{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-S\-T\-R\-A\-I\-G\-H\-T}\label{program_8h_ac54833d00ce3cc941c94146ab60b37a4ae4370a7d5c71d18b1ce2b64427307c6a}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-A\-N\-G\-L\-E@{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-A\-N\-G\-L\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-A\-N\-G\-L\-E@{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-A\-N\-G\-L\-E}}\item[{\em 
+\hypertarget{program_8h_ac54833d00ce3cc941c94146ab60b37a4a8fe9673a3b8cf51a47cd5b671627b0bb}{\-F\-E\-N\-C\-E\-\_\-\-C\-O\-R\-R\-E\-C\-T\-I\-O\-N\-\_\-\-A\-N\-G\-L\-E}\label{program_8h_ac54833d00ce3cc941c94146ab60b37a4a8fe9673a3b8cf51a47cd5b671627b0bb}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a87877f4854863e17de660c413f9b2ff4}{\index{program.\-h@{program.\-h}!fencedetectstate@{fencedetectstate}}
+\index{fencedetectstate@{fencedetectstate}!program.h@{program.\-h}}
+\subsubsection[{fencedetectstate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf fencedetectstate}}}\label{program_8h_a87877f4854863e17de660c413f9b2ff4}
+\-An enum for the sub state \-F\-E\-N\-C\-E\-\_\-\-D\-E\-T\-E\-C\-T \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-F\-E\-N\-C\-E\-\_\-\-N\-O\-N\-E@{\-F\-E\-N\-C\-E\-\_\-\-N\-O\-N\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-N\-O\-N\-E@{\-F\-E\-N\-C\-E\-\_\-\-N\-O\-N\-E}}\item[{\em 
+\hypertarget{program_8h_a87877f4854863e17de660c413f9b2ff4a3c905d1dac255ef7354437af9e04bce3}{\-F\-E\-N\-C\-E\-\_\-\-N\-O\-N\-E}\label{program_8h_a87877f4854863e17de660c413f9b2ff4a3c905d1dac255ef7354437af9e04bce3}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-F\-I\-R\-S\-T@{\-F\-E\-N\-C\-E\-\_\-\-F\-I\-R\-S\-T}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-F\-I\-R\-S\-T@{\-F\-E\-N\-C\-E\-\_\-\-F\-I\-R\-S\-T}}\item[{\em 
+\hypertarget{program_8h_a87877f4854863e17de660c413f9b2ff4ad1a2d641f683f7cda002654ccc05dce6}{\-F\-E\-N\-C\-E\-\_\-\-F\-I\-R\-S\-T}\label{program_8h_a87877f4854863e17de660c413f9b2ff4ad1a2d641f683f7cda002654ccc05dce6}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-V\-O\-I\-D@{\-F\-E\-N\-C\-E\-\_\-\-V\-O\-I\-D}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-V\-O\-I\-D@{\-F\-E\-N\-C\-E\-\_\-\-V\-O\-I\-D}}\item[{\em 
+\hypertarget{program_8h_a87877f4854863e17de660c413f9b2ff4a516323f13dec9cf43d2be1d75e07790e}{\-F\-E\-N\-C\-E\-\_\-\-V\-O\-I\-D}\label{program_8h_a87877f4854863e17de660c413f9b2ff4a516323f13dec9cf43d2be1d75e07790e}
+}]\index{\-F\-E\-N\-C\-E\-\_\-\-S\-E\-C\-O\-N\-D@{\-F\-E\-N\-C\-E\-\_\-\-S\-E\-C\-O\-N\-D}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-F\-E\-N\-C\-E\-\_\-\-S\-E\-C\-O\-N\-D@{\-F\-E\-N\-C\-E\-\_\-\-S\-E\-C\-O\-N\-D}}\item[{\em 
+\hypertarget{program_8h_a87877f4854863e17de660c413f9b2ff4a9decac323fe4c0850c325ae2723119dc}{\-F\-E\-N\-C\-E\-\_\-\-S\-E\-C\-O\-N\-D}\label{program_8h_a87877f4854863e17de660c413f9b2ff4a9decac323fe4c0850c325ae2723119dc}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_ac39dc3eea5cbe93d8820470419ab3f36}{\index{program.\-h@{program.\-h}!lineapproachstate@{lineapproachstate}}
+\index{lineapproachstate@{lineapproachstate}!program.h@{program.\-h}}
+\subsubsection[{lineapproachstate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf lineapproachstate}}}\label{program_8h_ac39dc3eea5cbe93d8820470419ab3f36}
+\-An enum for the sub state \-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-L\-I\-N\-E\-\_\-\-T\-U\-R\-N\-\_\-\-F\-R\-O\-M\-\_\-\-B\-A\-S\-E@{\-L\-I\-N\-E\-\_\-\-T\-U\-R\-N\-\_\-\-F\-R\-O\-M\-\_\-\-B\-A\-S\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-L\-I\-N\-E\-\_\-\-T\-U\-R\-N\-\_\-\-F\-R\-O\-M\-\_\-\-B\-A\-S\-E@{\-L\-I\-N\-E\-\_\-\-T\-U\-R\-N\-\_\-\-F\-R\-O\-M\-\_\-\-B\-A\-S\-E}}\item[{\em 
+\hypertarget{program_8h_ac39dc3eea5cbe93d8820470419ab3f36a7ff8f6acc8169f26d9008205d46f8fa7}{\-L\-I\-N\-E\-\_\-\-T\-U\-R\-N\-\_\-\-F\-R\-O\-M\-\_\-\-B\-A\-S\-E}\label{program_8h_ac39dc3eea5cbe93d8820470419ab3f36a7ff8f6acc8169f26d9008205d46f8fa7}
+}]\index{\-L\-I\-N\-E\-\_\-\-D\-R\-I\-V\-E@{\-L\-I\-N\-E\-\_\-\-D\-R\-I\-V\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-L\-I\-N\-E\-\_\-\-D\-R\-I\-V\-E@{\-L\-I\-N\-E\-\_\-\-D\-R\-I\-V\-E}}\item[{\em 
+\hypertarget{program_8h_ac39dc3eea5cbe93d8820470419ab3f36a17676ddea121aab34fdcc7fdb4de9be7}{\-L\-I\-N\-E\-\_\-\-D\-R\-I\-V\-E}\label{program_8h_ac39dc3eea5cbe93d8820470419ab3f36a17676ddea121aab34fdcc7fdb4de9be7}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a3405b806bf4c924d6c4afba63def29e6}{\index{program.\-h@{program.\-h}!nextbasestate@{nextbasestate}}
+\index{nextbasestate@{nextbasestate}!program.h@{program.\-h}}
+\subsubsection[{nextbasestate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf nextbasestate}}}\label{program_8h_a3405b806bf4c924d6c4afba63def29e6}
+\-An enum for the sub state next base \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-D\-R\-I\-V\-E@{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-D\-R\-I\-V\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-D\-R\-I\-V\-E@{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-D\-R\-I\-V\-E}}\item[{\em 
+\hypertarget{program_8h_a3405b806bf4c924d6c4afba63def29e6a61749b5bab0f56390e4cb2a7d50765fd}{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-D\-R\-I\-V\-E}\label{program_8h_a3405b806bf4c924d6c4afba63def29e6a61749b5bab0f56390e4cb2a7d50765fd}
+}]\index{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-N\-U\-M@{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-N\-U\-M}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-N\-U\-M@{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-N\-U\-M}}\item[{\em 
+\hypertarget{program_8h_a3405b806bf4c924d6c4afba63def29e6a7dfd258f20cee13e09128c4f85d71c32}{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-N\-U\-M}\label{program_8h_a3405b806bf4c924d6c4afba63def29e6a7dfd258f20cee13e09128c4f85d71c32}
+}]\index{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H@{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}}\item[{\em 
+\hypertarget{program_8h_a3405b806bf4c924d6c4afba63def29e6a6cd5c57967aa0c7e5b07b3905f3e9c92}{\-N\-E\-X\-T\-B\-A\-S\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H}\label{program_8h_a3405b806bf4c924d6c4afba63def29e6a6cd5c57967aa0c7e5b07b3905f3e9c92}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{\index{program.\-h@{program.\-h}!programstate@{programstate}}
+\index{programstate@{programstate}!program.h@{program.\-h}}
+\subsubsection[{programstate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate}}}\label{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}
+\-An enum for the main program state machine \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-C\-A\-L\-I\-B\-R\-A\-T\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-A\-L\-I\-B\-R\-A\-T\-E@{\-C\-A\-L\-I\-B\-R\-A\-T\-E}}\item[{\em 
+\hypertarget{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edaaab5a2bcea860b4f52557e01cb37c66f}{\-C\-A\-L\-I\-B\-R\-A\-T\-E}\label{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edaaab5a2bcea860b4f52557e01cb37c66f}
+}]\index{\-D\-R\-I\-V\-E@{\-D\-R\-I\-V\-E}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-D\-R\-I\-V\-E@{\-D\-R\-I\-V\-E}}\item[{\em 
+\hypertarget{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edaf7b6d6d8e5e14633d388ef9cc7a941b7}{\-D\-R\-I\-V\-E}\label{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edaf7b6d6d8e5e14633d388ef9cc7a941b7}
+}]\index{\-C\-O\-L\-L\-I\-S\-I\-O\-N@{\-C\-O\-L\-L\-I\-S\-I\-O\-N}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-C\-O\-L\-L\-I\-S\-I\-O\-N@{\-C\-O\-L\-L\-I\-S\-I\-O\-N}}\item[{\em 
+\hypertarget{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edad5384d1822c72da119100438c5051831}{\-C\-O\-L\-L\-I\-S\-I\-O\-N}\label{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17edad5384d1822c72da119100438c5051831}
+}]\index{\-S\-E\-E\-K\-D\-O\-C\-K@{\-S\-E\-E\-K\-D\-O\-C\-K}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-S\-E\-E\-K\-D\-O\-C\-K@{\-S\-E\-E\-K\-D\-O\-C\-K}}\item[{\em 
+\hypertarget{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17eda523fd3390bbfe0fd8acb526cb6d8dece}{\-S\-E\-E\-K\-D\-O\-C\-K}\label{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17eda523fd3390bbfe0fd8acb526cb6d8dece}
+}]\index{\-D\-O\-C\-K\-E\-D@{\-D\-O\-C\-K\-E\-D}!program.\-h@{program.\-h}}\index{program.\-h@{program.\-h}!\-D\-O\-C\-K\-E\-D@{\-D\-O\-C\-K\-E\-D}}\item[{\em 
+\hypertarget{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17eda00ddb6ac2f6beae3b9c42f8991e5809d}{\-D\-O\-C\-K\-E\-D}\label{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17eda00ddb6ac2f6beae3b9c42f8991e5809d}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{program_8h_a951e83dd1b0ba3d8f8d20833a5186d20}{\index{program.\-h@{program.\-h}!get\-Opposite\-Direction@{get\-Opposite\-Direction}}
+\index{get\-Opposite\-Direction@{get\-Opposite\-Direction}!program.h@{program.\-h}}
+\subsubsection[{get\-Opposite\-Direction}]{\setlength{\rightskip}{0pt plus 5cm}{\bf direction} {\bf get\-Opposite\-Direction} (
+\begin{DoxyParamCaption}
+\item[{{\bf direction}}]{dir}
+\end{DoxyParamCaption}
+)}}\label{program_8h_a951e83dd1b0ba3d8f8d20833a5186d20}
+
+
+\-Get opposite direction. 
+
+this function returns the opposite direction to the given one 
+\begin{DoxyParams}{\-Parameters}
+{\em dir} & the direction to get the opposite of \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the opposite direction or \-S\-T\-R\-A\-I\-G\-H\-T for \-S\-T\-R\-A\-I\-G\-H\-T input value (0) 
+\end{DoxyReturn}
+\hypertarget{program_8h_a0f5be7e3ba08881af87089ce4098f455}{\index{program.\-h@{program.\-h}!handle\-State\-Calibrate@{handle\-State\-Calibrate}}
+\index{handle\-State\-Calibrate@{handle\-State\-Calibrate}!program.h@{program.\-h}}
+\subsubsection[{handle\-State\-Calibrate}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-State\-Calibrate} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_a0f5be7e3ba08881af87089ce4098f455}
+
+
+\-Handle \-C\-A\-L\-I\-B\-R\-A\-T\-E state. 
+
+this function handles the \-C\-A\-L\-I\-B\-R\-A\-T\-E program state \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_aa163d8cdbf5c0a8619ac2078b5ff7194}{\index{program.\-h@{program.\-h}!handle\-State\-Collision@{handle\-State\-Collision}}
+\index{handle\-State\-Collision@{handle\-State\-Collision}!program.h@{program.\-h}}
+\subsubsection[{handle\-State\-Collision}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-State\-Collision} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_aa163d8cdbf5c0a8619ac2078b5ff7194}
+
+
+\-Handle \-C\-O\-L\-L\-I\-S\-I\-O\-N state. 
+
+this function handles the \-C\-O\-L\-L\-I\-S\-I\-O\-N program state \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_ac3fc814975a378c8ab3a5a2725dad4b6}{\index{program.\-h@{program.\-h}!handle\-State\-Docked@{handle\-State\-Docked}}
+\index{handle\-State\-Docked@{handle\-State\-Docked}!program.h@{program.\-h}}
+\subsubsection[{handle\-State\-Docked}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-State\-Docked} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_ac3fc814975a378c8ab3a5a2725dad4b6}
+
+
+\-Handle \-D\-O\-C\-K\-E\-D state. 
+
+this function handles the \-D\-O\-C\-K\-E\-D program state \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_a55443443436d11f5a72b1590a587254b}{\index{program.\-h@{program.\-h}!handle\-State\-Drive@{handle\-State\-Drive}}
+\index{handle\-State\-Drive@{handle\-State\-Drive}!program.h@{program.\-h}}
+\subsubsection[{handle\-State\-Drive}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-State\-Drive} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_a55443443436d11f5a72b1590a587254b}
+
+
+\-Handle \-D\-R\-I\-V\-E state. 
+
+this function handles the \-D\-R\-I\-V\-E program state \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_ade6534fcc6d9172101799c3b52141a1b}{\index{program.\-h@{program.\-h}!handle\-State\-Seekdock@{handle\-State\-Seekdock}}
+\index{handle\-State\-Seekdock@{handle\-State\-Seekdock}!program.h@{program.\-h}}
+\subsubsection[{handle\-State\-Seekdock}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-State\-Seekdock} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_ade6534fcc6d9172101799c3b52141a1b}
+
+
+\-Handle \-S\-E\-E\-K\-D\-O\-C\-K state. 
+
+this function handles the \-S\-E\-E\-K\-D\-O\-C\-K program state \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_accdd6ae24fd80fc2a0158306cc97a4b9}{\index{program.\-h@{program.\-h}!handle\-Sub\-State\-Angle\-Approach@{handle\-Sub\-State\-Angle\-Approach}}
+\index{handle\-Sub\-State\-Angle\-Approach@{handle\-Sub\-State\-Angle\-Approach}!program.h@{program.\-h}}
+\subsubsection[{handle\-Sub\-State\-Angle\-Approach}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-Sub\-State\-Angle\-Approach} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_accdd6ae24fd80fc2a0158306cc97a4b9}
+
+
+\-Handle sub-\/state \-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H. 
+
+this function handles the drive state \-A\-N\-G\-L\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_a503c3367909ea680743780fce317e4fc}{\index{program.\-h@{program.\-h}!handle\-Sub\-State\-Fence\-Approach@{handle\-Sub\-State\-Fence\-Approach}}
+\index{handle\-Sub\-State\-Fence\-Approach@{handle\-Sub\-State\-Fence\-Approach}!program.h@{program.\-h}}
+\subsubsection[{handle\-Sub\-State\-Fence\-Approach}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-Sub\-State\-Fence\-Approach} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_a503c3367909ea680743780fce317e4fc}
+
+
+\-Handle sub-\/state \-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H. 
+
+this function handles the drive state \-F\-E\-N\-C\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_a0c42b76ed2d673af808038847f97cb9c}{\index{program.\-h@{program.\-h}!handle\-Sub\-State\-Leave\-Dock@{handle\-Sub\-State\-Leave\-Dock}}
+\index{handle\-Sub\-State\-Leave\-Dock@{handle\-Sub\-State\-Leave\-Dock}!program.h@{program.\-h}}
+\subsubsection[{handle\-Sub\-State\-Leave\-Dock}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-Sub\-State\-Leave\-Dock} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_a0c42b76ed2d673af808038847f97cb9c}
+
+
+\-Handle sub-\/state \-L\-E\-A\-V\-E\-D\-O\-C\-K. 
+
+this function handles the drive state \-L\-E\-A\-V\-E\-D\-O\-C\-K \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_acddffc960aad5bf5343017a78eca8e1d}{\index{program.\-h@{program.\-h}!handle\-Sub\-State\-Line\-Approach@{handle\-Sub\-State\-Line\-Approach}}
+\index{handle\-Sub\-State\-Line\-Approach@{handle\-Sub\-State\-Line\-Approach}!program.h@{program.\-h}}
+\subsubsection[{handle\-Sub\-State\-Line\-Approach}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-Sub\-State\-Line\-Approach} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_acddffc960aad5bf5343017a78eca8e1d}
+
+
+\-Handle sub-\/state \-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H. 
+
+this function handles the drive state \-L\-I\-N\-E\-\_\-\-A\-P\-P\-R\-O\-A\-C\-H \begin{DoxyReturn}{\-Returns}
+the main program state for the next iteration (can be \-C\-A\-L\-I\-B\-R\-A\-T\-E, \-D\-R\-I\-V\-E,\-C\-O\-L\-L\-I\-S\-I\-O\-N, \-S\-E\-E\-K\-D\-O\-C\-K, \-D\-O\-C\-K\-E\-D) 
+\end{DoxyReturn}
+\hypertarget{program_8h_aedb273b64fb0ee8f1a9333a435faee0b}{\index{program.\-h@{program.\-h}!int\-To\-Ascii@{int\-To\-Ascii}}
+\index{int\-To\-Ascii@{int\-To\-Ascii}!program.h@{program.\-h}}
+\subsubsection[{int\-To\-Ascii}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf int\-To\-Ascii} (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{value, }
+\item[{int32\-\_\-t}]{out\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{program_8h_aedb273b64fb0ee8f1a9333a435faee0b}
+
+
+\-Convert int to ascii. 
+
+\-Convert an integer value to an array of ascii digits with function
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em value} & the integer value to convert \\
+\hline
+{\em out} & the result array, containing the ascii digits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+1 if the integer value is smaller than 10000, -\/1 otherwise 
+\end{DoxyReturn}
+\hypertarget{program_8h_ad6a19aead26fbdc1d2334564f3c9b0f2}{\index{program.\-h@{program.\-h}!program\-Run@{program\-Run}}
+\index{program\-Run@{program\-Run}!program.h@{program.\-h}}
+\subsubsection[{program\-Run}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf program\-Run} (
+\begin{DoxyParamCaption}
+\item[{void}]{}
+\end{DoxyParamCaption}
+)}}\label{program_8h_ad6a19aead26fbdc1d2334564f3c9b0f2}
+
+
+\-Main program loop. 
+
+\-The main program loop function \hypertarget{program_8h_acae4abb376e677915fa71863956c3f6f}{\index{program.\-h@{program.\-h}!set\-Program\-State@{set\-Program\-State}}
+\index{set\-Program\-State@{set\-Program\-State}!program.h@{program.\-h}}
+\subsubsection[{set\-Program\-State}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf set\-Program\-State} (
+\begin{DoxyParamCaption}
+\item[{enum {\bf programstate}}]{state}
+\end{DoxyParamCaption}
+)}}\label{program_8h_acae4abb376e677915fa71863956c3f6f}
+
+
+\-Set program state function. 
+
+\-Set the program state according to the state chart with this function
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em state} & the state to set \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{program_8h_ae013e8828a04f2f56d6a8e7d7dc6bb67}{\index{program.\-h@{program.\-h}!base\-\_\-config\-\_\-state@{base\-\_\-config\-\_\-state}}
+\index{base\-\_\-config\-\_\-state@{base\-\_\-config\-\_\-state}!program.h@{program.\-h}}
+\subsubsection[{base\-\_\-config\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf base\-\_\-config\-\_\-state}}}\label{program_8h_ae013e8828a04f2f56d6a8e7d7dc6bb67}
+\-Current state of the base configuration module \hypertarget{program_8h_a210d7e23bcd2277ddae750ae786dd728}{\index{program.\-h@{program.\-h}!global\-\_\-clock@{global\-\_\-clock}}
+\index{global\-\_\-clock@{global\-\_\-clock}!program.h@{program.\-h}}
+\subsubsection[{global\-\_\-clock}]{\setlength{\rightskip}{0pt plus 5cm}{\bf millis\-\_\-t} {\bf global\-\_\-clock}}}\label{program_8h_a210d7e23bcd2277ddae750ae786dd728}
+\-Global clock; incremented in every iteration of the main loop \hypertarget{program_8h_a0e1e6ffbb33fa2aa30f0ea074cd71ed1}{\index{program.\-h@{program.\-h}!ir\-\_\-action@{ir\-\_\-action}}
+\index{ir\-\_\-action@{ir\-\_\-action}!program.h@{program.\-h}}
+\subsubsection[{ir\-\_\-action}]{\setlength{\rightskip}{0pt plus 5cm}volatile int32\-\_\-t {\bf ir\-\_\-action}}}\label{program_8h_a0e1e6ffbb33fa2aa30f0ea074cd71ed1}
+stores the queried ir button state 

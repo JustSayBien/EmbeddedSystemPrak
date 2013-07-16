@@ -2,6 +2,7 @@ var searchData=
 [
   ['lcd_2eh',['lcd.h',['../lcd_8h.html',1,'']]],
   ['lcd_5fprintf',['lcd_printf',['../output_8h.html#ad01b23ce7a9ee4520ce14114bfd9f771',1,'output.h']]],
+  ['leave_5fdock',['LEAVE_DOCK',['../program_8h.html#ad2baada0c169e2158f13d255dffcf9c5a580e1fa813ad6d477e53e689ffe1f505',1,'program.h']]],
   ['led_2eh',['led.h',['../led_8h.html',1,'']]],
   ['led_5fcheck_5frobot_5fred',['LED_CHECK_ROBOT_RED',['../roomba_8h.html#a18a6f29e2d4a60d18362e9ee88079985',1,'roomba.h']]],
   ['led_5fdirt_5fdetect_5fblue',['LED_DIRT_DETECT_BLUE',['../roomba_8h.html#a62951b8a0a121fd297117552693478bd',1,'roomba.h']]],
@@ -38,7 +39,15 @@ var searchData=
   ['led_5fsched_5fwday_5ftue',['LED_SCHED_WDAY_TUE',['../roomba_8h.html#a44b288199450e5f6f64c5ca00ea78fcc',1,'roomba.h']]],
   ['led_5fsched_5fwday_5fwed',['LED_SCHED_WDAY_WED',['../roomba_8h.html#aee81e461f3f87645f021c79aef4d882b',1,'roomba.h']]],
   ['led_5fspot_5fgreen',['LED_SPOT_GREEN',['../roomba_8h.html#a7bad0b6090b9574104346e2273f64ef5',1,'roomba.h']]],
+  ['left',['LEFT',['../program_8h.html#a99f26e6ee9fcd62f75203b5402df8098adb45120aafd37a973140edee24708065',1,'program.h']]],
   ['length',['length',['../structpacket.html#ab2b3adeb2a67e656ff030b56727fd0ac',1,'packet']]],
+  ['light_5fbump_5fclear',['LIGHT_BUMP_CLEAR',['../roomba_8h.html#a48e60dc0e87bff81a12545f681a51d2d',1,'roomba.h']]],
+  ['light_5fbump_5fnot_5fclear',['LIGHT_BUMP_NOT_CLEAR',['../roomba_8h.html#a9b1046435af32b5dae762ee45c46946d',1,'roomba.h']]],
+  ['light_5fbumper_5fstate',['light_bumper_state',['../structcollision__data.html#ad40117dfe4921b4f52a9fcb49e76c3fa',1,'collision_data']]],
+  ['line_5fapproach',['LINE_APPROACH',['../program_8h.html#ad2baada0c169e2158f13d255dffcf9c5a32d79dca81bffba2848610ab1165ce14',1,'program.h']]],
+  ['line_5fdrive',['LINE_DRIVE',['../program_8h.html#ac39dc3eea5cbe93d8820470419ab3f36a17676ddea121aab34fdcc7fdb4de9be7',1,'program.h']]],
+  ['line_5fturn_5ffrom_5fbase',['LINE_TURN_FROM_BASE',['../program_8h.html#ac39dc3eea5cbe93d8820470419ab3f36a7ff8f6acc8169f26d9008205d46f8fa7',1,'program.h']]],
+  ['lineapproachstate',['lineapproachstate',['../program_8h.html#ac39dc3eea5cbe93d8820470419ab3f36',1,'program.h']]],
   ['linker_2eh',['linker.h',['../linker_8h.html',1,'']]],
   ['list',['list',['../structalt__dma__rxchan__dev__s.html#a3f58d046b28735c0e628aa1de56acd9b',1,'alt_dma_rxchan_dev_s']]],
   ['llist',['llist',['../structalt__alarm__s.html#a135bc0be285afc59289210771ad9c136',1,'alt_alarm_s::llist()'],['../structalt__dev__llist.html#a135bc0be285afc59289210771ad9c136',1,'alt_dev_llist::llist()'],['../structalt__dev__s.html#a135bc0be285afc59289210771ad9c136',1,'alt_dev_s::llist()'],['../structalt__dma__txchan__dev__s.html#a135bc0be285afc59289210771ad9c136',1,'alt_dma_txchan_dev_s::llist()']]],
@@ -46,5 +55,6 @@ var searchData=
   ['log_5fprintf',['log_printf',['../output_8h.html#afff86884884d8570c45095964d354589',1,'output.h']]],
   ['log_5fputchar',['log_putchar',['../output_8h.html#a747c3e1febddcd23fc87752c2b87a01e',1,'output.h']]],
   ['log_5fputs',['log_puts',['../output_8h.html#a75d643fcf2b14fde9297205954a220fc',1,'output.h']]],
+  ['low_5fword',['low_word',['../structf64.html#a0bcaca8a2513fca0a9613d1a0ac78e7b',1,'f64']]],
   ['lseek',['lseek',['../structalt__dev__s.html#ab8596a7b90d3cf8e637abbe23825c9bc',1,'alt_dev_s']]]
 ];

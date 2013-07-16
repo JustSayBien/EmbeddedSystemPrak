@@ -1,13 +1,32 @@
 var searchData=
 [
   ['matchpoints_5fto_5fndp',['MATCHPOINTS_TO_NDP',['../spr-defs_8h.html#ad591848bf351d98f47fcac77cde306f4',1,'spr-defs.h']]],
+  ['math_5f1_5fpi',['MATH_1_PI',['../mymath_8h.html#a4b1fa40580ac4f7f610b41b1962f094a',1,'mymath.h']]],
+  ['math_5fpi',['MATH_PI',['../mymath_8h.html#ac58cbaeae310f551049f77b7c098599e',1,'mymath.h']]],
+  ['math_5fpi2',['MATH_PI2',['../mymath_8h.html#a2ba39aa8a5bd8ca9078c365bef437c01',1,'mymath.h']]],
+  ['math_5fpi3',['MATH_PI3',['../mymath_8h.html#ae905c49f0049c3f37cdeef7de00f4769',1,'mymath.h']]],
+  ['math_5fpi6',['MATH_PI6',['../mymath_8h.html#a0397c3214d9074b0923d5690c8b5fd25',1,'mymath.h']]],
+  ['max_5fcount_5fworkbenches',['MAX_COUNT_WORKBENCHES',['../workbench_8h.html#acba125910e0f69e5c70d5c52a894b9ae',1,'workbench.h']]],
   ['max_5fgrps',['MAX_GRPS',['../spr-defs_8h.html#a44b278760f7184302d0070c0c39f5ba8',1,'spr-defs.h']]],
   ['max_5fmatchpoints',['MAX_MATCHPOINTS',['../spr-defs_8h.html#ad73e5a54a3ef51ce3fc8c029cae04b7b',1,'spr-defs.h']]],
   ['max_5fsprs',['MAX_SPRS',['../spr-defs_8h.html#ad0181a4ab5f0eecb77ac80cc860a3c1c',1,'spr-defs.h']]],
   ['max_5fsprs_5fper_5fgrp',['MAX_SPRS_PER_GRP',['../spr-defs_8h.html#aa4038b81fb32dbdd0ed4ab955ce78dec',1,'spr-defs.h']]],
   ['max_5fsprs_5fper_5fgrp_5fbits',['MAX_SPRS_PER_GRP_BITS',['../spr-defs_8h.html#adcfdf6c984d5e7577cd0086d5475bfb6',1,'spr-defs.h']]],
   ['max_5fwatchpoints',['MAX_WATCHPOINTS',['../spr-defs_8h.html#af94d337a666ee76d67fca30b918cb42d',1,'spr-defs.h']]],
+  ['millis_5ft',['millis_t',['../program_8h.html#ab14fc3b0e7b9535ec25836108ce96a45',1,'program.h']]],
   ['my_5fmsleep',['my_msleep',['../tools_8h.html#ad307acddb10150dcbd536fe5ab801797',1,'tools.h']]],
   ['my_5fsleep',['my_sleep',['../tools_8h.html#a65f85ad4128b5b822218b400b97e67a0',1,'tools.h']]],
-  ['my_5fusleep',['my_usleep',['../tools_8h.html#a081d62accba0e782c4d3d9284566fa4f',1,'tools.h']]]
+  ['my_5fusleep',['my_usleep',['../tools_8h.html#a081d62accba0e782c4d3d9284566fa4f',1,'tools.h']]],
+  ['mymath_2eh',['mymath.h',['../mymath_8h.html',1,'']]],
+  ['mymathabs',['mymathAbs',['../mymath_8h.html#a1c2afbde0e5629535de1da7c15a6a1af',1,'mymath.h']]],
+  ['mymathatan',['mymathAtan',['../mymath_8h.html#a6aa2d820e1feb73761920d3244578027',1,'mymath.h']]],
+  ['mymathatan2',['mymathAtan2',['../mymath_8h.html#aa8ffa99d80feb9cd27a431c5449e4b8f',1,'mymath.h']]],
+  ['mymathcos',['mymathCos',['../mymath_8h.html#af51f540223716d61f6601f945df3ac01',1,'mymath.h']]],
+  ['mymathdegtorad',['mymathDegToRad',['../mymath_8h.html#aedaec2380d1b921e2fc0fdc0e6342080',1,'mymath.h']]],
+  ['mymathmodf',['mymathModf',['../mymath_8h.html#a9c261806a84d6e1910c4018fef355685',1,'mymath.h']]],
+  ['mymathradtodeg',['mymathRadToDeg',['../mymath_8h.html#a8b46567c4c220b52ee2b305ef3077a8f',1,'mymath.h']]],
+  ['mymathsign',['mymathSign',['../mymath_8h.html#a9f24cefd3073bc9dba03123c90aacddc',1,'mymath.h']]],
+  ['mymathsin',['mymathSin',['../mymath_8h.html#a88dc6d36c33ede38c6abe78ff049c249',1,'mymath.h']]],
+  ['mymathsinus',['mymathSinus',['../mymath_8h.html#aa1c4f108a2f32be7104a756f434f956c',1,'mymath.h']]],
+  ['mymathsquareroot',['mymathSquareRoot',['../mymath_8h.html#abd40fcc0cd6b6b403dc13195c454705d',1,'mymath.h']]]
 ];

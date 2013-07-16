@@ -50,7 +50,6 @@ uint8_t fence_drive_counter = 0;
 int32_t fence_correct_straight_distance = 0;
 uint32_t drive_counter = 0;
 
-
 void programRun() {
 
 	//init sevenseg
@@ -91,7 +90,7 @@ void programRun() {
 		}
 
 		//global reset for all states
-		if(ir_action == ROOMBA_REMOTE_BACK) {
+		if (ir_action == ROOMBA_REMOTE_BACK) {
 			roombaStop();
 			drive_state = LEAVE_DOCK;
 			angle_approach_state = DRIVE_ANGLE;
@@ -253,6 +252,8 @@ enum programstate handleStateDrive() {
 
 }
 
+
+
 enum programstate handleStateCollision() {
 
 	collisiondata.program_tick_counter++;
@@ -276,7 +277,7 @@ enum programstate handleStateCollision() {
 			if (collisiondata.bumper_state != 0) {
 				//any wheeldrop
 				if (collisiondata.bumper_state >= 0x4) {
-					//use Day button to return to drive mode
+					//use remote ok button to return to drive mode
 					if (ir_action == ROOMBA_REMOTE_CROSS_OK) {
 						roombaOnCollisionCleared();
 						return DRIVE;
@@ -288,7 +289,7 @@ enum programstate handleStateCollision() {
 				roombaDriveABitBackward(DIFFERENCE_TO_BASE / 4);
 			}
 
-			roombaResetTrips();
+			roombaResetTripsWithoutConsumingSensors();
 
 			if (!collisiondata.played_acustic_feedback) {
 				roombaPlaySongCollision();
@@ -327,7 +328,7 @@ enum programstate handleStateCollision() {
 					&& light_signal <= LIGHT_BUMP_NOT_CLEAR) {
 				roombaStop();
 				collisiondata.angle_sum += roombadata.trip_angle;
-				roombaResetTrips();
+				roombaResetTripsWithoutConsumingSensors();
 				collision_state = COLLISION_DRIVE;
 			}
 		}
@@ -335,6 +336,7 @@ enum programstate handleStateCollision() {
 	case COLLISION_DRIVE:
 
 		if (!roombadata.is_moving) {
+			roombaResetTripsWithoutConsumingSensors();
 			roombaDrive(DEFAULT_VELOCITY / 2, STRAIGHT);
 		} else {
 			roombaQuerySensor(PACKET_ANGLE);
@@ -344,11 +346,12 @@ enum programstate handleStateCollision() {
 			int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
 			int32_t light_bumper_state = roombaQuerySensor(PACKET_LIGHT_BUMPER);
 			if (bumper_state != 0 || light_bumper_state != 0) {
-
-				collisiondata.angle_sum += roombadata.trip_angle;
-				roombaUpdateDistanceSum();
 				roombaStop();
-				roombaResetTrips();
+				collisiondata.angle_sum += roombadata.trip_angle;
+
+				roombaUpdateDistanceSum();
+
+				roombaResetTripsWithoutConsumingSensors();
 				collisiondata.bumper_state = bumper_state;
 				collisiondata.light_bumper_state = light_bumper_state;
 				collision_state = COLLISION_TURN;
@@ -368,21 +371,24 @@ enum programstate handleStateCollision() {
 					roombaStop();
 
 					collisiondata.angle_sum += roombadata.trip_angle;
+
 					roombaUpdateDistanceSum();
-					roombaResetTrips();
+					roombaResetTripsWithoutConsumingSensors();
 
 					roombaDrive(DEFAULT_VELOCITY / 2, RIGHT);
 				} else if (light_signal >= LIGHT_BUMP_NOT_CLEAR) {
 					collisiondata.angle_sum += roombadata.trip_angle;
+
 					roombaUpdateDistanceSum();
-					roombaResetTrips();
+					roombaResetTripsWithoutConsumingSensors();
 					roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
 				} else {
 					if (roombadata.trip_distance > 0
 							&& roombadata.trip_distance >= 50) {
 						collisiondata.angle_sum += roombadata.trip_angle;
+
 						roombaUpdateDistanceSum();
-						roombaResetTrips();
+						roombaResetTripsWithoutConsumingSensors();
 					}
 
 					roombaDrive(DEFAULT_VELOCITY / 2, STRAIGHT);
@@ -400,7 +406,7 @@ enum programstate handleStateCollision() {
 						if (cliff_front_left_signal >= TAPE_SIGNAL
 								&& cliff_front_right_signal >= TAPE_SIGNAL) {
 							roombaStop();
-							roombaResetTrips();
+							roombaResetTripsWithoutConsumingSensors();
 							int32_t angle_to_turn = 45;
 							roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
 
@@ -413,7 +419,7 @@ enum programstate handleStateCollision() {
 							return DRIVE;
 						} else if (cliff_front_left_signal >= TAPE_SIGNAL) {
 							roombaStop();
-							roombaResetTrips();
+							roombaResetTripsWithoutConsumingSensors();
 							int32_t angle_to_turn = 75;
 							roombaDrive(DEFAULT_VELOCITY / 2, LEFT);
 
@@ -426,7 +432,7 @@ enum programstate handleStateCollision() {
 							return DRIVE;
 						} else if (cliff_front_right_signal >= TAPE_SIGNAL) {
 							roombaStop();
-							roombaResetTrips();
+							roombaResetTripsWithoutConsumingSensors();
 							roombaOnCollisionCleared();
 							return DRIVE;
 
@@ -442,7 +448,7 @@ enum programstate handleStateCollision() {
 						if (collisiondata.distance_sum < 50
 								&& collisiondata.distance_sum > -50) {
 							roombaStop();
-							roombaResetTrips();
+							roombaResetTripsWithoutConsumingSensors();
 							int32_t angle_to_turn = 0;
 							int32_t angle_sum_abs =
 									collisiondata.angle_sum < 0 ?
@@ -469,7 +475,7 @@ enum programstate handleStateCollision() {
 								roombaQuerySensor(PACKET_ANGLE);
 							}
 							roombaStop();
-							roombaResetTrips();
+							roombaResetTripsWithoutConsumingSensors();
 
 							roombaOnCollisionCleared();
 
@@ -483,6 +489,9 @@ enum programstate handleStateCollision() {
 		break;
 
 	}
+
+	intToAscii(collisiondata.distance_sum, roomba_sevenseg_digits);
+	roombaWriteSevensegDigits();
 
 	return COLLISION;
 }
@@ -509,7 +518,7 @@ enum programstate handleStateSeekdock() {
 	}
 }
 
-enum programstate handleStateDocked() {	
+enum programstate handleStateDocked() {
 	if (roombadata.current_base_id == 0) {
 		roombadata.current_base_id = check_base_id();
 		if (roombadata.current_base_id != 0) {
@@ -852,7 +861,7 @@ enum programstate handleSubStateLineApproach() {
 	return DRIVE;
 }
 
-direction getOppositeDirection (direction dir) {
+direction getOppositeDirection(direction dir) {
 	switch (dir) {
 	case LEFT:
 		return RIGHT;
@@ -865,7 +874,8 @@ direction getOppositeDirection (direction dir) {
 }
 
 enum programstate handleSubStateFenceApproach() {
-	int16_t angle_to_drive = workbenchGetAngle(roombadata.current_base_id, roombadata.destination_base_id);
+	int16_t angle_to_drive = workbenchGetAngle(roombadata.current_base_id,
+			roombadata.destination_base_id);
 
 	//check if collisions are detected
 	int32_t bumper_state = roombaQuerySensor(PACKET_BUMPS_WHEELDROPS);
@@ -884,167 +894,172 @@ enum programstate handleSubStateFenceApproach() {
 	}
 
 	switch (fenceapproach_state) {
-		case FENCE_ANGLE:
-			//start turning if necessary
-			if(!roombadata.is_moving){
-				roombaResetTrips();
-				roombaDrive(DEFAULT_VELOCITY, (angle_to_drive < 0 ? RIGHT : LEFT));
-			} else {
-				//check if defined angle is reached
-				roombaQuerySensor(PACKET_ANGLE);
+	case FENCE_ANGLE:
+		//start turning if necessary
+		if (!roombadata.is_moving) {
+			roombaResetTrips();
+			roombaDrive(DEFAULT_VELOCITY, (angle_to_drive < 0 ? RIGHT : LEFT));
+		} else {
+			//check if defined angle is reached
+			roombaQuerySensor(PACKET_ANGLE);
+		}
+
+		if (mymathAbs(roombadata.trip_angle) >= mymathAbs(angle_to_drive)) {
+			roombaStop();
+			roombaResetTrips();
+			fenceapproach_state = FENCE_STRAIGHT;
+		}
+		break;
+
+	case FENCE_STRAIGHT: {
+		// drive straight
+		uint8_t wall_detected = 0;
+		if (!roombadata.is_moving) {
+			roombaDrive(DEFAULT_VELOCITY, STRAIGHT);
+		} else {
+			wall_detected = roombaQuerySensor(PACKET_VIRTUAL_WALL);
+		}
+
+		if (wall_detected)
+			roombaSetLed(LED_DIRT_DETECT_BLUE, 0, 0);
+
+		if (fencedetect_state != FENCE_NONE && fence_drive_counter <= 3) {
+			roombaResetTrips();
+			roombaQuerySensor(PACKET_DISTANCE);
+			roombaDrive(DEFAULT_VELOCITY / 2, STRAIGHT);
+			wall_detection_counter = 0;
+			roombaSetLed(LED_SPOT_GREEN, 0, 0);
+			while (roombadata.trip_distance <= 50) {
+				drive_counter++;
+				led_set_blue(drive_counter);
+				fence_correct_straight_distance += roombaQuerySensor(
+						PACKET_DISTANCE);
+				my_msleep(50);
+				global_clock += 50;
 			}
-			
-			if(mymathAbs(roombadata.trip_angle) >= mymathAbs(angle_to_drive)) {
+			fence_correct_straight_distance += roombaQuerySensor(
+					PACKET_DISTANCE);
+			roombaStop();
+
+			fence_recog_start_time = global_clock;
+
+			roombaSetLed(LED_CHECK_ROBOT_RED, 0, 0);
+			while ((global_clock - fence_recog_start_time)
+					< FENCE_VALUE_COLLECTION_TIME) {
+				wall_detection_counter += wall_detected;
+				led_set_blue(wall_detection_counter);
+				roombaSetWeekdayLed(wall_detection_counter);
+				my_msleep(150);
+				global_clock += 150;
+			}
+			roombaSetLed(0, 0, 0);
+			fence_drive_counter++;
+		}
+
+		switch (fencedetect_state) {
+		// setup for fence evasion
+		case FENCE_NONE:
+			//roomba_sevenseg_digits[0] = '1';
+			//roombaWriteSevensegDigits();
+			if (wall_detected == 1) {
 				roombaStop();
 				roombaResetTrips();
-				fenceapproach_state = FENCE_STRAIGHT;
+				wall_detection_counter = 1;
+				fence_drive_counter = 0;
+				fencedetect_state = FENCE_FIRST;
 			}
 			break;
-		
-		case FENCE_STRAIGHT: {
-			// drive straight
-			uint8_t wall_detected = 0;
-			if (!roombadata.is_moving) {
-				roombaDrive(DEFAULT_VELOCITY, STRAIGHT);
-			} else {
-				wall_detected = roombaQuerySensor(PACKET_VIRTUAL_WALL);
-			}
-			
-			if (wall_detected)
-				roombaSetLed(LED_DIRT_DETECT_BLUE, 0, 0);
-			
-			if (fencedetect_state != FENCE_NONE && fence_drive_counter <= 3) {
-				roombaResetTrips();
-				roombaQuerySensor(PACKET_DISTANCE);
-				roombaDrive(DEFAULT_VELOCITY/2, STRAIGHT);
-				wall_detection_counter = 0;
-				roombaSetLed(LED_SPOT_GREEN, 0, 0);
-				while(roombadata.trip_distance <= 50) {
-					drive_counter++;
-					led_set_blue(drive_counter);
-					fence_correct_straight_distance += roombaQuerySensor(PACKET_DISTANCE);
-					my_msleep(50);
-					global_clock += 50;
-				}
-				fence_correct_straight_distance += roombaQuerySensor(PACKET_DISTANCE);
-				roombaStop();
-				
-				fence_recog_start_time = global_clock;
-				
-				roombaSetLed(LED_CHECK_ROBOT_RED, 0, 0);
-				while ((global_clock - fence_recog_start_time) < FENCE_VALUE_COLLECTION_TIME) {
-					wall_detection_counter += wall_detected;
-					led_set_blue(wall_detection_counter);
-					roombaSetWeekdayLed(wall_detection_counter);
-					my_msleep(150);
-					global_clock += 150;
-				}
-				roombaSetLed(0, 0, 0);
-				fence_drive_counter++;
-			}
-			
-			switch (fencedetect_state) {
-				// setup for fence evasion
-				case FENCE_NONE:
-					//roomba_sevenseg_digits[0] = '1';
-					//roombaWriteSevensegDigits();
-					if (wall_detected == 1) {
-						roombaStop();
-						roombaResetTrips();
-						wall_detection_counter = 1;
-						fence_drive_counter = 0;
-						fencedetect_state = FENCE_FIRST;
-					}
-					break;
-				// first fence detected
-				case FENCE_FIRST:
-					//roomba_sevenseg_digits[0] = '2';
-					//roombaWriteSevensegDigits();
-					//led_set_blue(ledb_vals[0]);
-					if (wall_detection_counter == 0) {
-						fencedetect_state = FENCE_VOID;
-						fence_drive_counter = 0;
-					}
-					break;
-				// space between fences detected
-				case FENCE_VOID:
-					//roomba_sevenseg_digits[0] = '3';
-					//roombaWriteSevensegDigits();
-					//led_set_blue(ledb_vals[1]);
-					if (wall_detection_counter > 1) {
-						fencedetect_state = FENCE_SECOND;
-						fence_drive_counter = 0;
-					} else if (fence_drive_counter >=2) {
-						current_fence_direction = RIGHT;
-						fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
-					}
-					break;
-				// second fence detected
-				case FENCE_SECOND:
-					//roomba_sevenseg_digits[0] = '4';
-					//roombaWriteSevensegDigits();
-					//led_set_blue(ledb_vals[2]);
-					if (wall_detection_counter == 0) {
-						current_fence_direction = LEFT;
-						fence_drive_counter = 0;
-						fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
-					}
-					break;
-					
-				default:
-					break;
-			}
-			
-			if (fenceapproach_state == FENCE_CORRECTION_STRAIGHT) {
-				fencedetect_state = FENCE_NONE;
+			// first fence detected
+		case FENCE_FIRST:
+			//roomba_sevenseg_digits[0] = '2';
+			//roombaWriteSevensegDigits();
+			//led_set_blue(ledb_vals[0]);
+			if (wall_detection_counter == 0) {
+				fencedetect_state = FENCE_VOID;
 				fence_drive_counter = 0;
 			}
-						
+			break;
+			// space between fences detected
+		case FENCE_VOID:
+			//roomba_sevenseg_digits[0] = '3';
+			//roombaWriteSevensegDigits();
+			//led_set_blue(ledb_vals[1]);
+			if (wall_detection_counter > 1) {
+				fencedetect_state = FENCE_SECOND;
+				fence_drive_counter = 0;
+			} else if (fence_drive_counter >= 2) {
+				current_fence_direction = RIGHT;
+				fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
+			}
+			break;
+			// second fence detected
+		case FENCE_SECOND:
+			//roomba_sevenseg_digits[0] = '4';
+			//roombaWriteSevensegDigits();
+			//led_set_blue(ledb_vals[2]);
+			if (wall_detection_counter == 0) {
+				current_fence_direction = LEFT;
+				fence_drive_counter = 0;
+				fenceapproach_state = FENCE_CORRECTION_STRAIGHT;
+			}
+			break;
+
+		default:
 			break;
 		}
-		case FENCE_CORRECTION_STRAIGHT:
-			intToAscii(fence_correct_straight_distance, roomba_sevenseg_digits);
-			roombaWriteSevensegDigits();
+
+		if (fenceapproach_state == FENCE_CORRECTION_STRAIGHT) {
+			fencedetect_state = FENCE_NONE;
+			fence_drive_counter = 0;
+		}
+
+		break;
+	}
+	case FENCE_CORRECTION_STRAIGHT:
+		intToAscii(fence_correct_straight_distance, roomba_sevenseg_digits);
+		roombaWriteSevensegDigits();
+		my_msleep(3000);
+
+		// drive backwards
+		if (!roombadata.is_moving) {
+			roombaDrive(-DEFAULT_VELOCITY, STRAIGHT);
+			fence_correct_straight_distance += roombaQuerySensor(
+					PACKET_DISTANCE);
+			roombaResetTrips();
+		} else {
+			roombaQuerySensor(PACKET_DISTANCE);
+		}
+
+		// if driven far enough backwards (average distance between two lighthouses on the right side)
+		if (roombadata.trip_distance > fence_correct_straight_distance) {
+			roombaStop();
+			roombaResetTrips();
+			fenceapproach_state = FENCE_CORRECTION_ANGLE;
+		}
+
+		break;
+
+	case FENCE_CORRECTION_ANGLE:
+		// turn away from fence
+		if (!roombadata.is_moving) {
+			roombaDrive(DEFAULT_VELOCITY,
+					getOppositeDirection(current_fence_direction));
+		} else {
+			roombaQuerySensor(PACKET_ANGLE);
+		}
+
+		// if fence no longer recognized or angle turned too large resume straight path
+		if (roombaQuerySensor(PACKET_VIRTUAL_WALL)
+				== 0|| mymathAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
+			roombaStop();
+			roombaResetTrips();
+			current_fence_direction = STRAIGHT;
+			fenceapproach_state = FENCE_STRAIGHT;
+			roombaPlaySongDone();
 			my_msleep(3000);
-			
-			// drive backwards
-			if (!roombadata.is_moving) {
-				roombaDrive(-DEFAULT_VELOCITY, STRAIGHT);
-				fence_correct_straight_distance += roombaQuerySensor(PACKET_DISTANCE);
-				roombaResetTrips();
-			} else {
-				roombaQuerySensor(PACKET_DISTANCE);
-			}
-			
-			// if driven far enough backwards (average distance between two lighthouses on the right side)
-			if (roombadata.trip_distance > fence_correct_straight_distance) {
-				roombaStop();
-				roombaResetTrips();
-				fenceapproach_state = FENCE_CORRECTION_ANGLE;
-			}
-			
-			break;
+		}
 
-		case FENCE_CORRECTION_ANGLE:
-			// turn away from fence
-			if (!roombadata.is_moving) {
-				roombaDrive(DEFAULT_VELOCITY,
-						getOppositeDirection(current_fence_direction));
-			} else {
-				roombaQuerySensor(PACKET_ANGLE);
-			}
-
-			// if fence no longer recognized or angle turned too large resume straight path
-			if (roombaQuerySensor(PACKET_VIRTUAL_WALL) == 0|| mymathAbs(roombadata.trip_angle) >= ROOMBA_FENCE_MAX_EVASIVE_ANGLE) {
-				roombaStop();
-				roombaResetTrips();
-				current_fence_direction = STRAIGHT;
-				fenceapproach_state = FENCE_STRAIGHT;
-				roombaPlaySongDone();
-				my_msleep(3000);
-			}
-
-			break;
+		break;
 
 	}
 

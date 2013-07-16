@@ -1,0 +1,415 @@
+\hypertarget{ir__remote_8h}{\section{include/ir\-\_\-remote.h \-File \-Reference}
+\label{ir__remote_8h}\index{include/ir\-\_\-remote.\-h@{include/ir\-\_\-remote.\-h}}
+}
+{\ttfamily \#include \char`\"{}program.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}workbench.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}tools.\-h\char`\"{}}\*
+{\ttfamily \#include $<$stdint.\-h$>$}\*
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{ir__remote_8h_aac5e1aaa335507efbc042c6eaaa76461}{\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}~14
+\item 
+\#define \hyperlink{ir__remote_8h_a0dabb424b2c43c3813a41fdeddae993a}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T}~0
+\item 
+\#define \hyperlink{ir__remote_8h_a6aca012e49303b00b6bc6a462c140a16}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T}~1
+\item 
+\#define \hyperlink{ir__remote_8h_aadcee615227b54c3011baec72030969d}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T}~2
+\item 
+\#define \hyperlink{ir__remote_8h_af2a1044b1e6b4081d94620d0ade7be33}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T}~3
+\item 
+\#define \hyperlink{ir__remote_8h_a42f092cc248c7663e3b7bdd2c910aa0c}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T}~4
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2}{roomba\-\_\-remote\-\_\-actions} \{ \*
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a52178afa6077fa8d980bebf230f13703}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P} =  0x85, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a3dd635f440fc81a52600a6f175f55194}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N} =  0x86, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2af0d03aee43899fe4244782b279f56203}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T} =  0x83, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2ac6386f5bc74c8b25ed9f9644f5ab9681}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T} =  0x81, 
+\*
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2ae6a352f814da65ab0999444db64abd44}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K} =  0x82, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a98231936d430ff518c409ccb9b0862d2}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K} =  0x8\-D, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a3f025afd146f632dce26230d9ec6caff}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E} =  0x89, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a16c712ccb4bde8e5b3db2a241db90139}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R} =  0x8\-A, 
+\*
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a2830aea2275ea9f712715f4861a8b52a}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1} =  0x8\-C, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a44df14bccc298ae7a29f45d7f813fcaf}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2} =  0x8\-B, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a296bcb01ed2041eb5b63ee43d3e7c0fd}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3} =  0x84, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a4471b1bef39e3921ba4c4cfb33bb1d50}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4} =  0x87, 
+\*
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a0c264e9684dc9247e1a81b238f03164a}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5} =  0x88, 
+\hyperlink{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a5462917b27f8a3eb8b79bceec82c6878}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6} =  0x8\-F
+ \}
+\item 
+enum \hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cb}{roomba\-\_\-action\-\_\-indices} \{ \*
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbac45583cba623eb3920b148fc5823cdbd}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P\-\_\-\-I\-N\-D\-E\-X} =  0, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba8e3977a62898a79c9d41d67cb8b28c91}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba775a79ed01e5bd1fdc5df28193121cec}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba94431643f401acc24e387584439c5ffc}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T\-\_\-\-I\-N\-D\-E\-X}, 
+\*
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba3486284afa2b6093f0bd06a799b55dbe}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba3a3c32ad1452ef55635e1d979ce68db9}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba7bbf9b88c8bf474e92f059bfc0ab8c20}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbab9ae5ca83ee8e92ed39c8c7c643fb75d}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R\-\_\-\-I\-N\-D\-E\-X}, 
+\*
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbac17a96245a16533b29eb6ed4d2e6903f}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbafed8ae4a4d34b4e5025e0636167e5bd6}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbace1acc75feda03802da677c972899321}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbaacd9eba22c4599027ad78fdec1f51a14}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4\-\_\-\-I\-N\-D\-E\-X}, 
+\*
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbaed75f8fe8fc79b61f250968f564f909c}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5\-\_\-\-I\-N\-D\-E\-X}, 
+\hyperlink{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba4f3d48c7d674f2ae9398bfe22da05a43}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6\-\_\-\-I\-N\-D\-E\-X}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{program_8h_a2c58b09eb098c92b9cf7ccc2c4dd17ed}{programstate} \hyperlink{ir__remote_8h_a3c1599a0f2e38b4fa64a23acf8a7eed7}{handle\-Substate\-Base\-Setup} ()
+\begin{DoxyCompactList}\small\item\em \-Setup the base coordinates and angles. \end{DoxyCompactList}\item 
+\hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8}{bool\-\_\-t} \hyperlink{ir__remote_8h_a83d0adf8a3b216e85f95213793e93e53}{int\-To\-Ascii2places\-Signed} (int32\-\_\-t value, int32\-\_\-t out\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em \-Convert int to ascii. \end{DoxyCompactList}\item 
+\hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8}{bool\-\_\-t} \hyperlink{ir__remote_8h_a1931e6f5603a8e8c6ebe1dca14d0ad7a}{int\-To\-Ascii3places\-Unsigned} (uint32\-\_\-t value, int32\-\_\-t out\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em \-Convert int to ascii. \end{DoxyCompactList}\item 
+int \hyperlink{ir__remote_8h_a074fc7f22249192654d87c3e2cb59dd7}{get\-I\-R\-Action} ()
+\begin{DoxyCompactList}\small\item\em \-Get the current \-I\-R remote action. \end{DoxyCompactList}\item 
+int \hyperlink{ir__remote_8h_a53a9783d623583b16d4a39159d61c0a5}{get\-I\-R\-Action\-Index} (int character)
+\begin{DoxyCompactList}\small\item\em \-Get the array index for an \-I\-R remote button. \end{DoxyCompactList}\item 
+void \hyperlink{ir__remote_8h_a7003e070667833ceaf34ccc2c808db9e}{print\-Xcoordinate} (\hyperlink{structworkbench}{workbench} $\ast$to\-Print)
+\begin{DoxyCompactList}\small\item\em \-Print the current x coordinate to the roomba's display. \end{DoxyCompactList}\item 
+void \hyperlink{ir__remote_8h_a2ea0b57fc06b6d1a32d78a9ffd3dad09}{print\-Ycoordinate} (\hyperlink{structworkbench}{workbench} $\ast$to\-Print)
+\begin{DoxyCompactList}\small\item\em \-Print the current y coordinate to the roomba's display. \end{DoxyCompactList}\item 
+void \hyperlink{ir__remote_8h_ac3cd50286c905f68cdc363cff8999530}{print\-Rotation} (\hyperlink{structworkbench}{workbench} $\ast$to\-Print)
+\begin{DoxyCompactList}\small\item\em \-Print the current angle to the roomba's display. \end{DoxyCompactList}\item 
+void \hyperlink{ir__remote_8h_aab1f03227b2e01a99f297d093f1a80aa}{print\-Coordinate} (int8\-\_\-t coordinate\-\_\-value)
+\begin{DoxyCompactList}\small\item\em \-Print the specified coordinate to the roomba's display (max. 2 digits, signed) \end{DoxyCompactList}\item 
+void \hyperlink{ir__remote_8h_a5b32cc6ad84ffc32e9a9eb8c1169efdb}{handle\-Base\-Select} (uint8\-\_\-t base\-\_\-num)
+\begin{DoxyCompactList}\small\item\em \-Sets the current workbench pointer to the workbench with the specified index. \end{DoxyCompactList}\item 
+\hyperlink{tools_8h_a04dd5074964518403bf944f2b240a5f8}{bool\-\_\-t} \hyperlink{ir__remote_8h_af4edcefec452000383943da469f474df}{check\-Discrete\-Roomba\-Button\-Array} (int index)
+\begin{DoxyCompactList}\small\item\em \-Handles discrete \-I\-R remote button recognition. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{program_8h_ab14fc3b0e7b9535ec25836108ce96a45}{millis\-\_\-t} \hyperlink{ir__remote_8h_a5a720bbeb84b2bf121d1ebec8d4f71b5}{roomba\-\_\-remote\-\_\-activation\-\_\-times} \mbox{[}\hyperlink{ir__remote_8h_aac5e1aaa335507efbc042c6eaaa76461}{\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}\mbox{]}
+\item 
+uint8\-\_\-t \hyperlink{ir__remote_8h_a87765c002988935ed69d74ab1f31dd34}{raw\-\_\-ir\-\_\-data}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{ir__remote_8h_aac5e1aaa335507efbc042c6eaaa76461}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S@{\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}}
+\index{\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S@{\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{\-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}~14}}\label{ir__remote_8h_aac5e1aaa335507efbc042c6eaaa76461}
+\hypertarget{ir__remote_8h_af2a1044b1e6b4081d94620d0ade7be33}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T}}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-L\-O\-N\-G\-\_\-\-R\-E\-P\-E\-A\-T}~3}}\label{ir__remote_8h_af2a1044b1e6b4081d94620d0ade7be33}
+\hypertarget{ir__remote_8h_a42f092cc248c7663e3b7bdd2c910aa0c}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T}}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-A\-X\-\_\-\-R\-E\-P\-E\-A\-T}~4}}\label{ir__remote_8h_a42f092cc248c7663e3b7bdd2c910aa0c}
+\hypertarget{ir__remote_8h_a0dabb424b2c43c3813a41fdeddae993a}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T}}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-M\-I\-N\-\_\-\-R\-E\-P\-E\-A\-T}~0}}\label{ir__remote_8h_a0dabb424b2c43c3813a41fdeddae993a}
+\hypertarget{ir__remote_8h_aadcee615227b54c3011baec72030969d}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T}}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-O\-R\-M\-A\-L\-\_\-\-R\-E\-P\-E\-A\-T}~2}}\label{ir__remote_8h_aadcee615227b54c3011baec72030969d}
+\hypertarget{ir__remote_8h_a6aca012e49303b00b6bc6a462c140a16}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T}}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-S\-H\-O\-R\-T\-\_\-\-R\-E\-P\-E\-A\-T}~1}}\label{ir__remote_8h_a6aca012e49303b00b6bc6a462c140a16}
+
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cb}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!roomba\-\_\-action\-\_\-indices@{roomba\-\_\-action\-\_\-indices}}
+\index{roomba\-\_\-action\-\_\-indices@{roomba\-\_\-action\-\_\-indices}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{roomba\-\_\-action\-\_\-indices}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf roomba\-\_\-action\-\_\-indices}}}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cb}
+\-An enum for array indices of the possible roomba ir remote buttons \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbac45583cba623eb3920b148fc5823cdbd}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbac45583cba623eb3920b148fc5823cdbd}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba8e3977a62898a79c9d41d67cb8b28c91}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba8e3977a62898a79c9d41d67cb8b28c91}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba775a79ed01e5bd1fdc5df28193121cec}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba775a79ed01e5bd1fdc5df28193121cec}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba94431643f401acc24e387584439c5ffc}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba94431643f401acc24e387584439c5ffc}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba3486284afa2b6093f0bd06a799b55dbe}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba3486284afa2b6093f0bd06a799b55dbe}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba3a3c32ad1452ef55635e1d979ce68db9}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba3a3c32ad1452ef55635e1d979ce68db9}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba7bbf9b88c8bf474e92f059bfc0ab8c20}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba7bbf9b88c8bf474e92f059bfc0ab8c20}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbab9ae5ca83ee8e92ed39c8c7c643fb75d}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbab9ae5ca83ee8e92ed39c8c7c643fb75d}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbac17a96245a16533b29eb6ed4d2e6903f}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbac17a96245a16533b29eb6ed4d2e6903f}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbafed8ae4a4d34b4e5025e0636167e5bd6}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbafed8ae4a4d34b4e5025e0636167e5bd6}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbace1acc75feda03802da677c972899321}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbace1acc75feda03802da677c972899321}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbaacd9eba22c4599027ad78fdec1f51a14}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbaacd9eba22c4599027ad78fdec1f51a14}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbaed75f8fe8fc79b61f250968f564f909c}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cbaed75f8fe8fc79b61f250968f564f909c}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6\-\_\-\-I\-N\-D\-E\-X}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6\-\_\-\-I\-N\-D\-E\-X@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6\-\_\-\-I\-N\-D\-E\-X}}\item[{\em 
+\hypertarget{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba4f3d48c7d674f2ae9398bfe22da05a43}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6\-\_\-\-I\-N\-D\-E\-X}\label{ir__remote_8h_ab8ee26e6e0b8e46939d741b8ecd432cba4f3d48c7d674f2ae9398bfe22da05a43}
+}]\end{description}
+\end{Desc}
+
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!roomba\-\_\-remote\-\_\-actions@{roomba\-\_\-remote\-\_\-actions}}
+\index{roomba\-\_\-remote\-\_\-actions@{roomba\-\_\-remote\-\_\-actions}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{roomba\-\_\-remote\-\_\-actions}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf roomba\-\_\-remote\-\_\-actions}}}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2}
+\-An enum for the possible roomba ir remote buttons \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a52178afa6077fa8d980bebf230f13703}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-U\-P}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a52178afa6077fa8d980bebf230f13703}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a3dd635f440fc81a52600a6f175f55194}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-D\-O\-W\-N}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a3dd635f440fc81a52600a6f175f55194}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2af0d03aee43899fe4244782b279f56203}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-R\-I\-G\-H\-T}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2af0d03aee43899fe4244782b279f56203}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2ac6386f5bc74c8b25ed9f9644f5ab9681}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-L\-E\-F\-T}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2ac6386f5bc74c8b25ed9f9644f5ab9681}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2ae6a352f814da65ab0999444db64abd44}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-C\-R\-O\-S\-S\-\_\-\-O\-K}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2ae6a352f814da65ab0999444db64abd44}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a98231936d430ff518c409ccb9b0862d2}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-A\-C\-K}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a98231936d430ff518c409ccb9b0862d2}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a3f025afd146f632dce26230d9ec6caff}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-A\-U\-S\-E}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a3f025afd146f632dce26230d9ec6caff}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a16c712ccb4bde8e5b3db2a241db90139}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-P\-O\-W\-E\-R}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a16c712ccb4bde8e5b3db2a241db90139}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a2830aea2275ea9f712715f4861a8b52a}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-1}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a2830aea2275ea9f712715f4861a8b52a}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a44df14bccc298ae7a29f45d7f813fcaf}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-2}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a44df14bccc298ae7a29f45d7f813fcaf}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a296bcb01ed2041eb5b63ee43d3e7c0fd}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-3}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a296bcb01ed2041eb5b63ee43d3e7c0fd}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a4471b1bef39e3921ba4c4cfb33bb1d50}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-4}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a4471b1bef39e3921ba4c4cfb33bb1d50}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a0c264e9684dc9247e1a81b238f03164a}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-5}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a0c264e9684dc9247e1a81b238f03164a}
+}]\index{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6}!ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}}\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6@{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6}}\item[{\em 
+\hypertarget{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a5462917b27f8a3eb8b79bceec82c6878}{\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-N\-U\-M\-\_\-6}\label{ir__remote_8h_aea9d7e0eab671ca158767392e91101b2a5462917b27f8a3eb8b79bceec82c6878}
+}]\end{description}
+\end{Desc}
+
+
+
+\subsection{\-Function \-Documentation}
+\hypertarget{ir__remote_8h_af4edcefec452000383943da469f474df}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!check\-Discrete\-Roomba\-Button\-Array@{check\-Discrete\-Roomba\-Button\-Array}}
+\index{check\-Discrete\-Roomba\-Button\-Array@{check\-Discrete\-Roomba\-Button\-Array}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{check\-Discrete\-Roomba\-Button\-Array}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool\-\_\-t} {\bf check\-Discrete\-Roomba\-Button\-Array} (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_af4edcefec452000383943da469f474df}
+
+
+\-Handles discrete \-I\-R remote button recognition. 
+
+\-Handles ensured recognition of \-I\-R remote commands (eliminates accidental recognition) and repeat timeouts for button press repetition
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em index} & the index of the \-I\-R remote button \\
+\hline
+\end{DoxyParams}
+\hypertarget{ir__remote_8h_a074fc7f22249192654d87c3e2cb59dd7}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!get\-I\-R\-Action@{get\-I\-R\-Action}}
+\index{get\-I\-R\-Action@{get\-I\-R\-Action}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{get\-I\-R\-Action}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf get\-I\-R\-Action} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a074fc7f22249192654d87c3e2cb59dd7}
+
+
+\-Get the current \-I\-R remote action. 
+
+\-Handles sensor querying, index lookup, ensured recognition of \-I\-R remote commands (eliminates accidental recognition) and repeat timeouts for button press repetition
+
+\begin{DoxyReturn}{\-Returns}
+the ensured and repeat handled \-I\-R remote button code 
+\end{DoxyReturn}
+\hypertarget{ir__remote_8h_a53a9783d623583b16d4a39159d61c0a5}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!get\-I\-R\-Action\-Index@{get\-I\-R\-Action\-Index}}
+\index{get\-I\-R\-Action\-Index@{get\-I\-R\-Action\-Index}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{get\-I\-R\-Action\-Index}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf get\-I\-R\-Action\-Index} (
+\begin{DoxyParamCaption}
+\item[{int}]{character}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a53a9783d623583b16d4a39159d61c0a5}
+
+
+\-Get the array index for an \-I\-R remote button. 
+
+\-Get the array index of a specified \-I\-R remote button
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em character} & the character to look up \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+the array index of the specified character 
+\end{DoxyReturn}
+\hypertarget{ir__remote_8h_a5b32cc6ad84ffc32e9a9eb8c1169efdb}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!handle\-Base\-Select@{handle\-Base\-Select}}
+\index{handle\-Base\-Select@{handle\-Base\-Select}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{handle\-Base\-Select}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf handle\-Base\-Select} (
+\begin{DoxyParamCaption}
+\item[{uint8\-\_\-t}]{base\-\_\-num}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a5b32cc6ad84ffc32e9a9eb8c1169efdb}
+
+
+\-Sets the current workbench pointer to the workbench with the specified index. 
+
+\-Sets the current workbench pointer to the workbench with the specified index (between 1 and \-M\-A\-X\-\_\-\-C\-O\-U\-N\-T\-\_\-\-W\-O\-R\-K\-B\-E\-N\-C\-H\-E\-S)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em base\-\_\-num} & the id of the base to work with from now on \\
+\hline
+\end{DoxyParams}
+\hypertarget{ir__remote_8h_a3c1599a0f2e38b4fa64a23acf8a7eed7}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!handle\-Substate\-Base\-Setup@{handle\-Substate\-Base\-Setup}}
+\index{handle\-Substate\-Base\-Setup@{handle\-Substate\-Base\-Setup}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{handle\-Substate\-Base\-Setup}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf programstate} {\bf handle\-Substate\-Base\-Setup} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a3c1599a0f2e38b4fa64a23acf8a7eed7}
+
+
+\-Setup the base coordinates and angles. 
+
+\begin{DoxyReturn}{\-Returns}
+the appropriate main program state 
+\end{DoxyReturn}
+\hypertarget{ir__remote_8h_a83d0adf8a3b216e85f95213793e93e53}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!int\-To\-Ascii2places\-Signed@{int\-To\-Ascii2places\-Signed}}
+\index{int\-To\-Ascii2places\-Signed@{int\-To\-Ascii2places\-Signed}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{int\-To\-Ascii2places\-Signed}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool\-\_\-t} {\bf int\-To\-Ascii2places\-Signed} (
+\begin{DoxyParamCaption}
+\item[{int32\-\_\-t}]{value, }
+\item[{int32\-\_\-t}]{out\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a83d0adf8a3b216e85f95213793e93e53}
+
+
+\-Convert int to ascii. 
+
+\-Convert an integer value to an array of ascii digits (2 places int with sign)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em value} & the integer value to convert \\
+\hline
+{\em out} & the result array, containing the ascii digits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success 
+\end{DoxyReturn}
+\hypertarget{ir__remote_8h_a1931e6f5603a8e8c6ebe1dca14d0ad7a}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!int\-To\-Ascii3places\-Unsigned@{int\-To\-Ascii3places\-Unsigned}}
+\index{int\-To\-Ascii3places\-Unsigned@{int\-To\-Ascii3places\-Unsigned}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{int\-To\-Ascii3places\-Unsigned}]{\setlength{\rightskip}{0pt plus 5cm}{\bf bool\-\_\-t} {\bf int\-To\-Ascii3places\-Unsigned} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{value, }
+\item[{int32\-\_\-t}]{out\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a1931e6f5603a8e8c6ebe1dca14d0ad7a}
+
+
+\-Convert int to ascii. 
+
+\-Convert an integer value to an array of ascii digits (3 places int without sign)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em value} & the integer value to convert \\
+\hline
+{\em out} & the result array, containing the ascii digits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{\-Returns}
+success 
+\end{DoxyReturn}
+\hypertarget{ir__remote_8h_aab1f03227b2e01a99f297d093f1a80aa}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!print\-Coordinate@{print\-Coordinate}}
+\index{print\-Coordinate@{print\-Coordinate}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{print\-Coordinate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-Coordinate} (
+\begin{DoxyParamCaption}
+\item[{int8\-\_\-t}]{coordinate\-\_\-value}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_aab1f03227b2e01a99f297d093f1a80aa}
+
+
+\-Print the specified coordinate to the roomba's display (max. 2 digits, signed) 
+
+\-Print the specified coordinate to the roomba's display (max. 2 digits, signed)
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em coordinate\-Value} & the coordinate value to print to the roomba's display \\
+\hline
+\end{DoxyParams}
+\hypertarget{ir__remote_8h_ac3cd50286c905f68cdc363cff8999530}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!print\-Rotation@{print\-Rotation}}
+\index{print\-Rotation@{print\-Rotation}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{print\-Rotation}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-Rotation} (
+\begin{DoxyParamCaption}
+\item[{{\bf workbench} $\ast$}]{to\-Print}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_ac3cd50286c905f68cdc363cff8999530}
+
+
+\-Print the current angle to the roomba's display. 
+
+\-Print the angle of the specified workbench to the roomba's seven segment display
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em to\-Print} & the workbench of which to print the angle \\
+\hline
+\end{DoxyParams}
+\hypertarget{ir__remote_8h_a7003e070667833ceaf34ccc2c808db9e}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!print\-Xcoordinate@{print\-Xcoordinate}}
+\index{print\-Xcoordinate@{print\-Xcoordinate}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{print\-Xcoordinate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-Xcoordinate} (
+\begin{DoxyParamCaption}
+\item[{{\bf workbench} $\ast$}]{to\-Print}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a7003e070667833ceaf34ccc2c808db9e}
+
+
+\-Print the current x coordinate to the roomba's display. 
+
+\-Print the x coordinate of the specified workbench to the roomba's seven segment display
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em to\-Print} & the workbench of which to print the x coordinate \\
+\hline
+\end{DoxyParams}
+\hypertarget{ir__remote_8h_a2ea0b57fc06b6d1a32d78a9ffd3dad09}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!print\-Ycoordinate@{print\-Ycoordinate}}
+\index{print\-Ycoordinate@{print\-Ycoordinate}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{print\-Ycoordinate}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf print\-Ycoordinate} (
+\begin{DoxyParamCaption}
+\item[{{\bf workbench} $\ast$}]{to\-Print}
+\end{DoxyParamCaption}
+)}}\label{ir__remote_8h_a2ea0b57fc06b6d1a32d78a9ffd3dad09}
+
+
+\-Print the current y coordinate to the roomba's display. 
+
+\-Print the y coordinate of the specified workbench to the roomba's seven segment display
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em to\-Print} & the workbench of which to print the y coordinate \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{ir__remote_8h_a87765c002988935ed69d74ab1f31dd34}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!raw\-\_\-ir\-\_\-data@{raw\-\_\-ir\-\_\-data}}
+\index{raw\-\_\-ir\-\_\-data@{raw\-\_\-ir\-\_\-data}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{raw\-\_\-ir\-\_\-data}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf raw\-\_\-ir\-\_\-data}}}\label{ir__remote_8h_a87765c002988935ed69d74ab1f31dd34}
+\-Stores the raw received \-I\-R data \hypertarget{ir__remote_8h_a5a720bbeb84b2bf121d1ebec8d4f71b5}{\index{ir\-\_\-remote.\-h@{ir\-\_\-remote.\-h}!roomba\-\_\-remote\-\_\-activation\-\_\-times@{roomba\-\_\-remote\-\_\-activation\-\_\-times}}
+\index{roomba\-\_\-remote\-\_\-activation\-\_\-times@{roomba\-\_\-remote\-\_\-activation\-\_\-times}!ir_remote.h@{ir\-\_\-remote.\-h}}
+\subsubsection[{roomba\-\_\-remote\-\_\-activation\-\_\-times}]{\setlength{\rightskip}{0pt plus 5cm}{\bf millis\-\_\-t} {\bf roomba\-\_\-remote\-\_\-activation\-\_\-times}\mbox{[}{\bf \-N\-U\-M\-\_\-\-R\-O\-O\-M\-B\-A\-\_\-\-R\-E\-M\-O\-T\-E\-\_\-\-B\-U\-T\-T\-O\-N\-S}\mbox{]}}}\label{ir__remote_8h_a5a720bbeb84b2bf121d1ebec8d4f71b5}
+\-An array for the times of the first remote button presses 

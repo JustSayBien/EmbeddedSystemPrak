@@ -36,6 +36,8 @@ var searchData=
   ['led_5fsched_5fwday_5ftue',['LED_SCHED_WDAY_TUE',['../roomba_8h.html#a44b288199450e5f6f64c5ca00ea78fcc',1,'roomba.h']]],
   ['led_5fsched_5fwday_5fwed',['LED_SCHED_WDAY_WED',['../roomba_8h.html#aee81e461f3f87645f021c79aef4d882b',1,'roomba.h']]],
   ['led_5fspot_5fgreen',['LED_SPOT_GREEN',['../roomba_8h.html#a7bad0b6090b9574104346e2273f64ef5',1,'roomba.h']]],
+  ['light_5fbump_5fclear',['LIGHT_BUMP_CLEAR',['../roomba_8h.html#a48e60dc0e87bff81a12545f681a51d2d',1,'roomba.h']]],
+  ['light_5fbump_5fnot_5fclear',['LIGHT_BUMP_NOT_CLEAR',['../roomba_8h.html#a9b1046435af32b5dae762ee45c46946d',1,'roomba.h']]],
   ['load_5fsymbol_5f2_5fgpr',['LOAD_SYMBOL_2_GPR',['../or32-asm_8h.html#a3564ecdf86e8c1b44e80fe8c48d46b9e',1,'or32-asm.h']]],
   ['log_5fprintf',['log_printf',['../output_8h.html#afff86884884d8570c45095964d354589',1,'output.h']]],
   ['log_5fputchar',['log_putchar',['../output_8h.html#a747c3e1febddcd23fc87752c2b87a01e',1,'output.h']]],

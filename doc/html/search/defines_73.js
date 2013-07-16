@@ -1,6 +1,8 @@
 var searchData=
 [
   ['sc_5fstackframe_5fsize',['SC_STACKFRAME_SIZE',['../ptrace_8h.html#a295b5e2ea4c2f1ba9dd78e94142dc64d',1,'ptrace.h']]],
+  ['seekdock_5fled_5fbitmask',['SEEKDOCK_LED_BITMASK',['../roomba_8h.html#ae1ee0cd6205cf0b901148ea8224db603',1,'roomba.h']]],
+  ['seekdock_5ftrigger_5fdistance',['SEEKDOCK_TRIGGER_DISTANCE',['../workbench_8h.html#aa4fdb7a9a5fda479beb1804559e661df',1,'workbench.h']]],
   ['sensors_5fall',['SENSORS_ALL',['../roomba_8h.html#ad0f0780de717745ccc5ca09a78890b24',1,'roomba.h']]],
   ['sensors_5fbuttons_5fand_5finternal',['SENSORS_BUTTONS_AND_INTERNAL',['../roomba_8h.html#a72f7b326a033e02e3f0a66c12a0bb62d',1,'roomba.h']]],
   ['sensors_5fphysical',['SENSORS_PHYSICAL',['../roomba_8h.html#a3e52aac8f9eb45fb4546e4bac0758948',1,'roomba.h']]],

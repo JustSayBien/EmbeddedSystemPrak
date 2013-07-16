@@ -100,5 +100,6 @@ var searchData=
   ['nop_5fputc',['NOP_PUTC',['../spr-defs_8h.html#a0a98ecdd01067bb7348e4bb3df389eaf',1,'spr-defs.h']]],
   ['nop_5freport',['NOP_REPORT',['../spr-defs_8h.html#ac03e2b85051e7d7fb135eff9621593d3',1,'spr-defs.h']]],
   ['nop_5freport_5ffirst',['NOP_REPORT_FIRST',['../spr-defs_8h.html#aa3fc7d7ca0b51257700fc6b248d1f857',1,'spr-defs.h']]],
-  ['nop_5freport_5flast',['NOP_REPORT_LAST',['../spr-defs_8h.html#ac1390be32f334a1c1d53d130205ed2ad',1,'spr-defs.h']]]
+  ['nop_5freport_5flast',['NOP_REPORT_LAST',['../spr-defs_8h.html#ac1390be32f334a1c1d53d130205ed2ad',1,'spr-defs.h']]],
+  ['num_5froomba_5fremote_5fbuttons',['NUM_ROOMBA_REMOTE_BUTTONS',['../ir__remote_8h.html#aac5e1aaa335507efbc042c6eaaa76461',1,'ir_remote.h']]]
 ];

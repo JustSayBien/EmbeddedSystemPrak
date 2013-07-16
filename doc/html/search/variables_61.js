@@ -11,5 +11,7 @@ var searchData=
   ['alt_5firq',['alt_irq',['../alt__irq__table_8h.html#aa4777752cbe1ea5dd98ad562c328927f',1,'alt_irq_table.h']]],
   ['alt_5fmax_5ffd',['alt_max_fd',['../alt__file_8h.html#aefa50a1243bc074834e3140d00a7eca0',1,'alt_file.h']]],
   ['alt_5fstack_5flimit_5fvalue',['alt_stack_limit_value',['../alt__stack_8h.html#a796c4edff5f3301d97fdac9caab86608',1,'alt_stack.h']]],
-  ['angle_5f360_5fdegrees',['angle_360_degrees',['../structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75',1,'roomba_data']]]
+  ['angle_5f360_5fdegrees',['angle_360_degrees',['../structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75',1,'roomba_data']]],
+  ['angle_5fsum',['angle_sum',['../structcollision__data.html#a7b6969b715149f30de60681a139e467f',1,'collision_data']]],
+  ['angle_5fto_5fworkbench',['angle_to_workbench',['../structworkbench.html#a0142206cb187b4f67026aab9bd200f75',1,'workbench']]]
 ];

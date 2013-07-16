@@ -196,6 +196,7 @@ var searchData=
   ['alt_5fwait',['ALT_WAIT',['../alt__syscall_8h.html#a2fc7074c653286bdf6cbb0ded011ff4a',1,'alt_syscall.h']]],
   ['alt_5fweak',['ALT_WEAK',['../alt__types_8h.html#a40045c23a83e4c323f12796c67289501',1,'alt_types.h']]],
   ['alt_5fwrite',['ALT_WRITE',['../alt__syscall_8h.html#a659091067b05925f596b8bbf3d59d41c',1,'alt_syscall.h']]],
+  ['angle_5funknown',['ANGLE_UNKNOWN',['../workbench_8h.html#a18f5727b787944ad4c6b55f53457340b',1,'workbench.h']]],
   ['ascii_5fminus',['ASCII_MINUS',['../roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3',1,'roomba.h']]],
   ['ascii_5fnumber_5fstart',['ASCII_NUMBER_START',['../roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18',1,'roomba.h']]],
   ['ascii_5fplus',['ASCII_PLUS',['../roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927',1,'roomba.h']]]

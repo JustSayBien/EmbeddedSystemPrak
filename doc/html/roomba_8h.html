@@ -85,7 +85,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;stdint.h&gt;</code><br/>
-<code>#include &quot;<a class="el" href="uart_8h_source.html">uart.h</a>&quot;</code><br/>
 </div>
 <p><a href="roomba_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -93,6 +92,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 Data Structures</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpacket.html">packet</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html">roomba_data</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcollision__data.html">collision_data</a></td></tr>
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a60e92353eb5662d3e2abf6ef862538ff">ROOMBA_DELAY_MODECHANGE_MS</a>&#160;&#160;&#160;20</td></tr>
@@ -156,48 +156,75 @@ Defines</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a3e52aac8f9eb45fb4546e4bac0758948">SENSORS_PHYSICAL</a>&#160;&#160;&#160;0x01</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a72f7b326a033e02e3f0a66c12a0bb62d">SENSORS_BUTTONS_AND_INTERNAL</a>&#160;&#160;&#160;0x02</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a15af80bc0e237a7c74aa34787cc231ef">SENSORS_POWER</a>&#160;&#160;&#160;0x03</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>&#160;&#160;&#160;5</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>&#160;&#160;&#160;4</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927">ASCII_PLUS</a>&#160;&#160;&#160;43</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3">ASCII_MINUS</a>&#160;&#160;&#160;45</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18">ASCII_NUMBER_START</a>&#160;&#160;&#160;48</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a9d9e0b1d566c33afab82708e1ea6a8be">DEFAULT_VELOCITY</a>&#160;&#160;&#160;200</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ac2728d38a59a0747167e0031e85e5c43">DRIVE_ON_CHARGER_FORCEFIELD</a>&#160;&#160;&#160;0xA1</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a2724991aa6cf2254bf3cf41a9f7e95b1">DRIVE_ON_CHARGER_GREENBUOY</a>&#160;&#160;&#160;0xA4</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a2a9a8dbe24653040c5c53f205c3080eb">DRIVE_ON_CHARGER_REDBUOY</a>&#160;&#160;&#160;0xA8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ada488d033e7ffddd9b73f51081183310">DRIVE_ON_CHARGER_ALL</a>&#160;&#160;&#160;0xAD</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a5fdfdcbfd0f764e23e833fe60a7cfae7">CHARGING_SOURCE_HOMEBASE</a>&#160;&#160;&#160;0x2</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>&#160;&#160;&#160;0x4</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927">ASCII_PLUS</a>&#160;&#160;&#160;0x2B</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3">ASCII_MINUS</a>&#160;&#160;&#160;0x2D</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18">ASCII_NUMBER_START</a>&#160;&#160;&#160;0x30</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a9d9e0b1d566c33afab82708e1ea6a8be">DEFAULT_VELOCITY</a>&#160;&#160;&#160;0xC8</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#abe48441640a0144da0dd7ce9ccc6f68b">TAPE_SIGNAL</a>&#160;&#160;&#160;0x4B0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a4a1baddf3ca8562961f139056f63434c">INFRARED_VALUE_DOCK_TRIGGER</a>&#160;&#160;&#160;0xA0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ae1ee0cd6205cf0b901148ea8224db603">SEEKDOCK_LED_BITMASK</a>&#160;&#160;&#160;0xFF</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a52eae75f70c780600d4bd77f8427e420">DOCKED_LED_BITMASK</a>&#160;&#160;&#160;0x64</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a48e60dc0e87bff81a12545f681a51d2d">LIGHT_BUMP_CLEAR</a>&#160;&#160;&#160;0x1E</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a9b1046435af32b5dae762ee45c46946d">LIGHT_BUMP_NOT_CLEAR</a>&#160;&#160;&#160;0x190</td></tr>
 <tr><td colspan="2"><h2><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#aee9fbf5a8cf760ab38dc3509f8953f43">init_roomba</a> (void)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">init roomba function  <a href="#aee9fbf5a8cf760ab38dc3509f8953f43"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#adfba988f90e19a381a4f505b61546097">roomba_calibrate_angle</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">calibrate angle function  <a href="#adfba988f90e19a381a4f505b61546097"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a035293124dd6f95b2d8897997ce22829">roomba_calibrate_distance</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">calibrate angle function  <a href="#a035293124dd6f95b2d8897997ce22829"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a57774583ce5e1c1d2e30d31221e0fb0a">query_sensor</a> (<a class="el" href="structpacket.html">packet</a> query_packet)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">query sensor function  <a href="#a57774583ce5e1c1d2e30d31221e0fb0a"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ac32ee66206bdeea9213de8c3d23b8819">query_list</a> (const <a class="el" href="structpacket.html">packet</a> *packets[], uint8_t count, int32_t results[])</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">query sensor list function  <a href="#ac32ee66206bdeea9213de8c3d23b8819"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a261cc5ae02d8506d2bdbe0433c9f7a74">write_query_list</a> (const <a class="el" href="structpacket.html">packet</a> *packets[], uint8_t count)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">write sensor list function  <a href="#a261cc5ae02d8506d2bdbe0433c9f7a74"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a295a6a56865fe08949e2027bc9dbb4a5">read_query_list</a> (const <a class="el" href="structpacket.html">packet</a> *packets[], uint8_t count, int32_t results[])</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">read sensor list function  <a href="#a295a6a56865fe08949e2027bc9dbb4a5"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a3a315a67275f91ca4dbe86576cf7b00f">setWeekdayLed</a> (uint8_t led_mask)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to roomba's weekday LEDs.  <a href="#a3a315a67275f91ca4dbe86576cf7b00f"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a5e81b58095a2f79cd4dd3c112650730d">setLed</a> (uint8_t led_mask, uint8_t color, uint8_t intensity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to roomba's LEDs.  <a href="#a5e81b58095a2f79cd4dd3c112650730d"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a827f6c823bc26c1f07205d6227da485c">write_sevenseg_digits</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the ascii digits.  <a href="#a827f6c823bc26c1f07205d6227da485c"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#adbe775d0f9e78cc4be310cfd077aab75">drive</a> (int16_t velocity, int16_t radius)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Drive function.  <a href="#adbe775d0f9e78cc4be310cfd077aab75"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a8c528baf37154d347366083f0f816846">stop</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop function.  <a href="#a8c528baf37154d347366083f0f816846"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a61d980cd654b5b28e4e48a7f4092c3f9">check_button</a> ()</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the roomba buttons.  <a href="#a61d980cd654b5b28e4e48a7f4092c3f9"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a003330edfbf4d75a09dbaeb415bed728">calculateTimeToDrive</a> (int32_t distance, int32_t velocity)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the time to drive.  <a href="#a003330edfbf4d75a09dbaeb415bed728"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a7a94e608ea756db96d06c917ba7bb1b5">roombaInit</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">init roomba function  <a href="#a7a94e608ea756db96d06c917ba7bb1b5"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a6c950d1452f0b850f75fe4d18052badb">roombaCalibrateAngle</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">calibrate angle function  <a href="#a6c950d1452f0b850f75fe4d18052badb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#adbbc7b5dd3febaa22cb2a4e6637b541a">roombaCalibrateDistance</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">calibrate distance function  <a href="#adbbc7b5dd3febaa22cb2a4e6637b541a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a9d35768b2da08d9ff6306333252d99e3">roombaQuerySensor</a> (<a class="el" href="structpacket.html">packet</a> query_packet)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">query sensor function  <a href="#a9d35768b2da08d9ff6306333252d99e3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a97138bf877904e4570420a07e5f26ea3">roombaAsCalibratedAngle</a> (int32_t angle_raw)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">angle convert function  <a href="#a97138bf877904e4570420a07e5f26ea3"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#aca02dca009d257987bf5cf7691e6d9a2">roombaAsCalibratedDistance</a> (int32_t distance_raw)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">distance convert function  <a href="#aca02dca009d257987bf5cf7691e6d9a2"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a5e8ad6dd3d747a90fbf38aed8b2aaa5b">roombaSeekdock</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">seekdock function  <a href="#a5e8ad6dd3d747a90fbf38aed8b2aaa5b"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a5f09f9dca7e6d957a032047ec11573e7">roombaResetTrips</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">reset roomba's trip meters  <a href="#a5f09f9dca7e6d957a032047ec11573e7"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a7c0642bbb3c74ca89e22ecd78ede0525">roombaResetTripsWithoutConsumingSensors</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">reset roomba's trip meters without consuming sensor values  <a href="#a7c0642bbb3c74ca89e22ecd78ede0525"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a291f2d17fb58f59edd4dcc3e04e5301a">roombaDriveABitBackward</a> (int32_t backward_distance)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">drive backward function  <a href="#a291f2d17fb58f59edd4dcc3e04e5301a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a46e311aa25d488f8a53437a87847d069">roombaOnCollisionDetected</a> (int32_t bumper_state, int32_t light_bumper_state)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">collision detected function  <a href="#a46e311aa25d488f8a53437a87847d069"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a40f569e5fff1f5376702aa7d147c7cb1">roombaOnCollisionCleared</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">collision cleared function  <a href="#a40f569e5fff1f5376702aa7d147c7cb1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a47cabc0903bc4a1075b51125b994a751">roombaUpdateDistanceSum</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Update the distance sum.  <a href="#a47cabc0903bc4a1075b51125b994a751"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a3e9d18fc95c4e4c5e8db4b604eaa415a">roombaPlaySongTheme</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">play song theme function  <a href="#a3e9d18fc95c4e4c5e8db4b604eaa415a"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a8164c3abeeb769be6f662c67848fe1ab">roombaPlaySongCollision</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">play song collision function  <a href="#a8164c3abeeb769be6f662c67848fe1ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ae09806d66fbeb8f69598ea9143513ff1">roombaPlaySongDone</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">play song done function  <a href="#ae09806d66fbeb8f69598ea9143513ff1"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a6cd1e4e80ad46ab7dad1a571ebede647">roombaPlaySongBeep</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">play song beep function  <a href="#a6cd1e4e80ad46ab7dad1a571ebede647"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a11a37d8efad1e63b44608c66b21d6230">roombaSetWeekdayLed</a> (uint8_t led_mask)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to roomba's weekday LEDs.  <a href="#a11a37d8efad1e63b44608c66b21d6230"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a91c51ca8879c22f407a8d3b5024c1d3c">roombaSetLed</a> (uint8_t led_mask, uint8_t color, uint8_t intensity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write to roomba's LEDs.  <a href="#a91c51ca8879c22f407a8d3b5024c1d3c"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ad4c5a3a31ac972bdbf699ddb70171610">roombaWriteSevensegDigits</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the ascii digits.  <a href="#ad4c5a3a31ac972bdbf699ddb70171610"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a87b26aec548e6af2616d5b5aca488f04">roombaDrive</a> (int16_t velocity, int16_t radius)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Drive function.  <a href="#a87b26aec548e6af2616d5b5aca488f04"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a0884ea9eea8a4f9efddd0a392b984da9">roombaStop</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Stop function.  <a href="#a0884ea9eea8a4f9efddd0a392b984da9"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a360a93d84f6eda39b2f99311c0ac7246">roombaCheckButton</a> (void)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the roomba buttons.  <a href="#a360a93d84f6eda39b2f99311c0ac7246"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#aed1b5b78f07c5770b873d296c9416849">roombaCalculateTimeToDrive</a> (int32_t distance, int32_t velocity)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the time to drive function.  <a href="#aed1b5b78f07c5770b873d296c9416849"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a9fad066b7b58012f6a37377327ff6c70">packet_queries</a> [<a class="el" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>]</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">volatile int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#acf4670bd8261f765433573c60c0c9957">query_results</a> [<a class="el" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>]</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a62ed77ced8e2e97e8580f41c9ecce0d4">roomba_sevenseg_digits</a> [<a class="el" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>]</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structroomba__data.html">roomba_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a032ea8a9c2e01cdc2b0445ac573459bc">roombadata</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a97eca45fe8764ff2b4ea54b740578bad">PACKET_BUMPS_WHEELDROPS</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a55988d9b6699be75d95d9268b6c02670">PACKET_WALL</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a4a22caa5f0bda4603a8915adbca7497f">PACKET_CLIFF_LEFT</a></td></tr>
@@ -248,6 +275,8 @@ Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a256d4f4f8eb0acdd3d00149fe747afc7">PACKET_MAIN_BRUSH_MOTOR_CURRENT</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a06c54dba26e71caf615c3265c721ba6c">PACKET_SIDE_BRUSH_MOTOR_CURRENT</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">const <a class="el" href="structpacket.html">packet</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#ac7f2e6c28e7d740cd390c5d1849957e2">PACKET_STASIS</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structroomba__data.html">roomba_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a032ea8a9c2e01cdc2b0445ac573459bc">roombadata</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcollision__data.html">collision_data</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="roomba_8h.html#a39aab70914328afc9176856a17c1812b">collisiondata</a></td></tr>
 </table>
 <hr/><h2>Define Documentation</h2>
 <a class="anchor" id="ae43d7eb20c15c3452e4d558596950db3"></a><!-- doxytag: member="roomba.h::ASCII_MINUS" ref="ae43d7eb20c15c3452e4d558596950db3" args="" -->
@@ -255,7 +284,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3">ASCII_MINUS</a>&#160;&#160;&#160;45</td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#ae43d7eb20c15c3452e4d558596950db3">ASCII_MINUS</a>&#160;&#160;&#160;0x2D</td>
         </tr>
       </table>
 </div>
@@ -268,7 +297,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18">ASCII_NUMBER_START</a>&#160;&#160;&#160;48</td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#ab0d013f71d12e26ec46c2a5edfda8c18">ASCII_NUMBER_START</a>&#160;&#160;&#160;0x30</td>
         </tr>
       </table>
 </div>
@@ -281,7 +310,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927">ASCII_PLUS</a>&#160;&#160;&#160;43</td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a6088ce708e8f4ff3fcd563ef7ae36927">ASCII_PLUS</a>&#160;&#160;&#160;0x2B</td>
         </tr>
       </table>
 </div>
@@ -399,6 +428,19 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define <a class="el" href="roomba_8h.html#ae4b348997669056348b58747fe7af172">BTN_SPOT</a>&#160;&#160;&#160;0x02</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a5fdfdcbfd0f764e23e833fe60a7cfae7"></a><!-- doxytag: member="roomba.h::CHARGING_SOURCE_HOMEBASE" ref="a5fdfdcbfd0f764e23e833fe60a7cfae7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a5fdfdcbfd0f764e23e833fe60a7cfae7">CHARGING_SOURCE_HOMEBASE</a>&#160;&#160;&#160;0x2</td>
         </tr>
       </table>
 </div>
@@ -814,7 +856,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="roomba_8h.html#a9d9e0b1d566c33afab82708e1ea6a8be">DEFAULT_VELOCITY</a>&#160;&#160;&#160;200</td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a9d9e0b1d566c33afab82708e1ea6a8be">DEFAULT_VELOCITY</a>&#160;&#160;&#160;0xC8</td>
         </tr>
       </table>
 </div>
@@ -827,7 +869,85 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>&#160;&#160;&#160;4</td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a49a7c7da2e05a1ec1914021a41f7d11d">DIGIT_LENGTH</a>&#160;&#160;&#160;0x4</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a52eae75f70c780600d4bd77f8427e420"></a><!-- doxytag: member="roomba.h::DOCKED_LED_BITMASK" ref="a52eae75f70c780600d4bd77f8427e420" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a52eae75f70c780600d4bd77f8427e420">DOCKED_LED_BITMASK</a>&#160;&#160;&#160;0x64</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ada488d033e7ffddd9b73f51081183310"></a><!-- doxytag: member="roomba.h::DRIVE_ON_CHARGER_ALL" ref="ada488d033e7ffddd9b73f51081183310" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#ada488d033e7ffddd9b73f51081183310">DRIVE_ON_CHARGER_ALL</a>&#160;&#160;&#160;0xAD</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ac2728d38a59a0747167e0031e85e5c43"></a><!-- doxytag: member="roomba.h::DRIVE_ON_CHARGER_FORCEFIELD" ref="ac2728d38a59a0747167e0031e85e5c43" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#ac2728d38a59a0747167e0031e85e5c43">DRIVE_ON_CHARGER_FORCEFIELD</a>&#160;&#160;&#160;0xA1</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2724991aa6cf2254bf3cf41a9f7e95b1"></a><!-- doxytag: member="roomba.h::DRIVE_ON_CHARGER_GREENBUOY" ref="a2724991aa6cf2254bf3cf41a9f7e95b1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a2724991aa6cf2254bf3cf41a9f7e95b1">DRIVE_ON_CHARGER_GREENBUOY</a>&#160;&#160;&#160;0xA4</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a2a9a8dbe24653040c5c53f205c3080eb"></a><!-- doxytag: member="roomba.h::DRIVE_ON_CHARGER_REDBUOY" ref="a2a9a8dbe24653040c5c53f205c3080eb" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a2a9a8dbe24653040c5c53f205c3080eb">DRIVE_ON_CHARGER_REDBUOY</a>&#160;&#160;&#160;0xA8</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a4a1baddf3ca8562961f139056f63434c"></a><!-- doxytag: member="roomba.h::INFRARED_VALUE_DOCK_TRIGGER" ref="a4a1baddf3ca8562961f139056f63434c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a4a1baddf3ca8562961f139056f63434c">INFRARED_VALUE_DOCK_TRIGGER</a>&#160;&#160;&#160;0xA0</td>
         </tr>
       </table>
 </div>
@@ -1043,12 +1163,25 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a4592825487c8f673a12811927628d9a9"></a><!-- doxytag: member="roomba.h::QUERY_LENGTH" ref="a4592825487c8f673a12811927628d9a9" args="" -->
+<a class="anchor" id="a48e60dc0e87bff81a12545f681a51d2d"></a><!-- doxytag: member="roomba.h::LIGHT_BUMP_CLEAR" ref="a48e60dc0e87bff81a12545f681a51d2d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>&#160;&#160;&#160;5</td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a48e60dc0e87bff81a12545f681a51d2d">LIGHT_BUMP_CLEAR</a>&#160;&#160;&#160;0x1E</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="a9b1046435af32b5dae762ee45c46946d"></a><!-- doxytag: member="roomba.h::LIGHT_BUMP_NOT_CLEAR" ref="a9b1046435af32b5dae762ee45c46946d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#a9b1046435af32b5dae762ee45c46946d">LIGHT_BUMP_NOT_CLEAR</a>&#160;&#160;&#160;0x190</td>
         </tr>
       </table>
 </div>
@@ -1062,6 +1195,19 @@ Variables</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">#define <a class="el" href="roomba_8h.html#a60e92353eb5662d3e2abf6ef862538ff">ROOMBA_DELAY_MODECHANGE_MS</a>&#160;&#160;&#160;20</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<a class="anchor" id="ae1ee0cd6205cf0b901148ea8224db603"></a><!-- doxytag: member="roomba.h::SEEKDOCK_LED_BITMASK" ref="ae1ee0cd6205cf0b901148ea8224db603" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#ae1ee0cd6205cf0b901148ea8224db603">SEEKDOCK_LED_BITMASK</a>&#160;&#160;&#160;0xFF</td>
         </tr>
       </table>
 </div>
@@ -1121,13 +1267,80 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<hr/><h2>Function Documentation</h2>
-<a class="anchor" id="a003330edfbf4d75a09dbaeb415bed728"></a><!-- doxytag: member="roomba.h::calculateTimeToDrive" ref="a003330edfbf4d75a09dbaeb415bed728" args="(int32_t distance, int32_t velocity)" -->
+<a class="anchor" id="abe48441640a0144da0dd7ce9ccc6f68b"></a><!-- doxytag: member="roomba.h::TAPE_SIGNAL" ref="abe48441640a0144da0dd7ce9ccc6f68b" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t <a class="el" href="roomba_8h.html#a003330edfbf4d75a09dbaeb415bed728">calculateTimeToDrive</a> </td>
+          <td class="memname">#define <a class="el" href="roomba_8h.html#abe48441640a0144da0dd7ce9ccc6f68b">TAPE_SIGNAL</a>&#160;&#160;&#160;0x4B0</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
+<hr/><h2>Function Documentation</h2>
+<a class="anchor" id="a97138bf877904e4570420a07e5f26ea3"></a><!-- doxytag: member="roomba.h::roombaAsCalibratedAngle" ref="a97138bf877904e4570420a07e5f26ea3" args="(int32_t angle_raw)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="roomba_8h.html#a97138bf877904e4570420a07e5f26ea3">roombaAsCalibratedAngle</a> </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>angle_raw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>angle convert function </p>
+<p>This function converts a raw angle value to the corresponding calibrated value</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">angle_raw</td><td>the raw angle value as queried from roomba's sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the converted angle value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aca02dca009d257987bf5cf7691e6d9a2"></a><!-- doxytag: member="roomba.h::roombaAsCalibratedDistance" ref="aca02dca009d257987bf5cf7691e6d9a2" args="(int32_t distance_raw)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="roomba_8h.html#aca02dca009d257987bf5cf7691e6d9a2">roombaAsCalibratedDistance</a> </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>distance_raw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>distance convert function </p>
+<p>This function converts a raw distance value to the corresponding calibrated value </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">distance_raw</td><td>the raw distance value as queried from roomba's sensor </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="return"><dt><b>Returns:</b></dt><dd>the converted distance value </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="aed1b5b78f07c5770b873d296c9416849"></a><!-- doxytag: member="roomba.h::roombaCalculateTimeToDrive" ref="aed1b5b78f07c5770b873d296c9416849" args="(int32_t distance, int32_t velocity)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="roomba_8h.html#aed1b5b78f07c5770b873d296c9416849">roombaCalculateTimeToDrive</a> </td>
           <td>(</td>
           <td class="paramtype">int32_t&#160;</td>
           <td class="paramname"><em>distance</em>, </td>
@@ -1147,8 +1360,8 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>Calculate the time to drive. </p>
-<p>Calculate the time to drive 'distance' centimeters with the specified 'velocity'</p>
+<p>Calculate the time to drive function. </p>
+<p>Use this function to calculate the time to drive 'distance' centimeters with the specified 'velocity'</p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
     <tr><td class="paramname">distance</td><td>the distance to drive </td></tr>
@@ -1160,13 +1373,54 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a61d980cd654b5b28e4e48a7f4092c3f9"></a><!-- doxytag: member="roomba.h::check_button" ref="a61d980cd654b5b28e4e48a7f4092c3f9" args="()" -->
+<a class="anchor" id="a6c950d1452f0b850f75fe4d18052badb"></a><!-- doxytag: member="roomba.h::roombaCalibrateAngle" ref="a6c950d1452f0b850f75fe4d18052badb" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t <a class="el" href="roomba_8h.html#a61d980cd654b5b28e4e48a7f4092c3f9">check_button</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a6c950d1452f0b850f75fe4d18052badb">roombaCalibrateAngle</a> </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>calibrate angle function </p>
+<p>This function can be used to calibrate a angle of 360 degrees </p>
+
+</div>
+</div>
+<a class="anchor" id="adbbc7b5dd3febaa22cb2a4e6637b541a"></a><!-- doxytag: member="roomba.h::roombaCalibrateDistance" ref="adbbc7b5dd3febaa22cb2a4e6637b541a" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="roomba_8h.html#adbbc7b5dd3febaa22cb2a4e6637b541a">roombaCalibrateDistance</a> </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>calibrate distance function </p>
+<p>This function can be used to calibrate a distance of 1 meter </p>
+
+</div>
+</div>
+<a class="anchor" id="a360a93d84f6eda39b2f99311c0ac7246"></a><!-- doxytag: member="roomba.h::roombaCheckButton" ref="a360a93d84f6eda39b2f99311c0ac7246" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t <a class="el" href="roomba_8h.html#a360a93d84f6eda39b2f99311c0ac7246">roombaCheckButton</a> </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1180,12 +1434,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="adbe775d0f9e78cc4be310cfd077aab75"></a><!-- doxytag: member="roomba.h::drive" ref="adbe775d0f9e78cc4be310cfd077aab75" args="(int16_t velocity, int16_t radius)" -->
+<a class="anchor" id="a87b26aec548e6af2616d5b5aca488f04"></a><!-- doxytag: member="roomba.h::roombaDrive" ref="a87b26aec548e6af2616d5b5aca488f04" args="(int16_t velocity, int16_t radius)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#adbe775d0f9e78cc4be310cfd077aab75">drive</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a87b26aec548e6af2616d5b5aca488f04">roombaDrive</a> </td>
           <td>(</td>
           <td class="paramtype">int16_t&#160;</td>
           <td class="paramname"><em>velocity</em>, </td>
@@ -1216,12 +1470,38 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aee9fbf5a8cf760ab38dc3509f8953f43"></a><!-- doxytag: member="roomba.h::init_roomba" ref="aee9fbf5a8cf760ab38dc3509f8953f43" args="(void)" -->
+<a class="anchor" id="a291f2d17fb58f59edd4dcc3e04e5301a"></a><!-- doxytag: member="roomba.h::roombaDriveABitBackward" ref="a291f2d17fb58f59edd4dcc3e04e5301a" args="(int32_t backward_distance)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#aee9fbf5a8cf760ab38dc3509f8953f43">init_roomba</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a291f2d17fb58f59edd4dcc3e04e5301a">roombaDriveABitBackward</a> </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>backward_distance</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>drive backward function </p>
+<p>This function can be used to drive a bit backward </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">backward_distance</td><td>the distance to drive backward (in milimeters) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a7a94e608ea756db96d06c917ba7bb1b5"></a><!-- doxytag: member="roomba.h::roombaInit" ref="a7a94e608ea756db96d06c917ba7bb1b5" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a7a94e608ea756db96d06c917ba7bb1b5">roombaInit</a> </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -1236,27 +1516,41 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ac32ee66206bdeea9213de8c3d23b8819"></a><!-- doxytag: member="roomba.h::query_list" ref="ac32ee66206bdeea9213de8c3d23b8819" args="(const packet *packets[], uint8_t count, int32_t results[])" -->
+<a class="anchor" id="a40f569e5fff1f5376702aa7d147c7cb1"></a><!-- doxytag: member="roomba.h::roombaOnCollisionCleared" ref="a40f569e5fff1f5376702aa7d147c7cb1" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#ac32ee66206bdeea9213de8c3d23b8819">query_list</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a40f569e5fff1f5376702aa7d147c7cb1">roombaOnCollisionCleared</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structpacket.html">packet</a> *&#160;</td>
-          <td class="paramname"><em>packets</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>collision cleared function </p>
+<p>This function should be called if a previously detected collision has been cleared </p>
+
+</div>
+</div>
+<a class="anchor" id="a46e311aa25d488f8a53437a87847d069"></a><!-- doxytag: member="roomba.h::roombaOnCollisionDetected" ref="a46e311aa25d488f8a53437a87847d069" args="(int32_t bumper_state, int32_t light_bumper_state)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a46e311aa25d488f8a53437a87847d069">roombaOnCollisionDetected</a> </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>bumper_state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>results</em>[]&#160;</td>
+          <td class="paramname"><em>light_bumper_state</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -1267,25 +1561,104 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>query sensor list function </p>
-<p>Query a list of sensor values with this function</p>
+<p>collision detected function </p>
+<p>This function should be called when a collision is detected either by light bumps or physical bumps </p>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">packets</td><td>an array of packets, specifying which sensors should be queried </td></tr>
-    <tr><td class="paramname">count</td><td>the length of 'packets' </td></tr>
-    <tr><td class="paramname">results</td><td>the out-array where the query results get stored. It should have at least a length of 'count' </td></tr>
+    <tr><td class="paramname">light_bumper_state</td><td>the state of the light_bumpers at the moment of collision </td></tr>
+    <tr><td class="paramname">bumper_state</td><td>the state of the physical bumpers at the moment of collision </td></tr>
   </table>
   </dd>
 </dl>
 
 </div>
 </div>
-<a class="anchor" id="a57774583ce5e1c1d2e30d31221e0fb0a"></a><!-- doxytag: member="roomba.h::query_sensor" ref="a57774583ce5e1c1d2e30d31221e0fb0a" args="(packet query_packet)" -->
+<a class="anchor" id="a6cd1e4e80ad46ab7dad1a571ebede647"></a><!-- doxytag: member="roomba.h::roombaPlaySongBeep" ref="a6cd1e4e80ad46ab7dad1a571ebede647" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t <a class="el" href="roomba_8h.html#a57774583ce5e1c1d2e30d31221e0fb0a">query_sensor</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a6cd1e4e80ad46ab7dad1a571ebede647">roombaPlaySongBeep</a> </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>play song beep function </p>
+<p>This function plays a neutral beep sound </p>
+
+</div>
+</div>
+<a class="anchor" id="a8164c3abeeb769be6f662c67848fe1ab"></a><!-- doxytag: member="roomba.h::roombaPlaySongCollision" ref="a8164c3abeeb769be6f662c67848fe1ab" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a8164c3abeeb769be6f662c67848fe1ab">roombaPlaySongCollision</a> </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>play song collision function </p>
+<p>This function plays a warning sound, which is used when a collision is detected </p>
+
+</div>
+</div>
+<a class="anchor" id="ae09806d66fbeb8f69598ea9143513ff1"></a><!-- doxytag: member="roomba.h::roombaPlaySongDone" ref="ae09806d66fbeb8f69598ea9143513ff1" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="roomba_8h.html#ae09806d66fbeb8f69598ea9143513ff1">roombaPlaySongDone</a> </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>play song done function </p>
+<p>This function plays a positive acoustic feedback, which can be used for any type of success </p>
+
+</div>
+</div>
+<a class="anchor" id="a3e9d18fc95c4e4c5e8db4b604eaa415a"></a><!-- doxytag: member="roomba.h::roombaPlaySongTheme" ref="a3e9d18fc95c4e4c5e8db4b604eaa415a" args="(void)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a3e9d18fc95c4e4c5e8db4b604eaa415a">roombaPlaySongTheme</a> </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>play song theme function </p>
+<p>This function plays the zelda theme </p>
+
+</div>
+</div>
+<a class="anchor" id="a9d35768b2da08d9ff6306333252d99e3"></a><!-- doxytag: member="roomba.h::roombaQuerySensor" ref="a9d35768b2da08d9ff6306333252d99e3" args="(packet query_packet)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="roomba_8h.html#a9d35768b2da08d9ff6306333252d99e3">roombaQuerySensor</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="structpacket.html">packet</a>&#160;</td>
           <td class="paramname"><em>query_packet</em></td><td>)</td>
@@ -1297,60 +1670,42 @@ Variables</h2></td></tr>
 
 <p>query sensor function </p>
 <p>This function queries the specified sensor </p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">query_packet</td><td>the packet which represents the sensor to query </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="return"><dt><b>Returns:</b></dt><dd>the queried sensor value, converted to a 32-bit integer </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="a295a6a56865fe08949e2027bc9dbb4a5"></a><!-- doxytag: member="roomba.h::read_query_list" ref="a295a6a56865fe08949e2027bc9dbb4a5" args="(const packet *packets[], uint8_t count, int32_t results[])" -->
+<a class="anchor" id="a5f09f9dca7e6d957a032047ec11573e7"></a><!-- doxytag: member="roomba.h::roombaResetTrips" ref="a5f09f9dca7e6d957a032047ec11573e7" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a295a6a56865fe08949e2027bc9dbb4a5">read_query_list</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a5f09f9dca7e6d957a032047ec11573e7">roombaResetTrips</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structpacket.html">packet</a> *&#160;</td>
-          <td class="paramname"><em>packets</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>count</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int32_t&#160;</td>
-          <td class="paramname"><em>results</em>[]&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>read sensor list function </p>
-<p>This function should be called after <a class="el" href="roomba_8h.html#a261cc5ae02d8506d2bdbe0433c9f7a74" title="write sensor list function">write_query_list()</a> to read the sensor values from roomba</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">packets</td><td>an array of packets, specifying which sensor requests have been written to roomba </td></tr>
-    <tr><td class="paramname">count</td><td>the length of 'packets' </td></tr>
-    <tr><td class="paramname">results</td><td>the out-array where the query results get stored. It should have at least a length of 'count' </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>reset roomba's trip meters </p>
+<p>This function consumes the angle and distance sensor values and resets angle and distance trip meters </p>
 
 </div>
 </div>
-<a class="anchor" id="adfba988f90e19a381a4f505b61546097"></a><!-- doxytag: member="roomba.h::roomba_calibrate_angle" ref="adfba988f90e19a381a4f505b61546097" args="()" -->
+<a class="anchor" id="a7c0642bbb3c74ca89e22ecd78ede0525"></a><!-- doxytag: member="roomba.h::roombaResetTripsWithoutConsumingSensors" ref="a7c0642bbb3c74ca89e22ecd78ede0525" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#adfba988f90e19a381a4f505b61546097">roomba_calibrate_angle</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a7c0642bbb3c74ca89e22ecd78ede0525">roombaResetTripsWithoutConsumingSensors</a> </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -1359,18 +1714,19 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>calibrate angle function </p>
-<p>This function can be used to calibrate a angle of 360 degrees </p>
+<p>reset roomba's trip meters without consuming sensor values </p>
+<p>This function just resets angle and distance trip meters without clearing the sensor 'cache' </p>
 
 </div>
 </div>
-<a class="anchor" id="a035293124dd6f95b2d8897997ce22829"></a><!-- doxytag: member="roomba.h::roomba_calibrate_distance" ref="a035293124dd6f95b2d8897997ce22829" args="()" -->
+<a class="anchor" id="a5e8ad6dd3d747a90fbf38aed8b2aaa5b"></a><!-- doxytag: member="roomba.h::roombaSeekdock" ref="a5e8ad6dd3d747a90fbf38aed8b2aaa5b" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a035293124dd6f95b2d8897997ce22829">roomba_calibrate_distance</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a5e8ad6dd3d747a90fbf38aed8b2aaa5b">roombaSeekdock</a> </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1378,17 +1734,17 @@ Variables</h2></td></tr>
 </div>
 <div class="memdoc">
 
-<p>calibrate angle function </p>
-<p>This function can be used to calibrate a distance of 1 meter </p>
+<p>seekdock function </p>
+<p>This function executes roomba's built-in seekdock algorithm </p>
 
 </div>
 </div>
-<a class="anchor" id="a5e81b58095a2f79cd4dd3c112650730d"></a><!-- doxytag: member="roomba.h::setLed" ref="a5e81b58095a2f79cd4dd3c112650730d" args="(uint8_t led_mask, uint8_t color, uint8_t intensity)" -->
+<a class="anchor" id="a91c51ca8879c22f407a8d3b5024c1d3c"></a><!-- doxytag: member="roomba.h::roombaSetLed" ref="a91c51ca8879c22f407a8d3b5024c1d3c" args="(uint8_t led_mask, uint8_t color, uint8_t intensity)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a5e81b58095a2f79cd4dd3c112650730d">setLed</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a91c51ca8879c22f407a8d3b5024c1d3c">roombaSetLed</a> </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>led_mask</em>, </td>
@@ -1427,12 +1783,12 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a3a315a67275f91ca4dbe86576cf7b00f"></a><!-- doxytag: member="roomba.h::setWeekdayLed" ref="a3a315a67275f91ca4dbe86576cf7b00f" args="(uint8_t led_mask)" -->
+<a class="anchor" id="a11a37d8efad1e63b44608c66b21d6230"></a><!-- doxytag: member="roomba.h::roombaSetWeekdayLed" ref="a11a37d8efad1e63b44608c66b21d6230" args="(uint8_t led_mask)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a3a315a67275f91ca4dbe86576cf7b00f">setWeekdayLed</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a11a37d8efad1e63b44608c66b21d6230">roombaSetWeekdayLed</a> </td>
           <td>(</td>
           <td class="paramtype">uint8_t&#160;</td>
           <td class="paramname"><em>led_mask</em></td><td>)</td>
@@ -1453,13 +1809,14 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8c528baf37154d347366083f0f816846"></a><!-- doxytag: member="roomba.h::stop" ref="a8c528baf37154d347366083f0f816846" args="()" -->
+<a class="anchor" id="a0884ea9eea8a4f9efddd0a392b984da9"></a><!-- doxytag: member="roomba.h::roombaStop" ref="a0884ea9eea8a4f9efddd0a392b984da9" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a8c528baf37154d347366083f0f816846">stop</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a0884ea9eea8a4f9efddd0a392b984da9">roombaStop</a> </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1472,50 +1829,34 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a261cc5ae02d8506d2bdbe0433c9f7a74"></a><!-- doxytag: member="roomba.h::write_query_list" ref="a261cc5ae02d8506d2bdbe0433c9f7a74" args="(const packet *packets[], uint8_t count)" -->
+<a class="anchor" id="a47cabc0903bc4a1075b51125b994a751"></a><!-- doxytag: member="roomba.h::roombaUpdateDistanceSum" ref="a47cabc0903bc4a1075b51125b994a751" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a261cc5ae02d8506d2bdbe0433c9f7a74">write_query_list</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#a47cabc0903bc4a1075b51125b994a751">roombaUpdateDistanceSum</a> </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structpacket.html">packet</a> *&#160;</td>
-          <td class="paramname"><em>packets</em>[], </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">uint8_t&#160;</td>
-          <td class="paramname"><em>count</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
-<p>write sensor list function </p>
-<p>Write a list of sensor values to the roomba robot with this function</p>
-<dl class="params"><dt><b>Parameters:</b></dt><dd>
-  <table class="params">
-    <tr><td class="paramname">packets</td><td>an array of packets, specifying which sensor requests should be written to roomba </td></tr>
-    <tr><td class="paramname">count</td><td>the length of 'packets' </td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Update the distance sum. </p>
+<p>This function updates the distance sum value in the collision state </p>
 
 </div>
 </div>
-<a class="anchor" id="a827f6c823bc26c1f07205d6227da485c"></a><!-- doxytag: member="roomba.h::write_sevenseg_digits" ref="a827f6c823bc26c1f07205d6227da485c" args="()" -->
+<a class="anchor" id="ad4c5a3a31ac972bdbf699ddb70171610"></a><!-- doxytag: member="roomba.h::roombaWriteSevensegDigits" ref="ad4c5a3a31ac972bdbf699ddb70171610" args="(void)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="roomba_8h.html#a827f6c823bc26c1f07205d6227da485c">write_sevenseg_digits</a> </td>
+          <td class="memname">void <a class="el" href="roomba_8h.html#ad4c5a3a31ac972bdbf699ddb70171610">roombaWriteSevensegDigits</a> </td>
           <td>(</td>
+          <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
@@ -1529,6 +1870,19 @@ Variables</h2></td></tr>
 </div>
 </div>
 <hr/><h2>Variable Documentation</h2>
+<a class="anchor" id="a39aab70914328afc9176856a17c1812b"></a><!-- doxytag: member="roomba.h::collisiondata" ref="a39aab70914328afc9176856a17c1812b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structcollision__data.html">collision_data</a> <a class="el" href="roomba_8h.html#a39aab70914328afc9176856a17c1812b">collisiondata</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+</div>
+</div>
 <a class="anchor" id="a97e5e57731786bf00c614dd433106ee5"></a><!-- doxytag: member="roomba.h::PACKET_ANGLE" ref="a97e5e57731786bf00c614dd433106ee5" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1958,19 +2312,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a9fad066b7b58012f6a37377327ff6c70"></a><!-- doxytag: member="roomba.h::packet_queries" ref="a9fad066b7b58012f6a37377327ff6c70" args="[QUERY_LENGTH]" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const <a class="el" href="structpacket.html">packet</a>* <a class="el" href="roomba_8h.html#a9fad066b7b58012f6a37377327ff6c70">packet_queries</a>[<a class="el" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>]</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a11b5f572f83a75cb7a440628edd65dce"></a><!-- doxytag: member="roomba.h::PACKET_REQUESTED_LEFT_VELOCITY" ref="a11b5f572f83a75cb7a440628edd65dce" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -2179,19 +2520,6 @@ Variables</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="acf4670bd8261f765433573c60c0c9957"></a><!-- doxytag: member="roomba.h::query_results" ref="acf4670bd8261f765433573c60c0c9957" args="[QUERY_LENGTH]" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">volatile int32_t <a class="el" href="roomba_8h.html#acf4670bd8261f765433573c60c0c9957">query_results</a>[<a class="el" href="roomba_8h.html#a4592825487c8f673a12811927628d9a9">QUERY_LENGTH</a>]</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-</div>
-</div>
 <a class="anchor" id="a2f6e4e7b6d8d581b63c51e06a723b1e9"></a><!-- doxytag: member="roomba.h::REQUESTED_RADIUS" ref="a2f6e4e7b6d8d581b63c51e06a723b1e9" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -2249,7 +2577,7 @@ Variables</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 28 2013 10:55:21 for Roomba Embedded Systems Training by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 16 2013 03:15:44 for Roomba Embedded Systems Training by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -1,5 +1,9 @@
 var searchData=
 [
+  ['getiraction',['getIRAction',['../ir__remote_8h.html#a074fc7f22249192654d87c3e2cb59dd7',1,'ir_remote.h']]],
+  ['getiractionindex',['getIRActionIndex',['../ir__remote_8h.html#a53a9783d623583b16d4a39159d61c0a5',1,'ir_remote.h']]],
+  ['getoppositedirection',['getOppositeDirection',['../program_8h.html#a951e83dd1b0ba3d8f8d20833a5186d20',1,'program.h']]],
+  ['global_5fclock',['global_clock',['../program_8h.html#a210d7e23bcd2277ddae750ae786dd728',1,'program.h']]],
   ['gmon_5fdata_5fmcount_5flimit',['GMON_DATA_MCOUNT_LIMIT',['../nios2__gmon__data_8h.html#a0cff2d607194e419af39a76334196ab2',1,'nios2_gmon_data.h']]],
   ['gmon_5fdata_5fmcount_5fstart',['GMON_DATA_MCOUNT_START',['../nios2__gmon__data_8h.html#a59333386c5ef4348aa10424ce5aa0130',1,'nios2_gmon_data.h']]],
   ['gmon_5fdata_5fprofile_5fbucket',['GMON_DATA_PROFILE_BUCKET',['../nios2__gmon__data_8h.html#acdf7a30188998871c8495aeef44a90ab',1,'nios2_gmon_data.h']]],

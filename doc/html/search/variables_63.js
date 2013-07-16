@@ -10,6 +10,8 @@ var searchData=
   ['c_5fospeed',['c_ospeed',['../structtermios.html#af5ea2ab180c38bf961799a84ff8bde67',1,'termios']]],
   ['callback',['callback',['../structalt__alarm__s.html#a2357171a3a2fc264d0c97105037b86e9',1,'alt_alarm_s']]],
   ['close',['close',['../structalt__dev__s.html#a971c646055e5b97090e1257789d40e04',1,'alt_dev_s']]],
+  ['collisiondata',['collisiondata',['../roomba_8h.html#a39aab70914328afc9176856a17c1812b',1,'roomba.h']]],
   ['context',['context',['../structalt__alarm__s.html#ae376f130b17d169ee51be68077a89ed0',1,'alt_alarm_s::context()'],['../struct_a_l_t___i_r_q___h_a_n_d_l_e_r.html#ae376f130b17d169ee51be68077a89ed0',1,'ALT_IRQ_HANDLER::context()']]],
+  ['current_5fbase_5fid',['current_base_id',['../structroomba__data.html#a29ec4a96bc0931db96257857fd300de5',1,'roomba_data']]],
   ['current_5fvelocity',['current_velocity',['../structroomba__data.html#a7f174749fed904af98a79cb40f2e9b2c',1,'roomba_data']]]
 ];

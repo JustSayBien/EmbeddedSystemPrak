@@ -1,7 +1,28 @@
 var searchData=
 [
-  ['read_5fquery_5flist',['read_query_list',['../roomba_8h.html#a295a6a56865fe08949e2027bc9dbb4a5',1,'roomba.h']]],
   ['register_5ftimer_5fcb',['register_timer_cb',['../timer_8h.html#a2aa252fba62a0a37ba68e2e1379ee843',1,'timer.h']]],
-  ['roomba_5fcalibrate_5fangle',['roomba_calibrate_angle',['../roomba_8h.html#adfba988f90e19a381a4f505b61546097',1,'roomba.h']]],
-  ['roomba_5fcalibrate_5fdistance',['roomba_calibrate_distance',['../roomba_8h.html#a035293124dd6f95b2d8897997ce22829',1,'roomba.h']]]
+  ['roombaascalibratedangle',['roombaAsCalibratedAngle',['../roomba_8h.html#a97138bf877904e4570420a07e5f26ea3',1,'roomba.h']]],
+  ['roombaascalibrateddistance',['roombaAsCalibratedDistance',['../roomba_8h.html#aca02dca009d257987bf5cf7691e6d9a2',1,'roomba.h']]],
+  ['roombacalculatetimetodrive',['roombaCalculateTimeToDrive',['../roomba_8h.html#aed1b5b78f07c5770b873d296c9416849',1,'roomba.h']]],
+  ['roombacalibrateangle',['roombaCalibrateAngle',['../roomba_8h.html#a6c950d1452f0b850f75fe4d18052badb',1,'roomba.h']]],
+  ['roombacalibratedistance',['roombaCalibrateDistance',['../roomba_8h.html#adbbc7b5dd3febaa22cb2a4e6637b541a',1,'roomba.h']]],
+  ['roombacheckbutton',['roombaCheckButton',['../roomba_8h.html#a360a93d84f6eda39b2f99311c0ac7246',1,'roomba.h']]],
+  ['roombadrive',['roombaDrive',['../roomba_8h.html#a87b26aec548e6af2616d5b5aca488f04',1,'roomba.h']]],
+  ['roombadriveabitbackward',['roombaDriveABitBackward',['../roomba_8h.html#a291f2d17fb58f59edd4dcc3e04e5301a',1,'roomba.h']]],
+  ['roombainit',['roombaInit',['../roomba_8h.html#a7a94e608ea756db96d06c917ba7bb1b5',1,'roomba.h']]],
+  ['roombaoncollisioncleared',['roombaOnCollisionCleared',['../roomba_8h.html#a40f569e5fff1f5376702aa7d147c7cb1',1,'roomba.h']]],
+  ['roombaoncollisiondetected',['roombaOnCollisionDetected',['../roomba_8h.html#a46e311aa25d488f8a53437a87847d069',1,'roomba.h']]],
+  ['roombaplaysongbeep',['roombaPlaySongBeep',['../roomba_8h.html#a6cd1e4e80ad46ab7dad1a571ebede647',1,'roomba.h']]],
+  ['roombaplaysongcollision',['roombaPlaySongCollision',['../roomba_8h.html#a8164c3abeeb769be6f662c67848fe1ab',1,'roomba.h']]],
+  ['roombaplaysongdone',['roombaPlaySongDone',['../roomba_8h.html#ae09806d66fbeb8f69598ea9143513ff1',1,'roomba.h']]],
+  ['roombaplaysongtheme',['roombaPlaySongTheme',['../roomba_8h.html#a3e9d18fc95c4e4c5e8db4b604eaa415a',1,'roomba.h']]],
+  ['roombaquerysensor',['roombaQuerySensor',['../roomba_8h.html#a9d35768b2da08d9ff6306333252d99e3',1,'roomba.h']]],
+  ['roombaresettrips',['roombaResetTrips',['../roomba_8h.html#a5f09f9dca7e6d957a032047ec11573e7',1,'roomba.h']]],
+  ['roombaresettripswithoutconsumingsensors',['roombaResetTripsWithoutConsumingSensors',['../roomba_8h.html#a7c0642bbb3c74ca89e22ecd78ede0525',1,'roomba.h']]],
+  ['roombaseekdock',['roombaSeekdock',['../roomba_8h.html#a5e8ad6dd3d747a90fbf38aed8b2aaa5b',1,'roomba.h']]],
+  ['roombasetled',['roombaSetLed',['../roomba_8h.html#a91c51ca8879c22f407a8d3b5024c1d3c',1,'roomba.h']]],
+  ['roombasetweekdayled',['roombaSetWeekdayLed',['../roomba_8h.html#a11a37d8efad1e63b44608c66b21d6230',1,'roomba.h']]],
+  ['roombastop',['roombaStop',['../roomba_8h.html#a0884ea9eea8a4f9efddd0a392b984da9',1,'roomba.h']]],
+  ['roombaupdatedistancesum',['roombaUpdateDistanceSum',['../roomba_8h.html#a47cabc0903bc4a1075b51125b994a751',1,'roomba.h']]],
+  ['roombawritesevensegdigits',['roombaWriteSevensegDigits',['../roomba_8h.html#ad4c5a3a31ac972bdbf699ddb70171610',1,'roomba.h']]]
 ];

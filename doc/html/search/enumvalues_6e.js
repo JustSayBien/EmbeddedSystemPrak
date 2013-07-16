@@ -1,5 +1,8 @@
 var searchData=
 [
+  ['nextbase_5fapproach',['NEXTBASE_APPROACH',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6a6cd5c57967aa0c7e5b07b3905f3e9c92',1,'program.h']]],
+  ['nextbase_5fdrive',['NEXTBASE_DRIVE',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6a61749b5bab0f56390e4cb2a7d50765fd',1,'program.h']]],
+  ['nextbase_5fnum',['NEXTBASE_NUM',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6a7dfd258f20cee13e09128c4f85d71c32',1,'program.h']]],
   ['nios2_5fexception_5fcause_5fnot_5fpresent',['NIOS2_EXCEPTION_CAUSE_NOT_PRESENT',['../alt__exceptions_8h.html#ad617d7c8cfb4131d987afb0bd91fab53ab03c65077cdee06696ec6efb6a4417af',1,'alt_exceptions.h']]],
   ['nios2_5fexception_5fcpu_5fonly_5freset_5frequest',['NIOS2_EXCEPTION_CPU_ONLY_RESET_REQUEST',['../alt__exceptions_8h.html#ad617d7c8cfb4131d987afb0bd91fab53a7fc081560604efa925848ed4204b589c',1,'alt_exceptions.h']]],
   ['nios2_5fexception_5fdivision_5ferror',['NIOS2_EXCEPTION_DIVISION_ERROR',['../alt__exceptions_8h.html#ad617d7c8cfb4131d987afb0bd91fab53ad831a5dd045c258c7586f33b4af5ca85',1,'alt_exceptions.h']]],

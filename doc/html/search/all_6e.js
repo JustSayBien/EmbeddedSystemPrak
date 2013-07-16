@@ -6,6 +6,10 @@ var searchData=
   ['name',['name',['../structalt__dev__llist.html#a8f8f80d37794cde9472343e4487ba3eb',1,'alt_dev_llist::name()'],['../structalt__dev__s.html#a8f8f80d37794cde9472343e4487ba3eb',1,'alt_dev_s::name()'],['../structalt__dma__txchan__dev__s.html#a8f8f80d37794cde9472343e4487ba3eb',1,'alt_dma_txchan_dev_s::name()'],['../structalt__dma__rxchan__dev__s.html#a8f8f80d37794cde9472343e4487ba3eb',1,'alt_dma_rxchan_dev_s::name()']]],
   ['nccs',['NCCS',['../termios_8h.html#a15cde8857ad26391c93358f528e7e13a',1,'termios.h']]],
   ['next',['next',['../structalt__llist__s.html#a92b9c95abfb939845f3336b7ff25c86a',1,'alt_llist_s']]],
+  ['nextbase_5fapproach',['NEXTBASE_APPROACH',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6a6cd5c57967aa0c7e5b07b3905f3e9c92',1,'program.h']]],
+  ['nextbase_5fdrive',['NEXTBASE_DRIVE',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6a61749b5bab0f56390e4cb2a7d50765fd',1,'program.h']]],
+  ['nextbase_5fnum',['NEXTBASE_NUM',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6a7dfd258f20cee13e09128c4f85d71c32',1,'program.h']]],
+  ['nextbasestate',['nextbasestate',['../program_8h.html#a3405b806bf4c924d6c4afba63def29e6',1,'program.h']]],
   ['nios2_2eh',['nios2.h',['../nios2_8h.html',1,'']]],
   ['nios2_5fbig_5fendian',['NIOS2_BIG_ENDIAN',['../system_8h.html#a576f59e356f82cfdab1b629ba0248692',1,'system.h']]],
   ['nios2_5fbreak',['NIOS2_BREAK',['../nios2_8h.html#a7026dab1cb67e8210a6f236922dfba14',1,'nios2.h']]],
@@ -128,5 +132,6 @@ var searchData=
   ['nop_5fputc',['NOP_PUTC',['../spr-defs_8h.html#a0a98ecdd01067bb7348e4bb3df389eaf',1,'spr-defs.h']]],
   ['nop_5freport',['NOP_REPORT',['../spr-defs_8h.html#ac03e2b85051e7d7fb135eff9621593d3',1,'spr-defs.h']]],
   ['nop_5freport_5ffirst',['NOP_REPORT_FIRST',['../spr-defs_8h.html#aa3fc7d7ca0b51257700fc6b248d1f857',1,'spr-defs.h']]],
-  ['nop_5freport_5flast',['NOP_REPORT_LAST',['../spr-defs_8h.html#ac1390be32f334a1c1d53d130205ed2ad',1,'spr-defs.h']]]
+  ['nop_5freport_5flast',['NOP_REPORT_LAST',['../spr-defs_8h.html#ac1390be32f334a1c1d53d130205ed2ad',1,'spr-defs.h']]],
+  ['num_5froomba_5fremote_5fbuttons',['NUM_ROOMBA_REMOTE_BUTTONS',['../ir__remote_8h.html#aac5e1aaa335507efbc042c6eaaa76461',1,'ir_remote.h']]]
 ];

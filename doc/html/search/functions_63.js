@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['calculatetimetodrive',['calculateTimeToDrive',['../roomba_8h.html#a003330edfbf4d75a09dbaeb415bed728',1,'roomba.h']]],
-  ['check_5fbutton',['check_button',['../roomba_8h.html#a61d980cd654b5b28e4e48a7f4092c3f9',1,'roomba.h']]]
+  ['check_5fbase_5fid',['check_base_id',['../ir__base_8h.html#a79c2bf039a0badea5c0bda23d09467b6',1,'ir_base.h']]],
+  ['check_5fdiscrete_5fbase_5fid',['check_discrete_base_id',['../ir__base_8h.html#a0021b9bf078f02353c73d5ce0fbdb5cd',1,'ir_base.h']]],
+  ['checkdiscreteroombabuttonarray',['checkDiscreteRoombaButtonArray',['../ir__remote_8h.html#af4edcefec452000383943da469f474df',1,'ir_remote.h']]]
 ];

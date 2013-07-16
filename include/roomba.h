@@ -259,6 +259,16 @@ void roombaSeekdock(void);
  */
 void roombaResetTrips(void);
 
+
+/**
+ * \brief  reset roomba's trip meters without consuming sensor values
+ *
+ *	This function just resets angle and distance trip meters without clearing the sensor 'cache'
+ *
+ */
+void roombaResetTripsWithoutConsumingSensors();
+
+
 /**
  * \brief drive backward function
  *

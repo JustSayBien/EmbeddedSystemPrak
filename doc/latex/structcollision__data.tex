@@ -1,0 +1,66 @@
+\hypertarget{structcollision__data}{\section{collision\-\_\-data \-Struct \-Reference}
+\label{structcollision__data}\index{collision\-\_\-data@{collision\-\_\-data}}
+}
+
+
+{\ttfamily \#include $<$roomba.\-h$>$}
+
+\subsection*{\-Data \-Fields}
+\begin{DoxyCompactItemize}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_a7b6969b715149f30de60681a139e467f}{angle\-\_\-sum}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_a5d82d80b71d7c0371fbc631ae4944b86}{distance\-\_\-sum}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_a3dce872c749367a7762bdde1f33f639c}{driven\-\_\-trip\-\_\-distance}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_a2d865c62fc673dffe7dd64d7c49c2d95}{bumper\-\_\-state}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_ad40117dfe4921b4f52a9fcb49e76c3fa}{light\-\_\-bumper\-\_\-state}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_ae863069398d3aad944262da21ddf2870}{program\-\_\-tick\-\_\-counter}
+\item 
+int8\-\_\-t \hyperlink{structcollision__data_abc8ff00f84162de37e15e431872b7d3b}{played\-\_\-acustic\-\_\-feedback}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_ab029fc46a5f17b2301b1afa7baba9b66}{trip\-\_\-distance\-\_\-at\-\_\-collision}
+\item 
+int32\-\_\-t \hyperlink{structcollision__data_a9bf88bb25b13b5a18e0fdc887e3cf81c}{trip\-\_\-angle\-\_\-at\-\_\-collision}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-A structure which holds all data to handle a collision 
+
+\subsection{\-Field \-Documentation}
+\hypertarget{structcollision__data_a7b6969b715149f30de60681a139e467f}{\index{collision\-\_\-data@{collision\-\_\-data}!angle\-\_\-sum@{angle\-\_\-sum}}
+\index{angle\-\_\-sum@{angle\-\_\-sum}!collision_data@{collision\-\_\-data}}
+\subsubsection[{angle\-\_\-sum}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf angle\-\_\-sum}}}\label{structcollision__data_a7b6969b715149f30de60681a139e467f}
+the sum of turned angles since collision detection (in degrees) \hypertarget{structcollision__data_a2d865c62fc673dffe7dd64d7c49c2d95}{\index{collision\-\_\-data@{collision\-\_\-data}!bumper\-\_\-state@{bumper\-\_\-state}}
+\index{bumper\-\_\-state@{bumper\-\_\-state}!collision_data@{collision\-\_\-data}}
+\subsubsection[{bumper\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf bumper\-\_\-state}}}\label{structcollision__data_a2d865c62fc673dffe7dd64d7c49c2d95}
+the last known state of the physical bumpers \hypertarget{structcollision__data_a5d82d80b71d7c0371fbc631ae4944b86}{\index{collision\-\_\-data@{collision\-\_\-data}!distance\-\_\-sum@{distance\-\_\-sum}}
+\index{distance\-\_\-sum@{distance\-\_\-sum}!collision_data@{collision\-\_\-data}}
+\subsubsection[{distance\-\_\-sum}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf distance\-\_\-sum}}}\label{structcollision__data_a5d82d80b71d7c0371fbc631ae4944b86}
+the sum of driven distances since collision detection (in millimeters) \hypertarget{structcollision__data_a3dce872c749367a7762bdde1f33f639c}{\index{collision\-\_\-data@{collision\-\_\-data}!driven\-\_\-trip\-\_\-distance@{driven\-\_\-trip\-\_\-distance}}
+\index{driven\-\_\-trip\-\_\-distance@{driven\-\_\-trip\-\_\-distance}!collision_data@{collision\-\_\-data}}
+\subsubsection[{driven\-\_\-trip\-\_\-distance}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf driven\-\_\-trip\-\_\-distance}}}\label{structcollision__data_a3dce872c749367a7762bdde1f33f639c}
+calculated distance value needed to evade collision object \hypertarget{structcollision__data_ad40117dfe4921b4f52a9fcb49e76c3fa}{\index{collision\-\_\-data@{collision\-\_\-data}!light\-\_\-bumper\-\_\-state@{light\-\_\-bumper\-\_\-state}}
+\index{light\-\_\-bumper\-\_\-state@{light\-\_\-bumper\-\_\-state}!collision_data@{collision\-\_\-data}}
+\subsubsection[{light\-\_\-bumper\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf light\-\_\-bumper\-\_\-state}}}\label{structcollision__data_ad40117dfe4921b4f52a9fcb49e76c3fa}
+the last known state of the light bumpers \hypertarget{structcollision__data_abc8ff00f84162de37e15e431872b7d3b}{\index{collision\-\_\-data@{collision\-\_\-data}!played\-\_\-acustic\-\_\-feedback@{played\-\_\-acustic\-\_\-feedback}}
+\index{played\-\_\-acustic\-\_\-feedback@{played\-\_\-acustic\-\_\-feedback}!collision_data@{collision\-\_\-data}}
+\subsubsection[{played\-\_\-acustic\-\_\-feedback}]{\setlength{\rightskip}{0pt plus 5cm}int8\-\_\-t {\bf played\-\_\-acustic\-\_\-feedback}}}\label{structcollision__data_abc8ff00f84162de37e15e431872b7d3b}
+flag to specify if a acoustic feedback was played for entering collision mode \hypertarget{structcollision__data_ae863069398d3aad944262da21ddf2870}{\index{collision\-\_\-data@{collision\-\_\-data}!program\-\_\-tick\-\_\-counter@{program\-\_\-tick\-\_\-counter}}
+\index{program\-\_\-tick\-\_\-counter@{program\-\_\-tick\-\_\-counter}!collision_data@{collision\-\_\-data}}
+\subsubsection[{program\-\_\-tick\-\_\-counter}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf program\-\_\-tick\-\_\-counter}}}\label{structcollision__data_ae863069398d3aad944262da21ddf2870}
+counts the program iterations in collision mode \hypertarget{structcollision__data_a9bf88bb25b13b5a18e0fdc887e3cf81c}{\index{collision\-\_\-data@{collision\-\_\-data}!trip\-\_\-angle\-\_\-at\-\_\-collision@{trip\-\_\-angle\-\_\-at\-\_\-collision}}
+\index{trip\-\_\-angle\-\_\-at\-\_\-collision@{trip\-\_\-angle\-\_\-at\-\_\-collision}!collision_data@{collision\-\_\-data}}
+\subsubsection[{trip\-\_\-angle\-\_\-at\-\_\-collision}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf trip\-\_\-angle\-\_\-at\-\_\-collision}}}\label{structcollision__data_a9bf88bb25b13b5a18e0fdc887e3cf81c}
+backup of the roomba's trip angle value at the moment of collision detection \hypertarget{structcollision__data_ab029fc46a5f17b2301b1afa7baba9b66}{\index{collision\-\_\-data@{collision\-\_\-data}!trip\-\_\-distance\-\_\-at\-\_\-collision@{trip\-\_\-distance\-\_\-at\-\_\-collision}}
+\index{trip\-\_\-distance\-\_\-at\-\_\-collision@{trip\-\_\-distance\-\_\-at\-\_\-collision}!collision_data@{collision\-\_\-data}}
+\subsubsection[{trip\-\_\-distance\-\_\-at\-\_\-collision}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf trip\-\_\-distance\-\_\-at\-\_\-collision}}}\label{structcollision__data_ab029fc46a5f17b2301b1afa7baba9b66}
+backup of the roomba's trip distance value at the moment of collision detection 
+
+\-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{roomba_8h}{roomba.\-h}\end{DoxyCompactItemize}

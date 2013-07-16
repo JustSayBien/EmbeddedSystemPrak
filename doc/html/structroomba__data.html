@@ -88,13 +88,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a27949ed7575f6665baf658b206ba9cff">is_moving</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a29ec4a96bc0931db96257857fd300de5">current_base_id</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#acda989cdf9bced3a9a1598c2328b266b">destination_base_id</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a7f174749fed904af98a79cb40f2e9b2c">current_velocity</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a9874cc3ce685901b1a022c32751fff3e">driven_distance</a></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a00d5dafaa40740d43325df48a57e3bad">trip_meter</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a22f88fbf731f115d1c35906dd65a9293">trip_distance</a></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#aaa13920a13096418bc196e4b464df213">trip_angle</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#a938f80c21b9bcc3a8598135c5b141b75">angle_360_degrees</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structroomba__data.html#aa2702f293fb9d49b8c1d60303ca5ba63">distance_1_meter</a></td></tr>
 </table>
-<hr/><h2>Field Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>A structure which holds important data of the roomba robot </p>
+</div><hr/><h2>Field Documentation</h2>
 <a class="anchor" id="a938f80c21b9bcc3a8598135c5b141b75"></a><!-- doxytag: member="roomba_data::angle_360_degrees" ref="a938f80c21b9bcc3a8598135c5b141b75" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -105,6 +110,21 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>the calibrated angle value which corresponds 360 degrees </p>
+
+</div>
+</div>
+<a class="anchor" id="a29ec4a96bc0931db96257857fd300de5"></a><!-- doxytag: member="roomba_data::current_base_id" ref="a29ec4a96bc0931db96257857fd300de5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t <a class="el" href="structroomba__data.html#a29ec4a96bc0931db96257857fd300de5">current_base_id</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>the id of the base at which the roomba is docked </p>
 
 </div>
 </div>
@@ -118,6 +138,21 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>the current velocity of the roomba (0 if not moving) </p>
+
+</div>
+</div>
+<a class="anchor" id="acda989cdf9bced3a9a1598c2328b266b"></a><!-- doxytag: member="roomba_data::destination_base_id" ref="acda989cdf9bced3a9a1598c2328b266b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint8_t <a class="el" href="structroomba__data.html#acda989cdf9bced3a9a1598c2328b266b">destination_base_id</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>the id of the base to which the roomba should drive </p>
 
 </div>
 </div>
@@ -131,6 +166,7 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>the calibrated distance value which corresponds 1000 millimeters (1 meter) </p>
 
 </div>
 </div>
@@ -144,6 +180,7 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>the whole driven distance since the program was started </p>
 
 </div>
 </div>
@@ -157,19 +194,35 @@ Data Fields</h2></td></tr>
       </table>
 </div>
 <div class="memdoc">
+<p>flag to specify if the roomba is moving(e.g. drive, turn) or not </p>
 
 </div>
 </div>
-<a class="anchor" id="a00d5dafaa40740d43325df48a57e3bad"></a><!-- doxytag: member="roomba_data::trip_meter" ref="a00d5dafaa40740d43325df48a57e3bad" args="" -->
+<a class="anchor" id="aaa13920a13096418bc196e4b464df213"></a><!-- doxytag: member="roomba_data::trip_angle" ref="aaa13920a13096418bc196e4b464df213" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int32_t <a class="el" href="structroomba__data.html#a00d5dafaa40740d43325df48a57e3bad">trip_meter</a></td>
+          <td class="memname">int32_t <a class="el" href="structroomba__data.html#aaa13920a13096418bc196e4b464df213">trip_angle</a></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
+<p>the driven angle since trip meters were reset </p>
+
+</div>
+</div>
+<a class="anchor" id="a22f88fbf731f115d1c35906dd65a9293"></a><!-- doxytag: member="roomba_data::trip_distance" ref="a22f88fbf731f115d1c35906dd65a9293" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="structroomba__data.html#a22f88fbf731f115d1c35906dd65a9293">trip_distance</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>the driven distance since trip meters were reset </p>
 
 </div>
 </div>
@@ -194,7 +247,7 @@ Data Fields</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue May 28 2013 10:55:21 for Roomba Embedded Systems Training by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Jul 16 2013 03:15:44 for Roomba Embedded Systems Training by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

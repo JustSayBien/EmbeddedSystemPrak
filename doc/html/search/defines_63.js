@@ -5,6 +5,7 @@ var searchData=
   ['cfgetospeed',['cfgetospeed',['../termios_8h.html#ac89be85085008e154a023c1a778465f5',1,'termios.h']]],
   ['cfsetispeed',['cfsetispeed',['../termios_8h.html#a56f116aaab1fb66be72f489888f6c00d',1,'termios.h']]],
   ['cfsetospeed',['cfsetospeed',['../termios_8h.html#adca48c3ea4f200ad66987bdaa06fa4b9',1,'termios.h']]],
+  ['charging_5fsource_5fhomebase',['CHARGING_SOURCE_HOMEBASE',['../roomba_8h.html#a5fdfdcbfd0f764e23e833fe60a7cfae7',1,'roomba.h']]],
   ['clocal',['CLOCAL',['../termios_8h.html#a1dec50a32b486302a9414456df4cbb11',1,'termios.h']]],
   ['cmd_5f7seg_5fascii',['CMD_7SEG_ASCII',['../roomba_8h.html#ac796d81e0cafc588b07242ddbb3ac646',1,'roomba.h']]],
   ['cmd_5f7seg_5fraw',['CMD_7SEG_RAW',['../roomba_8h.html#a18838b5f20645a2cbe0dda4904e38d33',1,'roomba.h']]],

@@ -10,11 +10,17 @@
 \item 
 uint8\-\_\-t \hyperlink{structroomba__data_a27949ed7575f6665baf658b206ba9cff}{is\-\_\-moving}
 \item 
+uint8\-\_\-t \hyperlink{structroomba__data_a29ec4a96bc0931db96257857fd300de5}{current\-\_\-base\-\_\-id}
+\item 
+uint8\-\_\-t \hyperlink{structroomba__data_acda989cdf9bced3a9a1598c2328b266b}{destination\-\_\-base\-\_\-id}
+\item 
 int16\-\_\-t \hyperlink{structroomba__data_a7f174749fed904af98a79cb40f2e9b2c}{current\-\_\-velocity}
 \item 
 int32\-\_\-t \hyperlink{structroomba__data_a9874cc3ce685901b1a022c32751fff3e}{driven\-\_\-distance}
 \item 
-int32\-\_\-t \hyperlink{structroomba__data_a00d5dafaa40740d43325df48a57e3bad}{trip\-\_\-meter}
+int32\-\_\-t \hyperlink{structroomba__data_a22f88fbf731f115d1c35906dd65a9293}{trip\-\_\-distance}
+\item 
+int32\-\_\-t \hyperlink{structroomba__data_aaa13920a13096418bc196e4b464df213}{trip\-\_\-angle}
 \item 
 int32\-\_\-t \hyperlink{structroomba__data_a938f80c21b9bcc3a8598135c5b141b75}{angle\-\_\-360\-\_\-degrees}
 \item 
@@ -22,26 +28,38 @@ int32\-\_\-t \hyperlink{structroomba__data_aa2702f293fb9d49b8c1d60303ca5ba63}{di
 \end{DoxyCompactItemize}
 
 
+\subsection{\-Detailed \-Description}
+\-A structure which holds important data of the roomba robot 
+
 \subsection{\-Field \-Documentation}
 \hypertarget{structroomba__data_a938f80c21b9bcc3a8598135c5b141b75}{\index{roomba\-\_\-data@{roomba\-\_\-data}!angle\-\_\-360\-\_\-degrees@{angle\-\_\-360\-\_\-degrees}}
 \index{angle\-\_\-360\-\_\-degrees@{angle\-\_\-360\-\_\-degrees}!roomba_data@{roomba\-\_\-data}}
 \subsubsection[{angle\-\_\-360\-\_\-degrees}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf angle\-\_\-360\-\_\-degrees}}}\label{structroomba__data_a938f80c21b9bcc3a8598135c5b141b75}
-\hypertarget{structroomba__data_a7f174749fed904af98a79cb40f2e9b2c}{\index{roomba\-\_\-data@{roomba\-\_\-data}!current\-\_\-velocity@{current\-\_\-velocity}}
+the calibrated angle value which corresponds 360 degrees \hypertarget{structroomba__data_a29ec4a96bc0931db96257857fd300de5}{\index{roomba\-\_\-data@{roomba\-\_\-data}!current\-\_\-base\-\_\-id@{current\-\_\-base\-\_\-id}}
+\index{current\-\_\-base\-\_\-id@{current\-\_\-base\-\_\-id}!roomba_data@{roomba\-\_\-data}}
+\subsubsection[{current\-\_\-base\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf current\-\_\-base\-\_\-id}}}\label{structroomba__data_a29ec4a96bc0931db96257857fd300de5}
+the id of the base at which the roomba is docked \hypertarget{structroomba__data_a7f174749fed904af98a79cb40f2e9b2c}{\index{roomba\-\_\-data@{roomba\-\_\-data}!current\-\_\-velocity@{current\-\_\-velocity}}
 \index{current\-\_\-velocity@{current\-\_\-velocity}!roomba_data@{roomba\-\_\-data}}
 \subsubsection[{current\-\_\-velocity}]{\setlength{\rightskip}{0pt plus 5cm}int16\-\_\-t {\bf current\-\_\-velocity}}}\label{structroomba__data_a7f174749fed904af98a79cb40f2e9b2c}
-\hypertarget{structroomba__data_aa2702f293fb9d49b8c1d60303ca5ba63}{\index{roomba\-\_\-data@{roomba\-\_\-data}!distance\-\_\-1\-\_\-meter@{distance\-\_\-1\-\_\-meter}}
+the current velocity of the roomba (0 if not moving) \hypertarget{structroomba__data_acda989cdf9bced3a9a1598c2328b266b}{\index{roomba\-\_\-data@{roomba\-\_\-data}!destination\-\_\-base\-\_\-id@{destination\-\_\-base\-\_\-id}}
+\index{destination\-\_\-base\-\_\-id@{destination\-\_\-base\-\_\-id}!roomba_data@{roomba\-\_\-data}}
+\subsubsection[{destination\-\_\-base\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf destination\-\_\-base\-\_\-id}}}\label{structroomba__data_acda989cdf9bced3a9a1598c2328b266b}
+the id of the base to which the roomba should drive \hypertarget{structroomba__data_aa2702f293fb9d49b8c1d60303ca5ba63}{\index{roomba\-\_\-data@{roomba\-\_\-data}!distance\-\_\-1\-\_\-meter@{distance\-\_\-1\-\_\-meter}}
 \index{distance\-\_\-1\-\_\-meter@{distance\-\_\-1\-\_\-meter}!roomba_data@{roomba\-\_\-data}}
 \subsubsection[{distance\-\_\-1\-\_\-meter}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf distance\-\_\-1\-\_\-meter}}}\label{structroomba__data_aa2702f293fb9d49b8c1d60303ca5ba63}
-\hypertarget{structroomba__data_a9874cc3ce685901b1a022c32751fff3e}{\index{roomba\-\_\-data@{roomba\-\_\-data}!driven\-\_\-distance@{driven\-\_\-distance}}
+the calibrated distance value which corresponds 1000 millimeters (1 meter) \hypertarget{structroomba__data_a9874cc3ce685901b1a022c32751fff3e}{\index{roomba\-\_\-data@{roomba\-\_\-data}!driven\-\_\-distance@{driven\-\_\-distance}}
 \index{driven\-\_\-distance@{driven\-\_\-distance}!roomba_data@{roomba\-\_\-data}}
 \subsubsection[{driven\-\_\-distance}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf driven\-\_\-distance}}}\label{structroomba__data_a9874cc3ce685901b1a022c32751fff3e}
-\hypertarget{structroomba__data_a27949ed7575f6665baf658b206ba9cff}{\index{roomba\-\_\-data@{roomba\-\_\-data}!is\-\_\-moving@{is\-\_\-moving}}
+the whole driven distance since the program was started \hypertarget{structroomba__data_a27949ed7575f6665baf658b206ba9cff}{\index{roomba\-\_\-data@{roomba\-\_\-data}!is\-\_\-moving@{is\-\_\-moving}}
 \index{is\-\_\-moving@{is\-\_\-moving}!roomba_data@{roomba\-\_\-data}}
 \subsubsection[{is\-\_\-moving}]{\setlength{\rightskip}{0pt plus 5cm}uint8\-\_\-t {\bf is\-\_\-moving}}}\label{structroomba__data_a27949ed7575f6665baf658b206ba9cff}
-\hypertarget{structroomba__data_a00d5dafaa40740d43325df48a57e3bad}{\index{roomba\-\_\-data@{roomba\-\_\-data}!trip\-\_\-meter@{trip\-\_\-meter}}
-\index{trip\-\_\-meter@{trip\-\_\-meter}!roomba_data@{roomba\-\_\-data}}
-\subsubsection[{trip\-\_\-meter}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf trip\-\_\-meter}}}\label{structroomba__data_a00d5dafaa40740d43325df48a57e3bad}
-
+flag to specify if the roomba is moving(e.\-g. drive, turn) or not \hypertarget{structroomba__data_aaa13920a13096418bc196e4b464df213}{\index{roomba\-\_\-data@{roomba\-\_\-data}!trip\-\_\-angle@{trip\-\_\-angle}}
+\index{trip\-\_\-angle@{trip\-\_\-angle}!roomba_data@{roomba\-\_\-data}}
+\subsubsection[{trip\-\_\-angle}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf trip\-\_\-angle}}}\label{structroomba__data_aaa13920a13096418bc196e4b464df213}
+the driven angle since trip meters were reset \hypertarget{structroomba__data_a22f88fbf731f115d1c35906dd65a9293}{\index{roomba\-\_\-data@{roomba\-\_\-data}!trip\-\_\-distance@{trip\-\_\-distance}}
+\index{trip\-\_\-distance@{trip\-\_\-distance}!roomba_data@{roomba\-\_\-data}}
+\subsubsection[{trip\-\_\-distance}]{\setlength{\rightskip}{0pt plus 5cm}int32\-\_\-t {\bf trip\-\_\-distance}}}\label{structroomba__data_a22f88fbf731f115d1c35906dd65a9293}
+the driven distance since trip meters were reset 
 
 \-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 
